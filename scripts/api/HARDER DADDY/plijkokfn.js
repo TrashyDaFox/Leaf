@@ -1,7 +1,7 @@
 import { prismarineDb } from "../../lib/prismarinedb";
 import actionParser from "../actionParser";
 import * as mc from '@minecraft/server'
-class IPissedMyPantsAt3AMLastNightFrFrOnSkibidyOhioToiletRizziloveskibiditoiletbtwitssocoolalsopleasefuckingslurponmycockandsuckitnyauwu {
+class CustomActions {
     constructor() {
         // this.instructionList = data;
         // this.player = player;
@@ -357,7 +357,7 @@ class IPissedMyPantsAt3AMLastNightFrFrOnSkibidyOhioToiletRizziloveskibiditoiletb
     //     }
     // }
 }
-export default new IPissedMyPantsAt3AMLastNightFrFrOnSkibidyOhioToiletRizziloveskibiditoiletbtwitssocoolalsopleasefuckingslurponmycockandsuckitnyauwu()
+export default new CustomActions()
 // https://www.youtube.com/watch?v=USQ6BA0r7-Y
 
 // HUH

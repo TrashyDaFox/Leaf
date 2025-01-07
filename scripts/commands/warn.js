@@ -2,7 +2,7 @@
 
 import { world } from "@minecraft/server";
 import commandManager from "../api/commands/commandManager";
-import './report'
+
 
 commandManager.addCommand("warn", { description: "Warn people", author: "FruitKitty + TrashyKitty", category: "Moderation" }, ({ msg }) => {
     msg.sender.error("Use a subcommand!")

@@ -1,3 +1,4 @@
+import { formatStr } from "../../api/azaleaFormatting";
 import icons from "../../api/icons";
 import uiBuilder from "../../api/uiBuilder";
 import config from "../../config";
@@ -20,7 +21,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
     })
     for(let index = 0;index < form.data.buttons.length;index++) {
         let button = form.data.buttons[index];
-        actionForm.button(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
+        actionForm.button(formatStr(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, player), button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
             uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)
         })
     }

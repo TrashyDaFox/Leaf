@@ -58,6 +58,7 @@ import './uis/pay.js';
 import './uis/sidebar/trashEdit';
 import './uis/currencyEditor/root';
 import './uis/currencyEditor/add';
+import './uis/uiBuilder/editActions.js';
 import './crates/main';
 import './uis/basic/basicConfirmation.js';
 import './features/chestLocking'
@@ -204,8 +205,11 @@ function openTabUI(tabUI, entity, tabIndex = 0) {
             if (ui.data.body) form.body(ui.data.body);
 
             for (const button of ui.data.buttons) {
-                form.button(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, button.iconID ? icons.resolve(button.iconID) : null, (player) => {
-                    actionParser.runAction(entity, button.action)
+                if(button.requiredTag && !entity.hasTag(button.requiredTag)) continue;
+                form.button(formatStr(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, entity), button.iconID ? icons.resolve(button.iconID) : null, (player) => {
+                    for(const action of button.actions) {
+                        actionParser.runAction(entity, action)
+                    }
                 })
             }
         }

@@ -170,6 +170,8 @@ export default {
             Root: "homes | Leaf/Homes/Root",
             Create: "homes_create | Leaf/Homes/Create",
             View: "homes_view | Leaf/Homes/View",
+            ViewShared: "homes_viewshared | Leaf/Homes/ViewShared",
+            Shared: "homes_shared | Leaf/Homes/Shared",
         },
         Reports: {
             Dashboard: 'reports_dashboard | Leaf/Reports/Dashboard',

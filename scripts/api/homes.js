@@ -13,7 +13,8 @@ class Homes {
         let h2 = this.db.insertDocument({
             owner,
             name,
-            loc: player.location
+            loc: player.location,
+            sharedTo: []
         })
         return h2;
     }
@@ -40,6 +41,31 @@ class Homes {
             z: h.data.loc.z
         })
         return true;
+    }
+    shareHome(id, player) {
+        let h = this.db.getByID(id)
+        if(!h) return false
+        h.data.sharedTo.push(player.name)
+        this.db.overwriteDataByID(id, h.data)
+        return true;
+    }
+    getSharedHomes(player) {
+        let hs = [];
+        for (const h of this.db.findDocuments()) {
+            for (const sh of h.data.sharedTo) {
+                if(sh == player.name) {
+                    hs.push(h)
+                }
+            }
+        }
+        return hs;
+    }
+    removeShare(id, name) {
+        let h = this.db.getByID(id)
+        if(!h) return false;
+        let index = h.data.sharedTo.findIndex(sh => sh == name)
+        if(index) return h.data.sharedTo.splice(index, 1);
+        this.db.overwriteDataByID(id, h.data)
     }
     delete(id) {
         let h = this.db.getByID(id)

@@ -98,16 +98,19 @@ class OpenClanAPI {
             }
         }
     }
-    depositMoneyIntoClanBank(clanID, currency, amount) {
+    depositMoneyIntoClanBank(player, clanID, currency, amount) {
         let currencyData = prismarineDb.economy.getCurrency(currency);
         if(currencyData && currencyData.scoreboard) {
             let clan = this.db.getByID(clanID);
             if(clan) {
                 let doc = this.bankDb.findFirst({owner:clanID});
                 let data = doc ? doc.data : {};
+                if(prismarineDb.economy.getMoney(player, currency) < amount) return;
                 if(!doc) {
                     if(data[currencyData.scoreboard]) data[currencyData.scoreboard] += amount
                     else data[currencyData.scoreboard] = amount;
+
+                    prismarineDb.economy.removeMoney(player, currency)
 
                     data.owner = clan.id;
                     this.bankDb.insertDocument(data);
@@ -115,11 +118,40 @@ class OpenClanAPI {
                     if(data[currencyData.scoreboard]) data[currencyData.scoreboard] += amount
                     else data[currencyData.scoreboard] = amount;
 
+                    prismarineDb.economy.removeMoney(player, currency)
+
                     this.bankDb.overwriteDataByID(doc.id, data);
                 }
             }
         }
     }
+
+    withdrawMoneyFromClanBank(player, clanID, currency, amount) {
+        let currencyData = prismarineDb.economy.getCurrency(currency);
+        if(currencyData && currencyData.scoreboard) {
+            let clan = this.db.getByID(clanID);
+            if(clan) {
+                let doc = this.bankDb.findFirst({owner:clanID});
+                let data = doc ? doc.data : {};
+                if(data[currencyData.scoreboard] < amount) return; // Ensuring the bank has enough funds
+                if(!doc) {
+                    // If there's no bank record, no money to withdraw
+                    return;
+                } else {
+                    // Subtract the amount from the clan bank
+                    data[currencyData.scoreboard] -= amount;
+    
+                    // Add the withdrawn amount to the player's balance
+                    prismarineDb.economy.addMoney(player, currency, amount);
+    
+                    // Save the updated data in the bank database
+                    this.bankDb.overwriteDataByID(doc.id, data);
+                }
+            }
+        }
+    }
+    
+
     /**
      * 
      * @param {number} clanID 

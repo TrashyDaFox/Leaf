@@ -1,5 +1,6 @@
 import { ActionForm } from "../../lib/form_func";
 import actionParser from "../actionParser";
+import { formatStr } from "../azaleaFormatting";
 import icons from "../icons";
 
 class NormalFormOpener {
@@ -22,7 +23,7 @@ class NormalFormOpener {
         for(const button of data.buttons) {
             console.warn(JSON.stringify(button));
             if(button.requiredTag && !player.hasTag(button.requiredTag)) continue;
-            form.button(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
+            form.button(formatStr(`${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, player), button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
                 if(!button.actions) return actionParser.runAction(player, button.action)
                 for (const action of button.actions) {
                     actionParser.runAction(player, action)

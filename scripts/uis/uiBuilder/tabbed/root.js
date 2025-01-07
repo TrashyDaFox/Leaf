@@ -24,9 +24,10 @@ uiManager.addUI(config.uiNames.UIBuilderTabbed, "Tabbed UIs", (player)=>{
     form.button(`§6Create Tabbed UI\n§7Creates a UI with tabs`, `textures/azalea_icons/1`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderTabbedCreate)
     })
-    form.button(`§dGuide\n§7Learn how to use this`, `textures/azalea_icons/AdvancedGUIs`, (player)=>{
+    form.body(`§bTIP: To open tab UIs, do §e/scriptevent leaf:open_tabbed <tab ui>\n§r§dExample: §a/scriptevent leaf:open_tabbed server_ui`)
+    // form.button(`§dGuide\n§7Learn how to use this`, `textures/azalea_icons/AdvancedGUIs`, (player)=>{
 
-    })
+    // })
     for(const tabUI of uiBuilder.getTabbedUIs()) {
         form.button(`§a${tabUI.data.title}\n§7${tabUI.data.tabs.length} Tab(s)`, null, (player)=>{
             uiManager.open(player, config.uiNames.UIBuilderTabbedEdit, tabUI.id)

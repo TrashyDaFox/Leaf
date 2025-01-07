@@ -3,111 +3,147 @@ import hardCodedRanks from "./hardCodedRanks.js";
 import emojis from "./emojis";
 import { prismarineDb } from "../lib/prismarinedb.js";
 import { getClaimText } from "../landClaims.js";
-import playerStorage from "./playerStorage.js";
 import OpenClanAPI from "./OpenClanAPI.js";
+
+// TPS tracking
+const TPS_SAMPLE_SIZE = 20;
+const TPS_UPDATE_INTERVAL = 20; // ticks
+const TPS_CLEAR_INTERVAL = 20; // ticks (changed from ms)
+
 let lastTick = Date.now();
 let tps = 20;
-let configDb = prismarineDb.table("LegacyConfig").keyval("LegacyConfig");
 let timeArray = [];
-system.runInterval(() => {
-  if (timeArray.length === 20) timeArray.shift();
-  timeArray.push(Math.round(1000 / (Date.now() - lastTick) * 100) / 100);
-  tps = timeArray.reduce((a, b) => a + b) / timeArray.length;
-  lastTick = Date.now();
-});
-let startingRank = configDb.get("StartingRank", "Member");
+const configDb = prismarineDb.table("LegacyConfig").keyval("LegacyConfig");
+const startingRank = configDb.get("StartingRank", "Member");
+const recursionSessions = new Map();
 
-function betterArgs(myString) {
-    var myRegexp = /[^\s"]+|"([^"]*)"/gi;
-    var myArray = [];
+// Utility functions
+function parseQuotedString(str) {
+    const regex = /[^\s"]+|"([^"]*)"/gi;
+    const results = [];
+    let match;
     
-    do {
-        var match = myRegexp.exec(myString);
-        if (match != null)
-        {
-            myArray.push(match[1] ? match[1] : match[0]);
-        }
-    } while (match != null);
-
-    return myArray;
+    while ((match = regex.exec(str)) !== null) {
+        results.push(match[1] || match[0]);
+    }
+    
+    return results;
 }
+
 function getScore(objective, player) {
     try {
-      let scoreboard = world.scoreboard.getObjective(objective);
-      if(!scoreboard) scoreboard = world.scoreboard.addObjective(objective, objective);
-      if (!scoreboard) return 0;
-      let score = 0;
-      try {
-        score = scoreboard.getScore(player);
-      } catch {
-        score = 0;
-      }
-      if (!score) score = 0;
-      return score;
+        let scoreboard = world.scoreboard.getObjective(objective) 
+            || world.scoreboard.addObjective(objective, objective);
+        return scoreboard?.getScore(player) || 0;
     } catch {
-      return 0;
+        return 0;
     }
-  }
-  function setScore(objective, player, score) {
+}
+
+function setScore(objective, player, score) {
     try {
-      let scoreboard = world.scoreboard.getObjective(objective);
-      if(!scoreboard) scoreboard = world.scoreboard.addObjective(objective, objective);
-        scoreboard.setScore(player, score)
+        let scoreboard = world.scoreboard.getObjective(objective) 
+            || world.scoreboard.addObjective(objective, objective);
+        scoreboard.setScore(player, score);
     } catch {}
 }
-  function divide(num1, num2) {
-    if (num1 > 0 && num2 == 0) return num1;
-    if (num1 == 0 && num2 > 0) return -num2;
-    if (num1 == 0 && num2 == 0) return 1;
+
+function safeDivide(num1, num2) {
+    if (num2 === 0) return num1 > 0 ? num1 : num1 === 0 ? 1 : -num2;
     return num1 / num2;
-  }
-  const abbrNum = (number, decPlaces) => {
-    decPlaces = Math.pow(10, decPlaces)
-    var abbrev = ['k', 'm', 'b', 't']
-    for (var i = abbrev.length - 1; i >= 0; i--) {
-      var size = Math.pow(10, (i + 1) * 3)
-      if (size <= number) {
-        number = Math.round((number * decPlaces) / size) / decPlaces
-        if (number == 1000 && i < abbrev.length - 1) {
-          number = 1
-          i++
+}
+
+function abbreviateNumber(number, decPlaces) {
+    const suffixes = ['k', 'm', 'b', 't'];
+    const decScale = Math.pow(10, decPlaces);
+    
+    for (let i = suffixes.length - 1; i >= 0; i--) {
+        const size = Math.pow(10, (i + 1) * 3);
+        if (size <= number) {
+            number = Math.round((number * decScale) / size) / decScale;
+            if (number === 1000 && i < suffixes.length - 1) {
+                number = 1;
+                i++;
+            }
+            number += suffixes[i];
+            break;
         }
-        number += abbrev[i]
-        break
-      }
     }
-    return number
-  }
-let a = new Map();
-world.afterEvents.entityHitEntity.subscribe(e=>{
-    if(e.damagingEntity.typeId == "minecraft:player") {
-        let cps = getScore("azalea:cps", e.damagingEntity);
-        cps++;
-        setScore("azalea:cps", e.damagingEntity, cps);
+    return number;
+}
+
+// System intervals
+
+system.runInterval(() => {
+    if (timeArray.length === 20) timeArray.shift();
+    timeArray.push(Math.round(1000 / (Date.now() - lastTick) * 100) / 100);
+    tps = timeArray.reduce((a, b) => a + b) / timeArray.length;
+    lastTick = Date.now();
+  });
+// CPS handling
+world.afterEvents.entityHitEntity.subscribe(e => {
+    if (e.damagingEntity.typeId === "minecraft:player") {
+        setScore("azalea:cps", e.damagingEntity, getScore("azalea:cps", e.damagingEntity) + 1);
     }
-})
-system.runInterval(()=>{
-    for(const player of world.getPlayers()) {
-        // let cps = getScore("azalea:cps", player);
-        // if(cps > 0) {
-        //     cps--;
+});
+
+system.runInterval(() => {
+    for (const player of world.getPlayers()) {
         setScore("azalea:cps", player, 0);
-        // }
     }
-},20)
-system.runInterval(()=>{
-    a.clear();
+}, TPS_UPDATE_INTERVAL);
+
+system.runInterval(() => {
+    recursionSessions.clear();
     timeArray = [];
-}, 20 * 1000);
+}, TPS_CLEAR_INTERVAL);
+
+// Formatting functions
+function getPlayerColors(player) {
+    const isHardcodedRank = hardCodedRanks[player.name] && !player.hasTag("OverrideDevRank");
+    
+    return {
+        bracket: isHardcodedRank ? hardCodedRanks[player.name].BracketColor 
+            : player.getTags().find(t => t.startsWith('bracket-color:'))?.substring('bracket-color:'.length) || "§8",
+            
+        name: isHardcodedRank ? hardCodedRanks[player.name].NameColor
+            : player.getTags().find(t => t.startsWith('name-color:'))?.substring('name-color:'.length) || "§3",
+            
+        message: isHardcodedRank ? hardCodedRanks[player.name].MsgColor
+            : player.getTags().find(t => t.startsWith('message-color:'))?.substring('message-color:'.length) || "§7"
+    };
+}
+
+function getPlayerRanks(player) {
+    if (player.name === "OG clapz9521") return ["§dFurry"];
+    
+    if (hardCodedRanks[player.name] && !player.hasTag("OverrideDevRank")) {
+        return hardCodedRanks[player.name].Ranks;
+    }
+    
+    let ranks = player.getTags()
+        .filter(t => t.startsWith('rank:'))
+        .map(t => t.substring(5));
+        
+    if (!ranks.length) ranks.push(`§7${startingRank}`);
+    
+    return ranks.map(rank => {
+        for (const [emoji, replacement] of Object.entries(emojis)) {
+            rank = rank.replaceAll(`:${emoji}:`, replacement);
+        }
+        return rank;
+    });
+}
+
+// Main formatting function remains mostly the same for compatibility
 export function formatStr(str, player = null, extraVars = {}, session = Date.now()) {
-    if(!a.has(session)) a.set(session, 0)
+    if(!recursionSessions.has(session)) recursionSessions.set(session, 0)
     let newStr = str;
     let vars = {};
     vars.drj = ` §r<bc>] [ <rc>`
     for(const key in extraVars) {
         vars[key] = extraVars[key];
     }
-    vars.tps = `${tps}`;
     if(player) {
         if(!(player instanceof Player)) return;
         let bracketColorTag = player.getTags().find(_=>_.startsWith('bracket-color:'));
@@ -166,11 +202,13 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
         vars.kills = `${getScore("azalea:kills", player)}`;
         vars.deaths = `${getScore("azalea:deaths", player)}`;
         vars.cps = `${getScore("azalea:cps", player)}`;
-        vars["k/d"] = `${divide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
+        vars["k/d"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
         vars.claim = getClaimText(player);
 
     }
-    vars.tps = `${Math.floor(tps)}`;
+    vars.tps = `${tps}`;
+
+    // vars.tps = `${Math.floor(tps)}`;
     vars.online = `${world.getPlayers().length}`;
     vars.day = `${Math.floor(world.getDay())}`;
     vars.yr = `${new Date().getUTCFullYear()}`;
@@ -260,10 +298,10 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
         },
         scoreshort(objective) {
             if(!player) return `0`;
-            return `${abbrNum(getScore(objective, player),1)}`;
+            return `${abbreviateNumber(getScore(objective, player),1)}`;
         },
         scoreshort2(stringName, objective) {
-            return `${abbrNum(getScore(objective, stringName))}`;
+            return `${abbreviateNumber(getScore(objective, stringName))}`;
         },
         is_afk(isAfk, notAfk) {
             return player.hasTag("leaf:afk") ? isAfk : notAfk ? notAfk : "";
@@ -335,7 +373,7 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
     }
     if(fnMatches && fnMatches.length) {
         for(const fnMatch of fnMatches) {
-            let args = betterArgs(fnMatch.slice(0,-2).substring(2));
+            let args = parseQuotedString(fnMatch.slice(0,-2).substring(2));
             if(fns[args[0]]) {
                 newStr = newStr.replace(
                     fnMatch,
@@ -344,15 +382,15 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
             }
         }
     }
-    a.set(session, a.get(session) + 1)
+    recursionSessions.set(session, recursionSessions.get(session) + 1)
     if(c.some(_=>newStr.includes(`<${_}>`)) || b.some(_=>newStr.includes(`{{${_}`)) || Object.keys(emojis).some(_=>newStr.includes(`:${_}:`))) {
-        if(a.get(session) >= 10) {
-            a.delete(session)
+        if(recursionSessions.get(session) >= 10) {
+            recursionSessions.delete(session)
             return newStr + "  §r§o§c(Error: recursion limit reached)"
         }
         return formatStr(newStr, player, extraVars, session)
     } else {
-        a.delete(session)
+        recursionSessions.delete(session)
         return newStr
     }
     return newStr;
