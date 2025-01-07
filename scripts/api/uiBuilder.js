@@ -5,6 +5,16 @@ import actionParser from "./actionParser";
 import normalForm from "./openers/normalForm";
 import { system, ScriptEventSource } from '@minecraft/server';
 import { array_move } from "./utils/array_move";
+/*
+
+ /\___/\
+꒰ ˶• ༝ - ˶꒱
+./づᡕᠵ᠊ᡃ࡚ࠢ࠘ ⸝່ࠡࠣ᠊߯᠆ࠣ࠘ᡁࠣ࠘᠊᠊°.~♡︎
+"IM GONNA KILL YOU IF YOU BREAK THIS"
+- Trashy
+
+- i broke it, Claude 3.5 - 2025
+*/
 
 class UIBuilder {
     constructor() {
@@ -20,6 +30,41 @@ class UIBuilder {
         this.uiState = this.db.keyval("state");
         this.tabbedDB = prismarineDb.table("TabbedUI_DB");
         this.tagsDb = prismarineDb.table(`${config.tableNames.uis}~tags`);
+    }
+
+    createTabbedUI(title) {
+        this.tabbedDB.insertDocument({
+            type: "TAB_UI",
+            title,
+            tabs: [],
+        })
+    }
+    getTabbedUIs() {
+        return this.tabbedDB.findDocuments({type:"TAB_UI"})
+    }
+    addTab(id, tabTitle, tabUIScriptevent) {
+        let tabUI = this.tabbedDB.getByID(id);
+        if(!tabUI) return;
+        tabUI.data.tabs.push({
+            title: tabTitle,
+            scriptevent: tabUIScriptevent
+        })
+        this.tabbedDB.overwriteDataByID(tabUI.id, tabUI.data);
+    }
+    deleteTabbedUI(id) {
+        this.tabbedDB.deleteDocumentByID(id);
+    }
+    toggleState(state) {
+        this.uiState.set(
+            state,
+            this.uiState.has(state) ? this.uiState.get(state) == 0 ? 1 : 0 : 1
+        )
+    }
+    setState(state, value) {
+        this.uiState.set(state, value == true ? 1 : 0);
+    }
+    getState(state) {
+        return this.uiState.has(state) ? this.uiState.get(state) == 1 ? true : false : false;
     }
 
     initializeStates() {

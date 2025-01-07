@@ -3,6 +3,35 @@
 // Free to use in your own addons
 // Powered by LeafDB/PrismarineDB
 
+
+/*
+                            ╱|、
+                          (˚ˎ 。7  
+                           |、˜〵          
+                          じしˍ,)ノ
+
+    /\___/\
+   (  ◕ω◕)  
+    )   ♡(   
+   (     )
+    |  |  |
+    (___|__)
+
+     ∧＿∧
+   （｡･ω･｡)つ━☆・*。
+   ⊂　　 ノ 　　　・゜
+   　しーＪ　　　 。・゜
+
+   /\＿/\
+  ( ˶•ω•˶)♡
+  /　　づ
+
+             へ         ╱|、
+        ૮  -   ՛ ) つ(>   < 7  
+         /   ⁻  ៸          、˜〵     
+  乀 (ˍ,  ل            じしˍ,)ノ
+
+*/
 import { Player } from "@minecraft/server";
 import playerStorage from "./playerStorage";
 import { prismarineDb } from "../lib/prismarinedb";

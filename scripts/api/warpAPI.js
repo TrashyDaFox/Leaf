@@ -1,5 +1,37 @@
 import { prismarineDb } from "../lib/prismarinedb";
 
+
+/*
+/*
+                            ╱|、
+                          (˚ˎ 。7  
+                           |、˜〵          
+                          じしˍ,)ノ
+
+    /\___/\
+   (  ◕ω◕)  
+    )   ♡(   
+   (     )
+    |  |  |
+    (___|__)
+
+     ∧＿∧
+   （｡･ω･｡)つ━☆・*。
+   ⊂　　 ノ 　　　・゜
+   　しーＪ　　　 。・゜
+
+   /\＿/\
+  ( ˶•ω•˶)♡
+  /　　づ
+
+             へ         ╱|、
+        ૮  -   ՛ ) つ(>   < 7  
+         /   ⁻  ៸          、˜〵     
+  乀 (ˍ,  ل            じしˍ,)ノ
+
+  "meow"
+  - fruitkitty, 2025
+*/
 class WarpAPI {
     constructor() {
         this.db = prismarineDb.table("Warps");

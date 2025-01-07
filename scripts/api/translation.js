@@ -1,5 +1,10 @@
 import en from "../lang/en";
-
+/*
+                            ╱|、
+                          (˚ˎ 。7  
+                           |、˜〵          
+                          じしˍ,)ノ
+*/
 class TranslationAPI {
     constructor() {
         this.langauges = {en};
