@@ -67,7 +67,7 @@ uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
             
         form.button(
             `§b${ui.data.name}\n§r§7${emojis.clock} Updated ${moment(ui.updatedAt).fromNow()}${scriptEventInfo}`,
-            `textures/azalea_icons/ClickyClick`,
+            ui.data.icon ? icons.resolve(ui.data.icon) : `textures/azalea_icons/ClickyClick`,
             (player) => uiManager.open(player, config.uiNames.UIBuilderEdit, ui.id)
         );
     });

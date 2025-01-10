@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import icons from "../../api/icons";
 import uiBuilder from "../../api/uiBuilder";
 import config from "../../config"
@@ -25,6 +25,17 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
         modal.title("Code Editor");
         modal.textField("Code", "Code", JSON.stringify(doc.data, null, 2));
         modal.show(player, false, ()=>{})
+    })
+    actionForm.button(`§eSet icon\n§7Set icon for this UI`, doc.data.icon ? icons.resolve(doc.data.icon) : `textures/azalea_icons/ClickyClick`, (player)=>{
+        uiManager.open(player, config.uiNames.IconViewer, 0, (player, iconID)=>{
+            doc.data.icon = iconID;
+            uiBuilder.db.overwriteDataByID(doc.id, doc.data);
+            return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
+        });
+    })
+    actionForm.button(`§eTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? icons.resolve("azalea/name_tag") : icons.resolve("azalea/wand_01"), (player)=>{
+        uiBuilder.toggleUseTagOpener(id);
+        return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
     })
     if(http.player) {
         let published = doc.data.accessToken ? true : false

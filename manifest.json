@@ -14,13 +14,13 @@
 			"language": "javascript",
 			"uuid": "193360c7-c32b-4eb1-8c5c-dd1d188d1fa3",
 			"entry": "scripts/main.js",
-			"version": [1, 0, 27]
+			"version": [1, 0, 28]
 		},
 		{
 			"description": "Data Module",
 			"type": "data",
 			"uuid": "afecf66b-2000-443d-81d1-4064c97c7c1a",
-			"version": [1, 0, 27]
+			"version": [1, 0, 28]
 		}
 	],
 	"dependencies": [

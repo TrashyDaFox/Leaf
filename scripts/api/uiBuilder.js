@@ -1,10 +1,3 @@
-import config from "../config";
-import { ActionForm } from "../lib/form_func";
-import { colors, prismarineDb } from "../lib/prismarinedb";
-import actionParser from "./actionParser";
-import normalForm from "./openers/normalForm";
-import { system, ScriptEventSource } from '@minecraft/server';
-import { array_move } from "./utils/array_move";
 /*
 
  /\___/\
@@ -13,8 +6,15 @@ import { array_move } from "./utils/array_move";
 "IM GONNA KILL YOU IF YOU BREAK THIS"
 - Trashy
 
-- i broke it, Claude 3.5 - 2025
 */
+
+import config from "../config";
+import { ActionForm } from "../lib/form_func";
+import { colors, prismarineDb } from "../lib/prismarinedb";
+import actionParser from "./actionParser";
+import normalForm from "./openers/normalForm";
+import { system, ScriptEventSource, world } from '@minecraft/server';
+import { array_move } from "./utils/array_move";
 
 class UIBuilder {
     constructor() {
@@ -37,7 +37,7 @@ class UIBuilder {
             type: "TAB_UI",
             title,
             tabs: [],
-        })
+            })
     }
     getTabbedUIs() {
         return this.tabbedDB.findDocuments({type:"TAB_UI"})
@@ -88,6 +88,19 @@ class UIBuilder {
                 ui && this.open(ui.id, e.sourceEntity);
             }
         });
+
+        system.runInterval(()=>{
+                for(const ui of this.db.data){
+                    if(!ui.data.scriptevent) continue;
+                    if(!ui.data.useTagOpener) continue;
+                    for(const player of world.getPlayers()){
+                    if(player.hasTag(ui.data.scriptevent)){
+                        this.open(ui.id, player);
+                        player.removeTag(ui.data.scriptevent);
+                    }
+                }
+            }
+        }, 4)
     }
 
     migrateOldButtonActions() {
@@ -100,6 +113,14 @@ class UIBuilder {
                 }
             }
         }
+    }
+
+    toggleUseTagOpener(id){
+        const ui = this.getByID(id);
+        if(!ui) return;
+        ui.data.useTagOpener = ui.data.useTagOpener ? false : true;
+        this.db.overwriteDataByID(id, ui.data);
+        return true;
     }
 
     // Tag Management
