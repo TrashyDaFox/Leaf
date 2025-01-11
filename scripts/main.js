@@ -99,6 +99,7 @@ import './commands/moderation.js'
 import './uis/shop/categoryAdmin.js';
 import './uis/basic/itemSelect.js';
 import './uis/help.js'
+import './uis/uiBuilder/list.js'
 import './uis/config/advanced.js'
 import './uis/playerContentManager/editor/root.js';
 import './uis/basic/numberSelector.js';
@@ -107,7 +108,9 @@ import './uis/dailyrewards/claim.js';
 import './uis/dailyrewards/editReward.js';
 import './uis/dailyrewards/root.js'
 import './uis/shop/item.js'
+import './uis/tpa/index.js'
 import './commands/lb.js'
+import './uis/config/supermisc.js'
 import './uis/gifts/add.js'
 import './commands/tpto.js'
 import './uis/playershops/lb.js';
@@ -420,6 +423,9 @@ world.beforeEvents.chatSend.subscribe(e => {
         createMessage(e.sender, e.message);
     }
 })
+// |\---/|
+// | o_o |  "I protect this function from bugs!"
+//  \_^_/
 system.afterEvents.scriptEventReceive.subscribe(e=>{
     if(e.id == "leaf:wtag_add") {
         worldTags.addTag(e.message)

@@ -1,40 +1,68 @@
-
-    // form.title("§t§a§b§b§e§d§r§fTab UIs");
-    // form.button(`§t§a§b§r§f\uE180 UIs`, null, (player)=>{
-    //     uiManager.open(player, config.uiNames.UIBuilderRoot)
-    // })
-    // // form.button(`§t§a§b§r§f${emojis.axolotl_bucket} Presets`, null, (player)=>{
-
 import uiManager from "../uiManager";
 import { ActionForm } from "./form_func";
-
-    // // })
-    // form.button(`§t§a§b§a§c§t§i§v§e§r§f\uE17E Tab UIs`, null, (player)=>{
-    //     uiManager.open(player, config.uiNames.UIBuilderTabbed)
-
-    // })
-    // form.button(`§t§a§b§r§f\uE17F Info`, null, (player)=>{
-    //     uiManager.open(player, config.uiNames.UIBuilderInfo)
-    // })
 
 export class TabUI {
     constructor() {
         this.tabs = [];
+        this.tabsPerPage = 3;
     }
     registerTab(title, fn) {
         this.tabs.push({title, fn})
     }
-    open(player, tab = 0) {
+    open(player, tab = 0, currentPage = Math.floor(tab / this.tabsPerPage)) {
         if(tab < 0) tab = 0;
         if(tab >= this.tabs.length) tab = this.tabs.length - 1;
 
         let form = new ActionForm();
         form.title(`§t§a§b§b§e§d§r§f${this.tabs[tab].title}`);
 
-        for(let i = 0;i < this.tabs.length;i++) {
-            form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player)=>{
-                this.open(player, i)
-            })
+        // Calculate pagination
+        const totalPages = Math.ceil(this.tabs.length / this.tabsPerPage);
+        
+        // If only one page, show all tabs (up to 5)
+        if (totalPages <= 1) {
+            for(let i = 0; i < Math.min(5, this.tabs.length); i++) {
+                form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
+                    this.open(player, i, 0);
+                });
+            }
+        } else {
+            // Show 4 tabs on first page
+            if (currentPage === 0) {
+                for(let i = 0; i < Math.min(4, this.tabs.length); i++) {
+                    form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
+                        this.open(player, i, currentPage);
+                    });
+                }
+                form.button(`§t§a§b§r§f->`, null, (player) => {
+                    this.open(player, tab, currentPage + 1);
+                });
+            }
+            // Show 4 tabs on last page
+            else if (currentPage === totalPages - 1) {
+                form.button(`§t§a§b§r§f<-`, null, (player) => {
+                    this.open(player, tab, currentPage - 1);
+                });
+                for(let i = currentPage * this.tabsPerPage; i < this.tabs.length; i++) {
+                    form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
+                        this.open(player, i, currentPage);
+                    });
+                }
+            }
+            // Show 3 tabs on middle pages
+            else {
+                form.button(`§t§a§b§r§f<-`, null, (player) => {
+                    this.open(player, tab, currentPage - 1);
+                });
+                for(let i = currentPage * this.tabsPerPage; i < currentPage * this.tabsPerPage + 3; i++) {
+                    form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
+                        this.open(player, i, currentPage);
+                    });
+                }
+                form.button(`§t§a§b§r§f->`, null, (player) => {
+                    this.open(player, tab, currentPage + 1);
+                });
+            }
         }
 
         let data = this.tabs[tab].fn(player)
@@ -80,6 +108,109 @@ tabUI.registerTab("Tab 2", (player)=>{
         }
     ]
     return { buttons, body: "Body 2" }
+})
+tabUI.registerTab("Tab 3", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+    return { buttons, body: "Body 2" }
+})
+tabUI.registerTab("Tab 4", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+    return { buttons, body: "Body 2" }
+})
+tabUI.registerTab("Tab 5", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+    return { buttons, body: "Body 2" }
+})
+tabUI.registerTab("Tab 6", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+    return { buttons, body: "Body 2" }
+})
+tabUI.registerTab("Tab 7", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+})
+tabUI.registerTab("Tab 8", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+})
+tabUI.registerTab("Tab 9", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+})
+tabUI.registerTab("Tab 10", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
+})
+tabUI.registerTab("Tab 11", (player)=>{
+    let buttons = [
+        {
+            text: "Emerald >:3",
+            iconPath: "textures/items/emerald",
+            callback(player) {
+                player.sendMessage("haii (part 2)")
+            }
+        }
+    ]
 })
 
 uiManager.addUI("tab_test_2 | Leaf/Tests/Tab/2", "a", (player)=>{

@@ -160,6 +160,12 @@ export default {
             EventsEditCommands: "events_editor_commands | Leaf/Events/Commands/Edit",
             EventsEditCommand: "events_editor_command | Leaf/Events/Command/Edit"
         },
+        UIBuilderList: "ui_builder_list | Leaf/UIBuilder/List",
+        TpaRoot: "tpa_root | Leaf/Tpa/Root",
+        TpaIncoming: "tpa_incoming | Leaf/Tpa/Incoming",
+        TpaOutgoing: "tpa_outgoing | Leaf/Tpa/Outgoing",
+        TpaSend: "tpa_send | Leaf/Tpa/Send",
+        SuperMisc: "super_misc | Leaf/SuperMisc",
         Pay: "pay | Leaf/Pay",
         Basic: {
             Confirmation: "confirmation | Leaf/Basic/Confirmation",

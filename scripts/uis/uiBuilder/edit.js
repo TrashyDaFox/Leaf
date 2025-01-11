@@ -7,6 +7,7 @@ import http from "../../networkingLibs/currentNetworkingLib";
 import uiManager from "../../uiManager";
 
 uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
+    if(id == 1719775088275) return;
     let doc = uiBuilder.db.getByID(id);
     if(!doc) return;
     let actionForm = new ActionForm();

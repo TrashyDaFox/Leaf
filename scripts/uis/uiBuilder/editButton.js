@@ -5,6 +5,7 @@ import { ModalFormData } from '@minecraft/server-ui'
 import uiManager from "../../uiManager";
 
 uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, index) => {
+    if(id == 1719775088275) return;
     let actionForm = new ActionForm();
     let button = uiBuilder.db.getByID(id).data.buttons[index]
     actionForm.button(`§eEdit`, `textures/azalea_icons/ClickyClick`, (player) => {

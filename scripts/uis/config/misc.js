@@ -24,5 +24,8 @@ uiManager.addUI(config.uiNames.Config.Misc, "Misc Config", (player)=>{
     form.button(`§l§dRewards\n§r§7Give players time based rewards`, icons.resolve("Packs/Asteroid/winPING"), (player)=>{
         uiManager.open(player, config.uiNames.DailyRewards.Root, "REWARDS")
     })
+    form.button(`§l§aVERY misc toggles\n§r§7why are these here?`, `textures/items/bucket_lava`, (player)=>{
+        uiManager.open(player, config.uiNames.SuperMisc)
+    })
     form.show(player, false, (player, response)=>{})
 })

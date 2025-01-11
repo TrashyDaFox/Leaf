@@ -28,6 +28,11 @@ const NAVIGATION_BUTTONS = [
         text: `§aAdd\n§r§7Add a UI`,
         icon: `textures/azalea_icons/1`,
         action: (player) => uiManager.open(player, config.uiNames.UIBuilderAdd)
+    },
+    {
+        text: `§t§a§b§r§f\uE186 Leaf UIs`,
+        icon: null,
+        action: (player) => uiManager.open(player, config.uiNames.UIBuilderList)
     }
 ];
 
@@ -67,8 +72,21 @@ uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
             
         form.button(
             `§b${ui.data.name}\n§r§7${emojis.clock} Updated ${moment(ui.updatedAt).fromNow()}${scriptEventInfo}`,
-            ui.data.icon ? icons.resolve(ui.data.icon) : `textures/azalea_icons/ClickyClick`,
-            (player) => uiManager.open(player, config.uiNames.UIBuilderEdit, ui.id)
+            ui.id == 1719775088275 ? `textures/azalea_icons/icontextures/uwu` : ui.data.icon ? icons.resolve(ui.data.icon) : `textures/azalea_icons/ClickyClick`,
+            (player) => {
+                if(ui.id == 1719775088275) {
+                    let form2 = new ActionForm();
+                    form2.title(`Nuh uh`);
+                    form2.body(`Trashy no no want u to edit this because she is a trashy girl :3`);
+                    form2.button("ok", null, (player)=>{
+                        uiManager.open(player, config.uiNames.UIBuilderRoot);
+                    })
+
+                    form2.show(player, false, () => {});
+                } else {
+                    uiManager.open(player, config.uiNames.UIBuilderEdit, ui.id);
+                }
+            }
         );
     });
 

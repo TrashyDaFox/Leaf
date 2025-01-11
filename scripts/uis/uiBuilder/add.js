@@ -6,6 +6,7 @@ import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 
 uiManager.addUI(config.uiNames.UIBuilderAdd, "Add a UI", (player, defaultTitle = undefined, defaultBody = undefined, defaultScriptevent = undefined, error = undefined, id = undefined)=>{
+    if(id == 1719775088275) return;
     let modalForm = new ModalForm();
     modalForm.title(error ? `§c${error}` : translation.getTranslation(player, "uibuilder.createui"))
     modalForm.textField(`${translation.getTranslation(player, "uibuilder.title")}§c*`, translation.getTranslation(player, "uibuilder.titleplaceholder"), defaultTitle);

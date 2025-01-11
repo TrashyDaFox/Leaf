@@ -13,6 +13,7 @@ import uiManager from "../../uiManager";
  * @param {boolean} initial - Whether this is the initial form load
  */
 uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, index = -1, data2, initial = true) => {
+    if(id == 1719775088275) return;
     const form = new ActionForm();
     const ui = uiBuilder.db.getByID(id);
     const data = data2 || {};

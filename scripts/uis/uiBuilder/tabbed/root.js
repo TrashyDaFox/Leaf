@@ -20,7 +20,9 @@ uiManager.addUI(config.uiNames.UIBuilderTabbed, "Tabbed UIs", (player)=>{
     form.button(`§t§a§b§r§f\uE17F Info`, null, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderInfo)
     })
-
+    form.button(`§t§a§b§r§f\uE186 Leaf UIs`, null, (player) => {
+        uiManager.open(player, config.uiNames.UIBuilderList);
+    });
     form.button(`§6Create Tabbed UI\n§7Creates a UI with tabs`, `textures/azalea_icons/1`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderTabbedCreate)
     })

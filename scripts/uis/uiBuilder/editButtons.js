@@ -6,6 +6,7 @@ import { ActionForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 
 uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (player, id)=>{
+    if(id == 1719775088275) return;
     let form = uiBuilder.db.getByID(id);
     let actionForm = new ActionForm();
     let pre = `§r`;

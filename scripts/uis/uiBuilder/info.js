@@ -2,6 +2,7 @@ import config from "../../config";
 import { ActionForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import emojis from '../../api/emojis';
+import uiBuilder from "../../api/uiBuilder";
 
 /**
  * UI Builder Info Screen
@@ -26,6 +27,10 @@ uiManager.addUI(config.uiNames.UIBuilderInfo, "a", (player) => {
         uiManager.open(player, config.uiNames.UIBuilderInfo);
     });
 
+    form.button(`§t§a§b§r§f\uE186 Leaf UIs`, null, (player) => {
+        uiManager.open(player, config.uiNames.UIBuilderList);
+    });
+
     // Info content
     const infoText = [
         "§eLeaf Essentials UI Builder",
@@ -34,8 +39,25 @@ uiManager.addUI(config.uiNames.UIBuilderInfo, "a", (player) => {
         "§fVersion: §a2.0",
         "",
         "§bMade by TheLegendaryTrashcan"
-    ].join("\n");
+    ];
 
-    form.body(infoText);
+    if(uiBuilder.db.data.length > 0){
+        infoText.push("");
+        infoText.push("§b----- Debug Info -----");
+        infoText.push("");
+        infoText.push("§fUIs: §a" + uiBuilder.db.data.length);
+        infoText.push("");
+        infoText.push("§b----- UI IDs (debug) -----");
+        for(const ui of uiBuilder.db.data){
+            if(ui.data.type !== 0) continue;
+            infoText.push(`§f${ui.data.name} §r§7: §a${ui.id}`);
+        }
+    }
+
+    form.button("§aRaw UI Data", null, (player)=>{
+        uiManager.open(player, config.uiNames.RawUIData);
+    })
+
+    form.body(infoText.join("\n§r§f"));
     form.show(player, false);
 });
