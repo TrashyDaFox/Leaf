@@ -1,39 +1,28 @@
-import uiManager from '../../../uiManager';
-import config from '../../../config';
-import { ActionForm } from "../../../lib/form_func";
-import emojis from '../../../api/emojis'
-import uiBuilder from '../../../api/uiBuilder';
+import { builderTabUI } from '../root';
+import uiBuilder from "../../../api/uiBuilder";
+import config from "../../../config";
+import uiManager from "../../../uiManager";
 
-uiManager.addUI(config.uiNames.UIBuilderTabbed, "Tabbed UIs", (player)=>{
-    let form = new ActionForm();
-    form.title("§t§a§b§b§e§d§r§fTab UIs");
-    form.button(`§t§a§b§r§f\uE180 UIs`, null, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderRoot)
-    })
-    // form.button(`§t§a§b§r§f${emojis.axolotl_bucket} Presets`, null, (player)=>{
+builderTabUI.registerTab("\uE17E Tab UIs", (player) => {
+    const buttons = [{
+        text: `§6Create Tabbed UI\n§7Creates a UI with tabs`,
+        iconPath: `textures/azalea_icons/1`,
+        callback: (player) => {
+            uiManager.open(player, config.uiNames.UIBuilderTabbedCreate);
+        }
+    }];
 
-    // })
-    form.button(`§t§a§b§a§c§t§i§v§e§r§f\uE17E Tab UIs`, null, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderTabbed)
-
-    })
-    form.button(`§t§a§b§r§f\uE17F Info`, null, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderInfo)
-    })
-    form.button(`§t§a§b§r§f\uE186 Leaf UIs`, null, (player) => {
-        uiManager.open(player, config.uiNames.UIBuilderList);
-    });
-    form.button(`§6Create Tabbed UI\n§7Creates a UI with tabs`, `textures/azalea_icons/1`, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderTabbedCreate)
-    })
-    form.body(`§bTIP: To open tab UIs, do §e/scriptevent leaf:open_tabbed <tab ui>\n§r§dExample: §a/scriptevent leaf:open_tabbed server_ui`)
-    // form.button(`§dGuide\n§7Learn how to use this`, `textures/azalea_icons/AdvancedGUIs`, (player)=>{
-
-    // })
     for(const tabUI of uiBuilder.getTabbedUIs()) {
-        form.button(`§a${tabUI.data.title}\n§7${tabUI.data.tabs.length} Tab(s)`, null, (player)=>{
-            uiManager.open(player, config.uiNames.UIBuilderTabbedEdit, tabUI.id)
-        })
+        buttons.push({
+            text: `§a${tabUI.data.title}\n§7${tabUI.data.tabs.length} Tab(s)`,
+            callback: (player) => {
+                uiManager.open(player, config.uiNames.UIBuilderTabbedEdit, tabUI.id);
+            }
+        });
     }
-    form.show(player, false, ()=>{})
-})
+
+    return {
+        buttons,
+        body: "§bTIP: To open tab UIs, do §e/scriptevent leaf:open_tabbed <tab ui>"
+    };
+});

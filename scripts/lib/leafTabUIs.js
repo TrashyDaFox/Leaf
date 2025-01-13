@@ -19,9 +19,9 @@ export class TabUI {
         // Calculate pagination
         const totalPages = Math.ceil(this.tabs.length / this.tabsPerPage);
         
-        // If only one page, show all tabs (up to 5)
-        if (totalPages <= 1) {
-            for(let i = 0; i < Math.min(5, this.tabs.length); i++) {
+        // If less than or equal to 5 tabs, show all on one page
+        if (this.tabs.length <= 5) {
+            for(let i = 0; i < this.tabs.length; i++) {
                 form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
                     this.open(player, i, 0);
                 });
@@ -29,7 +29,7 @@ export class TabUI {
         } else {
             // Show 4 tabs on first page
             if (currentPage === 0) {
-                for(let i = 0; i < Math.min(4, this.tabs.length); i++) {
+                for(let i = 0; i < 4; i++) {
                     form.button(`§t§a§b${i == tab ? "§a§c§t§i§v§e" : ""}§r§f${this.tabs[i].title}`, null, (player) => {
                         this.open(player, i, currentPage);
                     });

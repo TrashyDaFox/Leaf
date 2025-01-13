@@ -25,6 +25,28 @@ class UIBuilder {
         this.initializeVersionControl();
     }
 
+    setPinned(id, value){
+        if(typeof value !== "boolean") return;
+        const ui = this.getByID(id);
+        if(!ui) return;
+        ui.data.pinned = value;
+        this.db.overwriteDataByID(id, ui.data);
+    }
+
+    lockUI(id) {
+        const ui = this.getByID(id);
+        if(!ui) return;
+        ui.data.locked = true;
+        this.db.overwriteDataByID(id, ui.data);
+    }
+
+    unlockUI(id) {
+        const ui = this.getByID(id);
+        if(!ui) return;
+        ui.data.locked = false;
+        this.db.overwriteDataByID(id, ui.data);
+    }
+
     initializeDatabases() {
         this.db = prismarineDb.table(config.tableNames.uis);
         this.uiState = this.db.keyval("state");
@@ -85,6 +107,7 @@ class UIBuilder {
         system.afterEvents.scriptEventReceive.subscribe(e => {
             if (e.sourceType === ScriptEventSource.Entity && e.id === config.scripteventNames.open) {
                 const ui = this.db.findFirst({ scriptevent: e.message });
+                if(ui && ui.data.locked) return;
                 ui && this.open(ui.id, e.sourceEntity);
             }
         });
@@ -95,8 +118,9 @@ class UIBuilder {
                     if(!ui.data.useTagOpener) continue;
                     for(const player of world.getPlayers()){
                     if(player.hasTag(ui.data.scriptevent)){
-                        this.open(ui.id, player);
                         player.removeTag(ui.data.scriptevent);
+                        if(ui && ui.data.locked) return;
+                        this.open(ui.id, player);
                     }
                 }
             }
@@ -357,7 +381,19 @@ class UIBuilder {
 
         return dependencies;
     }
-
+    duplicateUI(id){
+        const ui = this.getByID(id);
+        if(!ui) return;
+        let data = JSON.parse(JSON.stringify(ui.data));
+        let i = 2;
+        while(this.db.findFirst({scriptevent: `${data.scriptevent}~${i}`})){
+            i++;
+        }
+        data.scriptevent = `${data.scriptevent}~${i}`;
+        return this.db.insertDocument(data);
+    }
+    // superscript 2: ²ww
+    // circle symbol: ⚫
     // Batch update buttons
     batchUpdateButtons(id, updates) {
         const ui = this.getByID(id);

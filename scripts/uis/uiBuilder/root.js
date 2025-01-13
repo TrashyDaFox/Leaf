@@ -1,56 +1,62 @@
-import { system, world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import icons from "../../api/icons";
 import uiBuilder from "../../api/uiBuilder";
 import config from "../../config";
-import { ActionForm } from "../../lib/form_func";
 import http from "../../networkingLibs/currentNetworkingLib";
 import uiManager from "../../uiManager";
 import moment from '../../lib/moment';
 import emojis from '../../api/emojis';
+import tabUI from "../../api/tabUI";
+import { ActionForm, ModalForm } from "../../lib/form_func";
 
-const NAVIGATION_BUTTONS = [
-    {
-        text: `§t§a§b§a§c§t§i§v§e§r§f\uE180 UIs`,
-        icon: null,
-        action: (player) => uiManager.open(player, config.uiNames.UIBuilderRoot)
-    },
-    {
-        text: `§t§a§b§r§f\uE17E Tab UIs`,
-        icon: null,
-        action: (player) => uiManager.open(player, config.uiNames.UIBuilderTabbed)
-    },
-    {
-        text: `§t§a§b§r§f\uE17F Info`,
-        icon: null,
-        action: (player) => uiManager.open(player, config.uiNames.UIBuilderInfo)
-    },
-    {
-        text: `§aAdd\n§r§7Add a UI`,
-        icon: `textures/azalea_icons/1`,
-        action: (player) => uiManager.open(player, config.uiNames.UIBuilderAdd)
-    },
-    {
-        text: `§t§a§b§r§f\uE186 Leaf UIs`,
-        icon: null,
-        action: (player) => uiManager.open(player, config.uiNames.UIBuilderList)
+// Create a tab UI for the builder
+const builderTabUI = tabUI.create("uiBuilder");
+uiManager.addUI(config.uiNames.UIBuilderFolders, "UI Builder Folders", (player) => {
+    let form = new ActionForm();
+    form.title(`UI Builder Folders`);
+    form.body(`Manage your folders here`);
+    form.button(`§aCreate Folder\n§r§7Create a new folder`, null, (player)=>{
+        let modalForm = new ModalForm();
+        modalForm.title(`Create Folder`);
+        modalForm.body(`Enter the name of the folder`);
+        modalForm.button(`§aCreate\n§r§7Create the folder`, null, (player, response)=>{
+            if(response.canceled || !response.formValues[0]) return uiManager.open(player, config.uiNames.UIBuilderFolders);
+             uiBuilder.db.createFolder(player, response.formValues[0]) ;
+             uiManager.open(player, config.uiNames.UIBuilderFolders);
+         })
+        modalForm.show(player, false, ()  => {});
+    })
+    for(const folder of uiBuilder.db.getFolders()) {
+        form.button(`${folder}`, null, (player)=>{
+            
+        })
     }
-];
+    form.show(player, false, () => {});
+});
+// Main UIs tab
+builderTabUI.registerTab("\uE180 UIs", (player) => {
+    const buttons = [{
+        text: `§aAdd\n§r§7Add a UI`,
+        iconPath: `textures/azalea_icons/1`,
+        callback: (player) => {
+            uiManager.open(player, config.uiNames.UIBuilderAdd);
+        }
+    }];
 
-uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
-    const form = new ActionForm();
-    form.title("§t§a§b§b§e§d§r§fUIs");
-
-    // Add navigation buttons
-    NAVIGATION_BUTTONS.forEach(button => {
-        form.button(button.text, button.icon, button.action);
+    buttons.push({
+        text: `§aFolders\n§r§7Manage folders`,
+        iconPath: `textures/azalea_icons/1`,
+        callback: (player) => {
+            uiManager.open(player, config.uiNames.UIBuilderFolders);
+        }
     });
-
+    
     // Add browse button if http player is available
     if (http.player) {
-        form.button(
-            `§aBrowse\n§r§7Browse global GUIs`, 
-            icons.resolve("leaf/image-806"), 
-            (player) => {
+        buttons.push({
+            text: `§aBrowse\n§r§7Browse global GUIs`,
+            iconPath: icons.resolve("leaf/image-806"),
+            callback: (player) => {
                 http.makeRequest({
                     method: 'get',
                     url: `${config.Endpoint}/guis/list`
@@ -60,9 +66,9 @@ uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
                     });
                 });
             }
-        );
+        });
     }
-
+    
     // Add UI list buttons
     const sortedUIs = uiBuilder.getUIs().sort((a, b) => b.updatedAt - a.updatedAt);
     sortedUIs.forEach(ui => {
@@ -70,10 +76,10 @@ uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
             ? ` §f| §7${emojis.chat} ${ui.data.scriptevent}` 
             : '';
             
-        form.button(
-            `§b${ui.data.name}\n§r§7${emojis.clock} Updated ${moment(ui.updatedAt).fromNow()}${scriptEventInfo}`,
-            ui.id == 1719775088275 ? `textures/azalea_icons/icontextures/uwu` : ui.data.icon ? icons.resolve(ui.data.icon) : `textures/azalea_icons/ClickyClick`,
-            (player) => {
+        buttons.push({
+            text: `§b${ui.data.name}\n§r§7${emojis.clock} Updated ${moment(ui.updatedAt).fromNow()}${scriptEventInfo}`,
+            iconPath: ui.id == 1719775088275 ? `textures/azalea_icons/icontextures/uwu` : ui.data.icon ? icons.resolve(ui.data.icon) : `textures/azalea_icons/ClickyClick`,
+            callback: (player) => {
                 if(ui.id == 1719775088275) {
                     let form2 = new ActionForm();
                     form2.title(`Nuh uh`);
@@ -81,14 +87,22 @@ uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
                     form2.button("ok", null, (player)=>{
                         uiManager.open(player, config.uiNames.UIBuilderRoot);
                     })
-
                     form2.show(player, false, () => {});
                 } else {
                     uiManager.open(player, config.uiNames.UIBuilderEdit, ui.id);
                 }
             }
-        );
+        });
     });
 
-    form.show(player, false, () => {});
+    return {
+        buttons
+    };
 });
+
+// Update the UI registration to use the tab UI
+uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
+    builderTabUI.open(player);
+});
+
+export { builderTabUI };

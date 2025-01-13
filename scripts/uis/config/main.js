@@ -31,7 +31,9 @@ uiManager.addUI(config.uiNames.ConfigMain, "Config Main", (player)=>{
         uiManager.open(player, config.uiNames.CustomCommands.root)
     })
 
-
+    form.button(`§l§dRTP\n§r§7Configure RTP`, icons.resolve("azalea/nether_star"), (player)=>{
+        uiManager.open(player, config.uiNames.Config.RTP)
+    })
 
 
 

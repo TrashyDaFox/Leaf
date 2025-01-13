@@ -121,6 +121,8 @@ import './uis/RoleEditor/root.js';
 import './uis/RoleEditor/edit.js';
 import './uis/RoleEditor/add.js';
 import './uis/gifts/root.js'
+import './commands/rtp.js'
+import './uis/config/rtp/rtpConfigRoot.js'
 import './uis/shop/category.js';
 import './commands/clan.js'
 import { createLandClaim, isOwner, vec3ToChunkCoordinates } from './landClaims.js';
@@ -138,7 +140,11 @@ import actionParser from './api/actionParser.js';
 import { ActionForm } from './lib/form_func.js';
 import { worldTags } from './worldTags.js';
 import { TabUI } from './lib/leafTabUIs.js';
-
+uiManager.addUI("abcdefghijklmnopqrstuvwxyz", "test", (player)=>{
+    let block2 = player.dimension.getBlock(player.location);
+    let block = block2.below();
+    world.sendMessage(block.getRedstonePower().toString())
+})
 Player.prototype.info = function (msg) {
     this.sendMessage(translation.getTranslation(this, "info", msg));
 }

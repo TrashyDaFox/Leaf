@@ -1,3 +1,4 @@
+import { ButtonState, InputButton, system, world } from "@minecraft/server";
 import configAPI from "../../api/config/configAPI";
 import emojis from "../../api/emojis";
 import icons from "../../api/icons";
@@ -7,7 +8,13 @@ import { prismarineDb } from "../../lib/prismarinedb";
 import http from "../../networkingLibs/currentNetworkingLib";
 import uiManager from "../../uiManager";
 export let targetLeafDBVersion = 11.0
-
+// system.runInterval(()=>{
+//     for(const player of world.getPlayers()) {
+//         if(player.inputInfo.getButtonState(InputButton.Jump) == ButtonState.Pressed) {
+//             world.sendMessage(`${player.name} is pressing jump`);
+//         }
+//     }
+// },1);
 uiManager.addUI(config.uiNames.ConfigRoot, "Config Root", (player)=>{
     let actionForm = new ActionForm();
     let body = [];

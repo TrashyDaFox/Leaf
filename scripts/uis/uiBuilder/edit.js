@@ -15,10 +15,10 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
     actionForm.button(`§6Back\n§7Go back`, icons.resolve(`leaf/image-1031`), (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderRoot);
     })
-    actionForm.button(`§eEdit Buttons\n§7Move, edit, and remove buttons`, `textures/azalea_icons/ClickyClick`, (player)=>{
+    actionForm.button(`§aEdit Buttons\n§7Move, edit, and remove buttons`, `textures/azalea_icons/ClickyClick`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
     });
-    actionForm.button(`§eEdit Form\n§7Edit form name, and more`, `textures/azalea_icons/GUIMaker/FormsV2`, (player)=>{
+    actionForm.button(`§dEdit Form\n§7Edit form name, and more`, `textures/azalea_icons/GUIMaker/FormsV2`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderAdd, doc.data.name, doc.data.body, doc.data.scriptevent, undefined, doc.id);
     });
     actionForm.button(`§nExport\n§7Get the code for this UI`, icons.resolve(`leaf/image-1183`), (player)=>{
@@ -27,14 +27,18 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
         modal.textField("Code", "Code", JSON.stringify(doc.data, null, 2));
         modal.show(player, false, ()=>{})
     })
-    actionForm.button(`§eSet icon\n§7Set icon for this UI`, doc.data.icon ? icons.resolve(doc.data.icon) : `textures/azalea_icons/ClickyClick`, (player)=>{
+    actionForm.button(`§uSet icon\n§7Set icon for this UI`, doc.data.icon ? icons.resolve(doc.data.icon) : `textures/azalea_icons/ClickyClick`, (player)=>{
         uiManager.open(player, config.uiNames.IconViewer, 0, (player, iconID)=>{
             doc.data.icon = iconID;
             uiBuilder.db.overwriteDataByID(doc.id, doc.data);
             return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         });
     })
-    actionForm.button(`§eTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? icons.resolve("azalea/name_tag") : icons.resolve("azalea/wand_01"), (player)=>{
+    actionForm.button(`§3Duplicate\n§7Duplicate this UI`, null, (player)=>{
+        uiBuilder.duplicateUI(id);
+        return uiManager.open(player, config.uiNames.UIBuilderRoot);
+    })
+    actionForm.button(`§bTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? icons.resolve("azalea/name_tag") : icons.resolve("azalea/wand_01"), (player)=>{
         uiBuilder.toggleUseTagOpener(id);
         return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
     })

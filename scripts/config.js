@@ -69,6 +69,7 @@ export default {
         Leaf: "leaf | Leaf",
         Config: {
             Clans: "clans_config | Leaf/Config/Clans",
+            RTP: "rtp_config | Leaf/Config/RTP",
             Modules: "modules_config | Leaf/Config/Modules",
             Misc: "misc_config | Leaf/Config/Misc",
             ChatrankFormat: "chatformat_config | Leaf/Config/Misc/Chatrankformat",
@@ -161,6 +162,7 @@ export default {
             EventsEditCommand: "events_editor_command | Leaf/Events/Command/Edit"
         },
         UIBuilderList: "ui_builder_list | Leaf/UIBuilder/List",
+        UIBuilderFolders: "ui_builder_folders | Leaf/UIBuilder/Folders",
         TpaRoot: "tpa_root | Leaf/Tpa/Root",
         TpaIncoming: "tpa_incoming | Leaf/Tpa/Incoming",
         TpaOutgoing: "tpa_outgoing | Leaf/Tpa/Outgoing",
