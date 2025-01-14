@@ -163,6 +163,7 @@ export default {
         },
         UIBuilderList: "ui_builder_list | Leaf/UIBuilder/List",
         UIBuilderFolders: "ui_builder_folders | Leaf/UIBuilder/Folders",
+        UIBuilderFoldersView: "ui_builder_folders_view | Leaf/UIBuilder/Folders/View",
         TpaRoot: "tpa_root | Leaf/Tpa/Root",
         TpaIncoming: "tpa_incoming | Leaf/Tpa/Incoming",
         TpaOutgoing: "tpa_outgoing | Leaf/Tpa/Outgoing",

@@ -34,8 +34,12 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         });
     })
-    actionForm.button(`§3Duplicate\n§7Duplicate this UI`, null, (player)=>{
+    actionForm.button(`§3Duplicate\n§7Duplicate this UI`, `textures/azalea_icons/AddItem`, (player)=>{
         uiBuilder.duplicateUI(id);
+        return uiManager.open(player, config.uiNames.UIBuilderRoot);
+    })
+    actionForm.button(`§2${doc.data.pinned ? "Unpin" : "Pin"} UI\n§7${doc.data.pinned ? "Unpin" : "Pin"} this UI`, `textures/azalea_icons/10`, (player)=>{
+        uiBuilder.setPinned(id, !doc.data.pinned);
         return uiManager.open(player, config.uiNames.UIBuilderRoot);
     })
     actionForm.button(`§bTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? icons.resolve("azalea/name_tag") : icons.resolve("azalea/wand_01"), (player)=>{
