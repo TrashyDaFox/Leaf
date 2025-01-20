@@ -26,6 +26,7 @@ world.beforeEvents.playerInteractWithEntity.subscribe(e=>{
 
         })
     }
+    if(e.itemStack && (e.itemStack.typeId == "leaf:entity_editor" || e.itemStack.typeId == "leaf:block_editor")) return;
     let command = "";
     try {
         command = e.target.getDynamicProperty('interact');

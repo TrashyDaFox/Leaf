@@ -7,6 +7,7 @@ import uiManager from "../../uiManager";
 uiManager.addUI(config.uiNames.Shop.RootAdmin, "Shop Root (Admin)", (player, id = shopAPI.getDefaultShop().id)=>{
     let shop = shopAPI.shops.getByID(id);
     let form = new ActionForm();
+    form.body(`Shop ID: ${id}`)
     form.button(`§cBack\n§7Go back`, `textures/blocks/barrier`, (player)=>{
         uiManager.open(player, config.uiNames.Shop.Root, id);
     })

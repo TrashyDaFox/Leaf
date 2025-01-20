@@ -33,6 +33,7 @@ class ConfigAPI {
         this.db.save();
         return id;
     }
+
     setProperty(property, value) {
         if(!this.propertiesRegistered[property]) return;
         let id = this.#getPropertyStorageID();

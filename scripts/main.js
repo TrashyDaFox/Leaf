@@ -1,4 +1,4 @@
-import { world, system, ScriptEventSource, Player } from '@minecraft/server';
+import { world, system, ScriptEventSource, Player, Block } from '@minecraft/server';
 import './commands/broadcast.js'
 import uiManager from './uiManager.js';
 import config from './config';
@@ -8,6 +8,7 @@ import './test'
 import './uis/clans/root.js'
 import './uis/clans/create.js'
 import './uis/CustomCommands/root.js'
+import './commands/pwarp.js'
 import './uis/clans/invite.js';
 import './uis/actions/root.js'
 import './uis/homes/root.js'
@@ -119,12 +120,14 @@ import './uis/gifts/redeem.js';
 import './uis/events/root.js'
 import './uis/RoleEditor/root.js';
 import './uis/RoleEditor/edit.js';
+import './uis/leaderboards/index.js'
 import './uis/RoleEditor/add.js';
 import './uis/gifts/root.js'
 import './commands/rtp.js'
 import './uis/config/rtp/rtpConfigRoot.js'
 import './uis/shop/category.js';
 import './commands/clan.js'
+import './features/graves.js'
 import { createLandClaim, isOwner, vec3ToChunkCoordinates } from './landClaims.js';
 import { SegmentedStoragePrismarine } from './prismarineDbStorages/segmented.js';
 import OpenClanAPI from './api/OpenClanAPI.js';
@@ -137,9 +140,48 @@ import hardCodedRanks from './api/hardCodedRanks.js';
 import configAPI from './api/config/configAPI.js';
 import uiBuilder from './api/uiBuilder.js';
 import actionParser from './api/actionParser.js';
-import { ActionForm } from './lib/form_func.js';
+import { ActionForm, ModalForm } from './lib/form_func.js';
 import { worldTags } from './worldTags.js';
 import { TabUI } from './lib/leafTabUIs.js';
+import beforeChat from './beforeChat.js';
+let blockTests = [
+    {
+        name: "Property Test (SET)",
+        use(block, player) {
+            if(!(block instanceof Block)) return;
+            let modal = new ModalForm();
+            modal.textField("Set Value", "Val", block.permutation.getState('leaf:test') ?? undefined)
+            modal.show(player, false, (player, response)=>{
+                if(response.canceled) return;
+                block.setPermutation(block.permutation.withState('leaf:test', response.formValues[0]))
+                world.sendMessage("Set value!")
+            })
+        }
+    },
+    {
+        name: "Property Test (GET)",
+        use(block, player) {
+            if(!(block instanceof Block)) return;
+            world.sendMessage(`${block.permutation.getState('leaf:test')}`)
+        }
+    }
+]
+world.beforeEvents.playerInteractWithBlock.subscribe(e=>{
+    if(!e.isFirstEvent) return;
+    if(!e.itemStack || e.itemStack.typeId != "leaf:block_devtool") return;
+    if(!e.player.hasTag("dev")) return e.player.error("You must have dev tag");
+    if(!e.isFirstEvent) return;
+    system.run(()=>{
+        let form = new ActionForm();
+        form.title("Block Dev Tool");
+        for(const test of blockTests) {
+            form.button(test.name, null, (player)=>{
+                test.use(e.block, player)
+            })
+        }
+        form.show(e.player, false, ()=>{})
+    })
+})
 uiManager.addUI("abcdefghijklmnopqrstuvwxyz", "test", (player)=>{
     let block2 = player.dimension.getBlock(player.location);
     let block = block2.below();
@@ -374,6 +416,13 @@ function betterArgs(myString) {
 }
 
 system.afterEvents.scriptEventReceive.subscribe(e => {
+    if(e.id == "leaf:speak_as" && e.sourceType == ScriptEventSource.Entity) {
+        beforeChat({
+            message: e.message,
+            sender: e.sourceEntity,
+            cancel: false
+        })
+    }
     if (
         e.id == config.scripteventNames.openDefaultLegacy &&
         e.sourceType == ScriptEventSource.Entity &&
@@ -411,23 +460,7 @@ OpenClanAPI.onClanMessage((player2, clanID, message) => {
     }
 })
 world.beforeEvents.chatSend.subscribe(e => {
-    if (e.message.startsWith('!')) {
-        e.cancel = true;
-        commandManager.run(e)
-        return;
-    }
-    if (configAPI.getProperty("Chatranks")) {
-        e.cancel = true;
-        if (e.message.startsWith('.') && config.HTTPEnabled) return;
-        if (e.sender.hasTag("clan-chat")) {
-            let clan = OpenClanAPI.getClan(e.sender)
-            if (clan) {
-                OpenClanAPI.clanSendMessage(e.sender, clan.id, e.message);
-                return;
-            }
-        }
-        createMessage(e.sender, e.message);
-    }
+    beforeChat(e)
 })
 // |\---/|
 // | o_o |  "I protect this function from bugs!"

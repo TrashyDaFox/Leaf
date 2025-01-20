@@ -12,6 +12,7 @@ function parseItemID(id) {
 uiManager.addUI(config.uiNames.Shop.CategoryAdmin, "Category Admin", (player, shopID, categoryID)=>{
     let shop = shopAPI.shops.getByID(shopID);
     let form = new ActionForm();
+    form.body(`Category ID: ${categoryID}\nShop ID: ${shopID}`)
     form.button("§cBack\n§7Go back", `textures/blocks/barrier`, (player)=>{
         uiManager.open(player, config.uiNames.Shop.RootAdmin, shopID);
     })

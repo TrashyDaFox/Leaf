@@ -2,6 +2,7 @@ import commandManager from '../api/commands/commandManager'
 import { system } from '@minecraft/server'
 import config from '../config'
 import uiManager from '../uiManager'
+import './tpa'
 
 commandManager.addCommand("report", { description: "Report Players or Bugs", author: "FruitKitty", category: "Players" }, ({ msg, args }) => {
     msg.sender.success("Close chat and move to open UI");

@@ -17,12 +17,13 @@ commandManager.addSubcommand("lb", "remove", { description: "Remove a leaderboar
     for (const doc of leaderboardHandler.db.data) {
         if (doc.data.objective == args[0]) {
             leaderboardHandler.db.deleteDocumentByID(doc.id)
-            let entities = world.getDimension(doc.data.dimension ? doc.data.dimension : "overworld").getEntities({ type: 'leaf:floating_text', tags: [`lbid${doc.id}`] });
+            let entities = world.getDimension(doc.data.dimension ? doc.data.dimension : "overworld").getEntities({ type: 'leaf:floating_text', tags: [`lbid:${doc.id}`] });
             if (entities && entities.length) {
                 for (const entity of entities) {
                     entity.remove();
                 }
             }
+            leaderboardHandler.db.deleteDocumentByID(doc.id)
         }
     }
     msg.sender.success('removed leaderboards')

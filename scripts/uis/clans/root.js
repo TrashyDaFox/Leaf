@@ -5,8 +5,10 @@ import icons from '../../api/icons';
 import OpenClanAPI from "../../api/OpenClanAPI";
 import playerStorage from "../../api/playerStorage";
 import configAPI from "../../api/config/configAPI";
+
 uiManager.addUI(config.uiNames.Clans.Root, "Clans Root", (player)=>{
     if(!configAPI.getProperty("Clans")) return player.sendMessage("Clans are not enabled");
+    let clanBaseEnabled = configAPI.getProperty("clans:enable_clan_base");
     let form = new ActionForm();
     let clan = OpenClanAPI.getClan(player);
     form.button(`§dClan Invites\n§7View invites to clans`, `textures/amethyst_icons/Utilities/envelope`, (player)=>{
@@ -26,19 +28,21 @@ uiManager.addUI(config.uiNames.Clans.Root, "Clans Root", (player)=>{
         form.button(`§eClan Members\n§7Clan members`, icons.resolve(`leaf/image-483`), (player)=>{
             uiManager.open(player, config.uiNames.Clans.ClanMembers, clan.id)
         })
-
+    
         if(isClanOwner) {
             form.button(`§dInvite to clan\n§7Invite people to your clan`, icons.resolve(`leaf/image-517`), (player)=>{
                 uiManager.open(player, config.uiNames.Clans.Invite, clan.id)
             })
-            form.button(`§aSet clan base\n§7Set the clan base`, icons.resolve(`leaf/image-480`), (player)=>{
-                player.success(`Set clan base to §bX: ${Math.floor(player.location.x)}, Y: ${Math.floor(player.location.y)}, Z: ${Math.floor(player.location.z)}`)
-                player.playSound("note.pling");
-                uiManager.open(player, config.uiNames.Clans.Root)
-                OpenClanAPI.setClanBase(clan.id, player.location)
-            })
+            if(clanBaseEnabled) {
+                form.button(`§aSet clan base\n§7Set the clan base`, icons.resolve(`leaf/image-480`), (player)=>{
+                    player.success(`Set clan base to §bX: ${Math.floor(player.location.x)}, Y: ${Math.floor(player.location.y)}, Z: ${Math.floor(player.location.z)}`)
+                    player.playSound("note.pling");
+                    uiManager.open(player, config.uiNames.Clans.Root)
+                    OpenClanAPI.setClanBase(clan.id, player.location)
+                })    
+            }
         }
-        if(clan.data.settings.clanBase) {
+        if(clan.data.settings.clanBase && clanBaseEnabled) {
             form.button(`§6Go to clan base\n§7Teleport to the clan base`, icons.resolve(`leaf/image-521`), (player)=>{
                 player.teleport(clan.data.settings.clanBase)
                 player.playSound("mob.shulker.teleport")

@@ -14,7 +14,7 @@ const builderTabUI = tabUI.create("uiBuilder");
 let folderColors = [
     {
         name: "White",
-        texturePath: "textures/folders/white"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder White"
     },
     {
         name: "Rainbow",
@@ -22,63 +22,63 @@ let folderColors = [
     },
     {
         name: "Light Gray",
-        texturePath: "textures/folders/light-gray"
+        texturePath: "textures/update_pings_icons/ui-builder/folder2"
     },
     {
         name: "Dark Gray",
-        texturePath: "textures/folders/dark-gray"
+        texturePath: "textures/update_pings_icons/ui-builder/folder3"
     },
     {
         name: "Black",
-        texturePath: "textures/folders/black"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder Black"
     },
     {
         name: "Brown",
-        texturePath: "textures/folders/brown"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder Brown"
     },
     {
         name: "Red",
-        texturePath: "textures/folders/red"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder Rd"
     },
     {
         name: "Green",
-        texturePath: "textures/folders/green"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder datk green"
     },
     {
         name: "Blue",
-        texturePath: "textures/folders/blue"
+        texturePath: "textures/update_pings_icons/ui-builder/FolderDarkBlue"
     },
     {
         name: "Yellow",
-        texturePath: "textures/folders/yellow"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder Yellow"
     },
     {
         name: "Orange",
-        texturePath: "textures/folders/orange"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder ornage"
     },
     {
         name: "Pink",
-        texturePath: "textures/folders/pink"
+        texturePath: "textures/update_pings_icons/ui-builder/FolderPink"
     },
     {
         name: "Purple",
-        texturePath: "textures/folders/purple"
+        texturePath: "textures/update_pings_icons/ui-builder/FolderPurple"
     },
     {
         name: "Light Blue",
-        texturePath: "textures/folders/light-blue"
+        texturePath: "textures/update_pings_icons/ui-builder/FolderCyan"
     },
     {
         name: "Cyan",
-        texturePath: "textures/folders/cyan"
+        texturePath: "textures/update_pings_icons/ui-builder/Folder Blue"
     },
     {
         name: "Magenta",
-        texturePath: "textures/folders/magenta"
+        texturePath: "textures/update_pings_icons/ui-builder/FolderPinker"
     },
     {
         name: "Lime",
-        texturePath: "textures/folders/lime"
+        texturePath: "textures/update_pings_icons/ui-builder/folder lime green"
     }
 ]
 
@@ -244,6 +244,25 @@ builderTabUI.registerTab("\uE180 UIs", (player) => {
                 }
             }
         });
+    });
+
+    buttons.push({
+        text: `§aImport\n§r§7Import a UI`,
+        iconPath: `textures/azalea_icons/2`,
+        callback: (player) => {
+            let modal = new ModalForm();
+            modal.title("Code Editor");
+            modal.textField("Code", "Code");
+            modal.show(player, false, (player, response) => {
+                try {
+                    uiBuilder.importUI(JSON.parse(response.formValues[0]));
+                    uiManager.open(player, config.uiNames.UIBuilderRoot);
+                } catch {
+                    player.error("Failed to import UI");
+                    uiManager.open(player, config.uiNames.UIBuilderRoot);
+                }
+            });
+        }
     });
 
     return {

@@ -25,6 +25,27 @@ class LeaderboardHandler {
         system.runInterval(()=>{
             this.updateLeaderboards();
         },30);
+
+        this.themes = [
+            {
+                header: "§b",
+                headerSurroundings: "§8",
+                num: "§e",
+                player: "§a",
+                score: "§7",
+                scoreSurroundings: "§f",
+                name: "Default"
+            },
+            {
+                header: "§e",
+                headerSurroundings: "§8",
+                player: "§d",
+                score: "§5",
+                scoreSurroundings: "§a",
+                num: "§6",
+                name: "Purple"
+            }
+        ]
     }
     addLeaderboard(objective, vec3, dimension = "overworld") {
         this.db.insertDocument({
@@ -73,14 +94,16 @@ class LeaderboardHandler {
             //     this.db.overwriteDataByID(lb.id, lb.data);
             // }
             try {
+                let curnc = lb.data.disableCurrency ? null : prismarineDb.economy.getCurrency(lb.data.objective);
                 let dimension = world.getDimension(lb.data.dimension ? lb.data.dimension : "overworld")
                 let entities = dimension.getEntities({
                     tags: [`lbid:${lb.id}`],
                     type: "leaf:floating_text"
                 });
-                let lbText = [`§8-=-=-=-=- §r§b§l${lb.data.displayName ? lb.data.displayName : lb.data.objective} §r§8-=-=-=-=-`];
+                let lbText = [`${this.themes[lb.data.theme].headerSurroundings}-=-=-=-=- ${curnc ? `${curnc.symbol} ` : ""}§r${this.themes[lb.data.theme].header}§l${lb.data.displayName ? lb.data.displayName : lb.data.objective}${curnc ? ` ${curnc.symbol}` : ""} §r${this.themes[lb.data.theme].headerSurroundings}-=-=-=-=-`];
                 let scores = [];
                 for(const player of playerStorage.keyval.keys()) {
+                    if(!lb.data.showOffline && !world.getPlayers().find(_=>playerStorage.getID(_))) continue;
                     let playerData = playerStorage.keyval.get(player);
                     let score = playerData.scores.find(_=>_.objective == lb.data.objective);
                     if(score) {
@@ -91,11 +114,24 @@ class LeaderboardHandler {
                 }
                 scores = scores.sort((a,b)=>b.score - a.score);
                 let num = 0;
-                let limit = lb.data.limit ? lb.data.limit : 10;
+                let limit = lb.data.maxPlayers ? lb.data.maxPlayers : 10;
                 scores = scores.slice(0, limit)
                 for(const score of scores) {
                     num++;
-                    lbText.push(`§e${num}§7. §a${score.playerData.name}§r§f: §7${abbrNum(score.score, 1)}`)
+                    // lbText.push(`§e${num}§7. §a${score.playerData.name}§r§f: §7${abbrNum(score.score, 1)}`)
+                    let playerText = `${this.themes[lb.data.theme].player}${score.playerData.name}§r§f`;
+                    let enabledRanks = lb.data.disableRanks ? false : true;
+                    if(enabledRanks) {
+                        playerText = ""
+                        let ranks = score.playerData.tags.filter(_=>_.startsWith('rank:')).map(_=>_.substring(5));
+                        if(!ranks.length) ranks.push("§7Member");
+                        // playerText += `§8[§r§7${ranks.join('§r§8] [§7')}§r§8] `
+                        playerText += `§8[§r§7${ranks[0]}§r§8] `
+
+                        let nameColor = score.playerData.tags.find(_=>_.startsWith('name-color:'));
+                        playerText += `${nameColor ? nameColor.substring('name-color:'.length) : this.themes[lb.data.theme].player}${score.playerData.name}`;
+                    }
+                    lbText.push(`${this.themes[lb.data.theme].num}${num}§7. ${playerText} §r${this.themes[lb.data.theme].scoreSurroundings}: §r${this.themes[lb.data.theme].score}${curnc ? "$" : ""}${lb.data.abbreviate ? abbrNum(score.score, 1) : score.score}`)
                 }
                 if(entities && entities.length) {
                     // console.warn('a')
@@ -110,11 +146,11 @@ class LeaderboardHandler {
                         entity.addTag(`lbid:${lb.id}`);
                         entity.nameTag = lbText.join('\n§r');
                         // console.warn('Entity spawned!')
-                    } catch(e) {console.warn(e)}
+                    } catch(e) {}
                 }
     
             } catch(e) {
-                console.warn(e)
+                // console.warn(e)
             }
         }
     }

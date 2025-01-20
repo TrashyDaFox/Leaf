@@ -17,6 +17,7 @@ configAPI.registerProperty("ShopRewrite", configAPI.Types.Boolean, false);
 configAPI.registerProperty("AH", configAPI.Types.Boolean, false);
 configAPI.registerProperty("Placeholders", configAPI.Types.Boolean, false);
 configAPI.registerProperty("Meowify", configAPI.Types.Boolean, false);
+configAPI.registerProperty("Pwarps", configAPI.Types.Boolean, false);
 
 let data = [
     {}
@@ -24,6 +25,7 @@ let data = [
 const toggleOptions = [
     { display: "Clans", property: "Clans" },
     { display: "Land Claims", property: "LandClaims" },
+    { display: "Pwarps", property: "Pwarps" },
     { display: "§aGenerators " + emojis.potion48 + "\n§7Very experimental, not recommended", property: "Generators" },
     { display: "Shops", property: "Shops" },
     { display: "PlayerShops", property: "PlayerShops" },

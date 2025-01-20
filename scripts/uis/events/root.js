@@ -61,6 +61,19 @@ uiManager.addUI(config.uiNames.Events.EventsAdd, "A", (player, data = {})=>{
         })
     }
 })
+uiManager.addUI(config.uiNames.Events.EventsEdit, "Events Edit", (player, id)=>{
+    let form = new ActionForm();
+    form.button("§cDelete", null, (player)=>{
+        events.eventsDb.deleteDocumentByID(id);
+        uiManager.open(player, config.uiNames.Events.EventsRoot);
+    })
+    form.button("§aEdit", null, (player)=>{
+        uiManager.open(player, config.uiNames.Events.EventsAdd, {id});
+    })
+    form.show(player, false, (player, response)=>{
+
+    })
+})
 uiManager.addUI(config.uiNames.Events.EventsRoot, "Events Root", (player)=>{
     let form = new ActionForm();
     form.button(`§2Add Event\n§7Add an event`, null, (player)=>{
@@ -68,7 +81,7 @@ uiManager.addUI(config.uiNames.Events.EventsRoot, "Events Root", (player)=>{
     })
     for(const event of events.eventsDb.data) {
         form.button(`§b${event.data.comment}\n§7${event.data.type == "KILL" ? "Kill Event" : "Death Event"}`, null, (player)=>{
-            uiManager.open(player, config.uiNames.Events.EventsAdd, {id: event.id})
+            uiManager.open(player, config.uiNames.Events.EventsEdit, event.id)
         })
     }
     form.show(player, false, (player, response)=>{

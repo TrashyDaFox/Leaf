@@ -125,7 +125,7 @@ class SidebarEditor {
                     if(frames.length === 1) return frames[0];
                     let index = Math.floor(animationIndex / this.getLineTickSpeed(name, _.id)) % frames.length
                     let str = frames[index]
-                    return str;
+                    return str.replaceAll('[@username]', player.name);
                 } catch {
                     try {
                         return _.text.split('\n')[0]; // remove animations as fallback
@@ -150,11 +150,11 @@ class SidebarEditor {
                     return formatStr(line, player, {"sidebar-name": name})
         
                 } catch {
-                    return line;
+                    return line.replaceAll('[@username]', player.name);
                 }
             }).join('\n§r');
             if(!text) return "@@LEAF_SIDEBAR_IGNORE"
-            return text;
+            return text.replaceAll('[@username]', player.name);
         } catch {
             return "@@LEAF_SIDEBAR_IGNORE" // parsing the sidebar went very wrong. do not display to the user
         }

@@ -21,6 +21,9 @@ class BlockDB {
             z: parseFloat(str.split(';')[2]),
         }
     }
+    getBlocks() {
+        return this.db.keys().map(key=>this.stringToVec3(key));
+    }
     vec3ToString(vec3) {
         return `${vec3.x};${vec3.y};${vec3.z}`;
     }

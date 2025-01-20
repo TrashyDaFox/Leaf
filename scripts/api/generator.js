@@ -226,8 +226,9 @@ class GeneratorAPI {
             }
         })
         world.beforeEvents.itemUseOn.subscribe(e=>{
+            if(!e.isFirstEvent) return;
             system.run(()=>{
-                console.warn("A")
+                // console.warn("A")
                 if(e.itemStack && e.itemStack.typeId == "leaf:generator") {
                     let newLoc = directionAndVec3(e.blockFace, e.block.center());
                     if(e.itemStack.getDynamicProperty(`GenID`)) {

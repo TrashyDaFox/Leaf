@@ -23,6 +23,8 @@ eventHandler.on("create", (objective, loc, dimension = "minecraft:overworld")=>{
         theme: 0
     });
 })
+export const leaderboardDb = db;
+export const leaderboardEventHandler = eventHandler;
 // system.runInterval(()=>{
 //     for(const lb of db.data) {
 //         let entity;

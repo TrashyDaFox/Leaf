@@ -7,6 +7,24 @@ import { ActionForm } from "../../lib/form_func";
 import { prismarineDb } from "../../lib/prismarinedb";
 import http from "../../networkingLibs/currentNetworkingLib";
 import uiManager from "../../uiManager";
+
+const CONFIG_ICONS = {
+    LEAF_SETTINGS: "Packs/Asteroid/jungle_leaves",
+    UI_BUILDER: "Packs/Asteroid/ui",
+    CHEST_GUIS: "Packs/Asteroid/chest_tappable",
+    SIDEBAR: "Packs/Asteroid/beacon",
+    CURRENCY: "Packs/Asteroid/adventure_crystal_uncommon",
+    MAIN_SETTINGS: "Packs/Asteroid/slash",
+    ADVANCED: "leaf/image-515",
+    MISC_SETTINGS: "^textures/update_pings_icons/config-ui/misc",
+    FEATURES: `^textures/update_pings_icons/config-ui/Features`,
+    MODERATION: "leaf/image-613",
+    DEVELOPER: "Packs/Asteroid/dev",
+    PLATFORM: "^textures/update_pings_icons/config-ui/devices",
+    CREDITS: "^textures/update_pings_icons/config-ui/credits",
+    DISCORD: "leaf/image-0910"
+};
+
 export let targetLeafDBVersion = 11.0
 // system.runInterval(()=>{
 //     for(const player of world.getPlayers()) {
@@ -28,46 +46,46 @@ uiManager.addUI(config.uiNames.ConfigRoot, "Config Root", (player)=>{
     }
 
     actionForm.title(`${emojis.book36} §6Config UI ${emojis.book36}`)
-    // actionForm.button(`§2Leaf Settings\n§r§7Common settings`, icons.resolve("Packs/Asteroid/jungle_leaves"), (player)=>{
+    // actionForm.button(`§2Leaf Settings\n§r§7Common settings`, icons.resolve(CONFIG_ICONS.LEAF_SETTINGS), (player)=>{
     //     player.sendMessage(`§cThis feature is coming soon`);
     //     uiManager.open(player, config.uiNames.ConfigRoot)
     // })
-    // actionForm.button(`§cUI Builder\n§r§7Make UIs easily!`, icons.resolve("Packs/Asteroid/ui"), (player)=>{
+    // actionForm.button(`§cUI Builder\n§r§7Make UIs easily!`, icons.resolve(CONFIG_ICONS.UI_BUILDER), (player)=>{
     //     uiManager.open(player, config.uiNames.UIBuilderRoot)
     // })
-    // actionForm.button(`§6Chest GUIs\n§r§7Make Chest UIs easily!`, icons.resolve("Packs/Asteroid/chest_tappable"), (player)=>{
+    // actionForm.button(`§6Chest GUIs\n§r§7Make Chest UIs easily!`, icons.resolve(CONFIG_ICONS.CHEST_GUIS), (player)=>{
     //     uiManager.open(player, config.uiNames.ChestGuiRoot)
     // })
-    // actionForm.button(`§bSidebar\n§r§7Make sidebars easily!`, icons.resolve(`Packs/Asteroid/beacon`), (player)=>{
+    // actionForm.button(`§bSidebar\n§r§7Make sidebars easily!`, icons.resolve(CONFIG_ICONS.SIDEBAR), (player)=>{
     //     uiManager.open(player, config.uiNames.SidebarEditorRoot)
     // })
-    // actionForm.button(`§nCurrency Editor\n§r§7idfk`, icons.resolve(`Packs/Asteroid/adventure_crystal_uncommon`), (player)=>{
+    // actionForm.button(`§nCurrency Editor\n§r§7idfk`, icons.resolve(CONFIG_ICONS.CURRENCY), (player)=>{
     //     uiManager.open(player, config.uiNames.CurrencyEditor)
     // })
-    actionForm.button(`§l§nMain Settings\n§r§7Configure most features here`, icons.resolve("Packs/Asteroid/slash"), (player)=>{
+    actionForm.button(`§l§nMain Settings\n§r§7Configure most features here`, icons.resolve(CONFIG_ICONS.MAIN_SETTINGS), (player)=>{
         uiManager.open(player, config.uiNames.ConfigMain)
     })
-    // actionForm.button(`§l§dAdvanced Settings\n§r§7Very advanced fr fr`, icons.resolve("leaf/image-515"), (player)=>{
+    // actionForm.button(`§l§dAdvanced Settings\n§r§7Very advanced fr fr`, icons.resolve(CONFIG_ICONS.ADVANCED), (player)=>{
     //     uiManager.open(player, config.uiNames.ConfigMain)
     // })
-    actionForm.button(`§l§bMisc Settings\n§r§7Chat rank formats & more!`, icons.resolve("Packs/Asteroid/dev"), (player)=>{
+    actionForm.button(`§l§bMisc Settings\n§r§7Chat rank formats & more!`, icons.resolve(CONFIG_ICONS.MISC_SETTINGS), (player)=>{
         uiManager.open(player, config.uiNames.Config.Misc)
     })
-    actionForm.button(`§l§aFeatures/Experiments\n§r§7Manage leaf features`, icons.resolve("leaf/image-668"), (player)=>{
+    actionForm.button(`§l§aFeatures/Experiments\n§r§7Manage leaf features`, icons.resolve(CONFIG_ICONS.FEATURES), (player)=>{
         uiManager.open(player, config.uiNames.Config.Modules);
     })
-    // actionForm.button(`§l§dModeration Settings\n§r§7Change moderation settings`, icons.resolve("leaf/image-613"))
+    // actionForm.button(`§l§dModeration Settings\n§r§7Change moderation settings`, icons.resolve(CONFIG_ICONS.MODERATION))
     if(configAPI.getProperty("DevMode")) {
-        actionForm.button(`§l§eDeveloper Settings\n§r§7MAY CAUSE BUGS.`, icons.resolve("Packs/Asteroid/dev"))
+        actionForm.button(`§l§eDeveloper Settings\n§r§7MAY CAUSE BUGS.`, icons.resolve(CONFIG_ICONS.DEVELOPER))
     }
-    actionForm.button(`§l§nPlatform Settings\n§r§7[ Click to view info ]`, icons.resolve("leaf/image-779"), player=>{
+    actionForm.button(`§l§nPlatform Settings\n§r§7[ Click to view info ]`, icons.resolve(CONFIG_ICONS.PLATFORM), player=>{
         uiManager.open(player, config.uiNames.PlatformSettings.Root)
     })
-    actionForm.button(`§l§eCredits\n§r§7See who helped with leaf`, icons.resolve("Packs/Asteroid/custom"), player=>{
+    actionForm.button(`§l§eCredits\n§r§7See who helped with leaf`, icons.resolve(CONFIG_ICONS.CREDITS), player=>{
         uiManager.open(player, config.uiNames.ConfigCredits)
     })
     if(http.player) {
-        actionForm.button(`§l§9Discord Logs\n§r§7Online Exclusive`, icons.resolve(`leaf/image-0910`), (player)=>{
+        actionForm.button(`§l§9Discord Logs\n§r§7Online Exclusive`, icons.resolve(CONFIG_ICONS.DISCORD), (player)=>{
             
         })
     }

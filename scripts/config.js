@@ -161,6 +161,11 @@ export default {
             EventsEditCommands: "events_editor_commands | Leaf/Events/Commands/Edit",
             EventsEditCommand: "events_editor_command | Leaf/Events/Command/Edit"
         },
+        Leaderboards: {
+            Root: "leaderboards_root | Leaf/Leaderboards/Root",
+            Edit: "leaderboards_edit | Leaf/Leaderboards/Edit",
+            EditTheme: "leaderboards_edit_theme | Leaf/Leaderboards/EditTheme"
+        },
         UIBuilderList: "ui_builder_list | Leaf/UIBuilder/List",
         UIBuilderFolders: "ui_builder_folders | Leaf/UIBuilder/Folders",
         UIBuilderFoldersView: "ui_builder_folders_view | Leaf/UIBuilder/Folders/View",

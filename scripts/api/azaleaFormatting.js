@@ -39,6 +39,7 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
         vars[key] = extraVars[key];
     }
     if(player) {
+        newStr = newStr.replaceAll('[@username]', player.name);
         if(!(player instanceof Player)) return;
         const colors = getPlayerColors(player);
         vars.bc = colors.bracket;

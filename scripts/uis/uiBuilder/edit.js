@@ -24,8 +24,10 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
     actionForm.button(`§nExport\n§7Get the code for this UI`, icons.resolve(`leaf/image-1183`), (player)=>{
         let modal = new ModalForm();
         modal.title("Code Editor");
-        modal.textField("Code", "Code", JSON.stringify(doc.data, null, 2));
-        modal.show(player, false, ()=>{})
+        modal.textField("Code", "Code", JSON.stringify(uiBuilder.exportUI(id), null, 2));
+        modal.show(player, false, ()=>{
+            uiManager.open(player, config.uiNames.UIBuilderEdit, id);
+        })
     })
     actionForm.button(`§uSet icon\n§7Set icon for this UI`, doc.data.icon ? icons.resolve(doc.data.icon) : `textures/azalea_icons/ClickyClick`, (player)=>{
         uiManager.open(player, config.uiNames.IconViewer, 0, (player, iconID)=>{

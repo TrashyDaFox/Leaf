@@ -70,5 +70,15 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
         uiBuilder.moveButtonInUI(id, "down", index);
         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
     })
+    actionForm.button(`§eEdit Meta (Advanced)`, null, (player)=>{
+        let form = new ModalFormData();
+        form.title("Edit Meta")
+        form.textField("Meta", "Meta here...", button.meta ? button.meta : "")
+        form.show(player).then((res)=>{
+            if(res.canceled) return uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)
+            uiBuilder.editButtonMeta(id, button.id, res.formValues[0])
+            uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)
+        })
+    })
     actionForm.show(player, false, () => { })
 })
