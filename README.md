@@ -1,19 +1,44 @@
 <div align="center">
 
-![leaf essentials](https://github.com/Leaf-Utilities/Leaf-Essentials/assets/122332042/25f51bb6-5a6f-4830-a56a-b04d6daae3e9)
-
-A free and open-source MCBE essentials addon.
+![Title](title.png)
 
 </div>
 
-# History
+![Divider](divider.png)
 
-2 years ago, I made Azalea Essentials. While it was a good addon, it did have **A LOT** of problems. This is another attempt at an essentials addon using things I learned from making Azalea.
+Leaf Essentials is a free and open source MCBE (Minecraft Bedrock Edition) addon that aims to **improve** your servers with many features.
 
-# What will happen to Azalea Essentials?
+We think customization is very important. You can customize many things in leaf. If there is not a UI that you need, chances are you can just make it yourself
 
-Nothing. I will continue to update it along with this.
+![Divider](divider.png)
 
-# How do I download?
+![A picture of the leaf Config UI](image.png)
 
-For now, just use the releases tab. I will not be releasing this on MCPEDL for a while.
+![Divider](divider.png)
+
+# Features
+- 🎨 Custom UIs
+- 📃 Events that you can customize. Run commands whenever players kill another player.
+- 💼 Chest GUIs
+- 💻 Tab UIs
+- 🔗 Bind commands to blocks, items, and entities
+- 🏝️ Land claims
+- 📊 Leaderboards
+- 🔨 Reports
+- 💬 Good Community
+- ➕ And more!
+
+# Installation
+Go to the [MCBETools](https://mcbetools.com/s/leaf) page or the [MCPEDL](https://mcpedl.com/leaf) page
+
+*NOTE: MCPEDL isnt recommended as its usually out of date. Please use MCBETools if possible*
+
+![Divider](divider.png)
+
+# Support
+
+Join the [Discord Server](https://discord.gg/EU7dcxUr2F) for support and to get announcements, and interact with other people in the MCBE community!
+
+![Divider](divider.png)
+
+✨ Addon made by TrashyKitty! :3 ✨
