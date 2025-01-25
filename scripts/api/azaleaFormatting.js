@@ -11,17 +11,32 @@ import { prismarineDb } from "../lib/prismarinedb.js";
 const configDb = prismarineDb.table("LegacyConfig").keyval("LegacyConfig");
 const startingRank = configDb.get("StartingRank", "Member");
 const recursionSessions = new Map();
+let playersClicks = new Map();
 
+function recordClick(player) {
+    if(!playersClicks.has(player.id)) playersClicks.set(player.id, []);
+    playersClicks.get(player.id).push(Date.now());
+}
+function calculateCPS(clicks, player) {
+    const currentTime = Date.now();
+    // Filter out clicks that are older than 1 second
+    while (clicks.length > 0 && currentTime - clicks[0] > 1000) {
+      clicks.shift();  // Remove clicks older than 1 second
+    }
+    playersClicks.set(player.id, clicks);
+    return clicks.length;  // Return the number of clicks in the last second
+}
 // CPS handling
 world.afterEvents.entityHitEntity.subscribe(e => {
     if (e.damagingEntity.typeId === "minecraft:player") {
-        setScore("azalea:cps", e.damagingEntity, getScore("azalea:cps", e.damagingEntity) + 1);
+        recordClick(e.damagingEntity);
+        setScore("azalea:cps", e.damagingEntity, calculateCPS(playersClicks.get(e.damagingEntity.id), e.damagingEntity));
     }
 });
 
 system.runInterval(() => {
     for (const player of world.getPlayers()) {
-        setScore("azalea:cps", player, 0);
+        setScore("azalea:cps", player, calculateCPS(playersClicks.has(player.id) ? playersClicks.get(player.id) : [], player));
     }
 }, 20);
 
@@ -179,17 +194,17 @@ export function formatStr(str, player = null, extraVars = {}, session = Date.now
             if(!player.hasTag(tag)) return ifNotHasTag == "<bl>" ? "" : ifNotHasTag
             else return ifHasTag == "<bl>" ? "" : ifHasTag;
         },
-        kill() {
-            system.run(()=>{
-                try {
-                    player.kill()
-                } catch {}
-                try {
-                    player.destroy()
-                } catch {}
-            })
-            return "I ded :3"
-        },
+        // kill() {
+            // system.run(()=>{
+            //     try {
+            //         player.kill()
+            //     } catch {}
+            //     try {
+            //         player.destroy()
+            //     } catch {}
+            // })
+            // return "I ded :3"
+        // },
         vars() {
             return Object.keys(vars).join(', ')
         },

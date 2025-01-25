@@ -1,18 +1,32 @@
+/*
+  ╱|、
+(˚ˎ 。7  
+ |、˜〵          
+じしˍ,)ノ
+Kitty is watching the config >:3
+*/
 export default {
     defaults: {
         chatformat: `{{has_tag clan-chat "<nc>:small_diamond: " "<bl>"}}{{is_afk "§7AFK "}}{{clan "<bc>[§r§7<nc>[@CLAN]§r<bc>] "}}{{has_tag staffchat "<bc>[<nc> StaffChat §r<bc>] " "<bl>"}}§r<bc>[ <rc>{{rank_joiner "<drj>"}}§r<bc> ] §r<nc><name> §r§l<bc><dra> §r<mc><msg>`
     },
     versionInfo: {
-        versionName: "Update 2.2",
-        versionInternalID: 1, // 1 starts with october 2024 update
+        versionName: "Update 2.2.2",
+        versionInternalID: 2, // 1 starts with october 2024 update
         versionData: new Map([
             [
                 1,
                 {
-                    versionName: "Update 2.2",
+                    versionName: "Spooky Update",
                     versionInternalID: 1
                 }
-            ]
+            ],
+			[
+				2,
+				{
+					versionName: "Update 2.2.2",
+					versionInternalID: 2
+				}
+			]
         ])
     },
     tableNames: {
@@ -24,6 +38,12 @@ export default {
         openDefault: "leafgui:",
     },
     uiNames: {
+        Bounty: {
+            View: "bounty_view | Leaf/Bounty/View",
+            Root: "bounty_root | Leaf/Bounty/Root",
+            Create: "bounty_create | Leaf/Bounty/Create",
+            Config: "bounty_config | Leaf/Bounty/Config"
+        },
         PlatformSettings: {
             Root: "platformsettings | Leaf/PlatformSettings",
             Desktop: "platformsettings_desktop | Leaf/PlatformSettings/Desktop",
@@ -32,11 +52,21 @@ export default {
             EditPlatform: "platformsettings_editplatform | Leaf/PlatformSettings/EditPlatform",
             EditTag: "platformsettings_edittag | Leaf/PlatformSettings/EditPlatformTag",
             GlobalSettings: "platformsettings_global_settings | Leaf/PlatformSettings/GlobalSettings",
-
+			EditPlatformWhitelist: "platformsettings_editplatform_whitelist | Leaf/PlatformSettings/EditPlatform/Whitelist"
         },
         Crates: {
             Root: "crates_root | Leaf/Crates/Root"
         },
+		MiscTools: {
+			Root: "misctools | Leaf/MiscTools",
+			ConfigAPIRawEditor: "configapi_editor | Leaf/MiscTools/ConfigAPIEditor"
+		},
+		DevSettings: {
+			Root: "dev | Leaf/Dev",
+			DebugTools: "dev_debugtools | Leaf/DevDebugTools",
+			DevToggles: "dev_toggles | Leaf/DevSettings/DevToggles",
+			DevSetPassword: "dev_set_password | Leaf/DevSettings/SetPassword",
+		},
         Lock: "lock | Leaf/ChestLocking/Lock",
         UIBuilderRoot: "ui_builder_main_page | Leaf/UIBuilder/Root",
         UIBuilderAdd: "ui_builder_create_ui | Leaf/UIBuilder/Add",
@@ -74,6 +104,14 @@ export default {
             Misc: "misc_config | Leaf/Config/Misc",
             ChatrankFormat: "chatformat_config | Leaf/Config/Misc/Chatrankformat",
             Advanced: "advanced_config | Leaf/Config/Advanced"
+        },
+        Modal: {
+            Root: "modal_root | Leaf/UIs/Modals/Root",
+            Add: "modal_add | Leaf/UIs/Modals/Add",
+            Edit: "modal_edit | Leaf/UIs/Modals/Edit",
+            EditControls: "modal_edit_controls | Leaf/UIs/Modals/Edit/Controls",
+            AddControl: "modal_add_control | Leaf/UIs/Modals/Add/Control",
+            EditControl: "modal_edit_control | Leaf/UIs/Modals/Edit/Control"
         },
         PlayerContentManager: {
             Root: "pcm_root",

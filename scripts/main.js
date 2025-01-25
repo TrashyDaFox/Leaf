@@ -1,4 +1,19 @@
+/*
+          ／＞-🌱-フ
+　　　　　 | 　_　 _ l
+　 　　　 ／` ミ＿xノ
+　　 　 /　　　 　 |
+　　　 /　 ヽ　　 ﾉ
+　／￣|　　 |　 |   |
+　| (￣ヽ＿_ヽ__) _)
+　＼二つ
+
+i call him plant kitty
+
+leaf mascot real?
+*/
 import { world, system, ScriptEventSource, Player, Block } from '@minecraft/server';
+import './uis/modal-form-editor/index.js'
 import './commands/broadcast.js'
 import uiManager from './uiManager.js';
 import config from './config';
@@ -8,6 +23,7 @@ import './test'
 import './uis/clans/root.js'
 import './uis/clans/create.js'
 import './uis/CustomCommands/root.js'
+import './uis/bounty/index.js'
 import './commands/pwarp.js'
 import './uis/clans/invite.js';
 import './uis/actions/root.js'

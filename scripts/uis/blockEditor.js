@@ -25,6 +25,7 @@ uiManager.addUI(config.uiNames.BlockEditor, "Block editor", (player, vec3)=>{
 let usingBlockEditor = new Map();
 system.runInterval(()=>{
     for(const player of world.getPlayers()) {
+        continue;
         if(player.hasTag("chunk-borders")) {
             let chunkX = Math.floor(player.location.x / 16) * 16;
             let chunkZ = Math.floor(player.location.z / 16) * 16;
@@ -121,7 +122,7 @@ system.runInterval(()=>{
     }
 },10);
 world.beforeEvents.itemUse.subscribe(e=>{
-    if(e.source && e.source.typeId == "minecraft:player" && e.source.isSneaking) {
+    if(e.itemStack.typeId == "leaf:wblock_editor" && e.source && e.source.typeId == "minecraft:player" && e.source.isSneaking) {
         world.sendMessage("Opening chunk editor!")
         return;
     }

@@ -1,6 +1,11 @@
 import { system, world } from "@minecraft/server";
 import { prismarineDb } from "./lib/prismarinedb";
 import playerStorage from "./api/playerStorage";
+/*
+  ∧,,,∧
+(  ̳• · • ̳)
+/    づ♡ I would love you if you could make this not shit yk
+*/
 const abbrNum = (number, decPlaces) => {
     decPlaces = Math.pow(10, decPlaces)
     var abbrev = ['k', 'm', 'b', 't']

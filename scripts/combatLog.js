@@ -42,18 +42,18 @@ commandManager.addSubcommand("combatlog", "set-seconds", { description: "toggle 
         return msg.sender.sendMessage(`§cYou need a number amount: §f${currentValue}`)
     }
 })
-system.runInterval(() => {
-    enabled = getIsEnabled();
-    seconds = getSeconds();
-    if (!enabled) combatLog.clear();
-    if (!enabled) return;
-    let CLEnter = cfgDb.get("CLEnter");
-    let CLExit = cfgDb.get("CLExit");
-    if (!CLEnter) cfgDb.set("CLEnter", defaultEnterMessage)
-    if (!CLExit) cfgDb.set("CLExit", defaultExitMessage)
-    if (CLEnter) enterMessage = CLEnter;
-    if (CLExit) exitMessage = CLExit;
-}, 200);
+// system.runInterval(() => {
+    // enabled = getIsEnabled();
+    // seconds = getSeconds();
+    // if (!enabled) combatLog.clear();
+    // if (!enabled) return;
+    // let CLEnter = cfgDb.get("CLEnter");
+    // let CLExit = cfgDb.get("CLExit");
+    // if (!CLEnter) cfgDb.set("CLEnter", defaultEnterMessage)
+    // if (!CLExit) cfgDb.set("CLExit", defaultExitMessage)
+    // if (CLEnter) enterMessage = CLEnter;
+    // if (CLExit) exitMessage = CLExit;
+// }, 200);
 world.afterEvents.entityHitEntity.subscribe(e => {
     if (!enabled) return;
     if (e.hitEntity.typeId != "minecraft:player" || e.damagingEntity.typeId != "minecraft:player") return;
@@ -83,15 +83,15 @@ world.afterEvents.playerSpawn.subscribe(e => {
     }
 })
 
-system.runInterval(() => {
-    if (!enabled) return;
-    for (const key of combatLog.keys()) {
-        let entity = world.getPlayers().find(_ => _.id == key);
-        if (!entity) return;
-        let val = combatLog.get(key);
-        if (Date.now() >= val + seconds * 1000) {
-            combatLog.delete(key);
-            entity.sendMessage(exitMessage);
-        }
-    }
-}, 15);
+// system.runInterval(() => {
+//     if (!enabled) return;
+//     for (const key of combatLog.keys()) {
+//         let entity = world.getPlayers().find(_ => _.id == key);
+//         if (!entity) return;
+//         let val = combatLog.get(key);
+//         if (Date.now() >= val + seconds * 1000) {
+//             combatLog.delete(key);
+//             entity.sendMessage(exitMessage);
+//         }
+//     }
+// }, 15);

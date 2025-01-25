@@ -14,12 +14,12 @@ const CONFIG_ICONS = {
     CHEST_GUIS: "Packs/Asteroid/chest_tappable",
     SIDEBAR: "Packs/Asteroid/beacon",
     CURRENCY: "Packs/Asteroid/adventure_crystal_uncommon",
-    MAIN_SETTINGS: "Packs/Asteroid/slash",
+    MAIN_SETTINGS: "^textures/azalea_icons/MainSettings",
     ADVANCED: "leaf/image-515",
     MISC_SETTINGS: "^textures/update_pings_icons/config-ui/misc",
     FEATURES: `^textures/update_pings_icons/config-ui/Features`,
     MODERATION: "leaf/image-613",
-    DEVELOPER: "Packs/Asteroid/dev",
+    DEVELOPER: "^textures/azalea_icons/DevSettings",
     PLATFORM: "^textures/update_pings_icons/config-ui/devices",
     CREDITS: "^textures/update_pings_icons/config-ui/credits",
     DISCORD: "leaf/image-0910"
@@ -45,7 +45,7 @@ uiManager.addUI(config.uiNames.ConfigRoot, "Config Root", (player)=>{
         actionForm.body(body.join('\n§r'))
     }
 
-    actionForm.title(`${emojis.book36} §6Config UI ${emojis.book36}`)
+    actionForm.title(`§t§e§s§t§r${emojis.book36} §6Config UI ${emojis.book36}`)
     // actionForm.button(`§2Leaf Settings\n§r§7Common settings`, icons.resolve(CONFIG_ICONS.LEAF_SETTINGS), (player)=>{
     //     player.sendMessage(`§cThis feature is coming soon`);
     //     uiManager.open(player, config.uiNames.ConfigRoot)

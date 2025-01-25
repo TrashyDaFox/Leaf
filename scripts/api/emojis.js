@@ -1,3 +1,12 @@
+/*
+3
+
+January 22, 2025:
+
+We havent  been let out for days. This random girl named trashy keeps feeding us frozen milk while wearing a fursuit.
+
+Please help us.
+*/
 export default {
     "clock": "\uE108",
     "gold_ingot": "\uE109",

@@ -20,6 +20,7 @@ commandManager.addCommand("warp", { description: "Warps!", category: "Admin", al
         }
     }
 })
+
 commandManager.addSubcommand("warp", "set", { description: "set a warp", format: "!warp set <warpname>"}, ({ msg, args }) => {
     if (!prismarineDb.permissions.hasPermission(msg.sender, "warps.set"))
         return msg.sender.sendMessage(translation.getTranslation(msg.sender, "error", translation.getTranslation(msg.sender, "commands.errors.noperms", "warps.set")))

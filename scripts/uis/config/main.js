@@ -18,7 +18,7 @@ const MENU_ICONS = {
 
 uiManager.addUI(config.uiNames.ConfigMain, "Config Main", (player)=>{
     let form = new ActionForm();
-    form.title("§f§u§l§l§s§c§r§e§e§n§r§nMain Settings")
+    form.title("§r§nMain Settings")
     form.button(`§l§aGet Help\n§r§7Full documentation for leaf`, MENU_ICONS.help, (player)=>{
         uiManager.open(player, config.uiNames.Help)
     })
@@ -59,14 +59,14 @@ uiManager.addUI(config.uiNames.ConfigMain, "Config Main", (player)=>{
 
 
 
-    // form.button(`§l§9Permissions\n§r§7Manage player permissions`, icons.resolve("leaf/image-647"), (player)=>{
+    form.button(`§l§9Permissions\n§r§7Manage player permissions`, `textures/update_pings_icons/main-settings/perms`, (player)=>{
 
-    // })
+    })
 
 
-    // form.button(`§l§3PVP Settings\n§r§7Configure pvp settings`, icons.resolve("leaf/image-727"), (player)=>{
+    form.button(`§l§3PVP Settings\n§r§7Configure pvp settings`, `textures/update_pings_icons/main-settings/PVP`, (player)=>{
 
-    // })
+    })
     // form.button(`§l§cAnti Cheat\n§r§7Configure ant cheat`, icons.resolve("Packs/Asteroid/smithing_icon"), (player)=>{
 
     // })
@@ -77,12 +77,12 @@ uiManager.addUI(config.uiNames.ConfigMain, "Config Main", (player)=>{
 
 
 
-    // form.button(`§l§fPlayer Settings\n§r§7Configure player settings`, icons.resolve("Packs/Asteroid/custom"), (player)=>{
+    form.button(`§l§fPlayer Settings\n§r§7Configure player settings`, `textures/update_pings_icons/main-settings/player settings`, (player)=>{
 
-    // })
-    // form.button(`§l§gChat Settings\n§r§7Configure chat`, icons.resolve("leaf/image-640"), (player)=>{
+    })
+    form.button(`§l§gChat Settings\n§r§7Configure chat`, `textures/update_pings_icons/main-settings/Chat settings`, (player)=>{
 
-    // })
+    })
     
 
 
@@ -94,21 +94,21 @@ uiManager.addUI(config.uiNames.ConfigMain, "Config Main", (player)=>{
     // form.button(`§l§dVerification Settings\n§r§7Stop annoying kids from joining`, icons.resolve("Packs/Asteroid/adventure_crystal_epic"), (player)=>{
 
     // })
-    // form.button(`§l§aWarp Settings\n§r§7Warp`, icons.resolve("leaf/image-749"), (player)=>{
+    form.button(`§l§aWarp Settings\n§r§7Warp`, `textures/update_pings_icons/main-settings/warp settings`, (player)=>{
 
-    // })
-    // form.button(`§l§nBank Settings\n§r§7Banky wanky`, icons.resolve("Packs/Asteroid/vault"), (player)=>{
+    })
+    form.button(`§l§nBank Settings\n§r§7Banky wanky`, `textures/update_pings_icons/main-settings/bank`, (player)=>{
 
-    // })
-    // form.button(`§l§qAuction House\n§7Manage auction house`, icons.resolve("leaf/image-751"), (player)=>{
+    })
+    form.button(`§l§qAuction House\n§r§7Manage auction house`, `textures/update_pings_icons/main-settings/Ah`, (player)=>{
 
-    // })
+    })
     form.button(`§l§cClans\n§r§7Configure clans`, MENU_ICONS.clans, (player)=>{
         uiManager.open(player, config.uiNames.Config.Clans)
     })
-    // form.button(`§l§6Crates\n§r§7Configure crates`, icons.resolve("leaf/image-480"), (player)=>{
-        // uiManager.open(player, config.uiNames.Crates.Root)
-    // })
+    form.button(`§l§6Crates\n§r§7Configure crates`, `textures/update_pings_icons/main-settings/crates`, (player)=>{
+        uiManager.open(player, config.uiNames.Crates.Root)
+    })
     form.button(`§l§eEvents\n§r§7Events`, MENU_ICONS.events, (player)=>{
         uiManager.open(player, config.uiNames.Events.EventsRoot)
     })

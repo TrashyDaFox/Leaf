@@ -1,3 +1,4 @@
+// PRISMARINEDB HAS A PERMISSIONS SYSTEM WHY IS THIS HERE
 import { prismarineDb } from "../lib/prismarinedb";
 
 class Permissions {

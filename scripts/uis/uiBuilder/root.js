@@ -79,6 +79,10 @@ let folderColors = [
     {
         name: "Lime",
         texturePath: "textures/update_pings_icons/ui-builder/folder lime green"
+    },
+    {
+        name: ":3",
+        texturePath: "textures/folders/trans"
     }
 ]
 
@@ -248,7 +252,7 @@ builderTabUI.registerTab("\uE180 UIs", (player) => {
 
     buttons.push({
         text: `§aImport\n§r§7Import a UI`,
-        iconPath: `textures/azalea_icons/2`,
+        iconPath: `textures/azalea_icons/import`,
         callback: (player) => {
             let modal = new ModalForm();
             modal.title("Code Editor");

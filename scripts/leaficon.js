@@ -18,6 +18,7 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{
     }
     if(e.id == "leaficon:add_icon_to_pack") {
         let json = JSON.parse(e.message);
+		
         if(tempRegistry[json.pack]) {
             tempRegistry[json.pack].get("pack_data").set(json.icon.name, json.icon.texture_path)
         }

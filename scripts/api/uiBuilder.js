@@ -354,6 +354,17 @@ class UIBuilder {
         return this.db.insertDocument(baseUI);
     }
 
+    createModalUI(name, scriptevent) {
+        const baseUI = {
+            name,
+            type: 3,
+            controls: []
+        };
+        return this.db.insertDocument(baseUI);
+    }
+
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
     createSubUI(name, body = null, type = "normal", scriptevent, layout = 0) {
         const ui = this.createUI(name, body, type, scriptevent, layout);
         ui.data.type = this.convertTypeToSubUI(ui.data.type);
@@ -440,6 +451,7 @@ class UIBuilder {
     untrash(id) { return this.db.untrashDocumentByID(id); }
     getByID(id) { return this.db.getByID(id); }
     getUIs() { return this.db.findDocuments({type: 0}); }
+    getModalUIs() { return this.db.findDocuments({type: 3}); }
     open(id, player) {
         const doc = this.getByID(id);
         if (doc && (doc.data.type === 0 || doc.data.type === 1)) {

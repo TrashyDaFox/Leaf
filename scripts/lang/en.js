@@ -12,6 +12,21 @@ export default {
             scripteventundefined: "Scriptevent must be defined.",
         }
     },
+	tpa: {
+		requestSent: "Sent tpa request!",
+	},
+	general: {
+		noPlayerFoudn: "No player found"
+	},
+	rtp: {
+		teleported: "Teleported to %s, %s",
+		findingSafeLocation: "Finding safe location"
+	},
+	config: {
+		mainsettings: {
+			text: "Main Settings"
+		},
+	},
     error: "§c§lERROR §8>> §r§7%s",
     success: "§a§lSUCCESS §8>> §r§7%s",
     info: "§b§lINFO §8>> §r§7%s",

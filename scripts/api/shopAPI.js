@@ -3,6 +3,21 @@ import { prismarineDb } from "../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
 import itemdb from "./itemdb";
 import playerStorage from "./playerStorage";
+/*
+no wonder i havent updated this yet
+
+          ／＞　 フ
+         | 　_　_| 
+       ／` ミ＿xノ 
+      /　　　　 |
+     /　 ヽ　　 ﾉ
+    │　　|　|　|
+／￣|　　 |　|　|
+(￣ヽ＿_ヽ_)__)
+＼二)
+
+what the fuck is this codebase?
+*/
 
 class ShopAPI {
     constructor() {

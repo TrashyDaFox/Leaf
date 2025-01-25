@@ -42,14 +42,14 @@ commandManager.addCommand("rtp", {description: "Teleport to a random location"},
 
             if(block.typeId.includes('light_block')) continue;
 
-            if(!block.isAir && !block.isLiquid && block.above(1).isAir && block.above(2).isAir) {
+            if(block.isSolid) {
                 x = block.center().x
                 z = block.center().z
                 y = block.center().y + 1
                 break;
             }
 
-            if(block.isLiquid && block.above(1).isAir && block.above(2).isAir) {
+            if(!block.isSolid && !block.isAir) {
                 let randomLocation = generateRandomLocation();
                 x = randomLocation.x
                 z = randomLocation.z

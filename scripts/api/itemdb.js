@@ -1,3 +1,17 @@
+/*
+6
+
+Tridecember 50, 2089
+
+It has been a few years now. Earth had the 2.0 update and many new months were added.
+
+Trashy has given us some pineapple on pizza to celebrate, and we watched tv static for a few hours.
+
+Shes a really nice person, and she has a nice basement.
+
+She also gave us a brand new miku plushie
+*/
+
 import { system, world, EquipmentSlot, ScriptEventSource, ItemStack, BlockVolume } from "@minecraft/server";
 // import { playerStorage } from "./apis/PlayerStorage";
 import { prismarineDb } from "../lib/prismarinedb";

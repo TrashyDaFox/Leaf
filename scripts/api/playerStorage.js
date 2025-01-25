@@ -103,10 +103,13 @@ class PlayerStorage {
             tags,
             dynamicProperties,
             scores,
+            id: player.id,
             name: player.name == "OG clapz9521" ? "Furry" : player.name,
+            nameTag: player.nameTag,
             location: {x: player.location.x, y:player.location.y, z: player.location.z}
         })
     }
+
     addReward(playerID, currency, amount) {
         if(!prismarineDb.economy.getCurrency(currency)) return;
         let rewards = this.rewardsKeyval.has(playerID) ? this.rewardsKeyval.get(playerID) : [];

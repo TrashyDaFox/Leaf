@@ -12,16 +12,16 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
     if(!doc) return;
     let actionForm = new ActionForm();
     actionForm.title(`§f§u§l§l§s§c§r§e§e§n§rEditing "§b${doc.data.name.replace('§g§r§i§d§u§i','').replace('§c§h§e§s§t','')}§r"`);
-    actionForm.button(`§6Back\n§7Go back`, icons.resolve(`leaf/image-1031`), (player)=>{
+    actionForm.button(`§6Back\n§7Go back`, `textures/azalea_icons/2`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderRoot);
     })
-    actionForm.button(`§aEdit Buttons\n§7Move, edit, and remove buttons`, `textures/azalea_icons/ClickyClick`, (player)=>{
+    actionForm.button(`§aEdit Buttons\n§7Move, edit, and remove buttons`, `textures/azalea_icons/EditUi`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
     });
-    actionForm.button(`§dEdit Form\n§7Edit form name, and more`, `textures/azalea_icons/GUIMaker/FormsV2`, (player)=>{
+    actionForm.button(`§dEdit Form\n§7Edit form name, and more`, `textures/azalea_icons/Extra UI settings`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderAdd, doc.data.name, doc.data.body, doc.data.scriptevent, undefined, doc.id);
     });
-    actionForm.button(`§nExport\n§7Get the code for this UI`, icons.resolve(`leaf/image-1183`), (player)=>{
+    actionForm.button(`§nExport\n§7Get the code for this UI`, `textures/azalea_icons/export`, (player)=>{
         let modal = new ModalForm();
         modal.title("Code Editor");
         modal.textField("Code", "Code", JSON.stringify(uiBuilder.exportUI(id), null, 2));
@@ -36,7 +36,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         });
     })
-    actionForm.button(`§3Duplicate\n§7Duplicate this UI`, `textures/azalea_icons/AddItem`, (player)=>{
+    actionForm.button(`§3Duplicate\n§7Duplicate this UI`, `textures/azalea_icons/UI Copy and paste`, (player)=>{
         uiBuilder.duplicateUI(id);
         return uiManager.open(player, config.uiNames.UIBuilderRoot);
     })
@@ -76,7 +76,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             }
         })
     }
-    actionForm.button(`§cDelete\n§7Delete this UI`, icons.resolve("leaf/image-1289"), player=>{
+    actionForm.button(`§cDelete\n§7Delete this UI`, `textures/azalea_icons/SidebarTrash`, player=>{
         uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this Chest GUI?", ()=>{
             uiBuilder.db.deleteDocumentByID(id);
             return uiManager.open(player, config.uiNames.UIBuilderRoot)    
