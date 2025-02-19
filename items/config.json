@@ -14,7 +14,7 @@
 			"minecraft:icon": {
 				"texture": "admin_ui"
 			},
-			"minecraft:foil": false
+			"minecraft:glint": true
 		}
 	}
 }

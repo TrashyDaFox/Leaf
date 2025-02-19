@@ -8,13 +8,20 @@
 
 */
 
-import config from "../config";
+import config from "../versionData";
 import { ActionForm } from "../lib/form_func";
 import { colors, prismarineDb } from "../lib/prismarinedb";
 import actionParser from "./actionParser";
 import normalForm from "./openers/normalForm";
 import { system, ScriptEventSource, world } from '@minecraft/server';
 import { array_move } from "./utils/array_move";
+import modalForm from "./openers/modalForm";
+import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
+import chestUIBuilder from "./chest/chestUIBuilder";
+import common from "./chest/common";
+import chestUIOpener from "./chest/chestUIOpener";
+import icons from "./icons";
+
 // yo what should we add uwu
 // button categories
 // tf would that even be useful for
@@ -79,6 +86,8 @@ import { array_move } from "./utils/array_move";
 // MORE IDEAS
 // MORE IDEAS
 // MORE IDEAS
+// MORE IDEAS
+// MORE IDEAS
 // add pussy pics
 // actually good ideas
 // finish coding language
@@ -108,16 +117,131 @@ import { array_move } from "./utils/array_move";
 // where did u go
 class UIBuilder {
     constructor() {
+        this.validRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.internalUIs = [];
         this.initializeDatabases();
-        this.initializeStates();
+        // this.initializeStates();
         this.setupScriptEventListener();
         this.addIdFieldToButtons();
         this.migrateOldButtonActions();
+        this.migrateOldButtonActions220();
         this.initializeVersionControl();
         this.addExampleUI();
+        this.migrateChestGUIs();
+        this.createSnippetBook()
     }
+    migrateOldButtonActions220() {
+        // for(const doc of this.db.data) {
+        //     doc.data.actionsv2 = doc.data.actions.map(_=>{
+        //         return {
+        //             action: _,
+        //         }
+        //     })
+        // }
+    }
+    migrateChestGUIs() {
+        // return;
+        this.db.waitLoad().then(()=>{
+            if(this.getState("ChestMigrationV1")) return;
 
+            let docs = this.db.findDocuments({type: 4});
+    
+            for(const doc of docs) {
+                this.db.deleteDocumentByID(doc.id)
+            }
+    
+            for(const data of chestUIBuilder.db.data) {
+                this.db.insertDocument({
+                    type: 4,
+                    ...data.data
+                })
+            }
+    
+            this.setState("ChestMigrationV1", true)
+        })
+
+    }
+    createChestGUI(title, scriptevent, rows = 3) {
+        if(!this.validRows.includes(rows)) throw new Error("Row count is not valid.");
+        return this.db.insertDocument({
+            type: 4,
+            title,
+            advanced: false,
+            scriptevent,
+            rows,
+            icons: []
+        }); 
+    }
+    createAdvancedChestGUI(title, scriptevent, rows = 3) {
+        if(!this.validRows.includes(rows)) throw new Error("Row count is not valid.");
+        return this.db.insertDocument({
+            type: 4,
+            title,
+            advanced: true,
+            scriptevent,
+            rows,
+            icons: []
+        });
+    }
+    addIconToChestGUI(id, row, col, iconID, name, lore = [], itemStackAmount = 1, action) {
+        let chest = this.db.getByID(id);
+        if(!chest) throw new Error("Chest UI not found");
+        if(chest.data.advanced) throw new Error("Chest GUI cant be in advanced mode");
+        let slot = common.rowColToSlotId(row, col);
+        if(!iconID) throw new Error("Icon needs to be defined");
+        if(!icons.resolve(iconID)) {
+            throw new Error("Icon ID not valid");
+        }
+        if(!name) throw new Error("Name needs to be defined");
+        if(!action) throw new Error("Action needs to be defined");
+        if(chest.data.icons.find(_=>_.slot == slot)) throw new Error("There is already an icon at this slot");
+        chest.data.icons.push({
+            slot,
+            iconID,
+            name,
+            action,
+            lore,
+            amount: itemStackAmount
+        })
+        this.db.overwriteDataByID(chest.id, chest.data);
+    }
+    replaceIconInChestGUI(id, row, col, iconID, name, lore = [], itemStackAmount = 1, action, index = 0) {
+        let chest = this.db.getByID(id);
+        if(!chest) throw new Error("Chest UI not found");
+        if(chest.data.advanced) throw new Error("Chest GUI cant be in advanced mode");
+        let slot = common.rowColToSlotId(row, col);
+        if(!iconID) throw new Error("Icon needs to be defined");
+        if(!icons.resolve(iconID)) {
+            throw new Error("Icon ID not valid");
+        }
+        if(index >= chest.data.icons.length || index < 0) throw new Error("Item out of range");
+        if(!name) throw new Error("Name needs to be defined");
+        if(!action) throw new Error("Action needs to be defined");
+        if(chest.data.icons.find((_,i)=>_.slot == slot && i != index)) throw new Error("There is already an icon at this slot");
+        chest.data.icons[index] = ({
+            slot,
+            iconID,
+            name,
+            lore,
+            action,
+            amount: itemStackAmount
+        })
+        this.db.overwriteDataByID(chest.id, chest.data);
+    }
+    addIconToChestGUIAdvanced(id, code) {
+        let chest = this.db.getByID(id);
+        if(!chest.data.advanced) throw new Error("Chest GUI must be in advanced mode");
+        chest.data.icons.push(code);
+        this.db.overwriteDataByID(chest.id, chest.data);
+    }
+    replaceIconInChestGUIAdvanced(id, code, index = 0) {
+        let chest = this.db.getByID(id);
+        if(!chest.data.advanced) throw new Error("Chest GUI must be in advanced mode");
+        chest.data.icons[index] = code;
+        this.db.overwriteDataByID(chest.id, chest.data);
+    }
     addExampleUI(){
+        return;
         if(this.db.findFirst({scriptevent: "example-ui"})) return;
         if(this.getState("ExampleUI1")) return;
         this.setState("ExampleUI1", true);
@@ -188,6 +312,16 @@ class UIBuilder {
 
     addIdFieldToButtons(){
         for(const ui of this.db.data){
+            if(ui.data.type == 3) {
+                for(let i = 0; i < ui.data.controls.length; i++){
+                    ui.data.controls[i].id = i
+                }
+                ui.data.lastID = ui.data.controls.length - 1
+                if(!ui.data.scriptevent) ui.data.scriptevent = "n/a"
+                let index = this.db.data.findIndex(doc => doc.id == ui.id);
+                this.db.data[index] = ui;
+                this.db.save();
+            }
             if(ui.data.type !== 0) continue;
             for(let i = 0; i < ui.data.buttons.length; i++){
                 ui.data.buttons[i].id = i
@@ -222,9 +356,22 @@ class UIBuilder {
         this.db.overwriteDataByID(id, ui.data);
     }
 
-    initializeDatabases() {
-        this.db = prismarineDb.table(config.tableNames.uis);
-        this.uiState = this.db.keyval("state");
+    async initializeDatabases() {
+        this.db1 = prismarineDb.table(config.tableNames.uis);
+        this.db = prismarineDb.customStorage(config.tableNames.uis + "~new", SegmentedStoragePrismarine)
+        system.run(()=>{
+
+            let flag = world.getDynamicProperty("TRANSITIONSHIT")
+            if(!flag) {
+                for(const doc of this.db1.data) {
+                    this.db.data.push(doc);
+                    this.db.save();
+                }
+                world.setDynamicProperty("TRANSITIONSHIT", true)
+
+            }
+    })
+    this.uiState = await this.db.keyval("state");
         this.tabbedDB = prismarineDb.table("TabbedUI_DB");
         this.tagsDb = prismarineDb.table(`${config.tableNames.uis}~tags`);
     }
@@ -265,25 +412,33 @@ class UIBuilder {
     }
 
     initializeStates() {
-        const defaultStates = [
-            "ActionsV2Experiment",
-            "UIStateEditor",
-            "FormFolders",
-            "UISearch",
-            "UITags",
-            "BuiltinTemplates",
-            "PlayerContentManager",
-            "SubUIs"
-        ];
-        defaultStates.forEach(state => this.setState(state, true));
+        this.db.waitLoad().then(res=>{
+            const defaultStates = [
+                "ActionsV2Experiment",
+                "UIStateEditor",
+                "FormFolders",
+                "UISearch",
+                "UITags",
+                "BuiltinTemplates",
+                "PlayerContentManager",
+                "SubUIs"
+            ];
+            defaultStates.forEach(state => this.setState(state, true));
+        })
     }
 
     setupScriptEventListener() {
         system.afterEvents.scriptEventReceive.subscribe(e => {
             if (e.sourceType === ScriptEventSource.Entity && e.id === config.scripteventNames.open) {
-                const ui = this.db.findFirst({ scriptevent: e.message });
+                let internal = this.internalUIs.find(_=>_.scriptevent == e.message.replace(/\[.*?\]/g, "").trim())
+                const ui = internal ? {data: internal} : this.db.findFirst({ scriptevent: e.message.replace(/\[.*?\]/g, "").trim() });
                 if(ui && ui.data.locked) return;
-                ui && this.open(ui.id, e.sourceEntity);
+                let args = [];
+                let argsRaw = [...e.message.matchAll(/\[(.*?)\]/g)].map(_=> _[1])
+                for(const arg of argsRaw) {
+                    args.push(arg)
+                }
+                ui && this.open(ui, e.sourceEntity, ...args);
             }
         });
 
@@ -306,9 +461,47 @@ class UIBuilder {
         for (const ui of this.db.data) {
             if (ui.data.type !== 0) continue;
             for (const button of ui.data.buttons) {
+                if(!button.iconOverrides) {
+                    button.iconOverrides = [];
+                    this.db.save()
+                }
+                if(!button.displayOverrides) {
+                    button.displayOverrides = [];
+                    this.db.save()
+                }
                 if (!button.actions || !button.actions.length) {
                     button.actions = [button.action];
                     this.db.save();
+                }
+            }
+        }
+    }
+    addIconOverride(id, btnID, iconID, condition, index = -1) {
+        let doc = this.db.getByID(id);
+        if(!doc) return;
+        let index2 = doc.data.buttons.findIndex(button => button.id == btnID);
+        if(index2 == -1) return;
+        if(index == -1) {
+            doc.data.buttons[index2].iconOverrides.push({condition, iconID})
+        } else {
+            doc.data.buttons[index2].iconOverrides[index].iconID = iconID;
+            doc.data.buttons[index2].iconOverrides[index].condition = condition;
+        }
+        this.db.overwriteDataByID(id, doc.data);
+        this.db.save();
+    }
+    migrateOldActionsFormat() {
+        for(const ui of this.db.data) {
+            if(ui.data.type !== 0) continue;
+            for(const button of ui.data.buttons) {
+                for(let i = 0;i < button.actions.length;i++) {
+                    if(typeof button.actions[i] !== "string") continue;
+                    let newData = {
+                        action: button.actions[i],
+                        id: Date.now(),
+                        condition: ""
+                    }
+                    button.actions[i] = newData;
                 }
             }
         }
@@ -339,7 +532,25 @@ class UIBuilder {
     getTags() {
         return this.tagsDb.data.map(({ data: { name, color }}) => ({ name, color }));
     }
-
+    createSnippetBook() {
+        this.db.waitLoad().then(()=>{
+            let ui = this.db.findFirst({type: 5});
+            // this.db.deleteDocumentByID(ui.id)
+            if(ui) return;
+            const baseUI = {
+                name: "Snippet Book",
+                body: "Welcome to snippet book!",
+                layout: 4,
+                type: 5,
+                buttons: [],
+                subuis: {}
+            };
+            this.db.insertDocument(baseUI)
+        })
+    }
+    getSnippetBook() {
+        return this.db.findFirst({type: 5})
+    }
     // UI Management
     createUI(name, body = null, type = "normal", scriptevent, layout = 0) {
         const baseUI = {
@@ -357,13 +568,12 @@ class UIBuilder {
     createModalUI(name, scriptevent) {
         const baseUI = {
             name,
+            scriptevent,
             type: 3,
             controls: []
         };
         return this.db.insertDocument(baseUI);
     }
-
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
     createSubUI(name, body = null, type = "normal", scriptevent, layout = 0) {
         const ui = this.createUI(name, body, type, scriptevent, layout);
@@ -373,8 +583,10 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     moveButtonInUI(id, direction, index){
         const doc = this.getByID(id);
         if(!doc) return;
-        array_move(doc.data.buttons, index, direction == "up" ? index - 1 < 0 ? 0 : index - 1 : index + 1 >= doc.data.buttons.length ? doc.data.buttons.length - 1 : index + 1);
+        let newIndex = direction == "up" ? index - 1 < 0 ? 0 : index - 1 : index + 1 >= doc.data.buttons.length ? doc.data.buttons.length - 1 : index + 1
+        array_move(doc.data.buttons, index, newIndex);
         this.db.overwriteDataByID(id, doc.data);
+        return newIndex;
     }
     editButtonMeta(id, btnID, meta) {
         let doc = this.db.getByID(id);
@@ -385,10 +597,21 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         this.db.overwriteDataByID(id, doc.data);
         this.db.save();
     }
+    editConditionalAction(id, btnID, bool) {
+        let doc = this.db.getByID(id);
+        if(!doc) return;
+        let index = doc.data.buttons.findIndex(button => button.id == btnID);
+        if(index == -1) return;
+        doc.data.buttons[index].conditionalActions = bool;
+        console.warn(JSON.stringify(doc.data))
+        this.db.overwriteDataByID(id, doc.data);
+        this.db.save();
+
+    }
     // Button Management
-    addButtonToUI(id, text, subtext = null, action = "", iconID = "", requiredTag) {
+    addButtonToUI(id, text, subtext = null, action = "", iconID = "", requiredTag, extra = {}) {
         const doc = this.getByID(id);
-        if (!doc || doc.data.type !== 0) return;
+        if (!doc) return;
 
         const newButton = {
             text,
@@ -396,15 +619,17 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
             action,
             actions: [action],
             iconID,
+            iconOverrides: [],
             requiredTag,
-            id: doc.data.lastID ? doc.data.lastID + 1 : 0
+            ...extra,
+            id: doc.data.lastID != null ? doc.data.lastID + 1 : 0,
         };
 
         doc.data.lastID = newButton.id;
 
         doc.data.buttons.push(newButton);
         this.db.overwriteDataByID(id, doc.data);
-        this._autoSaveVersion(id);
+        // this._autoSaveVersion(id);
         return true;
     }
 
@@ -422,7 +647,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         }
         
         this.db.overwriteDataByID(id, doc.data);
-        this._autoSaveVersion(id);
+        // this._autoSaveVersion(id);
         return true;
     }
 
@@ -452,13 +677,27 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     getByID(id) { return this.db.getByID(id); }
     getUIs() { return this.db.findDocuments({type: 0}); }
     getModalUIs() { return this.db.findDocuments({type: 3}); }
-    open(id, player) {
-        const doc = this.getByID(id);
+    open(doc, player, ...args) {
         if (doc && (doc.data.type === 0 || doc.data.type === 1)) {
-            normalForm.open(player, doc.data);
+            normalForm.open(player, doc.data, ...args);
+        }
+        if(doc && doc.data.type == 3) {
+            modalForm.open(player, doc, ...args)
+        }
+        if(doc && doc.data.type == 4) {
+            chestUIOpener.open(doc.data, player, ...args);
         }
     }
-
+    getAllUIs() {
+        let uis = [];
+        for(const ui of this.db.data) {
+            if([0,3,4,2,6].includes(ui.data.type)) uis.push(ui)
+        }
+        return uis;
+    }
+    deleteChestGUI(id) {
+        this.db.trashDocumentByID(id);
+    }
     // UI Validation
     validateUI(uiData) {
         const required = ['name', 'type', 'buttons'];
@@ -557,7 +796,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
             return { success: false, error: validation.error };
         }
 
-        // Import dependencies first if any
+        // Import dependencies first if anys
         let containsConflictingNames = false;
         if (exportedData.dependencies) {
             for (const dep of exportedData.dependencies) {
@@ -592,7 +831,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     getUIDependencies(id) {
         const ui = this.getByID(id);
         if (!ui) return [];
-
+        if(ui.data.type != 0) return []
         const dependencies = [];
 
         for(const button of ui.data.buttons) {
@@ -604,8 +843,8 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                 }
             }
             if(reqUI) {
-                const reqUI = this.db.findFirst({scriptevent: reqUI});
-                if(reqUI) dependencies.push(reqUI.data);
+                const reqUI2 = this.db.findFirst({scriptevent: reqUI});
+                if(reqUI2) dependencies.push(reqUI2.data);
             }
         }
         
@@ -619,6 +858,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
         return dependencies;
     }
+    
     duplicateUI(id){
         const ui = this.getByID(id);
         if(!ui) return;
@@ -695,19 +935,19 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
     // Internal method to automatically save versions
     _autoSaveVersion(id) {
-        const ui = this.getByID(id);
-        if (!ui) return null;
+        // const ui = this.getByID(id);
+        // if (!ui) return null;
 
-        const newVersion = this.versionsDb.insertDocument({
-            uiId: id,
-            timestamp: Date.now(),
-            data: JSON.parse(JSON.stringify(ui.data))
-        });
+        // const newVersion = this.versionsDb.insertDocument({
+        //     uiId: id,
+        //     timestamp: Date.now(),
+        //     data: JSON.parse(JSON.stringify(ui.data))
+        // });
 
-        // Automatically cleanup old versions after saving a new one
-        this.cleanupVersions(id);
+        // // Automatically cleanup old versions after saving a new one
+        // this.cleanupVersions(id);
 
-        return newVersion;
+        // return newVersion;
     }
 
     // Get version history for a UI
@@ -730,7 +970,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         if (!version) return false;
 
         // Save current state before restoring
-        this._autoSaveVersion(version.data.uiId);
+        // this._autoSaveVersion(version.data.uiId);
 
         // Restore the old version
         this.db.overwriteDataByID(version.data.uiId, version.data.data);
@@ -759,6 +999,84 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         versionsToDelete.forEach(version => {
             this.versionsDb.deleteDocumentByID(version.id);
         });
+    }
+
+    addButtonGroupToUI(id, buttonRow = false) {
+        const doc = this.getByID(id);
+        if (!doc || doc.data.type !== 0) return;
+
+        const newGroup = {
+            type: "group",
+            buttons: [],
+            buttonRow: buttonRow,
+            id: doc.data.lastID != null ? doc.data.lastID + 1 : 0
+        };
+
+        doc.data.lastID = newGroup.id;
+        doc.data.buttons.push(newGroup);
+        this.db.overwriteDataByID(id, doc.data);
+        return true;
+    }
+
+    addButtonToGroup(id, groupIndex, buttonData) {
+        const doc = this.getByID(id);
+        if (!doc) {
+            console.warn(`No document found with ID ${id}`);
+            return;
+        }
+
+        // Debug log the buttons array
+        console.warn(`Total buttons: ${doc.data.buttons.length}`);
+        console.warn(`Attempting to add to group at index ${groupIndex}`);
+
+        const group = doc.data.buttons[groupIndex];
+        if (!group || group.type !== "group") {
+            console.warn(`Invalid group at index ${groupIndex}. Found: ${JSON.stringify(group)}`);
+            return;
+        }
+
+        // Initialize buttons array if it doesn't exist
+        if (!group.buttons) {
+            group.buttons = [];
+        }
+
+        // Create new button with proper ID
+        const newButton = {
+            ...buttonData,
+            id: doc.data.lastID + 1,
+            actions: buttonData.action ? [buttonData.action] : buttonData.actions || []
+        };
+
+        doc.data.lastID = newButton.id;
+        group.buttons.push(newButton);
+        
+        // Debug log
+        console.warn(`Added button to group ${groupIndex}, now has ${group.buttons.length} buttons`);
+        
+        this.db.overwriteDataByID(id, doc.data);
+        this.db.save(); // Force save to ensure changes persist
+        return true;
+    }
+
+    moveButtonInGroup(id, groupIndex, buttonIndex, direction) {
+        const doc = this.getByID(id);
+        if (!doc) return;
+
+        const group = doc.data.buttons[groupIndex];
+        if (!group || group.type !== "group") return;
+
+        const newIndex = direction === "left" || direction === "up" ? 
+            buttonIndex - 1 : buttonIndex + 1;
+        
+        if (newIndex < 0 || newIndex >= group.buttons.length) return;
+
+        // Swap buttons
+        const temp = group.buttons[buttonIndex];
+        group.buttons[buttonIndex] = group.buttons[newIndex];
+        group.buttons[newIndex] = temp;
+
+        this.db.overwriteDataByID(id, doc.data);
+        return newIndex;
     }
 }
 

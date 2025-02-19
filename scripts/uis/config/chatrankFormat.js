@@ -1,7 +1,7 @@
 import configAPI from "../../api/config/configAPI";
 import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
-import config from "../../config";
+import config from "../../versionData";
 
 uiManager.addUI(config.uiNames.Config.ChatrankFormat, "Chat rank format editor", (player)=>{
     let modalForm = new ModalForm();
@@ -10,6 +10,6 @@ uiManager.addUI(config.uiNames.Config.ChatrankFormat, "Chat rank format editor",
     modalForm.show(player, false, (player, response)=>{
         if(response.canceled) return uiManager.open(player, config.uiNames.ConfigRoot)
         configAPI.setProperty("chatformat", response.formValues[0]);
-        uiManager.open(player, config.uiNames.ConfigRoot)
+        uiManager.open(player, config.uiNames.Config.Misc)
     })
 })

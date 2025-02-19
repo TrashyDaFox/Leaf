@@ -32,20 +32,24 @@
   乀 (ˍ,  ل            じしˍ,)ノ
 
 */
-import { Player } from "@minecraft/server";
+import { EntityDamageCause, Player, world } from "@minecraft/server";
 import playerStorage from "./playerStorage";
 import { prismarineDb } from "../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
 import inviteManager from "./inviteManager";
-
+import configAPI from "./config/configAPI";
+let db = prismarineDb.customStorage("clans", SegmentedStoragePrismarine);
+let keyval = await prismarineDb.keyval("Clans");
+configAPI.registerProperty("EnableStealXPOnKill", configAPI.Types.Boolean, true)
 class OpenClanAPI {
     constructor() {
         this.name = "OpenClanAPI";
         this.version = 1.0;
-        this.db = prismarineDb.customStorage("clans", SegmentedStoragePrismarine);
-        this.keyval = prismarineDb.keyval("Clans");
+        this.db = db;
+        this.keyval = keyval;
         this.bankDb = prismarineDb.customStorage("clans_bank", SegmentedStoragePrismarine)
         this.clanMessageEvents = [];
+        this.initEvents()
     }
     /**
      * @description creates a clan message event
@@ -74,6 +78,122 @@ class OpenClanAPI {
         })
         this.keyval.set(ownerID, clanID);
         return clanID;
+    }
+    addXP(clanID, xp, multiplier) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        doc.data.xp += xp * multiplier;
+        this.db.overwriteDataByID(doc.id, doc.data)
+    }
+    removeXP(clanID, xp) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        doc.data.xp -= xp;
+        this.db.overwriteDataByID(doc.id, doc.data)
+    }
+    getKiller(damageSource) {
+        let {damagingEntity, damagingProjectile} = damageSource;
+        if(damagingEntity) return damagingEntity;
+        try {
+            let projectileComponent = damagingProjectile.getComponent('minecraft:projectile');
+            return projectileComponent.owner ? projectileComponent.owner : null;
+        } catch {
+            return null;
+        }
+        return null;
+    }
+    getClanXPMultiplier(clanID) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        return doc.data.xpMult ? doc.data.xpMult : 1;
+    }
+    getClanXP(clanID) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        return doc.data.xp ? doc.data.xp : 0;
+    }
+    setPublicClan(clanID, value = true) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        doc.data.isPublic = value;
+        this.db.overwriteDataByID(doc.id, doc.data)
+    }
+    getPublicClans() {
+        return this.db.findDocuments({isPublic: true}).sort((b,a)=>{
+            return (b.data.xp ? b.data.xp : 0) - (a.data.xp ? a.data.xp : 0)
+        })
+    }
+    setClanQuestions(clanID, questions = []) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        doc.data.applicationQuestions = questions;
+        this.db.overwriteDataByID(doc.id, doc.data)
+    }
+    getClanQuestions(clanID) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        return doc.data.applicationQuestions ? doc.data.applicationQuestions : [];
+    }
+    getApplications(clanID) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        return doc.data.applications ? doc.data.applications : [];
+    }
+    submitApplication(clanID, player, answers) {
+        let doc = this.db.getByID(clanID);
+        if(!doc) return;
+        let application = {
+            playerID: playerStorage.getID(player),
+            answers: []
+        }
+        let questions = this.getClanQuestions(clanID)
+        for(let i = 0;i < answers.length;i++) {
+            application.answers.push([questions[i], answers[i]])
+        }
+        doc.data.applications = [...this.getApplications(clanID), application];
+        this.db.overwriteDataByID(doc.id, doc.data)
+
+    }
+    initEvents() {
+        world.afterEvents.entityDie.subscribe(e=>{
+            let killer = this.getKiller(e.damageSource)
+            if(!killer) return;
+            if(killer.typeId != "minecraft:player") return;
+            let clanID = this.getClanID(killer);
+            if(!clanID) return;
+            let clanXPMultiplier = this.getClanXPMultiplier(clanID)
+            let clan = this.db.getByID(clanID)
+            let currLevel = this.getLevel(this.getClanXP(clanID));
+            switch(e.deadEntity.typeId) {
+                case "minecraft:wither":
+                    this.addXP(clanID, 100, clanXPMultiplier)
+                case "minecraft:ender_dragon":
+                    this.addXP(clanID, 200, clanXPMultiplier)
+                case "minecraft:warden":
+                    this.addXP(clanID, 250, clanXPMultiplier)
+                case "minecraft:player":
+                    let extra = 0;
+                    if(configAPI.getProperty("EnableStealXPOnKill")) {
+                        try {
+                            let clan = this.getClan(e.deadEntity)
+                            extra = Math.floor(Math.min((clan.data.xp ? clan.data.xp : 0) * 0.1, 500));
+                            this.removeXP(clan.id, extra)
+                        } catch {}
+                    }
+                    this.addXP(clanID, 20 + extra, clanXPMultiplier)
+                case "minecraft:skeleton":
+                    this.addXP(clanID, 20, clanXPMultiplier)
+                default:
+                    this.addXP(clanID, 5, clanXPMultiplier)
+            }
+            let newLevel = this.getLevel(this.getClanXP(clanID));
+            if(newLevel > currLevel) {
+                killer.sendMessage(`§aLEVEL UP §8§l>> §r§7Your clan leveled up to §aLvl ${newLevel}`)
+            }
+        })
+    }
+    getLevel(xp) {
+        return Math.floor((xp / 100) ** (1 / 1.4))
     }
     /**
      * 
@@ -232,6 +352,12 @@ class OpenClanAPI {
         let playerID = playerStorage.getID(player);
         let id = this.keyval.has(playerID) ? this.keyval.get(playerID) : null;
         if(id) return this.db.getByID(id)
+        return null;
+    }
+    getClanID(player) {
+        let playerID = playerStorage.getID(player);
+        let id = this.keyval.has(playerID) ? this.keyval.get(playerID) : null;
+        if(id) return id;
         return null;
     }
     disbandClan(clanID) {

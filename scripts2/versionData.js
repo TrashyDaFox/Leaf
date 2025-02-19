@@ -106,6 +106,7 @@ export default {
             Advanced: "advanced_config | Leaf/Config/Advanced"
         },
         Modal: {
+            Preview: "modal_preview | Leaf/UIs/Modals/Preview",
             Root: "modal_root | Leaf/UIs/Modals/Root",
             Add: "modal_add | Leaf/UIs/Modals/Add",
             Edit: "modal_edit | Leaf/UIs/Modals/Edit",

@@ -1,7 +1,7 @@
 // Added in v0.1
 import translation from "../../api/translation";
 import uiBuilder from "../../api/uiBuilder";
-import config from "../../config";
+import config from "../../versionData";
 import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 
@@ -31,6 +31,14 @@ uiManager.addUI(config.uiNames.UIBuilderAdd, "Add a UI", (player, defaultTitle =
         },
         {
             option: "Normal (with player model)",
+            callback() {}
+        },
+        {
+            option: "CherryUI",
+            callback() {}
+        },
+        {
+            option: "Dropdown",
             callback() {}
         }
     ], ui2 ? ui2.data.layout ? ui2.data.layout : 0 : 0);

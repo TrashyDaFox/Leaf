@@ -13,17 +13,21 @@ i call him plant kitty
 leaf mascot real?
 */
 import { world, system, ScriptEventSource, Player, Block } from '@minecraft/server';
-import './uis/modal-form-editor/index.js'
+import { CommandHandler } from './api/commandHandler.js';
+import * as mc from '@minecraft/server'
 import './commands/broadcast.js'
 import uiManager from './uiManager.js';
-import config from './config';
+import './uis/uiBuilder/editIconOverrides.js'
+import config from './versionData.js';
 import './api/Scriptevents/switchSidebar.js'
 import './uis/uiBuilder/root';
 import './test'
 import './uis/clans/root.js'
 import './uis/clans/create.js'
+import './uis/moderation_hub/index'
 import './uis/CustomCommands/root.js'
 import './uis/bounty/index.js'
+import './uis/preset_browser/index.js'
 import './commands/pwarp.js'
 import './uis/clans/invite.js';
 import './uis/actions/root.js'
@@ -55,7 +59,6 @@ import './commands/help';
 import './commands/uisList';
 import './commands/warp.js'
 import './commands/speakas.js';
-import './uis/chests/root';
 import './uis/chests/add';
 import './uis/chests/edit';
 import './uis/chests/editItems';
@@ -160,6 +163,9 @@ import { ActionForm, ModalForm } from './lib/form_func.js';
 import { worldTags } from './worldTags.js';
 import { TabUI } from './lib/leafTabUIs.js';
 import beforeChat from './beforeChat.js';
+import './uis/modal-form-editor/index.js'
+import './uis/chests/root';
+
 let blockTests = [
     {
         name: "Property Test (SET)",
@@ -290,7 +296,13 @@ system.afterEvents.scriptEventReceive.subscribe(e => {
             if (!tabUI) return;
             openTabUI(tabUI, e.sourceEntity)
         }
-
+        if(e.id == "leaf:delay") {
+            let amt = parseInt(e.message.split(' ')[0])
+            let cmd = e.message.split(' ').slice(1).join(' ').trim();
+            system.runTimeout(()=>{
+                e.sourceEntity.runCommand(cmd.startsWith('/') ? cmd.substring(1) : cmd)
+            }, amt)
+        }
     }
 })
 
@@ -454,7 +466,7 @@ system.afterEvents.scriptEventReceive.subscribe(e => {
         uiManager.open(e.sourceEntity, e.id.substring(config.scripteventNames.openDefault.length), ...args2);
     }
 })
-let recordsDb = prismarineDb.customStorage("Records", SegmentedStoragePrismarine);
+// let recordsDb = prismarineDb.customStorage("Records", SegmentedStoragePrismarine);
 
 OpenClanAPI.onClanMessage((player2, clanID, message) => {
     try {
@@ -478,6 +490,7 @@ OpenClanAPI.onClanMessage((player2, clanID, message) => {
 world.beforeEvents.chatSend.subscribe(e => {
     beforeChat(e)
 })
+
 // |\---/|
 // | o_o |  "I protect this function from bugs!"
 //  \_^_/
@@ -493,8 +506,12 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{
     }
 })
 world.afterEvents.itemUse.subscribe(e => {
-    if (e.source.typeId == "minecraft:player" && e.itemStack.typeId == config.items.LeafConfig && prismarineDb.permissions.hasPermission(e.source, "configui.open")) {
-        uiManager.open(e.source, config.uiNames.ConfigRoot)
+    if (e.source.typeId == "minecraft:player" && e.itemStack.typeId == config.items.LeafConfig) {
+        if(prismarineDb.permissions.hasPermission(e.source, "configui.open")) {
+            uiManager.open(e.source, config.uiNames.ConfigRoot)
+        } else {
+            e.source.error("You dont have permissions to do this. Do /tag @s add admin")
+        }
     }
     if (e.source.typeId == "minecraft:player" && e.itemStack.typeId == "leaf:shop") {
         uiManager.open(e.source, config.uiNames.Shop.Root)

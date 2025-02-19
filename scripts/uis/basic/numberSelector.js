@@ -1,8 +1,8 @@
-import config from "../../config";
+import config from "../../versionData";
 import { ModalForm } from "../../lib/form_func";
 import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
-
+import'./pinCode'
 uiManager.addUI(config.uiNames.Basic.NumberSelector, "Number Select", (player, callback, label = "Price", showCurrencySelector = false, min = 0, max = Infinity, negativesAllowed = false, defaultValue = undefined, defaultCurrency = undefined, error = "")=>{
     let modal = new ModalForm();
     modal.textField(`${label}${error ? `\n§c${error}` : ``}`, `Type a number`, defaultValue ? defaultValue.toString() : undefined)

@@ -1,13 +1,20 @@
 import commandManager from "./api/commands/commandManager";
 import configAPI from "./api/config/configAPI";
 import OpenClanAPI from "./api/OpenClanAPI";
-import config from "./config";
+import config from "./versionData";
 import { createMessage } from "./createMessage";
+import { isMuted } from "./uis/moderation_hub/bans";
 
 export default function(e) {
     if (e.message.startsWith('!')) {
         e.cancel = true;
         commandManager.run(e)
+        return;
+    }
+    let playerIsMuted = isMuted(e.sender);
+    if(playerIsMuted) {
+        e.cancel = true;
+        e.sender.error("You are muted :<")
         return;
     }
     if (configAPI.getProperty("Chatranks")) {

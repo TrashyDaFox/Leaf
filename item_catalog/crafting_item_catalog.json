@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:crafting_items_catalog": {
+        "categories": [
+            {
+                "category_name": "items",
+                "groups": [
+                    {
+                        "group_identifier": {
+                            "icon": "leaf:config_ui",
+                            "name": "leaf:admin"
+                        },
+                        "items": [
+                            "leaf:config_ui",
+                            "leaf:entity_editor",
+                            "leaf:block_editor"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

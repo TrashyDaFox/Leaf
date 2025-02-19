@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { system, world } from '@minecraft/server';
 import { prismarineDb } from '../lib/prismarinedb';
 const generateUUID = () => {
     let
@@ -47,18 +47,68 @@ class SegmentedStoragePrismarine {
     save(table, data) {
         let data2 = JSON.stringify(data).match(/.{1,31000}/g);
         for(let i = 0;i < data2.length;i++) {
-            world.setDynamicProperty(`segmentedstorage_${i}:${table}`, data2[i]);
+            system.run(()=>{
+                world.setDynamicProperty(`segmentedstorage_${i}:${table}`, data2[i]);
+
+            })
         }
-        world.setDynamicProperty(`segmentedstorage:segment_count_${table}`, data2.length);
+        system.run(()=>{
+            world.setDynamicProperty(`segmentedstorage:segment_count_${table}`, data2.length);
+        })
     }
 }
 
+let db2 = prismarineDb.customStorage("PlayerStorage", SegmentedStoragePrismarine);
+let keyval = await db2.keyval("playerstorage");
+let rewardsKeyval = await db2.keyval("rewards");
 
 class PlayerStorage {
     constructor() {
-        this.db = prismarineDb.customStorage("PlayerStorage", SegmentedStoragePrismarine);
-        this.keyval = this.db.keyval("playerstorage");
-        this.rewardsKeyval = this.db.keyval("rewards");
+        this.db = db2;
+        this.keyval = keyval;
+        this.rewardsKeyval = rewardsKeyval;
+        this.a();
+    }
+    a() {
+        system.runInterval(async ()=>{
+            for(const player of world.getPlayers()) {
+                let entityTable = prismarineDb.entityTable("Data", player);
+                let keyval = await entityTable.keyval("_data");
+                let id = keyval.get("id")
+                if(!id) {
+                    let uuid = generateUUID();
+                    keyval.set("id", uuid);
+                    ids[player.id] = uuid;
+                    // return uuid;
+                } else {
+                    ids[player.id] = id;
+                    // return id;
+                }
+            }
+        },10)
+    }
+    getIDAsync(player) {
+        return new Promise((resolve, reject)=>{
+            system.run(async ()=>{
+                if(!ids[player.id]) {
+                    let entityTable = prismarineDb.entityTable("Data", player);
+                    let keyval = await entityTable.keyval("_data");
+                    let id = keyval.get("id")
+                    if(!id) {
+                        let uuid = generateUUID();
+                        keyval.set("id", uuid);
+                        ids[player.id] = uuid;
+                        resolve(uuid);
+                    } else {
+                        ids[player.id] = id;
+                        resolve(id);
+                    }
+                } else {
+                    resolve(ids[player.id]);
+                }
+            })
+    
+        })
     }
     getID(player) {
         if(!ids[player.id]) {
@@ -134,6 +184,10 @@ class PlayerStorage {
     searchPlayersByName(name) {
         let ids = [];
         for(const key of this.keyval.keys()) {
+            if(name == "") {
+                ids.push(key)
+                continue;
+            }
             let data = this.keyval.get(key);
             if(this.parseName(data.name).includes(this.parseName(name))) ids.push(key);
         }

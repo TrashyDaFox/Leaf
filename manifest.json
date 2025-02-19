@@ -1,11 +1,11 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "§2Leaf §aEssentials §7- §6v2.2.1.2",
-		"description": "Probably one of the most stable versions of leaf. Please do not stare at the goofy comments directly.",
+		"name": "§2Leaf §aEssentials §7- §6v2.3",
+		"description": "(MAJOR BUGFIX) Probably one of the most stable versions of leaf. Please do not stare at the goofy comments directly.",
 		"min_engine_version": [1, 20, 80],
 		"uuid": "89ed7dc6-aace-431e-b02b-162b61ea2ea7",
-		"version": [1, 0, 32]
+		"version": [1, 0, 43]
 	},
 	"modules": [
 		{
@@ -14,29 +14,30 @@
 			"language": "javascript",
 			"uuid": "193360c7-c32b-4eb1-8c5c-dd1d188d1fa3",
 			"entry": "scripts/main.js",
-			"version": [1, 0, 32]
+			"version": [1, 0, 43]
 		},
 		{
 			"description": "Data Module",
 			"type": "data",
 			"uuid": "afecf66b-2000-443d-81d1-4064c97c7c1a",
-			"version": [1, 0, 32]
+			"version": [1, 0, 43]
 		}
 	],
 	"dependencies": [
 		{
 			"module_name": "@minecraft/server",
-			"version": "1.17.0-beta"
+			"version": "2.0.0-beta"
 		},
 		{
 			"module_name": "@minecraft/server-ui",
-			"version": "1.4.0-beta"
+			"version": "2.0.0-beta"
 		}
 	],
 	"capabilities": ["script_eval"],
 	"metadata": {
-		"generated_with": {
-			"blockbench_entity_wizard": ["1.5.0", "1.6.0"]
-		}
+		"authors": ["TrashyKitty", "FruitKitty"],
+		"license": "MIT",
+		"url": "https://leaf.trashdev.org",
+		"product_type": "addon"
 	}
 }

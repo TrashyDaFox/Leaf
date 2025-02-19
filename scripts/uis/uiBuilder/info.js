@@ -1,7 +1,7 @@
 import { builderTabUI } from './root';
 import uiBuilder from "../../api/uiBuilder";
 import uiManager from "../../uiManager";
-import config from "../../config";
+import config from "../../versionData";
 
 builderTabUI.registerTab("\uE17F Info", (player) => {
     const buttons = [{
@@ -15,9 +15,9 @@ builderTabUI.registerTab("\uE17F Info", (player) => {
         "§eLeaf Essentials UI Builder",
         "",
         "§fEnhanced UI Builder Experiment: §aEnabled",
-        "§fVersion: §a2.0",
+        "§fVersion: §a3.0",
         "",
-        "§bMade by TheLegendaryTrashcan"
+        "§bMade with <3 by TrashyKitty"
     ];
 
     if(uiBuilder.db.data.length > 0){
@@ -28,8 +28,8 @@ builderTabUI.registerTab("\uE17F Info", (player) => {
         infoText.push("");
         infoText.push("§b----- UI IDs (debug) -----");
         for(const ui of uiBuilder.db.data){
-            if(ui.data.type !== 0) continue;
-            infoText.push(`§f${ui.data.name} §r§7: §a${ui.id}`);
+            if(ui.data.type !== 0 && ui.data.type !== 3 && ui.data.type !== 4) continue;
+            infoText.push(`§f${ui.data.type == 4 ? ui.data.title : ui.data.name} §r§7: §a${ui.id}`);
         }
     }
 
@@ -38,3 +38,7 @@ builderTabUI.registerTab("\uE17F Info", (player) => {
         body: infoText.join("\n§r§f")
     };
 });
+
+uiManager.addUI(config.uiNames.UIBuilderInfo, "asddsad", player=>{
+    builderTabUI.open(player, 0)
+})

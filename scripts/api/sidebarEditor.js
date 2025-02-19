@@ -32,6 +32,7 @@ class SidebarEditor {
         this.lineCaches = {};
     }
     createSidebar(name) {
+        if(!name) return; // fix empty sidebar bug. reported by theboss12332397
         let doc = this.db.findFirst({
             _name: name
         })
