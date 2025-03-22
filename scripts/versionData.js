@@ -10,8 +10,8 @@ export default {
         chatformat: `{{has_tag clan-chat "<nc>:small_diamond: " "<bl>"}}{{is_afk "§7AFK "}}{{clan "<bc>[§r§7<nc>[@CLAN]§r<bc>] "}}{{has_tag staffchat "<bc>[<nc> StaffChat §r<bc>] " "<bl>"}}§r<bc>[ <rc>{{rank_joiner "<drj>"}}§r<bc> ] §r<nc><name> §r§l<bc><dra> §r<mc><msg>`
     },
     versionInfo: {
-        versionName: "Update 2.2.2",
-        versionInternalID: 2, // 1 starts with october 2024 update
+        versionName: "Update 2.8",
+        versionInternalID: 3, // 1 starts with october 2024 update
         versionData: new Map([
             [
                 1,
@@ -26,6 +26,13 @@ export default {
 					versionName: "Update 2.2.2",
 					versionInternalID: 2
 				}
+			],
+            [
+				3,
+				{
+					versionName: "Update 2.8",
+					versionInternalID: 3
+				}
 			]
         ])
     },
@@ -38,8 +45,31 @@ export default {
         openDefault: "leafgui:",
     },
     uiNames: {
+        LandClaims: {
+            Root: "land_claims",
+            Manage: "land_claims_manage",
+            ManageClaim: "manage_land_claim",
+            Configure: "land_claims_config"
+        },
+        CombatLogConfig: "combat_log",
+        ItemIconSelector: "item_icon_selector | Leaf/Items/Icons/Selector",
         PresetBrowser: {
             Root: "preset_browser",
+        },
+        Zones: {
+            Root: "zones | Leaf/Zones/Root",
+            Add: "zones_add | Leaf/Zones/Add",
+            Edit: "zones_edit | Leaf/Zones/Edit",
+            EditFlags: "zones_edit_flags | Leaf/Zones/EditFlags"
+        },
+        AuctionHouse: {
+            Root: "ah_root | Leaf/AuctionHouse/Root",
+            ViewAuctions: "ah_view | Leaf/AuctionHouse/View",
+            Start: "ah_start | Leaf/AuctionHouse/Start",
+            ViewAuction: "ah_view_auction | Leaf/AuctionHouse/View/Auction",
+            Settings: {
+                Root: "ah_settings | Leaf/AuctionHouse/Settings/Root"
+            }
         },
         Bounty: {
             View: "bounty_view | Leaf/Bounty/View",
@@ -70,9 +100,15 @@ export default {
 			DevToggles: "dev_toggles | Leaf/DevSettings/DevToggles",
 			DevSetPassword: "dev_set_password | Leaf/DevSettings/SetPassword",
 		},
+        DevHub: "dev | Leaf/Dev",
+        ImportUI: "ui_import | Leaf/Import/UI",
         Lock: "lock | Leaf/ChestLocking/Lock",
         UIBuilderRoot: "ui_builder_main_page | Leaf/UIBuilder/Root",
+        UIBuilderTrash: "ui_builder_trash | Leaf/UIBuilder/Trash",
+        UIBuilderAddSeparator: "ui_builder_add_separator | Leaf/UIBuilder/Add/ViewSeparator",
+        UIBuilderLeaf: "edit_leaf_uis | Leaf/UIBuilder/Edit/LeafUIs",
         UIBuilderAdd: "ui_builder_create_ui | Leaf/UIBuilder/Add",
+        UIBuilderAddSubmenu: "ui_builder_create_ui_selector | Leaf/UIBuilder/Add/Selector",
         UIBuilderSearch: "ui_builder_search_uis | Leaf/UIBuilder/Search",
         UIBuilderEdit: "ui_builder_edit_ui | Leaf/UIBuilder/Edit",
         UIBuilderEditButtons: "ui_builder_edit_buttons | Leaf/UIBuilder/EditButtons",
@@ -84,6 +120,7 @@ export default {
         UIBuilderTabbed: "ui_builder_tabbed | Leaf/UIBuilder/Tabbed",
         UIBuilderTabbedCreate: "ui_builder_tabbed_create | Leaf/UIBuilder/Tabbed/Create",
         UIBuilderTabbedEdit: "ui_builder_tabbed_edit | Leaf/UIBuilder/Tabbed/Edit",
+        UIBuilderHelp: "uihelp | Leaf/UIBuilder/Help",
         UIBuilderTabbedEditTabs: "ui_builder_tabbed_edit_tabs | Leaf/UIBuilder/Tabbed/EditTabs",
         ConfigRoot: "config_menu_start_page | Leaf/Config/Root",
         ConfigMain: "config_menu_main_settings | Leaf/Config/Main",
@@ -146,6 +183,8 @@ export default {
         CurrencyEditor: "currency_editor | Leaf/CurrencyEditor/Root",
         CurrencyEditorAdd: "add_currency | Leaf/CurrencyEditor/Add",
         IconViewer: "icon_viewer | Leaf/IconViewer",
+        ToastBuilderAdd: "toast_builder_add | Leaf/Toast/Add",
+        ToastBuilderEdit: "toast_builder_edit | Leaf/Toast/Edit",
         PlayerShops: {
             Root: "player_shop_root | Leaf/PlayerShops/Root",
             View: "player_shop_view | Leaf/PlayerShops/View",
@@ -210,6 +249,7 @@ export default {
         },
         UIBuilderList: "ui_builder_list | Leaf/UIBuilder/List",
         UIBuilderFolders: "ui_builder_folders | Leaf/UIBuilder/Folders",
+        UIBuilderFolder: "ui_builder_folder | Leaf/UIBuilder/Folder",
         UIBuilderFoldersView: "ui_builder_folders_view | Leaf/UIBuilder/Folders/View",
         TpaRoot: "tpa_root | Leaf/Tpa/Root",
         TpaIncoming: "tpa_incoming | Leaf/Tpa/Incoming",
@@ -228,7 +268,9 @@ export default {
                 Add: "add_mute | Leaf/Mute/Add"
             }
         },
+        MCBEToolsAuth: "mcbetools_auth",
         Basic: {
+            PlayerSelector: "player_selector | Leaf/Basic/PlayerSelector",
             PinCode: "pin_code_input | Leaf/Basic/PinCode",
             MuteModal: "mute_modal | Leaf/Basic/MuteModal",
             BanModal: "ban_modal | Leaf/Basic/BanModal",
@@ -258,7 +300,7 @@ export default {
         Username: "Leaf Essentials"
     },
     HTTPEnabled: true,
-    Endpoint: "http://localhost:3004",
+    Endpoint: "https://mcbetools.com/api/leaf",
     items: {
         LeafConfig: "leaf:config_ui"
     }

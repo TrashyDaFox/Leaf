@@ -2,6 +2,7 @@ import { ChestFormData } from "../../lib/chestUI";
 import actionParser from "../actionParser";
 import { formatStr } from "../azaleaFormatting";
 import icons from "../icons";
+import normalForm from "../openers/normalForm";
 import common from "./common";
 
 class ChestGUIOpener {
@@ -13,7 +14,7 @@ class ChestGUIOpener {
         return formatStr(newStr, player);
     }
     open(form, player, ...args) {
-        let chest = new ChestFormData(form.rows == 0.5 ? "5" : (form.rows * 9).toString());
+        let chest = new ChestFormData(form.rows == 0.5 ? "5" : (Math.min(form.rows * 9, 6 * 9)).toString());
         chest.title(form.title);
         let advancedSlots = [];
         if(form.advanced) {
@@ -67,7 +68,23 @@ class ChestGUIOpener {
             if(res.canceled) return;
             let icon = form.icons.find(_=>_.slot == res.selection);
             if(icon) {
-                actionParser.runAction(player, icon.action);
+                if(icon.buyButtonEnabled) {
+                    normalForm.handleTransaction(player, icon, true).then(()=>{
+                        this.open(form, player, ...args);
+                    });
+                } else if(icon.sellButtonEnabled) {
+                    normalForm.handleTransaction(player, icon, false).then(()=>{
+                        this.open(form, player, ...args);
+                    });
+                } else {
+                    if(!icon.actions) {
+                        actionParser.runAction(player, icon.action);
+                    } else {
+                        for(const action of icon.actions) {
+                            actionParser.runAction(player, action);
+                        }
+                    }
+                }
             }
         })
         // {

@@ -12,6 +12,25 @@ import { ActionFormData } from "@minecraft/server-ui";
 uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (player, id, multiselect = [], selectingButton = false, response)=>{
     if(id == 1719775088275) return;
     let form = uiBuilder.db.getByID(id);
+    let view = player.getDynamicProperty(`ViewFilter:${id}`) ? player.getDynamicProperty(`ViewFilter:${id}`) : 0;
+    let views = [];
+    for(const button of form.data.buttons) {
+        if(!views.length && button.type != "separator") {
+            views.push({name: "Default View", id: -1})
+        }
+        if(button.type == "separator") {
+            views.push({name: button.label, id: button.id})
+        }
+    }
+    if(!views.length) {
+        views.push({name: "Default View", id: -1})
+    }
+    let viewFilter = -2;
+    if(view > 0) {
+        let newView = view - 1;
+        let viewIndex = newView < 0 ? 0 : newView >= views.length ? views.length - 1 : newView;
+        viewFilter = views[viewIndex].id;
+    }
     let actionForm = new ActionForm();
     let pre = `§r`;
     let snippetBook = uiBuilder.getSnippetBook();
@@ -57,7 +76,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
         if(!selectingButton) {
             actionForm.button(`§aAdd Element\n§7Add button, header, or label`, `textures/azalea_icons/1`, (player)=>{
                 let addMenu = new ActionForm();
-                addMenu.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[3][0]}§rAdd Element`);
+                addMenu.title(`${NUT_UI_TAG}${themString}§rAdd Element`);
                 
                 addMenu.button(`${NUT_UI_HEADER_BUTTON}§cBack\n§7Return to buttons`, "textures/azalea_icons/2", (player)=>{
                     uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
@@ -88,6 +107,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                 });
                 let form2 = new ActionFormData();
                 if(form2.divider && form2.header && form2.label) {
+                // if(true) {
                     addMenu.button("§bAdd Header\n§7Large text display", "textures/azalea_icons/add_header", (player)=>{
                         let modal = new ModalForm();
                         modal.textField("Header Text", "Enter header text", "");
@@ -104,7 +124,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                     });
                     addMenu.button("§eAdd Label\n§7Regular text display", "textures/azalea_icons/add_label", (player)=>{
                         let modal = new ModalForm();
-                        modal.textField("Label Text", "Enter label text", "");
+                        modal.textField("Label Text", "Enter label text", "", ()=>{}, "Meow meow meow! (test)");
                         modal.show(player, false, (player, response)=>{
                             if(response.canceled) return uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
                             if(!response.formValues[0]) return uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
@@ -123,8 +143,10 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                         });
                         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
                     });
-    
                 }
+                addMenu.button("§dView Separator\n§7Invisible utility component", "textures/items/add_divider", (player)=>{
+                    uiManager.open(player, config.uiNames.UIBuilderAddSeparator, id)
+                })
                 if(id != snippetBook.id) {
                     addMenu.button("§cAdd From Snippet Book\n§7Snippet book component", icons.resolve(`leaf/image-0876`), (player)=>{
                         uiManager.open(player, config.uiNames.UIBuilderEditButtons, snippetBook.id, [], true, (snID)=>{
@@ -145,6 +167,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
         }
     
     }
+
     if(!selectingButton) {
         actionForm.button(`§aMultiselect ${multiselectMode ? "OFF" : "ON"}\n§7Do stuff`, `textures/ui/multiselection`, (player)=>{
             if(multiselectMode) {
@@ -156,12 +179,20 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
         })
     
     }
+    if(views.length > 1) {
+        let viewList = ["All", ...views.map(_=>_.name)]
+        let viewIndex = view < 0 ? 0 : view >= viewList.length ? viewList.length - 1 : view;
+        actionForm.button(`§cSet View Filter\n§7Current: ${viewList[viewIndex]}`, null, (player)=>{
+            player.setDynamicProperty(`ViewFilter:${id}`, viewIndex + 1 >= viewList.length ? 0 : viewIndex + 1)
+            uiManager.open(player, config.uiNames.UIBuilderEditButtons, id, multiselect, selectingButton, response)
+        })
+    }
     if(!nutUIPreview && form.data.layout == 4) {
         // actionForm.button(`§p§4§0§r§f§aPreview Mode OFF\n§7This will give you a raw view of your UI.`, `textures/ui/icon_preview`)
     }
     // Add Button section with submenu
 
-    if(form.data.layout == 0) actionForm.divider()
+    if(form.data.layout == 0 || form.data.layout == 4) actionForm.divider()
     /*
         "$key": "§p§4§0",
 "$BUTTON_SIZER_left_third": "§p§1§1",
@@ -171,15 +202,30 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
 	"$VERTICAL_PROCESSING_no_height_key": "§p§0§0",
     */
     // List existing buttons/headers/labels
+    let currView = -1;
     for(let index = 0;index < form.data.buttons.length;index++) {
         let button = form.data.buttons[index];
+        if(viewFilter != -2) {
+            if(button.type == "separator") {
+                currView = button.id;
+                continue;
+            }
+            if(currView != viewFilter) continue;
+        }
         // let isSnippetBook = false;
         // if(button.type == "snippetbook") {
         //     button = snippetBook.buttons.find(_=>_.id == button.snippetBookID)
         //     if(!button) continue;
         //     isSnippetBook = true;
         // }
-        
+        if(button.type == "separator") {
+            let clearModes = ["NONE", "ALL", "VIEW", "NOTDEFAULT"]
+            let btnIndex = index;
+            actionForm.button(`§d[Separator] ${button.label}\n§r§7Condition: ${button.condition}, ${clearModes[button.clearMode ? button.clearMode : 0]}`, null, (player)=>{
+                uiManager.open(player, config.uiNames.UIBuilderEditButton, id, btnIndex)
+            })
+            continue;
+        }
         if(button.type === "group") {
             let isButtonRow = form.data.layout === 4 && button.buttonRow;
             let groupText = isButtonRow ? "§eButton Row" : "§eButton Group";

@@ -3,9 +3,13 @@ import commandManager from "../api/commands/commandManager";
 import translation from "../api/translation";
 import { prismarineDb } from "../lib/prismarinedb";
 import actionParser from "../api/actionParser";
+import uiBuilder from "../api/uiBuilder";
+
 
 let pdbKeyval = await prismarineDb.keyval("binds");
-
+if(!pdbKeyval.has(`leaf:navigator`)) {
+    pdbKeyval.set(`leaf:navigator`, `/scriptevent leaf:open leaf/nav`)
+}
 commandManager.addCommand("bind", { description: "Bind items to commands", category: "Setup", format: "!bind <command>" }, ({ msg, args }) => {
     let player = msg.sender;
     let inventory = player.getComponent('inventory');

@@ -16,32 +16,35 @@ uiManager.addUI(config.uiNames.UIBuilderAdd, "Add a UI", (player, defaultTitle =
     if(id) {
         ui2 = uiBuilder.db.getByID(id);
     }
+    modalForm.textField(`After Cancel Action`, "Command to run if player closes UI", ui2 ? ui2.data.cancel ? ui2.data.cancel : "" : "")
     modalForm.dropdown(`UI Layout`, [
         {
-            option: "Normal",
+            option: "§eNormal",
             callback() {}
         },
         {
-            option: "Grid UI",
+            option: "§6Grid UI",
             callback() {}
         },
         {
-            option: "Fullscreen UI",
+            option: "§uFullscreen UI",
             callback() {}
         },
         {
-            option: "Normal (with player model)",
+            option: "§dNormal (with player model)",
             callback() {}
         },
         {
-            option: "CherryUI",
+            option: "§cCherryUI (Recommended)",
             callback() {}
         },
         {
-            option: "Dropdown",
+            option: "§4Dropdown",
             callback() {}
         }
-    ], ui2 ? ui2.data.layout ? ui2.data.layout : 0 : 0);
+    ], ui2 ? ui2.data.layout ? ui2.data.layout : 0 : 4);
+    modalForm.divider()
+    // modalForm.toggle("Use simplified UI builder", ui2 && ui2.data.simplify ? true : false)
     modalForm.submitButton(translation.getTranslation(player, "uibuilder.createui"));
     modalForm.show(player, false, (player, response)=>{
         if(!response.formValues[0]) return uiManager.open(player, config.uiNames.UIBuilderAdd, response.formValues[0], response.formValues[1], response.formValues[2], translation.getTranslation(player, "uibuilder.errors.titleundefined"));
@@ -52,12 +55,17 @@ uiManager.addUI(config.uiNames.UIBuilderAdd, "Add a UI", (player, defaultTitle =
             ui.data.name = response.formValues[0];
             ui.data.body = response.formValues[1];
             ui.data.scriptevent = response.formValues[2];
-            ui.data.layout = response.formValues[3];
+            ui.data.cancel = response.formValues[3]
+            ui.data.layout = response.formValues[4];
+            // ui.data.simplify = response.formValues[5];
             uiBuilder.db.overwriteDataByID(id, ui.data);
             uiManager.open(player, config.uiNames.UIBuilderRoot);
             return;
         }
-        uiBuilder.createUI(response.formValues[0], response.formValues[1], "normal", response.formValues[2], response.formValues[3]);
+        uiBuilder.createUI(response.formValues[0], response.formValues[1], "normal", response.formValues[2], response.formValues[4], {
+            cancel: response.formValues[3],
+            // simplify: response.formValues[5]
+        });
         uiManager.open(player, config.uiNames.UIBuilderRoot);
     })
 })

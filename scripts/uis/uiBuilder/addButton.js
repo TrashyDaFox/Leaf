@@ -4,6 +4,8 @@ import config from "../../versionData";
 import { ActionForm, ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import itemdb from "../../api/itemdb";
+import { NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_HEADER_BUTTON, NUT_UI_LEFT_HALF, NUT_UI_RIGHT_HALF, NUT_UI_TAG, NUT_UI_THEMED } from "../preset_browser/nutUIConsts";
+import { themes } from "./cherryThemes";
 
 /*
 ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
@@ -51,6 +53,8 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
     const form = new ActionForm();
     const ui = uiBuilder.db.getByID(id);
     const data = data2 || {};
+    let themID = ui.data.theme ? ui.data.theme : 0;
+    let themString = themID > 0 ? `${NUT_UI_THEMED}${themes[themID] ? themes[themID][0] : ""}` : ``;
 
     // Check if this is adding to a group or editing a group button
     const isAddingToGroup = data2?.parentGroup !== undefined;
@@ -78,7 +82,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
             data.displayOverrides = button.displayOverrides ? button.displayOverrides : [];
             data.nutUINoSizeKey = button.nutUINoSizeKey ? true : false;
             data.nutUIHalf = button.nutUIHalf ? button.nutUIHalf : 0;
-            data.nutUIHeaderButton = button.nutUIHeaaderButton ? true : false;
+            data.nutUIHeaderButton = button.nutUIHeaderButton ? true : false;
             data.nutUIAlt = button.nutUIAlt ? true : false;
             data.nutUIColorCondition = button.nutUIColorCondition ? button.nutUIColorCondition : "";
         } else {
@@ -102,7 +106,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
                 data.displayOverrides = button.displayOverrides ? button.displayOverrides : [];
                 data.nutUINoSizeKey = button.nutUINoSizeKey ? true : false;
                 data.nutUIHalf = button.nutUIHalf ? button.nutUIHalf : 0;
-                data.nutUIHeaderButton = button.nutUIHeaaderButton ? true : false;
+                data.nutUIHeaderButton = button.nutUIHeaderButton ? true : false;
                 data.nutUIAlt = button.nutUIAlt ? true : false;
                 data.nutUIColorCondition = button.nutUIColorCondition ? button.nutUIColorCondition : "";
             } else {
@@ -124,10 +128,10 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
             }
         }
     }
-    form.title(`${index > -1 ? "Editing" : "Creating"} button${isAddingToGroup ? " in group" : ""} (${data.buyButtonEnabled ? "Buy" : data.sellButtonEnabled ? "Sell" : "Action"})`)
+    form.title(`${NUT_UI_TAG}${themString}§r${index > -1 ? "Editing" : "Creating"} button${isAddingToGroup ? " in group" : ""} (${data.buyButtonEnabled ? "Buy" : data.sellButtonEnabled ? "Sell" : "Action"})`)
 
     // Back button
-    form.button("§cBack\n§7Go back", `textures/azalea_icons/2`, (player) => {
+    form.button(NUT_UI_HEADER_BUTTON + "§r§cBack\n§7Go back", `textures/azalea_icons/2`, (player) => {
         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
     });
 
@@ -151,8 +155,8 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
             const displayForm = new ModalForm();
             displayForm.textField("Text§c*", "Text on the button", data.text);
             displayForm.textField("Subtext", "Subtext on the button", data.subtext);
-            displayForm.textField("Required Tag", "Tag required to use button", data.requiredTag);
-            displayForm.toggle("Disabled?", data.disabled ? true : false)
+            displayForm.textField("Required Condition", "§r§fCondition required to use button", data.requiredTag, ()=>{}, "Anything you type here normally will just check if the player has the tag.\n\nPlease go to §ehttps://leaf.trashdev.org/conditions §r§ffor more advanced info");
+            displayForm.toggle("Disabled?", data.disabled ? true : false, ()=>{}, "§fWill hide the button normally, but will make it grayed out in §cCherryUI §r§flayout.")
             displayForm.show(player, false, (player, response) => {
                 if (response.canceled) return uiManager.open(player, config.uiNames.UIBuilderAddButton, id, index, data, false);
                 
@@ -185,7 +189,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
         );
     }
     // if(index > -1) {
-    form.button(`§2Sell Button\n§7Sell buttons real`, `textures/azalea_icons/icontextures/diamond`, (player)=>{
+    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§2Sell Button\n§7Sell buttons real`, `textures/azalea_icons/icontextures/diamond`, (player)=>{
         try {
             let modal = new ModalForm();
             modal.toggle("Enable Sell Button (will override any normal actions on the button)", data.sellButtonEnabled ? true : false)
@@ -208,9 +212,9 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
     })
     // }
     // Add buy button menu after sell button
-    form.button(`§bBuy Button\n§7Configure buy button`, `textures/azalea_icons/icontextures/emerald`, (player)=>{
+    form.button(`${NUT_UI_LEFT_HALF}§r§bBuy Button\n§7Configure buy button`, null, (player)=>{
         const buyForm = new ActionForm();
-        buyForm.title("Buy Button Settings");
+        buyForm.title(NUT_UI_TAG + "§rBuy Button Settings");
         
         buyForm.button("§cBack\n§7Return to button editor", "textures/azalea_icons/2", (player) => {
             uiManager.open(player, config.uiNames.UIBuilderAddButton, id, index, data, false);
@@ -218,9 +222,9 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
 
         buyForm.button(`§aSet Price\n§7Configure price`, "textures/azalea_icons/icontextures/diamond", (player) => {
             const priceForm = new ModalForm();
-            priceForm.toggle("Enable Buy Button (will override any normal actions on the button)", data.buyButtonEnabled);
-            priceForm.textField("Price", "20", data.buyButtonPrice.toString());
-            priceForm.textField("Scoreboard", "money", data.buyButtonScoreboard);
+            priceForm.toggle("Enable Buy Button (will override any normal actions on the button)", data.buyButtonEnabled ? true : false);
+            priceForm.textField("Price", "20", data.buyButtonPrice ? data.buyButtonPrice.toString() : "20");
+            priceForm.textField("Scoreboard", "money", data.buyButtonScoreboard ? data.buyButtonScoreboard : "money");
 
             priceForm.show(player, false, (player, response) => {
                 if (response.canceled) return uiManager.open(player, config.uiNames.UIBuilderAddButton, id, index, data, false);
@@ -267,7 +271,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
         `textures/azalea_icons/edit display`,
         (player) => {
             const overridesForm = new ActionForm();
-            overridesForm.title("Display Overrides");
+            overridesForm.title(NUT_UI_TAG + "§rDisplay Overrides");
 
             overridesForm.button("§cBack\n§7Return to button editor", "textures/azalea_icons/2", (player) => {
                 uiManager.open(player, config.uiNames.UIBuilderAddButton, id, index, data, false);
@@ -308,7 +312,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
                     override.iconID ? icons.resolve(override.iconID) : "textures/azalea_icons/edit display",
                     (player) => {
                         const editOverrideForm = new ActionForm();
-                        editOverrideForm.title(`Edit Override #${i + 1}`);
+                        editOverrideForm.title(`${NUT_UI_TAG}§rEdit Override #${i + 1}`);
 
                         // Add move up button if not first item
                         if (i > 0) {
@@ -379,11 +383,17 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
         }
     );
 
+    // form.button(`§6Cooldown (BETA)\n§7Configure Cooldown`, `textures/items/clock_item`, (player)=>{
+    //     let cooldownEditor = new ModalForm();
+    //     cooldownEditor.slider("Seconds", 0, 60, 5, da)
+    // })
+
+
     // Add NUT UI Properties button
     if(ui.data.layout == 4) {
         form.button(
-            `§eCherryUI Properties\n§7Configure UI layout`,
-            `textures/azalea_icons/Settings`,
+            `§cCherryUI Properties\n§7Configure UI layout`,
+            `textures/azalea_icons/DevSettingsClickyClick`,
             (player) => {
                 const nutForm = new ModalForm();
                 
@@ -430,7 +440,7 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
             `§a${isEditing ? "Save" : "Create"} button\n§7Click me to ${isEditing ? "save" : "create"}`,
             isEditing ? `textures/azalea_icons/Save` : `textures/azalea_icons/1`,
             (player) => {
-                const buttonData = {
+                let buttonData = {
                     text: data.text,
                     subtext: data.subtext,
                     action: data.action,
@@ -438,20 +448,30 @@ uiManager.addUI(config.uiNames.UIBuilderAddButton, "Add a button", (player, id, 
                     requiredTag: data.requiredTag,
                     displayOverrides: data.displayOverrides,
                     sellButtonEnabled: data.sellButtonEnabled,
-                    sellButtonItem: data.sellButtonItem,
-                    sellButtonItemCount: data.sellButtonItemCount,
-                    sellButtonPrice: data.sellButtonPrice,
                     buyButtonEnabled: data.buyButtonEnabled,
-                    buyButtonItem: data.buyButtonItem,
-                    buyButtonPrice: data.buyButtonPrice,
-                    buyButtonScoreboard: data.buyButtonScoreboard,
-                    nutUIColorCondition: data.nutUIColorCondition,
-                    nutUIHeaderButton: data.nutUIHeaderButton,
                     nutUIHalf: data.nutUIHalf,
                     nutUINoSizeKey: data.nutUINoSizeKey,
                     nutUIAlt: data.nutUIAlt,
-                    disabled: data.disabled
+                    disabled: data.disabled,
+                    nutUIColorCondition: data.nutUIColorCondition,
+                    nutUIHeaderButton: data.nutUIHeaderButton,
                 };
+                if(data.buyButtonEnabled) {
+                    buttonData = {
+                        ...buttonData,
+                        buyButtonItem: data.buyButtonItem,
+                        buyButtonPrice: data.buyButtonPrice,
+                        buyButtonScoreboard: data.buyButtonScoreboard,
+                    }
+                }
+                if(data.sellButtonEnabled) {
+                    buttonData = {
+                        ...buttonData,
+                        sellButtonItem: data.sellButtonItem,
+                        sellButtonItemCount: data.sellButtonItemCount,
+                        sellButtonPrice: data.sellButtonPrice
+                    }
+                }
 
                 if(isEditing) {
                     if(isEditingGroupButton) {

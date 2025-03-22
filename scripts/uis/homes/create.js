@@ -11,5 +11,6 @@ uiManager.addUI(config.uiNames.Homes.Create, 'Create a home', (player) => {
 
         if(!response.formValues[0]) return player.error('Enter a name!');
         homes.createHome(response.formValues[0], player);
+        uiManager.open(player, config.uiNames.Homes.Root)
     })
 })

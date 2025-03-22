@@ -13,7 +13,7 @@ uiManager.addUI(config.uiNames.CurrencyEditorAdd, "Add a currency", (player, cur
         data.scoreboard = prismarineDb.economy.getCurrency(currencyScoreboard).scoreboard;
     }
     let form = new ModalForm();
-    form.textField("scoreboard", "Scoreboard Objective", "adsdagdsgf", data.scoreboard ? data.scoreboard : undefined);
+    form.textField("scoreboard", "Scoreboard Objective (Leave Blank To Delete)", "adsdagdsgf", data.scoreboard ? data.scoreboard : undefined);
     let emojis1 = [];
     let emojis2 = [];
     for(const emoji in emojis) {

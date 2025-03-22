@@ -37,6 +37,9 @@ uiManager.addUI(config.uiNames.ChestGuiEditItem, "Edit an item in a chest GUI", 
             index
         );
     });
+    form.button(`§aEdit Actions\n§7Edit the actions of the item`, null, (player)=>{
+        uiManager.open(player, "edit_actions", id, index);
+    })
     form.button("§nDelete\n§7Delete the item", icons.resolve("2.2/x"), (player)=>{
         chest.data.icons.splice(index, 1);
         uiBuilder.db.overwriteDataByID(chest.id, chest.data);

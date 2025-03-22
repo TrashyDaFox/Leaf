@@ -1,0 +1,35 @@
+{
+	"format_version": "1.20.50",
+	"minecraft:item": {
+		"description": {
+			"identifier": "leaf:roquefort",
+            "menu_category": {
+				"category": "equipment"
+			}
+        },
+		"components": {
+			"minecraft:display_name": {
+                "value": "Roquefort"
+            },
+            "minecraft:rarity": "epic",
+            "minecraft:food": {
+                "can_always_eat": true,
+                "nutrition": 20,
+                "saturation_modifier": 1.2
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_food"
+                ]
+            },
+            "minecraft:use_animation": "eat",
+			"minecraft:icon": {
+				"texture": "roquefort"
+			},
+            "minecraft:use_modifiers": {
+                "use_duration": 2.2,
+                "movement_modifier": 0.6
+            }
+		}
+	}
+}

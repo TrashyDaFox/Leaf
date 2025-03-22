@@ -11,7 +11,7 @@ uiManager.addUI(config.uiNames.ChestGuiEditItems, "Edit the items in Chest GUIs"
     let chest = uiBuilder.db.getByID(id);
     if(!chest) return uiManager.open(player, config.uiNames.ChestGuiRoot);
     if(chest.data.type !== 4) return uiManager.open(player, config.uiNames.ChestGuiRoot);
-    let form = new ChestFormData((chest.data.rows * 9).toString());
+    let form = new ChestFormData((Math.min(chest.data.rows * 9, 6 * 9)).toString());
     let usedSlots = [];
     let advancedSlots = [];
     for(let i = 0;i < chest.data.icons.length;i++) {

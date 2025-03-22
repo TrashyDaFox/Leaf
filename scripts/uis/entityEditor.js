@@ -21,11 +21,13 @@ uiManager.addUI(config.uiNames.EntityEditor, "Entity Editor", (player, entity)=>
 
 world.beforeEvents.playerInteractWithEntity.subscribe(e=>{
     if(e.itemStack && e.itemStack.typeId == "leaf:entity_editor" && prismarineDb.permissions.hasPermission(e.player, "entityeditor.open")) {
+        e.cancel = true;
         system.run(()=>{
             uiManager.open(e.player, config.uiNames.EntityEditor, e.target);
 
         })
     }
+    if(prismarineDb.permissions.hasPermission(e.player, "entityeditor.open") && e.player.isSneaking) return;
     if(e.itemStack && (e.itemStack.typeId == "leaf:entity_editor" || e.itemStack.typeId == "leaf:block_editor")) return;
     let command = "";
     try {

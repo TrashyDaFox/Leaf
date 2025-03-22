@@ -25,4 +25,4 @@ system.runInterval(()=>{
 
         }
     }
-},1);
+},3);

@@ -1,3 +1,7 @@
+import configAPI from "./api/config/configAPI";
+import { combatMap } from "./features/clog";
+import versionData from "./versionData";
+
 class UIManager {
     #mainUIs
     #altUIs
@@ -34,22 +38,40 @@ class UIManager {
             this.#altUIs.set(altName, ui);
         }
     }
+    #open(player, id, ...data) {
+        try {
+            const names = id.split(' | ');
+            const name = names[0];
+            
+            // Try to find and execute the UI function
+            const mainUI = this.#mainUIs.get(name);
+            if (mainUI) {
+                mainUI(player, ...data);
+                return;
+            }
+            
+            const altUI = this.#altUIs.get(name);
+            if (altUI) {
+                altUI(player, ...data);
+                return;
+            }
     
-    open(player, id, ...data) {
-        const names = id.split(' | ');
-        const name = names[0];
-        
-        // Try to find and execute the UI function
-        const mainUI = this.#mainUIs.get(name);
-        if (mainUI) {
-            mainUI(player, ...data);
-            return;
+        } catch(e) {
+            if(configAPI.getProperty("DevMode"))
+                player.error(`${e} ${e.stack}`)
         }
-        
-        const altUI = this.#altUIs.get(name);
-        if (altUI) {
-            altUI(player, ...data);
-            return;
+    }
+    open(player, id, ...data) {
+        if(configAPI.getProperty("CLog") && configAPI.getProperty("CLogDisableUIs") && combatMap.has(player.id)) return player.error("You cant open this UI while in combat")
+        let MASSAHEX = ["MassaHex"]
+        if(MASSAHEX.includes(player.name) && id != versionData.uiNames.Basic.Confirmation) {
+            this.open(player, versionData.uiNames.Basic.Confirmation, `Are you sure you want to open ${id.split(' | ')[0]}? This action is irreversible!\n\n(maybe stop being an asss if u dont like this lol)`, ()=>{
+                this.#open(player, id, ...data)
+            }, ()=>{
+                player.error("imagine being homophobic")
+            })
+        } else {
+            this.#open(player, id, ...data)
         }
     }
 }

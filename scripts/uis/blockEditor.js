@@ -140,6 +140,7 @@ world.beforeEvents.itemUse.subscribe(e=>{
 });
 world.beforeEvents.playerInteractWithEntity.subscribe(e=>{
     if(e.itemStack && e.itemStack.typeId == 'leaf:block_editor' && prismarineDb.permissions.hasPermission(e.player, "blockeditor.open") && !e.player.isSneaking) {
+        e.cancel = true;
         system.run(()=>{
             uiManager.open(e.player, config.uiNames.EntityEditor, e.target)
 
@@ -149,6 +150,7 @@ world.beforeEvents.playerInteractWithEntity.subscribe(e=>{
 world.beforeEvents.playerInteractWithBlock.subscribe(e=>{
     if(!e.isFirstEvent) return;
     if(e.itemStack && e.itemStack.typeId == 'leaf:block_editor' && !inUI.has(e.player.id) && prismarineDb.permissions.hasPermission(e.player, "blockeditor.open")) {
+        e.cancel = true;
         if(e.player.isSneaking) return;
         inUI.set(e.player.id, true);
         system.run(()=>{

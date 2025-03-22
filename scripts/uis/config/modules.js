@@ -5,6 +5,15 @@ import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import { system, world } from "@minecraft/server";
 
+configAPI.registerProperty("CLog", configAPI.Types.Boolean, false);
+configAPI.registerProperty("CLogSecCooldown", configAPI.Types.Number, 10);
+configAPI.registerProperty("CLogEnterMessageEnabled", configAPI.Types.Boolean, true);
+configAPI.registerProperty("CLogEnterMessage", configAPI.Types.String, "You have entered combat!");
+configAPI.registerProperty("CLogExitMessageEnabled", configAPI.Types.Boolean, true);
+configAPI.registerProperty("CLogExitMessage", configAPI.Types.String, "You have left combat!");
+configAPI.registerProperty("CLogDisableUIs", configAPI.Types.Boolean, true);
+configAPI.registerProperty("CLogDisableCommands", configAPI.Types.Boolean, true);
+configAPI.registerProperty("CLogKill", configAPI.Types.Boolean, true);
 configAPI.registerProperty("Clans", configAPI.Types.Boolean, true);
 configAPI.registerProperty("LandClaims", configAPI.Types.Boolean, true);
 configAPI.registerProperty("Generators", configAPI.Types.Boolean, false);
@@ -28,6 +37,10 @@ configAPI.registerProperty("PlayerShopLeaderboards", configAPI.Types.Boolean, fa
 configAPI.registerProperty("ModernReports", configAPI.Types.Boolean, false)
 configAPI.registerProperty("RefreshedSidebar", configAPI.Types.Boolean, false)
 configAPI.registerProperty("ClansV2", configAPI.Types.Boolean, false)
+configAPI.registerProperty("AuctionHouse", configAPI.Types.Boolean, true)
+configAPI.registerProperty("Homes", configAPI.Types.Boolean, true)
+configAPI.registerProperty("Gifts", configAPI.Types.Boolean, true)
+configAPI.registerProperty("Zones", configAPI.Types.Boolean, true)
 
 let data = [
     {}

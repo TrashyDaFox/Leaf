@@ -23,21 +23,24 @@ class ShopAPI {
     constructor() {
         this.shops = prismarineDb.customStorage("Shops", SegmentedStoragePrismarine);
         // this.shops.clear();
-        if(!this.shops.findFirst({default:true})) {
-            this.shops.insertDocument({
-                type: "ADMIN_SHOP",
-                default: true,
-                categories: [
-                    {
-                        id: Date.now(),
-                        name: "Example Category",
-                        items: []
-                    }
-                ],
-                title: "Server Shop",
-                description: ""
-            });
-        }
+        this.shops.waitLoad().then(()=>{
+            if(!this.shops.findFirst({default:true})) {
+                this.shops.insertDocument({
+                    type: "ADMIN_SHOP",
+                    default: true,
+                    categories: [
+                        {
+                            id: Date.now(),
+                            name: "Example Category",
+                            items: []
+                        }
+                    ],
+                    title: "Server Shop",
+                    description: ""
+                });
+            }
+    
+        })
     }
     createPlayerShop(title, owner) {
         return this.shops.insertDocument({

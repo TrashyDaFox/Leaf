@@ -6,10 +6,13 @@ import OpenClanAPI from "../../api/OpenClanAPI";
 import playerStorage from "../../api/playerStorage";
 import configAPI from "../../api/config/configAPI";
 import './extra.js'
+import { NUT_UI_TAG } from "../preset_browser/nutUIConsts.js";
+import { colors } from "../../lib/prismarinedb.js";
 uiManager.addUI(config.uiNames.Clans.Root, "Clans Root", (player)=>{
     if(!configAPI.getProperty("Clans")) return player.sendMessage("Clans are not enabled");
     let clanBaseEnabled = configAPI.getProperty("clans:enable_clan_base");
     let form = new ActionForm();
+    form.title(`${NUT_UI_TAG}§rClans`)
     let clan = OpenClanAPI.getClan(player);
     form.button(`§dClan Invites\n§7View invites to clans`, `textures/amethyst_icons/Utilities/envelope`, (player)=>{
         uiManager.open(player, config.uiNames.Clans.ViewInvites)
@@ -19,8 +22,12 @@ uiManager.addUI(config.uiNames.Clans.Root, "Clans Root", (player)=>{
             uiManager.open(player, config.uiNames.Clans.Create)
         })
     } else {
+        let clanNameNew = clan.data.name;
+        for(const colorCode of colors.getColorCodes()) {
+            clanNameNew = clanNameNew.replaceAll(colorCode, '')
+        }
         let isClanOwner = clan.data.owner == playerStorage.getID(player);
-        form.title(clan.data.name);
+        form.title(`${NUT_UI_TAG}§r${clanNameNew}`);
         form.button(`§bEnter/leave clan chat\n§7${player.hasTag("clan-chat") ? "Click to leave" : "Click to enter"}`, icons.resolve(`leaf/image-631`), (player)=>{
             if(player.hasTag("clan-chat")) player.removeTag("clan-chat")
             else player.addTag('clan-chat')

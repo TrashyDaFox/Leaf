@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { prismarineDb } from "../../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../../prismarineDbStorages/segmented";
 import uiManager from "../../uiManager";
@@ -12,22 +12,24 @@ import { themes } from "../uiBuilder/cherryThemes";
 let bansDB = prismarineDb.customStorage("Bans", SegmentedStoragePrismarine);
 
 world.afterEvents.playerSpawn.subscribe(async e=>{
-    if(!e.initialSpawn) return;
-    let id = await playerStorage.getIDAsync(e.player);
-    // world.sendMessage(`${id}`)
-    let ban = bansDB.findFirst({type: "BAN", playerID: id})
-    if(ban) {
-        if(ban.data.permanent || Date.now() < ban.data.expirationDate) {
-            e.player.runCommand(`kick "${e.player.name}" ${ban.data.reason ? ban.data.reason : "You are banned"}`)
-        } else {
-            bansDB.deleteDocumentByID(ban.id)
-        }
-    }
+    system.runTimeout(async ()=>{
+        if(!e.initialSpawn) return;
+        let id = await playerStorage.getIDAsync(e.player);
+        // world.sendMessage(`${id}`)
+        let ban = bansDB.findFirst({type: "BAN", playerID: id})
+        if(ban) {
+            if(ban.data.permanent || Date.now() < ban.data.expirationDate) {
+                e.player.runCommand(`kick "${e.player.name}" .\n\nYou were banned from this server: ${ban.data.reason ? ban.data.reason : "You are banned"}\n§r§fExpires: §c${ban.data.permanent ? "Never" : `${moment(ban.data.expirationDate).fromNow()}`}`)
+            } else {
+                bansDB.deleteDocumentByID(ban.id)
+            }
+        }    
+    },20)
 })
 uiManager.addUI(versionData.uiNames.Basic.MuteModal, "aaaaa", (player, id, searchQuery = "") => {
     let modal = new ModalForm();
     let player2 = playerStorage.getPlayerByID(id)
-    modal.title(`Ban ${player2.name}`);
+    modal.title(`Mute ${player2.name}`);
     modal.textField("Reason", "Reason")
     modal.toggle("Permanent? (will override the sliders below)");
     modal.slider("Minutes", 0, 60, 5, 0)
@@ -37,7 +39,7 @@ uiManager.addUI(versionData.uiNames.Basic.MuteModal, "aaaaa", (player, id, searc
     modal.slider("Years", 0, 5, 1, 0)
     modal.submitButton("Mute Player")
     modal.show(player, false, (player, response)=>{
-        if(response.canceled) return uiManager.open(player, versionData.uiNames.ModerationHub.Bans.Add, searchQuery);
+        if(response.canceled) return uiManager.open(player, versionData.uiNames.ModerationHub.Mute.Add, searchQuery);
         let expTime = Date.now();
         expTime += (1000 * 60) * response.formValues[2]
         expTime += (1000 * 60 * 60) * response.formValues[3]
@@ -51,7 +53,7 @@ uiManager.addUI(versionData.uiNames.Basic.MuteModal, "aaaaa", (player, id, searc
             permanent: response.formValues[1],
             reason: response.formValues[0]
         })
-        uiManager.open(player, versionData.uiNames.ModerationHub.Bans.Root)
+        uiManager.open(player, versionData.uiNames.ModerationHub.Mute.Root)
     })
 })
 uiManager.addUI(versionData.uiNames.Basic.BanModal, "aaaaa", (player, id, searchQuery = "") => {

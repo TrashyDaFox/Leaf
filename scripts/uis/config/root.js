@@ -8,7 +8,7 @@ import { prismarineDb } from "../../lib/prismarinedb";
 import http from "../../networkingLibs/currentNetworkingLib";
 import uiManager from "../../uiManager";
 import uiBuilder from "../../api/uiBuilder";
-
+import './combatLog'
 const CONFIG_ICONS = {
     LEAF_SETTINGS: "Packs/Asteroid/jungle_leaves",
     UI_BUILDER: "Packs/Asteroid/ui",

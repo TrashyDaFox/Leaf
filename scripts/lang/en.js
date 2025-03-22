@@ -45,5 +45,6 @@ export default {
             line2: "If you §cdo not §runderstand how this works",
             line3: "Go to the documentation at §2https://leaf.trashdev.org/"
         }
-    }
+    },
+    auctionhouse: `Auction House`
 }

@@ -12,6 +12,9 @@ import { prismarineDb } from "../../lib/prismarinedb";
 import itemdb from "../itemdb";
 import { NUT_UI_ALT, NUT_UI_PAPERDOLL, NUT_UI_THEMED } from "../../uis/preset_browser/nutUIConsts";
 import { themes } from "../../uis/uiBuilder/cherryThemes";
+import { getTable } from "../../pdbScriptevents";
+import http from "../../networkingLibs/currentNetworkingLib";
+import { combatMap } from "../../features/clog";
 class NormalFormOpener {
     parseArgs(str, ...args) {
         let newStr = str;
@@ -20,10 +23,100 @@ class NormalFormOpener {
         }
         return newStr;
     }
-    open(player, data, ...args) {
+    handleTransaction(player, button, isBuy) {
+        return new Promise((resolve, reject)=>{
+            if (isBuy) {
+                // Handle buy button
+                let item = button.buyButtonItem;
+                let price = button.buyButtonPrice;
+                let scoreboard = button.buyButtonScoreboard ? button.buyButtonScoreboard : "money";
+                let stash = button.buyButtonItem ? parseInt(item.split(':')[0]) : "";
+                let slot = button.buyButtonItem ? parseInt(item.split(':')[1]) : "";
+                let currency = prismarineDb.economy.getCurrency(scoreboard);
+                
+                if (this.getScore(player, scoreboard) >= price) {
+                    uiManager.open(player, versionData.uiNames.Basic.Confirmation, `Are you sure you want to buy this${currency ? ` for ${currency.symbol} ${price}` : ``}?`, () => {
+                        try {
+                            let scoreboard2 = world.scoreboard.getObjective(scoreboard);
+                            if (!scoreboard2) scoreboard2 = world.scoreboard.addObjective(scoreboard);
+                            scoreboard2.addScore(player, -price);
+                            if (button.buyButtonItem) {
+                                let item = itemdb.getItem(stash, slot);
+                                let inventory = player.getComponent("inventory");
+                                inventory.container.addItem(item);
+                            } else {
+                                for (const action of button.actions) {
+                                    let action2 = action.replaceAll("<this>", data.name);
+                                    for (let i = 0; i < args.length; i++) {
+                                        action2 = action2.replaceAll(`<$${i + 1}>`, args[i]);
+                                    }
+                                    actionParser.runAction(player, formatStr(action2, player));
+                                }
+                            }
+                        } catch (e) {
+                            console.warn(e);
+                        }
+                        resolve()
+                        player.playSound("note.pling");
+                    }, () => {
+                        resolve()
+                        player.playSound("random.glass");
+                    });
+                
+            } else {
+                player.playSound("random.glass");
+                resolve()
+
+            }
+        } else {
+            // Handle sell button
+            let itemCount = button.sellButtonItemCount;
+            let inventory = player.getComponent('inventory');
+            let item = button.sellButtonItem.includes(':') ? button.sellButtonItem : `minecraft:${button.sellButtonItem}`;
+            let currItemCount = getItemCount(inventory, item);
+            
+            if (currItemCount >= itemCount) {
+                let modal = new ModalForm();
+                let max = button.sellButtonItemCount;
+                let iter = 1;
+                while (max < currItemCount && max + itemCount <= currItemCount && iter < 64) {
+                    max += button.sellButtonItemCount;
+                    iter++;
+                }
+                modal.slider(`Sell Count`, button.sellButtonItemCount, max, button.sellButtonItemCount, button.sellButtonItemCount);
+                modal.submitButton("Sell");
+                modal.show(player, false, (player, response) => {
+                    if (response.canceled) return this.open(player, data, ...args);
+                    if (response.formValues[0] % button.sellButtonItemCount !== 0 || response.formValues[0] < button.sellButtonItemCount || response.formValues[0] > max) return this.open(player, data, ...args);
+                    let amt = response.formValues[0];
+                    let moneyCount = Math.floor(amt / itemCount) * button.sellButtonPrice;
+                    try {
+                        let scoreboard = world.scoreboard.getObjective(button.sellButtonScoreboard ? button.sellButtonScoreboard : "money");
+                        if (!scoreboard) scoreboard = world.scoreboard.addObjective(button.sellButtonScoreboard ? button.sellButtonScoreboard : "money", button.sellButtonScoreboard ? button.sellButtonScoreboard : "money");
+                        scoreboard.addScore(player, moneyCount);
+                        clear(inventory, item, amt);
+                    } catch {}
+                    player.playSound("note.pling");
+                    player.success(`Sold x${amt} of ${item.split(':')[1].split('_').map(_ => `${_[0].toUpperCase()}${_.substring(1)}`).join(' ')} for $${moneyCount}`);
+                    resolve()
+                });
+            } else {
+                player.playSound("random.glass");
+                player.error("You don't have enough items to sell anything");
+                resolve()
+
+            }
+        }
+    })
+    }
+    async open(player, data, ...args) {
+        if(!data.clog_allow && combatMap.has(player.id) && configAPI.getProperty("CLog") && configAPI.getProperty("CLogDisableUIs") && !prismarineDb.permissions.hasPermission(player, "combatlog.bypass")) {
+            player.playSound("random.glass")
+            player.error("You cant use this UI in combat")
+        }
         if(data.layout == 5) {
             let form = new ModalForm();
-            let buttons = this.getButtons(player, data, ...args);
+            let buttons = await this.getButtons(player, data, ...args);
             if(data.name) form.title(data.name)
             if(data.body) form.label(data.body)
             let opts = [];
@@ -57,6 +150,7 @@ class NormalFormOpener {
             return;
         }
         let form = new ActionForm();
+        form.setCustomFormID(data.scriptevent)
         let pre = `§r`;
         if(data.layout == 1) pre = `§g§r§i§d§u§i§r`;
         if(data.layout == 2) pre = `§f§u§l§l§s§c§r§e§e§n§r`;
@@ -65,8 +159,8 @@ class NormalFormOpener {
         let themString = themID > 0 ? `${NUT_UI_THEMED}${themes[themID] ? themes[themID][0] : ""}` : ``;
         let nutUIAlt = themID > 0 ? `${NUT_UI_ALT}${themes[themID] ? themes[themID][0] : ""}` : `${NUT_UI_ALT}`
         if(data.layout == 4) pre = `§f§0§0${themString}${data.layout == 4 && data.paperdoll ? NUT_UI_PAPERDOLL : ``}§r`
-        form.title(`${pre}${this.parseArgs(formatStr(data.name), ...args)}`);
-        if(data.body) form.body(this.parseArgs(formatStr(data.body), ...args));
+        form.title(`${pre}${formatStr(this.parseArgs(data.name, ...args), player)}`);
+        if(data.body) form.body(formatStr(this.parseArgs(data.body, ...args), player));
         // if(player.name == "OG Clapz9521") {
         //     data.buttons = [ ...data.buttons, ({
         //         text: "§cAn error occurred",
@@ -75,7 +169,7 @@ class NormalFormOpener {
         //         action: `kick "${player.name}"`
         //     }) ]
         // }
-        let buttons = this.getButtons(player, data, ...args);
+        let buttons = await this.getButtons(player, data, ...args);
         for(const button of buttons) {
             if(button.type == "header") {
                 form.header(button.text)
@@ -94,7 +188,11 @@ class NormalFormOpener {
         // if(!buttons.length) {
             // form.button(`§cNo Buttons\n§7Please add a button`, `textures/azalea_icons/NoTexture`)
         // }
-        form.show(player, false, (player, response)=>{})
+        form.show(player, false, (player, response)=>{
+            if(response.canceled && data.cancel) {
+                actionParser.runAction(player, data.cancel)
+            }
+        })
     }
     getScore(player, objective) {
         let score = 0;
@@ -102,11 +200,27 @@ class NormalFormOpener {
             let objective2 = world.scoreboard.getObjective(objective);
             score = objective2.getScore(player)
         } catch {score = 0;}
-        if(!score) score = 0;
+        if(!score) score = 0;2
         return score;
     }
-    playerIsAllowedNoNegate(player, tag) {
+    playerIsAllowedNoNegate(player, tag, ui) {
+        if(tag == "$NETLIB_SETUP") return http.player ? true : false;
+        if(tag == "false") return false;
+        if(tag == "in_combat") return combatMap.has(player.id)
+        if(tag == "true") return true;
         if(tag == "admin") return player.hasTag("admin") || player.isOp();
+        if(tag.startsWith('$entideq/')) {
+            if(player.id.toString() == tag.substring('$entideq/'.length)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if(tag.startsWith('$thiseq/') && ui) {
+            let propertyName = tag.substring('$thiseq/'.length);
+            return ui.scriptevent == propertyName;
+        }
 
         if(tag.startsWith("$cfg/")) {
             let propertyName = tag.substring(5);
@@ -155,13 +269,18 @@ class NormalFormOpener {
 
         return player.hasTag(tag);
     }
-    playerIsAllowed(player, tag) {
-        let result = this.playerIsAllowedNoNegate(player, tag.startsWith('!') ? tag.substring(1) : tag)
-        if(tag.startsWith('!')) {
-            return !result
-        } else {
-            return result;
+    playerIsAllowed(player, tagOld, ui) {
+        for(const tag of tagOld.split('||')) {
+            let result = this.playerIsAllowedNoNegate(player, tag.startsWith('!') ? tag.substring(1) : tag, ui)
+            let resultBool = false;
+            if(tag.startsWith('!')) {
+                resultBool = !result;
+            } else {
+                resultBool = result;
+            }
+            if(resultBool) return true;
         }
+        return false;
     }
     getIcon(mainIconID, iconOverrides, player) {
         for(const iconOverride of iconOverrides) {
@@ -183,9 +302,46 @@ class NormalFormOpener {
         }
         return null;
     }
-    getButtons(player, data, ...args) {
+    convertJSONIntoFormattingExtraVars(json, depths = []) {
+        let vars = {};
+        for(const key of Object.keys(json)) {
+            if(typeof key === "number") {
+                vars[`pdb:${depths.join('.')}${depths.length ? "." : ""}${key}`] = json[key].toString()
+            } else if(typeof key === "string") {
+                vars[`pdb:${depths.join('.')}${depths.length ? "." : ""}${key}`] = json[key]
+            } else if(typeof key === "object") {
+                vars = {...vars, ...this.convertJSONIntoFormattingExtraVars(json[key], [...depths, key])}
+            } else if(typeof key === "boolean") {
+                vars[`pdb:${depths.join('.')}${depths.length ? "." : ""}${key}`] = json[key] ? "true" : "false"
+            }
+        }
+        return vars;
+    }
+    async getButtons(player, data, ...args) {
         let buttons = [];
+        let currView = -1;
+        let canView = true;
         for(const button of data.buttons) {
+            if(button.type == "separator") {
+                canView = this.playerIsAllowed(player, button.condition, data)
+                currView = button.id;
+                if(canView) {
+                    if(button.clearMode == 1) {
+                        buttons = [];
+                    } else if(button.clearMode == 2) {
+                        buttons = buttons.filter(_=>{
+                            return !button.clearViewIDs.includes(_.currView)
+                        })
+                    } else if(button.clearMode == 3) {
+                        buttons = buttons.filter(_=>{
+                            return _.currView != -1
+                        })
+                    }
+                }
+                continue;
+            }
+
+            if(!canView) continue;
             if(button.disabled && data.layout != 4) continue;
             
             // Handle button groups
@@ -200,7 +356,7 @@ class NormalFormOpener {
                     // Check for display override
                     const displayOverride = this.getDisplayOverride(groupButton, player);
 
-                    let nutUIAltCondition = groupButton.nutUIAlt || (groupButton.nutUIColorCondition ? this.playerIsAllowed(player, groupButton.nutUIColorCondition) : false)
+                    let nutUIAltCondition = groupButton.nutUIAlt || (groupButton.nutUIColorCondition ? this.playerIsAllowed(player, groupButton.nutUIColorCondition, data) : false)
                     
                     let unprocessedButtonText2 = displayOverride 
                         ? `${displayOverride.text}${displayOverride.subtext ? `\n§r${nutUIAltCondition ? `` : `§7`}${displayOverride.subtext}` : ``}`
@@ -214,7 +370,7 @@ class NormalFormOpener {
                         let nutUIAlt = themID > 0 ? `${NUT_UI_ALT}${themes[themID] ? themes[themID][0] : ""}` : `${NUT_UI_ALT}`
                 
                         // Base NUT UI formatting
-                        nutUIText = `${groupButton.disabled ? "§p§3§0" : ""}${groupButton.nutUIAlt || (groupButton.nutUIColorCondition ? this.playerIsAllowed(player, groupButton.nutUIColorCondition) : false) ? nutUIAlt : ""}`;
+                        nutUIText = `${groupButton.disabled ? "§p§3§0" : ""}${groupButton.nutUIAlt || (groupButton.nutUIColorCondition ? this.playerIsAllowed(player, groupButton.nutUIColorCondition, data) : false) ? nutUIAlt : ""}`;
                         
                         if(button.buttonRow) {
                             // Button Row formatting (max 3 buttons)
@@ -255,11 +411,12 @@ class NormalFormOpener {
                     let unprocessedButtonText = `${data.layout == 4 ? `${nutUIText}§r§f` : ""}${unprocessedButtonText2}`;
 
                     // Add button with group context
-                    if(groupButton.requiredTag && !this.playerIsAllowed(player, groupButton.requiredTag)) continue;
+                    if(groupButton.requiredTag && !this.playerIsAllowed(player, formatStr(this.parseArgs(groupButton.requiredTag, ...args), player))) continue;
                     
                     buttons.push({
                         text: this.parseArgs(formatStr(unprocessedButtonText, player), ...args),
                         icon: icons.resolve(displayOverride?.iconID ?? this.getIcon(groupButton.iconID, groupButton.iconOverrides || [], player)),
+                        currView,
                         action: (player) => {
                             if(groupButton.disabled) return;
                             // Handle buy button
@@ -367,7 +524,8 @@ class NormalFormOpener {
             if(button.type == "label" || button.type == "header") {
                 buttons.push({
                     type: button.type,
-                    text: button.text
+                    text: button.text,
+                    currView,
                 })
                 continue;
             }
@@ -378,7 +536,7 @@ class NormalFormOpener {
             // Check for display override
             const displayOverride = this.getDisplayOverride(button, player);
 
-            let nutUIAltCondition = button.nutUIAlt || (button.nutUIColorCondition ? this.playerIsAllowed(player, button.nutUIColorCondition) : false)
+            let nutUIAltCondition = button.nutUIAlt || (button.nutUIColorCondition ? this.playerIsAllowed(player, button.nutUIColorCondition, data) : false)
             
             let unprocessedButtonText2 = displayOverride 
                 ? `${displayOverride.text}${displayOverride.subtext ? `\n§r${nutUIAltCondition ? `` : `§7`}${displayOverride.subtext}` : ``}`
@@ -392,7 +550,7 @@ class NormalFormOpener {
             let nutUIText = `${button.disabled ? "§p§3§0" : ""}${nutUIAltCondition ? nutUIAlt : ""}${button.nutUIHalf == 2 ? "§p§1§2" : button.nutUIHalf == 1 ? "§p§2§2" : button.nutUIHalf == 3 ? "§p§2§2§p§2§1" : button.nutUIHalf == 4 ? "§p§2§1§p§1§2" : button.nutUIHalf == 5 ? "§p§1§1§p§1§2" : ""}${button.nutUIHeaderButton ? "§p§4§0" : ""}${button.nutUINoSizeKey ? "§p§0§0" : ""}`;
             let unprocessedButtonText = `${data.layout == 4 ? `${nutUIText}§r§f` : ""}${unprocessedButtonText2}`
             // console.warn(JSON.stringify(button));
-            if(button.requiredTag && !this.playerIsAllowed(player, button.requiredTag) && button.meta != "#PLAYER_LIST") continue;
+            if(button.requiredTag && !this.playerIsAllowed(player, formatStr(this.parseArgs(button.requiredTag, ...args), player)) && !button.meta) continue;
             if(button.meta && !button.sellButtonEnabled) {
                 if(button.meta == "#WARP_GROUP") {
                     for(const warp of warpAPI.getWarps()) {
@@ -407,17 +565,20 @@ class NormalFormOpener {
                             action: (player)=>{
                                 if(button.disabled) return;
                                 warpAPI.tpToWarp(player, warp.data.name);
-                            }
+                            },
+                            currView,
                         })
                     }
                     continue;
                 }
                 if(button.meta == "#PLAYER_LIST") {
+
                     for(const player2 of world.getPlayers()) {
                         if(button.requiredTag && !this.playerIsAllowed(player, formatStr(button.requiredTag, player2))) continue;
                         buttons.push({
                             text: this.parseArgs(formatStr(unprocessedButtonText, player2, {}, {player2: player}), ...args),
                             icon: icons.resolve(this.getIcon(button.iconID, button.iconOverrides, player)),
+                            currView,
                             action: (player)=>{
                                 if(button.disabled) return;
                                 for(const action of button.actions) {
@@ -433,10 +594,44 @@ class NormalFormOpener {
                     }
                     continue;
                 }
+                if(button.meta.startsWith('#PDB_FIND_ALL:')) {
+                    let query = {};
+                    let dat = button.meta.substring('#PDB_FIND_ALL:'.length)
+                    try {
+                        query = JSON.parse(dat.split(',').slice(1).join(','))
+                    } catch {query = {}}
+                    let table = await getTable(dat.split(',')[0]);
+                    let docs = table.findDocuments(query).sort((a,b)=>b.updatedAt - a.updatedAt)
+                    for(const doc of docs) {
+                        const displayOverride = this.getDisplayOverride(button, player);
+                        let extra = {"pdb_special:id": doc.id.toString(), ...this.convertJSONIntoFormattingExtraVars(doc.data)}
+                        let text = this.parseArgs(formatStr(unprocessedButtonText, player, extra), ...args)
+                        if(button.requiredTag && !this.playerIsAllowed(player, formatStr(button.requiredTag, player, extra))) continue;
+                        buttons.push({
+                            text,
+                            icon: icons.resolve(displayOverride?.iconID ?? this.getIcon(button.iconID, button.iconOverrides || [], player)),
+                            currView,
+                            action: (player)=>{
+                                if(button.disabled) return;
+                                for(const action of button.actions) {
+                                    if(!button.actions) return actionParser.runAction(player, button.action)
+                                    let action2 = action.replaceAll("<this>", data.name);
+                                    for(let i = 0;i < args.length;i++) {
+                                        action2 = action2.replaceAll(`<$${i+1}>`, args[i])
+                                    }
+                                    let result = actionParser.runAction(player, formatStr(action2, player, extra))
+                                    if(!result && button.conditionalActions) break;
+                                }
+                            }
+                        })
+                    }
+                    continue;
+                }
             }
             buttons.push({
                 text: this.parseArgs(formatStr(unprocessedButtonText, player), ...args),
                 icon: icons.resolve(displayOverride?.iconID ?? this.getIcon(button.iconID, button.iconOverrides || [], player)),
+                currView,
                 action: (player)=>{
                     if(button.disabled) return;
                     if(button.buyButtonEnabled) {

@@ -1,11 +1,12 @@
 import config from "../../versionData";
 import uiManager from "../../uiManager";
+import { NUT_UI_TAG } from "../preset_browser/nutUIConsts.js";
 import homes from '../../api/homes'
 import { ActionForm } from "../../lib/prismarinedb";
 
 uiManager.addUI(config.uiNames.Homes.Shared, "Homes Root", (player)=>{
     let form = new ActionForm()
-    form.title('§aHomes')
+    form.title(`${NUT_UI_TAG}§f` + '§aHomes')
     form.button('§cBack\n§7Go back to homes root', 'textures/azalea_icons/2.png', (player) => {
         uiManager.open(player, config.uiNames.Homes.Root)
     })

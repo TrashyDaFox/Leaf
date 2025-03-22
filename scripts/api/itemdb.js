@@ -62,7 +62,10 @@ class ItemDB {
     constructor() {
         this.db = prismarineDb.table("ItemDB");
         // this.db.clear();
-        this.keyval = this.db.keyval("config");
+        this.initializeKeyval();
+    }
+    async initializeKeyval() {
+        this.keyval = await this.db.keyval("config");
     }
     getItemCount() {
         return this.keyval.get("itemCount") ? this.keyval.get("itemCount") : 0;

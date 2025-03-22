@@ -29,6 +29,7 @@ uiManager.addUI(config.uiNames.Generator.EditRoot, "Generator Edit Root", (playe
     }
     form.show(player, false, ()=>{})
 })
+let effects = ["Default", "Magic", "Nature", "Lava"]
 uiManager.addUI(config.uiNames.Generator.EditGenerator, "a", (player, id)=>{
     if(!configAPI.getProperty("Generators")) return player.sendMessage("Generators are not enabled");
     let gen = generator.db.getByID(id);
@@ -37,8 +38,34 @@ uiManager.addUI(config.uiNames.Generator.EditGenerator, "a", (player, id)=>{
     form.button("Edit Upgrades", null, (player)=>{
         uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id);
     })
-    form.button("Edit Settings", null, (player)=>{
-        
+    form.button(`Edit Effect`, null, (player)=>{
+        let modal = new ModalForm();
+        modal.dropdown("Effect", effects.map(_=>{return {option: _,callback(){}}}), gen.data.effect ? gen.data.effect : 0)
+        modal.show(player, false, (player, response)=>{
+            if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGenerator)
+            gen.data.effect = response.formValues[0];
+            generator.db.overwriteDataByID(gen.id, gen.data)
+            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
+        })
+    })
+    form.button(`Edit Base Cooldown\n${gen.data.respawnTime}`, null, (player)=>{
+        let modal = new ModalForm();
+        modal.textField("Respawn Time", `${gen.data.respawnTime}`, gen.data.respawnTime.toString())
+        modal.show(player, false, (player, response)=>{
+            if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+            gen.data.respawnTime = isNaN(parseInt(response.formValues[0])) ? 0 : parseInt(response.formValues[0])
+            generator.db.overwriteDataByID(gen.id, gen.data)
+            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
+        })
+    })
+    form.button(`Delete`, null, (player)=>{
+        uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this generator?", ()=>{
+            generator.db.deleteDocumentByID(gen.id)
+            return uiManager.open(player, config.uiNames.Generator.EditRoot)
+        }, ()=>{
+            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
+
+        })
     })
     form.show(player, false, ()=>{})
 })
@@ -71,11 +98,33 @@ uiManager.addUI(config.uiNames.Generator.EditGeneratorUpgrades, "a", (player, id
         let currency = prismarineDb.economy.getCurrency(upgrade.currency) ? prismarineDb.economy.getCurrency(upgrade.currency) : prismarineDb.economy.getCurrency("default");
         form.button(`Level ${i} (${upgrade.respawnTime}s)\n${currency.symbol} ${upgrade.price}`, null, (player)=>{
             let form2 = new ActionForm();
+            form2.button(`Back`, null, (player)=>{
+                return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+
+            })
+            form2.button(`Edit Cooldown`, null, (player)=>{
+                let modal = new ModalForm();
+                modal.textField("Respawn Time", `${upgrade.respawnTime}`, upgrade.respawnTime.toString())
+                modal.show(player, false, (player, response)=>{
+                    if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+                    upgrade.respawnTime = isNaN(parseInt(response.formValues[0])) ? 0 : parseInt(response.formValues[0])
+                    generator.db.overwriteDataByID(gen.id, gen.data)
+                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+                })
+            })
+            // form2.button()
             form2.button("Delete", null, (player)=>{
-                uiManager.open(config.uiNames.Basic.Confirmation, "Are you sure you want to delete this upgrade?", ()=>{
+                uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this upgrade?", ()=>{
                     gen.data.upgrades.splice(i - 2, 1);
                     generator.db.overwriteDataByID(gen.id, gen.data);
+                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+                }, ()=>{
+
+                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
                 })
+            })
+            form2.show(player, false, (player, response)=>{
+
             })
         })
     }

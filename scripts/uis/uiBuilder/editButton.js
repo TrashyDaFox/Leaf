@@ -3,11 +3,12 @@ import config from "../../versionData";
 import { ActionForm, ModalForm } from "../../lib/form_func";
 import { ModalFormData } from '@minecraft/server-ui'
 import uiManager from "../../uiManager";
+import { NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_HEADER_BUTTON, NUT_UI_LEFT_HALF, NUT_UI_RIGHT_HALF, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
+import { world } from "@minecraft/server";
 
 uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, index, buttonIndex) => {
     if(id == 1719775088275) return;
     let actionForm = new ActionForm();
-    actionForm.title(`Editing button`)
     let ui = uiBuilder.db.getByID(id);
     
     // Handle buttons in groups
@@ -28,12 +29,19 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
             return uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
         }
     }
-
-    actionForm.button("§cBack\n§7Go back", `textures/azalea_icons/2`, (player) => {
+    actionForm.title(`${NUT_UI_TAG}§rEditing ${button.type ? button.type : "button"}`)
+    // world.sendMessage(JSON.stringify(button))
+    actionForm.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`, `textures/azalea_icons/2`, (player) => {
         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
     });
+    if(button.type == "separator") {
+        actionForm.button(`§eEdit Properties\n§7Opens the edit menu`, `textures/azalea_icons/ClickyClick`, (player) => {
+            uiManager.open(player, config.uiNames.UIBuilderAddSeparator, id, index)
+        });
+        
+    }
 
-    if(button.type != "header" && button.type != "label" && button.type != "divider") {
+    if(button.type != "header" && button.type != "label" && button.type != "divider" && button.type != "separator") {
         actionForm.button(`§eEdit Properties\n§7Opens the edit menu`, `textures/azalea_icons/ClickyClick`, (player) => {
             let doc = uiBuilder.db.getByID(id);
             if (!doc) return;
@@ -66,34 +74,33 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
         });
     }
 
-    if(index != 0) {
-        actionForm.button(`§aMove Up\n§7Moves the button up by 1`, `textures/azalea_icons/Up`, (player) => {
+    actionForm.button(`${NUT_UI_RIGHT_HALF}${index != 0 ? `` : `§p§3§0`}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§aMove Up`, `textures/azalea_icons/Up`, (player) => {
+        if(index != 0) {
             uiBuilder.moveButtonInUI(id, "up", index);
             uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
-        })
-    }
-    if(index != ui.data.buttons.length) {
-        actionForm.button(`§6Move Down\n§7Moves the button down by 1`, `textures/azalea_icons/Down`, (player) => {
+        }
+    })
+    actionForm.button(`${NUT_UI_LEFT_HALF}${index != ui.data.buttons.length ? `` : `§p§3§0`}§r§6Move Down`, `textures/azalea_icons/Down`, (player) => {
+        if(index != ui.data.buttons.length) {
             uiBuilder.moveButtonInUI(id, "down", index);
             uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
-        })
-    }
-    if(index != 0) {
-        actionForm.button(`§aMove To Top\n§7Moves the button to the top`, `textures/azalea_icons/Up`, (player) => {
-            for(let i = 0; i < ui.data.buttons.length + 1;i++) {
-                index = uiBuilder.moveButtonInUI(id, "up", index);
-            }
-            uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
-        })    
-    }
-    if(index != ui.data.buttons.length - 1) {
-        actionForm.button(`§6Move To Bottom\n§7Moves the button to the bottom`, `textures/azalea_icons/Down`, (player) => {
+        }
+    })
+    actionForm.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${index == 0 ? "§p§3§0" : ""}§r§aMove To Top`, `textures/azalea_icons/Top`, (player) => {
+        if(index == 0) return;
+        for(let i = 0; i < ui.data.buttons.length + 1;i++) {
+            index = uiBuilder.moveButtonInUI(id, "up", index);
+        }
+        uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
+    })    
+    actionForm.button(`${NUT_UI_LEFT_HALF}${index != ui.data.buttons.length - 1 ? `` : `§p§3§0`}§r§6Move To Bottom`, `textures/azalea_icons/Bottom`, (player) => {
+        if(index != ui.data.buttons.length - 1) {
             for(let i = 0; i < ui.data.buttons.length + 1;i++) {
                 index =uiBuilder.moveButtonInUI(id, "down", index);
             }
             uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
-        })
-    }
+        }
+    })
     if(button.type == "header" || button.type == "label") {
         actionForm.button(`§eEdit Text\n§7Edit the ${button.type}`, null, (player)=>{
             let modal = new ModalForm();
@@ -109,27 +116,32 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
             })
         })
     }
-    actionForm.button(`§cDelete\n§7Deletes the button`, `textures/azalea_icons/Delete`, (player) => {
-        let doc = uiBuilder.db.getByID(id);
-        if (!doc) return;
-
-        if(isGroupButton) {
-            // Delete button from group
-            let group = doc.data.buttons[index];
-            if(group && group.buttons) {
-                group.buttons = group.buttons.filter((_, i) => i !== buttonIndex);
+    actionForm.button(`§c§h§e§1§r§cDelete\n§7Deletes the button`, `textures/azalea_icons/Delete`, (player) => {
+        uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this button?", ()=>{
+            let doc = uiBuilder.db.getByID(id);
+            if (!doc) return;
+    
+            if(isGroupButton) {
+                // Delete button from group
+                let group = doc.data.buttons[index];
+                if(group && group.buttons) {
+                    group.buttons = group.buttons.filter((_, i) => i !== buttonIndex);
+                    uiBuilder.db.overwriteDataByID(id, doc.data);
+                }
+            } else {
+                // Delete regular button
+                doc.data.buttons = doc.data.buttons.filter((_, i) => i !== index);
                 uiBuilder.db.overwriteDataByID(id, doc.data);
             }
-        } else {
-            // Delete regular button
-            doc.data.buttons = doc.data.buttons.filter((_, i) => i !== index);
-            uiBuilder.db.overwriteDataByID(id, doc.data);
-        }
-        
-        uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
+            
+            uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
+    
+        }, ()=>{
+            uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index, buttonIndex)
+        })
     });
 
-    if(button.type != "header" && button.type != "label" && button.type != "divider") {
+    if(button.type != "header" && button.type != "label" && button.type != "divider" && button.type != "separator") {
         
         actionForm.button(`§dEdit Meta (Advanced)\n§7More features`, `textures/azalea_icons/ExtIcon`, (player)=>{
             let form = new ModalFormData();
@@ -141,7 +153,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
                 uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)
             })
         })
-        actionForm.button(`§bEdit Icon Overrides\n§7Override icon`, `textures/azalea_icons/DevSettings`, (player)=>{
+        actionForm.button(`§bEdit Icon Overrides\n§7Legacy Feature`, `textures/azalea_icons/DevSettings2`, (player)=>{
             uiManager.open(player, "edit_icon_overrides", id, index)
         })
     }

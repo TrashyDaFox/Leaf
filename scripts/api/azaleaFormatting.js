@@ -7,6 +7,9 @@ import { getTPS } from "./formatting/tps.js";
 import { getPlayerColors, getPlayerRanks } from "./formatting/playerFormat.js";
 import emojis from "./emojis.js";
 import { prismarineDb } from "../lib/prismarinedb.js";
+import playerStorage from "./playerStorage.js";
+import { temp } from "../pdbScriptevents.js";
+import zones from "./zones.js";
 let db1 = prismarineDb.table("LegacyConfig")
 const configDb = await db1.keyval("LegacyConfig");
 const startingRank = configDb.get("StartingRank", "Member");
@@ -35,13 +38,10 @@ world.afterEvents.entityHitEntity.subscribe(e => {
 });
 
 system.runInterval(() => {
+    recursionSessions.clear();
     for (const player of world.getPlayers()) {
         setScore("azalea:cps", player, calculateCPS(playersClicks.has(player.id) ? playersClicks.get(player.id) : [], player));
     }
-}, 20);
-
-system.runInterval(() => {
-    recursionSessions.clear();
 }, 20);
 
 // Main formatting function
@@ -87,7 +87,8 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         vars.deaths = `${getScore("azalea:deaths", player)}`;
         vars.cps = `${getScore("azalea:cps", player)}`;
         vars["k/d"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
-        vars.claim = getClaimText(player);
+        let zone = zones.getZoneAtVec3(player.location);
+        vars.claim = zone ? zone.data.type == "ZONE" ? `§v${zone.data.name}` : zone.data.type == "CLAIM" ? `§q${zone.data.name}` : `§c${zone.data.name}` : `§7Wilderness`;
     }
     if(formatcfg && formatcfg.player2) {
         let player = formatcfg.player2;
@@ -242,15 +243,43 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
             // })
             // return "I ded :3"
         // },
+        // jsEval(...args) {
+        //     let newArgs = args.join(' ')
+        //     try {
+        //         let fn = new Function(`return (v)=>{return ${newArgs}}`)()
+        //         return fn(extraVars)
+    
+        //     } catch {
+        //         return ""
+        //     }
+        // },
         vars() {
             return Object.keys(vars).join(', ')
         },
         fns() {
             return Object.keys(fns).join(', ')
         },
+        "get-player-name": (entityID)=>{
+            for(const key of playerStorage.keyval.keys()) {
+                let data = playerStorage.keyval.get(key);
+                if(data.id && data.id.toString() == entityID.toString()) return data.name;
+            }
+            return "Unknown Player"
+        },
+        "get-temp-key": (name, key)=>{
+            // return `${name},${key}`
+            if(!temp[name]) return "null";
+
+            let val = temp[name][key];
+            if(val == null || val == undefined) return "null";
+            
+            if(typeof val == "number") return val.toString()
+            if(typeof val == "string") return val;
+            if(typeof val == "boolean") return val;
+        },
         clan(text, notText) {
             let clan2 = OpenClanAPI.getClan(player);
-            return clan2 ? text.replace('[@CLAN]', clan2.data.name) : notText ? notText : "";
+            return clan2 ? text.replace('[@CLAN]', clan2.data.name).replace('[@LVL]', `${OpenClanAPI.getLevel(clan2.data.xp ? clan2.data.xp : 0)}`) : notText ? notText : "";
         },
         get_tag(startingChar, textIfHas, textIfNotHas) {
             let tags = player.getTags();
@@ -274,7 +303,7 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
             return newText.join('');
         }
     }
-
+    if(vars.msg && vars.msg.includes('jsEval')) return `${player ? player.name : "Unknown Player"} - INSECURE CONTENT BLOCKED`;
     if(str.includes(':')) {
         let emojisUsed = str.match(/:([a-z0-9_-]+):/g) || [];
         for(const emoji of emojisUsed) {

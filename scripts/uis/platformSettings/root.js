@@ -4,13 +4,14 @@ import { ActionForm, ModalForm } from "../../lib/form_func";
 import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
 import { world } from "@minecraft/server";
+import { NUT_UI_TAG } from "../preset_browser/nutUIConsts";
 
 uiManager.addUI(config.uiNames.PlatformSettings.Root, "Platform Settings", (player)=>{
     let form = new ActionForm();
-    form.title("Platform Settings §9[ BETA ]")
-    // form.body("Here you can edit the behavior of players on different platforms.")
-    form.header("§b§lNOTE")
-    form.label("A whitelist is not planned for the future. Leaf Essentials does not condone banning players purely based on the platform they use. We would recommend getting a bot to do it for you or getting real moderation.")
+    form.title(NUT_UI_TAG+"§rPlatform Settings [ FOREVER IN BETA ]")
+    form.body("Here you can §eedit §rthe behavior of players on §cdifferent platforms§r. Please note that leaf does §l§cNOT§r condone banning players §apurely based on the platform they play on§r. Do not expect much from this feature")
+    // form.header("§b§lNOTE")
+    // form.label("A whitelist is not planned for the future. Leaf Essentials does not condone banning players purely based on the platform they use. We would recommend getting a bot to do it for you or getting real moderation.")
     form.button("§bDesktop\n§7[ Click to view ]", "textures/misc_icons/platform_icons/keybord", (player)=>{
         uiManager.open(player, config.uiNames.PlatformSettings.Desktop)
     })
@@ -19,6 +20,9 @@ uiManager.addUI(config.uiNames.PlatformSettings.Root, "Platform Settings", (play
     })
     form.button("§dConsole\n§7[ Click to view ]", "textures/misc_icons/platform_icons/controller", (player)=>{
         uiManager.open(player, config.uiNames.PlatformSettings.Console)
+    })
+    form.button("§aMore about this\n§7[ Click to view ]", "textures/blocks/glowing_obsidian", (player)=>{
+        uiManager.open(player, config.uiNames.Help, "how-to-properly-make-a-server")
     })
     form.show(player, false, (player, response)=>{
 

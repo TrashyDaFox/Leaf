@@ -125,7 +125,7 @@ import {
         try {
             this.form.divider()
         } catch(e) {
-            world.sendMessage(`${e}`)
+            // world.sendMessage(`${e}`)
         }
     }
       /**

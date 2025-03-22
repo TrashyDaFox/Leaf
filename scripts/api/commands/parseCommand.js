@@ -101,7 +101,7 @@ export function parseCommand(message, prefix) {
 					spaceCount = 1;
 				}
 				switch (char) {
-					case '@':
+					case '@@@@@@@@':
 						const nextChar = message?.[i + 1];
 						switch (nextChar) {
 							case '"':

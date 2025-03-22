@@ -1,9 +1,10 @@
-import { Direction, ItemStack, ScriptEventSource, system, world } from "@minecraft/server";
+import { Direction, ItemStack, MolangVariableMap, ScriptEventSource, system, world } from "@minecraft/server";
 import { positionalDb, prismarineDb } from "../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
 import { ActionForm } from "../lib/form_func";
 import icons from "./icons";
 import playerStorage from "./playerStorage";
+import zones from "./zones";
 function directionAndVec3(dir, vec3) {
     if(dir == Direction.Up) {
         return {x: vec3.x, y: vec3.y + 1, z: vec3.z}
@@ -25,10 +26,12 @@ let blockMap = new Map();
 system.runInterval(()=>{
     blockMap.clear();
 },30);
+let db = prismarineDb.customStorage("Generator", SegmentedStoragePrismarine);
+let keyval = await db.keyval("Gens");
 class GeneratorAPI {
     constructor() {
-        this.db = prismarineDb.customStorage("Generator", SegmentedStoragePrismarine);
-        this.keyval = this.db.keyval("Gens");
+        this.db = db;
+        this.keyval = keyval;
         // this.db.clear();
         this.#initialize();
         system.afterEvents.scriptEventReceive.subscribe(e=>{
@@ -160,77 +163,88 @@ class GeneratorAPI {
 
             }
         })
-        world.afterEvents.playerInteractWithBlock.subscribe(e=>{
-            let pos = positionalDb.getPosition(e.block.location);
-            if(pos.has("Generator") && this.db.getByID(pos.get("Generator").id)) {
-                if(blockMap.has(e.player.id)) return;
-                blockMap.set(e.player.id, true);
-                if(e.block.permutation.matches('minecraft:bedrock')) {
-                    e.player.playSound("random.glass");
-                    e.player.error(`You cant manage generators while they are on cooldown.`)
-                    return;
-                }
-                let genData = pos.get("Generator");
-                let genData2 = this.db.getByID(pos.get("Generator").id)
-                let actionForm = new ActionForm();
-                if(playerStorage.getID(e.player) == genData.owner || prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
-                    actionForm.button(`§cToggle on/off\n§7Currently on`, icons.resolve("leaf/image-0910"), (player)=>{
-
-                    });
-    
-                }
-                if(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
-                    actionForm.title(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage") ? "You do not own this generator" : "You hit max upgrades");
-                    actionForm.button(`§cClose`, `textures/blocks/barrier`)
-                } else if(genData.level >= genData2.data.upgrades.length - 1) {
-                    actionForm.title(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage") ? "You do not own this generator" : "You hit max upgrades");
-                    actionForm.button(`§cClose`, `textures/blocks/barrier`)
-                } else {
-                    actionForm.title(genData2.data.name);
-                    let nextUpgrade = genData2.data.upgrades[genData.level + 1];
-                    let currency = prismarineDb.economy.getCurrency(nextUpgrade.currency) ? prismarineDb.economy.getCurrency(nextUpgrade.currency) : prismarineDb.economy.getCurrency("default");
-                    actionForm.button(`§6Upgrade (${nextUpgrade.respawnTime}s)\n§r§7${currency.symbol} ${nextUpgrade.price}`, icons.resolve("leaf/image-752"), (player)=>{
-                        if(playerStorage.getID(e.player) == genData.owner) {
-                            let money = prismarineDb.economy.getMoney(e.player, currency.scoreboard);
-                            if(money >= nextUpgrade.price) {
-                                prismarineDb.economy.removeMoney(e.player, nextUpgrade.price, currency.scoreboard);
-                                genData.level++;
-                                pos.set("Generator", genData)
-                                e.player.playSound("random.levelup")
-                                e.player.dimension.spawnParticle("azalea:absorbw", e.block.center())
-                                e.player.sendMessage(`§aUpgraded generator to §eLevel ${genData.level + 2}`);
-                            } else {
-                                e.player.playSound("random.glass")
-                            }
-    
-                        }
-                    })
-                    
-                }
-                if(playerStorage.getID(e.player) == genData.owner || prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
-                    actionForm.button(`§eMove\n§7Move this generator`, icons.resolve("leaf/image-1289"), (player)=>{
-                        if(pos.has("Generator")) {
-                            let item = this.getGeneratorItem(genData2.id, genData.level);
-                            player.getComponent('inventory').container.addItem(item);
-                            player.dimension.setBlockType(e.block.location, 'minecraft:air')
-                            pos.delete("Generator");
-                            player.playSound("random.break");
-                            let entities = world.getDimension('overworld').getEntities({type:'leaf:floating_text',tags:[`generator_text:${genData.uniqueID}`]})
-                            for(const entity of entities) {
-                                entity.remove();
-                            }
-                        }
-                    })
-                }
-                actionForm.show(e.player, false, ()=>{})
-            }
-        })
-        world.beforeEvents.itemUseOn.subscribe(e=>{
+        world.beforeEvents.playerInteractWithBlock.subscribe(e=>{
             if(!e.isFirstEvent) return;
             system.run(()=>{
+                let pos = positionalDb.getPosition(e.block.location);
+                if(pos.has("Generator") && this.db.getByID(pos.get("Generator").id)) {
+                    if(blockMap.has(e.player.id)) return;
+                    blockMap.set(e.player.id, true);
+                    if(e.block.permutation.matches('minecraft:bedrock')) {
+                        e.player.playSound("random.glass");
+                        e.player.error(`You cant manage generators while they are on cooldown.`)
+                        return;
+                    }
+                    let genData = pos.get("Generator");
+                    let genData2 = this.db.getByID(pos.get("Generator").id)
+                    let actionForm = new ActionForm();
+                    if(playerStorage.getID(e.player) == genData.owner || prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
+                        // actionForm.button(`§cToggle on/off\n§7Currently ${pos.get("Disabled") ? "off" : "on"}`, icons.resolve("leaf/image-0910"), (player)=>{
+                        //     pos.set("Disabled", !pos.get("Disabled"));
+                        //     if(pos.get("Disabled")) {
+                        //         e.block.dimension.setBlockType(e.block.location, "minecraft:bedrock")
+                        //     } else {
+                        //         e.block.dimension.setBlockType(e.block.location, genData2.data.block)
+                        //     }
+                        // });
+        
+                    }
+                    if(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
+                        actionForm.title(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage") ? "You do not own this generator" : "You hit max upgrades");
+                        actionForm.button(`§cClose`, `textures/blocks/barrier`)
+                    } else if(genData.level >= genData2.data.upgrades.length - 1) {
+                        actionForm.title(playerStorage.getID(e.player) != genData.owner && !prismarineDb.permissions.hasPermission(e.player, "generator.manage") ? "You do not own this generator" : "You hit max upgrades");
+                        actionForm.button(`§cClose`, `textures/blocks/barrier`)
+                    } else {
+                        actionForm.title(genData2.data.name);
+                        let nextUpgrade = genData2.data.upgrades[genData.level + 1];
+                        let currency = prismarineDb.economy.getCurrency(nextUpgrade.currency) ? prismarineDb.economy.getCurrency(nextUpgrade.currency) : prismarineDb.economy.getCurrency("default");
+                        actionForm.button(`§6Upgrade (${nextUpgrade.respawnTime}s)\n§r§7${currency.symbol} ${nextUpgrade.price}`, icons.resolve("leaf/image-752"), (player)=>{
+                            if(playerStorage.getID(e.player) == genData.owner) {
+                                let money = prismarineDb.economy.getMoney(e.player, currency.scoreboard);
+                                if(money >= nextUpgrade.price) {
+                                    prismarineDb.economy.removeMoney(e.player, nextUpgrade.price, currency.scoreboard);
+                                    genData.level++;
+                                    pos.set("Generator", genData)
+                                    e.player.playSound("random.levelup")
+                                    e.player.dimension.spawnParticle("azalea:absorbw", e.block.center())
+                                    e.player.sendMessage(`§aUpgraded generator to §eLevel ${genData.level + 2}`);
+                                } else {
+                                    e.player.playSound("random.glass")
+                                }
+        
+                            }
+                        })
+                        
+                    }
+                    if(playerStorage.getID(e.player) == genData.owner || prismarineDb.permissions.hasPermission(e.player, "generator.manage")) {
+                        actionForm.button(`§eMove\n§7Move this generator`, icons.resolve("leaf/image-1289"), (player)=>{
+                            if(pos.has("Generator")) {
+                                let item = this.getGeneratorItem(genData2.id, genData.level);
+                                player.getComponent('inventory').container.addItem(item);
+                                player.dimension.setBlockType(e.block.location, 'minecraft:air')
+                                pos.delete("Generator");
+                                player.playSound("random.break");
+                                let entities = world.getDimension('overworld').getEntities({type:'leaf:floating_text',tags:[`generator_text:${genData.uniqueID}`]})
+                                for(const entity of entities) {
+                                    entity.remove();
+                                }
+                            }
+                        })
+                    }
+                    actionForm.show(e.player, false, ()=>{})
+                }
+            })
+        })
+        world.afterEvents.itemStopUseOn.subscribe(async e=>{
+            system.run(async ()=>{
                 // console.warn("A")
                 if(e.itemStack && e.itemStack.typeId == "leaf:generator") {
                     let newLoc = directionAndVec3(e.blockFace, e.block.center());
+                    // console.warn(JSON.stringify(newLoc))
+                    let zone = zones.getZoneAtVec3(newLoc);
+                    // console.warn(JSON.stringify(zone))
+                    if(zone && !zones.hasPerms(e.source) && (zone.data.flags.includes('DisallowBlockPlacing') || zone.data.flags.includes('DisallowGenPlacing'))) return e.source.error(zones.msg)
                     if(e.itemStack.getDynamicProperty(`GenID`)) {
                         if(blockMap.has(e.source.id)) return;
                         blockMap.set(e.source.id, true)
@@ -239,15 +253,44 @@ class GeneratorAPI {
                         this.placeGenerator(e.source, doc.id, newLoc, e.itemStack.getDynamicProperty('GenLevel') ? e.itemStack.getDynamicProperty('GenLevel') : -1)
                         let inv = e.source.getComponent('inventory');
                         inv.container.setItem(e.source.selectedSlotIndex);
-                        e.source.dimension.spawnParticle("azalea:fallingchant1", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("azalea:fallingchant2", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("azalea:fallingchant1", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("azalea:fallingchant2", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("azalea:green", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("azalea:vortex", e.source.dimension.getBlock(newLoc).center())
-                        e.source.dimension.spawnParticle("leaf:leaf", e.source.dimension.getBlock(newLoc).center())
+                        let genEffect = doc.data.effect ? doc.data.effect : 0;
+                        if(genEffect == 0) {
+                            e.source.dimension.spawnParticle("azalea:fallingchant1", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("azalea:fallingchant2", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("azalea:fallingchant1", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("azalea:fallingchant2", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("azalea:green", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("azalea:vortex", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle("leaf:leaf", e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.playSound("block.end_portal.spawn", e.source.dimension.getBlock(newLoc).center())    
+                        } else if(genEffect == 1) {
+                            for(let i = 0;i < 1;i += 0.1) {
+                                for(let i2 = 0;i2 < 1;i2 += 0.1) {
+                                    e.source.dimension.spawnParticle(`azalea:updraft`, {x: Math.floor(newLoc.x)+i, y: Math.floor(newLoc.y)+1, z: Math.floor(newLoc.z)+i2})
+                                }
+                            }
+                            e.source.dimension.spawnParticle(`azalea:bang`, e.source.dimension.getBlock(newLoc).center())
+
+                            e.source.dimension.playSound("block.end_portal.spawn", e.source.dimension.getBlock(newLoc).center())    
+                        } else if(genEffect == 2) {
+                            e.source.dimension.spawnParticle(`leaf:leaf`, e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.playSound("dig.grass", e.source.dimension.getBlock(newLoc).center())    
+                            e.source.dimension.playSound("dig.moss", e.source.dimension.getBlock(newLoc).center())    
+                            e.source.dimension.playSound("dig.stone", e.source.dimension.getBlock(newLoc).center())    
+                        } else if(genEffect == 3) {
+                            e.source.dimension.spawnParticle(`azalea:redflame`, e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.spawnParticle(`azalea:lava`, e.source.dimension.getBlock(newLoc).center())
+                            e.source.dimension.playSound("block.campfire.crackle", e.source.dimension.getBlock(newLoc).center())    
+                            let no = [0,0,0,0,0];
+                            for(let i = 0;i < 2;i++) {
+                                e.source.dimension.playSound("liquid.lava", e.source.dimension.getBlock(newLoc).center(), {
+                                    volume: 50
+                                })    
+                                await system.waitTicks(8)
+                            }  
+
+                        }
                         e.source.sendMessage(`§aYou have placed a §e${doc.data.name}§r§a!`)
-                        e.source.dimension.playSound("block.end_portal.spawn", e.source.dimension.getBlock(newLoc).center())
 
                     }
                     return;

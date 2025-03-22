@@ -2,6 +2,8 @@ import { system } from "@minecraft/server";
 import { prismarineDb } from "../../lib/prismarinedb";
 import translation from "../translation";
 import { parseCommand } from "./parseCommand";
+import configAPI from "../config/configAPI";
+import { combatMap } from "../../features/clog";
 
 class CommandManager {
     constructor() {
@@ -10,23 +12,29 @@ class CommandManager {
         this.subcmds = prismarineDb.nonPersistentTable("SubCommands")
     }
     addCommand(name, data, callback) {
-        let cmd = this.cmds.findFirst({name});
-        if(cmd) {
-            this.cmds.deleteDocumentByID(cmd.id);
-        }
-        this.cmds.insertDocument({
-            name,
-            ...data,
-            callback
+        this.cmds.waitLoad().then(()=>{
+            let cmd = this.cmds.findFirst({name});
+            if(cmd) {
+                this.cmds.deleteDocumentByID(cmd.id);
+            }
+            this.cmds.insertDocument({
+                name,
+                ...data,
+                callback
+            })
+    
         })
     }
     addSubcommand(parent, name, data, callback) {
-        this.subcmds.insertDocument({
-            parent,
-            name,
-            ...data,
-            callback
-        });
+        this.subcmds.waitLoad().then(()=>{
+            this.subcmds.insertDocument({
+                parent,
+                name,
+                ...data,
+                callback
+            });
+    
+        })
     }
     removeCmd(name) {
         this.cmds.deleteFirstDocumentByQuery({name})
@@ -49,6 +57,7 @@ class CommandManager {
             let args = data.slice(1);
             let cmd = this.cmds.findFirst({name: cmdName});
             if(!cmd) return msg.sender.sendMessage(translation.getTranslation(msg.sender, "error", translation.getTranslation(msg.sender, "commands.errors.notfound")));
+            if(configAPI.getProperty("CLog") && configAPI.getProperty("CLogDisableCommands") && combatMap.has(msg.sender)) return msg.sender.error(`You cant do this command while in combat`)
             if(data.length > 1) {
                 let subcmd = this.subcmds.findFirst({name: data[1], parent: data[0]})
                 if(subcmd) {

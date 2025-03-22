@@ -67,7 +67,7 @@ class OpenClanAPI {
      */
     createClan(owner, name) {
         if(!(owner instanceof Player)) throw new Error("Owner must be a player");
-        if(name.length > 10) throw new Error("Name must be 10 characters or under");
+        if(name.length > 15) throw new Error("Name must be 15 characters or under");
         if(name.length < 2) throw new Error("Name must be 2 characters or over");
         if(this.db.findFirst({name: name})) throw new Error("Name is already taken");
         let ownerID = playerStorage.getID(owner);
@@ -164,6 +164,7 @@ class OpenClanAPI {
             let clanXPMultiplier = this.getClanXPMultiplier(clanID)
             let clan = this.db.getByID(clanID)
             let currLevel = this.getLevel(this.getClanXP(clanID));
+            // world.sendMessage(`XP: ${this.getClanXP(clanID)}, currLevel: ${currLevel}`)
             switch(e.deadEntity.typeId) {
                 case "minecraft:wither":
                     this.addXP(clanID, 100, clanXPMultiplier)

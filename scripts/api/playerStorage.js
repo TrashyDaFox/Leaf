@@ -61,7 +61,7 @@ class SegmentedStoragePrismarine {
 let db2 = prismarineDb.customStorage("PlayerStorage", SegmentedStoragePrismarine);
 let keyval = await db2.keyval("playerstorage");
 let rewardsKeyval = await db2.keyval("rewards");
-
+// world.sendMessage(db2.data.map(_=>`${_.id}`).join(', '))
 class PlayerStorage {
     constructor() {
         this.db = db2;
@@ -72,6 +72,7 @@ class PlayerStorage {
     a() {
         system.runInterval(async ()=>{
             for(const player of world.getPlayers()) {
+                if(ids[player.id]) continue;
                 let entityTable = prismarineDb.entityTable("Data", player);
                 let keyval = await entityTable.keyval("_data");
                 let id = keyval.get("id")
@@ -170,6 +171,8 @@ class PlayerStorage {
         this.rewardsKeyval.set(playerID, rewards);
     }
     getRewards(playerID) {
+        // console.warn(`GETTING REWARDS FOR ${playerID}`)
+        // console.warn(JSON.stringify(db2.data))
         let rewards = this.rewardsKeyval.has(playerID) ? this.rewardsKeyval.get(playerID) : [];
         return rewards;
     }

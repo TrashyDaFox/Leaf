@@ -9,7 +9,7 @@ uiManager.addUI(config.uiNames.CustomCommands.view, 'View custom command', (play
     let cmd = CustomCommands.db.getByID(id)
     if(!cmd) return uiManager.open(player, config.uiNames.CustomCommands.root);
     let form = new ActionForm();
-    form.title('§a' + cmd.data.name)
+    form.title(`§f§0§0§f` + '§a' + cmd.data.name)
     form.button('§cDelete', 'textures/azalea_icons/Delete.png', (player) => {
         CustomCommands.remove(cmd.id)
         uiManager.open(player, config.uiNames.CustomCommands.root)
@@ -28,7 +28,7 @@ uiManager.addUI(config.uiNames.CustomCommands.view, 'View custom command', (play
     })
     form.button('§bEdit Subcommands', icons.resolve('azalea/name_tag'), (player) => {
         let form69 = new ActionForm();
-        form69.title('Edit subcommands')
+        form69.title('§f§0§0§fEdit subcommands')
         form69.button('§cBack', 'textures/azalea_icons/2.png', (player) => {
             uiManager.open(player, config.uiNames.CustomCommands.view, id)
         })
@@ -46,8 +46,8 @@ uiManager.addUI(config.uiNames.CustomCommands.view, 'View custom command', (play
         })
         for (const subcmd of cmd.data.subcommands) {
             form69.button('§a' + subcmd.name, null, (player) => {
-                let form600probably = new ActionForm()
-                form600probably.title('Edit subcommand')
+                let form600probably = new ActionForm();
+                form600probably.title('§f§0§0§fEdit subcommand')
                 form600probably.button('§cDelete', 'textures/azalea_icons/Delete.png', (player) => {
                     CustomCommands.removeSubcommand(id, subcmd.name)
                 })
@@ -78,7 +78,7 @@ uiManager.addUI(config.uiNames.CustomCommands.view, 'View custom command', (play
     })
     form.button('§cDelete action', 'textures/azalea_icons/CustomCommands.png', (player) => {
         let form3 = new ActionForm();
-        form3.title('§cDelete an action')
+        form3.title('§f§0§0§f§cDelete an action')
         form3.button('§cBack', 'textures/azalea_icons/2.png', (player) => {
             uiManager.open(player, config.uiNames.CustomCommands.view, id)
         })

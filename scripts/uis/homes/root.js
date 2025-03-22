@@ -6,11 +6,12 @@ import './view'
 import './viewShared'
 import './shared.js'
 import { ActionForm } from "../../lib/prismarinedb";
+import { NUT_UI_TAG } from "../preset_browser/nutUIConsts.js";
 import icons from '../../api/icons.js'
 
 uiManager.addUI(config.uiNames.Homes.Root, "Homes Root", player=>{
     let form = new ActionForm()
-    form.title('§aHomes')
+    form.title(`${NUT_UI_TAG}§fHomes`)
     form.button('§aCreate Home\n§7Create a home', 'textures/azalea_icons/1.png', (player) => {
         uiManager.open(player, config.uiNames.Homes.Create)
     })

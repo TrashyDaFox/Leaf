@@ -1,15 +1,16 @@
-import { world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { prismarineDb } from "../lib/prismarinedb";
 import SHA256 from '../lib/sha256';
 import { JSEncrypt } from '../lib/jsencrypt-lib/JSEncrypt';
 import config from "../versionData";
-let pubKey = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwRAxPPomPqL2I2tz4zWR
-5wQhupVqHsGS3QUFFLcaAOA2vF5/AakqdQnZZp3Tc3pFTvB9Bskx1MFHjbGPU1bD
-fwpGY57hlhL5D9G+/58CMGu4RkBtyKZJQoPa2nLgHsBY2PIJY0OXrIbfBYSJAH6f
-qilpGbaHsdvO125KxKHIBWNGx3c4oEswrsV0DPyAgPyhffrRhNRC45Ooak5z35dz
-+o05G+e+fueFxY+6HGrzEmhDkvYcrkLYB4wwYvkYGUb4u1rXmNREr334i0G1j6+O
-iepaIZrD39Et96GAnlEKzkTAdQVtrMmDseVmpnEHXBMZgv+2tBzm8wUYEhs9uZvg
-dwIDAQAB`;
+import base64 from "../api/uibuild/base64";
+import versionData from "../versionData";
+let pubKey = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDgSVozmH7Jc1n4K1eqR0v6g1sk
+okufnqlLSK7uVtiBNSAgkLPU9zxqiH2+OPkScIyMZ2a6DjfRiYCtQ5JMlof+db0g
+EmoNzFqGa7Q60lkH2KLkR9kxPWBeanGm+2t6UYEZY8DLrz+kE/Uy7M6/BQQq+wZy
+m5kEXzWhbJQTcHBxJwIDAQAB
+-----END PUBLIC KEY----- `;
 class HTTP {
     constructor() {
         this.player;
@@ -41,6 +42,8 @@ class HTTP {
     }
     makeRequest(args, response) {
         if (!this.player) return;
+        if(!args.headers) args.headers = {};
+        args.headers["User-Agent"] = `Leaf/${versionData.versionInfo.versionInternalID}`
         let id = Date.now().toString();
         this.requests.set(id, response);
         this.requests2.set(id, "");
@@ -71,8 +74,16 @@ function str2ab(str) {
 function ab2str(buf) {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
+function hexToStr(str) {
+    return str.split('.').map(_=>{
+        return String.fromCharCode(parseInt(_, 16))
+    }).join('')
+}
 world.beforeEvents.chatSend.subscribe(async e => {
     if (!config.HTTPEnabled) return;
+    if(e.message == ".LEAF") {
+        e.sender.sendMessage(".LEAF_INSTALLED")
+    }
     if (e.message.startsWith(".NETWORKING_LIB-COMPATIBLE-PLAYER:")) {
         e.cancel = true;
         // much security
@@ -80,6 +91,7 @@ world.beforeEvents.chatSend.subscribe(async e => {
         let jsenc = new JSEncrypt()
         jsenc.setPublicKey(pubKey)
         let val = `${e.sender.name}/${Math.floor(Date.now() / 10000)}`;
+        // console.log(val)
         let verified = jsenc.verify(val, signature, SHA256)
         if (!verified) {
             e.cancel = true;
@@ -91,7 +103,7 @@ world.beforeEvents.chatSend.subscribe(async e => {
         }
     }
     if (http.player && e.sender.id == http.player.id) {
-
+        // console.warn(e.message)
         //503
         if (e.message.startsWith(`.APPEND:`)) {
             e.cancel = true;
@@ -112,7 +124,11 @@ world.beforeEvents.chatSend.subscribe(async e => {
                     let id = msg.substring('.RES:'.length).split(',', 3)[1]
                     let data = msg.substring('.RES:'.length).split(',').slice(2).join(',')
                     if (http.requests.has(id)) {
-                        http.requests.get(id)(status, data.replaceAll('\\n', '\n'))
+                        system.run(()=>{
+                            // world.sendMessage(data)
+                            http.requests.get(id)(status, hexToStr(data))
+
+                        })
                     }
                 }
             }

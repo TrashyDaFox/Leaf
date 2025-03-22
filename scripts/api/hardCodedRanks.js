@@ -117,5 +117,11 @@ export default {
     "NameColor": "§b",
     "MsgColor": "§u",
     "BracketColor": "§8"
-  }
+  },
+  // "MassaHex": {
+    // "Ranks": [`§aCatboy`],
+    // "NameColor": "§a",
+    // "MsgColor": "§a",
+    // "BracketColor": "§a"
+  // }
 }
