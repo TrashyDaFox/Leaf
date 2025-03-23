@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { EntityInitializationCause, world } from "@minecraft/server";
 import { prismarineDb } from "../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
 import landclaims from "./landclaims/landclaims";
@@ -33,7 +33,8 @@ class Zones {
             "DisablePVP",
             "DisallowLogStripping",
             "DisallowLandClaiming",
-            "DisallowGenPlacing"
+            "DisallowGenPlacing",
+            "DisallowMobSpawning"
         ]
         this.initEvents();
         this.msg = "You cant do this here"
@@ -61,43 +62,53 @@ class Zones {
             if(zone) {
                 if(zone.data.flags.includes("DisallowAllBlockInteractions")) {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
                     return;
     
                 }
                 if(zone.data.flags.includes("DisableDoorInteractions") && (e.block.typeId.includes(':door_') || e.block.typeId.includes('_door'))) {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
                     return;
     
                 }
                 if(zone.data.flags.includes("DisallowTrapdoorInteractions") && (e.block.typeId.includes(':trapdoor_') || e.block.typeId.includes('_trapdoor') || e.block.typeId == "minecraft:trapdoor")) {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
+
                     return;
     
                 }
                 if(zone.data.flags.includes("DisableChestInteractions") && ['minecraft:chest', 'minecraft:barrel'].includes(e.block.typeId)) {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
+
                     return;
     
                 }
                 if(zone.data.flags.includes("DisallowLogStripping") && e.block.typeId.includes('log') && e.itemStack && e.itemStack.typeId.includes('axe')) {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
+
                     return;
     
                 }
                 if(zone.data.flags.includes("DisallowLeverInteractions") && e.block.typeId == "minecraft:lever") {
                     e.cancel = true;
-                    e.player.error(this.msg)
+                    if(e.isFirstEvent) e.player.error(this.msg)
                     return;
     
                 }
 
             }
             
+        })
+        world.afterEvents.entitySpawn.subscribe(e=>{
+            if(e.entity.typeId == "minecraft:player" || e.entity.typeId.startsWith('leaf:')) return;
+            let zone = this.getZoneAtVec3(e.entity.location)
+            if(zone && zone.data.flags.includes("DisallowMobSpawning")) {
+                e.entity.remove();
+            }
         })
     }
     hasPerms(player, zone) {

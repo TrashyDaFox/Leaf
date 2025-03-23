@@ -18,6 +18,7 @@ import { CommandHandler } from './api/commandHandler.js';
 import { transferPlayer } from "@minecraft/server-admin";
 import * as mc from '@minecraft/server'
 import './uis/auctionhouse/index.js';
+import './uis/chatranks/index.js'
 import './uis/nametagplus/ui.js';
 import './uis/zones/index.js';
 import './uis/landclaims/index.js'
@@ -105,7 +106,7 @@ import { generalConfig } from './configs';
 import './combatLog';
 import './uis/blockEditor.js';
 import './uis/entityEditor.js';
-import { prismarineDb } from './lib/prismarinedb.js';
+import { colors, prismarineDb } from './lib/prismarinedb.js';
 import emojis from './api/emojis.js';
 import './networkingLibs/currentNetworkingLib.js'
 import { leafIconPack, leafIconPack2 } from './icon_packs/leaf.js';
@@ -2981,6 +2982,10 @@ world.beforeEvents.chatSend.subscribe(e => {
 system.afterEvents.scriptEventReceive.subscribe(e=>{
     if(e.id == "leaf:wtag_add") {
         worldTags.addTag(e.message)
+    }
+    if(e.id == "leaf:meow") {
+      let text = colors.getColorNamesColored();
+      e.sourceEntity.sendMessage(text.join('\n§r'))
     }
     if(e.id == "leaf:wtag_remove") {
         worldTags.removeTag(e.message)

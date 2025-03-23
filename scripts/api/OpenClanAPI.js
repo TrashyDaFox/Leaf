@@ -32,7 +32,7 @@
   乀 (ˍ,  ل            じしˍ,)ノ
 
 */
-import { EntityDamageCause, Player, world } from "@minecraft/server";
+import { EntityDamageCause, Player, system, world } from "@minecraft/server";
 import playerStorage from "./playerStorage";
 import { prismarineDb } from "../lib/prismarinedb";
 import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
@@ -155,6 +155,13 @@ class OpenClanAPI {
 
     }
     initEvents() {
+        system.afterEvents.scriptEventReceive.subscribe(e=>{
+            if(e.id == "ocapi:set_base") {
+                let args = e.message.split(' ');
+                let id = parseInt(args[0]);
+                // let 
+            }
+        })
         world.afterEvents.entityDie.subscribe(e=>{
             let killer = this.getKiller(e.damageSource)
             if(!killer) return;

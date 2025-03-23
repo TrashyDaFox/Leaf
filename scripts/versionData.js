@@ -185,6 +185,9 @@ export default {
         IconViewer: "icon_viewer | Leaf/IconViewer",
         ToastBuilderAdd: "toast_builder_add | Leaf/Toast/Add",
         ToastBuilderEdit: "toast_builder_edit | Leaf/Toast/Edit",
+        ChatRanks: {
+            Config: "chatranks_config"
+        },
         PlayerShops: {
             Root: "player_shop_root | Leaf/PlayerShops/Root",
             View: "player_shop_view | Leaf/PlayerShops/View",

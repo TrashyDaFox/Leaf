@@ -155,13 +155,13 @@ uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
     form.button(`§bModal Form\n§7Advanced UI type`, null, (player)=>{
         uiManager.open(player, config.uiNames.Modal.Add)
     })
-    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§eChest UI\n§7Chest UI type`, null, (player)=>{
+    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§eChest UI\n§7Chest UI type`, `textures/azalea_icons/ChestIcons/Chest10`, (player)=>{
         uiManager.open(player, config.uiNames.ChestGuiAdd)
     })
     form.button(`${NUT_UI_LEFT_HALF}§r§6Adv. Chest UI\n§7Advanced Chest UI`, null, (player)=>{
         uiManager.open(player, config.uiNames.ChestGuiAddAdvanced)
     })
-    form.button(`§5Folder\n§7Organize your UIs`, null, (player)=>{
+    form.button(`§5Folder\n§7Organize your UIs`, `textures/azalea_icons/Logs`, (player)=>{
         let modalForm = new ModalForm()
         modalForm.textField("Name", "Name")
         modalForm.show(player, false, (player, response)=>{
@@ -171,6 +171,9 @@ uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
         })
     })
     form.button(`§dToast\n§7Create a customizable notification`, null, (player)=>{
+        uiManager.open(player, config.uiNames.ToastBuilderAdd)
+    })
+    form.button(`§vConditional Redirector\n§7Conditionally open different UIs`, null, (player)=>{
         uiManager.open(player, config.uiNames.ToastBuilderAdd)
     })
 

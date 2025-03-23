@@ -1,6 +1,7 @@
-import { system, world } from "@minecraft/server";
+import { GameMode, Player, system, world } from "@minecraft/server";
 import { worldTags } from "../worldTags";
 import configAPI from "../api/config/configAPI";
+import { prismarineDb } from "../lib/prismarinedb";
 configAPI.registerProperty("CLog", configAPI.Types.Boolean, true);
 configAPI.registerProperty("CLogSecCooldown", configAPI.Types.Number, 10);
 configAPI.registerProperty("CLogEnterMessageEnabled", configAPI.Types.Boolean, true);
@@ -80,18 +81,29 @@ world.afterEvents.playerLeave.subscribe(e=>{
     worldTags.addTag(`kill:${e.playerId}`)
 })
 
+system.runInterval(()=>{
+    for(const player of world.getPlayers()) {
+        if(ignore(player) && combatMap.has(player.id)) combatMap.delete(player.id)
+    }
+},10)
+
+function ignore(player) {
+    return player.getGameMode() == GameMode.creative || prismarineDb.permissions.hasPermission(player, "clog.bypass")
+}
+
 world.afterEvents.entityHitEntity.subscribe(e=>{
     if(!configAPI.getProperty("CLog")) return;
     let { hitEntity, damagingEntity } = e;
     if(hitEntity.typeId != "minecraft:player" || damagingEntity.typeId != "minecraft:player") return;
+    if(ignore(hitEntity) || ignore(damagingEntity)) return;
     let exp = Date.now() + (configAPI.getProperty("CLogSecCooldown") * 1000)
-    if(!combatMap.has(hitEntity.typeId)) {
+    if(!combatMap.has(hitEntity.id)) {
         if(configAPI.getProperty("CLogEnterMessageEnabled")) hitEntity.sendMessage(configAPI.getProperty("CLogEnterMessage"))
     }
-    if(!combatMap.has(damagingEntity.typeId)) {
+    if(!combatMap.has(damagingEntity.id)) {
         if(configAPI.getProperty("CLogEnterMessageEnabled")) damagingEntity.sendMessage(configAPI.getProperty("CLogEnterMessage"))
     }
-    combatMap.set(hitEntity.typeId, exp)
-    combatMap.set(damagingEntity.typeId, exp)
+    combatMap.set(hitEntity.id, exp)
+    combatMap.set(damagingEntity.id, exp)
 
 })

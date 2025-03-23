@@ -10,6 +10,7 @@ import { prismarineDb } from "../lib/prismarinedb.js";
 import playerStorage from "./playerStorage.js";
 import { temp } from "../pdbScriptevents.js";
 import zones from "./zones.js";
+import playerUtils from "./playerUtils.js";
 let db1 = prismarineDb.table("LegacyConfig")
 const configDb = await db1.keyval("LegacyConfig");
 const startingRank = configDb.get("StartingRank", "Member");
@@ -37,6 +38,27 @@ world.afterEvents.entityHitEntity.subscribe(e => {
     }
 });
 
+world.afterEvents.playerBreakBlock.subscribe(e=>{
+    setScore("leaf:blocksBroken", e.player, getScore("leaf:blocksBroken", e.player) + 1)
+})
+
+world.afterEvents.playerPlaceBlock.subscribe(e=>{
+    setScore("leaf:blocksPlaced", e.player, getScore("leaf:blocksPlaced", e.player) + 1)
+})
+
+world.afterEvents.entityDie.subscribe(e=>{
+    let damageSource = e.damageSource && e.damageSource.damagingEntity ? e.damageSource.damagingEntity : null;
+    if(e.damageSource.damagingProjectile) {
+        let projectile = e.damageSource.damagingProjectile.getComponent("projectile")
+        if(projectile && projectile.owner) damageSource = projectile.owner;
+    }
+    if(e.deadEntity.typeId != "minecraft:player") return;
+    setScore("azalea:deaths", e.deadEntity, getScore("azalea:deaths", e.deadEntity) + 1)
+    if(!damageSource || damageSource.typeId != "minecraft:player") return;
+    setScore("azalea:kills", damageSource, getScore("azalea:kills", damageSource) + 1)
+
+})
+
 system.runInterval(() => {
     recursionSessions.clear();
     for (const player of world.getPlayers()) {
@@ -56,10 +78,10 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
     if(player) {
         newStr = newStr.replaceAll('[@username]', player.name);
         if(!(player instanceof Player)) return;
-        const colors = getPlayerColors(player);
-        vars.bc = colors.bracket;
-        vars.nc = colors.name;
-        vars.mc = colors.message;
+        // const colors = getPlayerColors(player);
+        vars.bc = playerUtils.getBracketColor(player);
+        vars.nc = playerUtils.getNameColor(player);
+        vars.mc = playerUtils.getMessageColor(player);
         vars.x = `${Math.floor(player.location.x)}`;
         vars.y = `${Math.floor(player.location.y)}`;
         vars.z = `${Math.floor(player.location.z)}`;
@@ -82,10 +104,14 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         vars.hp_max = `${Math.floor(health.effectiveMax)}`
         vars.hp_min = `${Math.floor(health.effectiveMin)}`
         vars.hp_default = `${Math.floor(health.defaultValue)}`
-        vars.rank = getPlayerRanks(player)[0];
+        vars.rank = playerUtils.getRanks(player)[0];
         vars.kills = `${getScore("azalea:kills", player)}`;
         vars.deaths = `${getScore("azalea:deaths", player)}`;
+        vars.blocks_broken = `${getScore("leaf:blocksBroken", player)}`;
+        vars.blocks_placed = `${getScore("leaf:blocksPlaced", player)}`;
         vars.cps = `${getScore("azalea:cps", player)}`;
+        let clan = OpenClanAPI.getClan(player);
+        vars.clanID = clan ? `${clan.id}` : "null";
         vars["k/d"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
         let zone = zones.getZoneAtVec3(player.location);
         vars.claim = zone ? zone.data.type == "ZONE" ? `§v${zone.data.name}` : zone.data.type == "CLAIM" ? `§q${zone.data.name}` : `§c${zone.data.name}` : `§7Wilderness`;
@@ -95,9 +121,10 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         newStr = newStr.replaceAll('[@username2]', player.name);
         if(!(player instanceof Player)) return;
         const colors = getPlayerColors(player);
-        vars.bc2 = colors.bracket;
-        vars.nc2 = colors.name;
-        vars.mc2 = colors.message;
+        vars.bc2 = playerUtils.getBracketColor(player);
+        vars.nc2 = playerUtils.getNameColor(player);
+        vars.mc2 = playerUtils.getMessageColor(player);
+
         vars.x2 = `${Math.floor(player.location.x)}`;
         vars.y2 = `${Math.floor(player.location.y)}`;
         vars.z2 = `${Math.floor(player.location.z)}`;
@@ -120,9 +147,13 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         vars.hp_max2 = `${Math.floor(health.effectiveMax)}`
         vars.hp_min2 = `${Math.floor(health.effectiveMin)}`
         vars.hp_default2 = `${Math.floor(health.defaultValue)}`
-        vars.rank2 = getPlayerRanks(player)[0];
+        vars.rank2 = playerUtils.getRanks(player)[0];
+
         vars.kills2 = `${getScore("azalea:kills", player)}`;
         vars.deaths2 = `${getScore("azalea:deaths", player)}`;
+        vars.blocks_broken2 = `${getScore("leaf:blocksBroken", player)}`;
+        vars.blocks_placed2 = `${getScore("leaf:blocksPlaced", player)}`;
+
         vars.cps2 = `${getScore("azalea:cps", player)}`;
         vars["k/d2"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
         vars.claim2 = getClaimText(player);
@@ -200,7 +231,7 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
     let fns = {
         rank_joiner(separator) {
             if(!player) return "";
-            return getPlayerRanks(player).join(separator).replaceAll('&Q;','"');
+            return playerUtils.getRanks(player).join(separator).replaceAll('&Q;','"');
         },
         alternate(text, codes) {
             let codesList = codes.split('').map(_=>`§${_}`);

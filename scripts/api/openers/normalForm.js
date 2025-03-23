@@ -15,6 +15,8 @@ import { themes } from "../../uis/uiBuilder/cherryThemes";
 import { getTable } from "../../pdbScriptevents";
 import http from "../../networkingLibs/currentNetworkingLib";
 import { combatMap } from "../../features/clog";
+import OpenClanAPI from "../OpenClanAPI";
+import playerStorage from "../playerStorage";
 class NormalFormOpener {
     parseArgs(str, ...args) {
         let newStr = str;
@@ -204,6 +206,12 @@ class NormalFormOpener {
         return score;
     }
     playerIsAllowedNoNegate(player, tag, ui) {
+        if(tag == "$IN_CLAN") return OpenClanAPI.getClan(player) ? true : false;
+        if(tag == "$CLAN_OWNER") {
+            let clan = OpenClanAPI.getClan(player);
+            let playerID = playerStorage.getID(player);
+            return clan && clan.data.owner == playerID ? true : false;
+        }
         if(tag == "$NETLIB_SETUP") return http.player ? true : false;
         if(tag == "false") return false;
         if(tag == "in_combat") return combatMap.has(player.id)

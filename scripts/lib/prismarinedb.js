@@ -2916,7 +2916,8 @@ var ColorAPI = class {
       "\xA7q",
       "\xA7s",
       "\xA7t",
-      "\xA7u"
+      "\xA7u",
+      "\xA7v",
     ];
   }
   getColorNames() {
@@ -2928,6 +2929,7 @@ var ColorAPI = class {
       "Dark Red",
       "Dark Purple",
       "Gold",
+      "Light Gray",
       "Dark Gray",
       "Blue",
       "Green",
@@ -2943,9 +2945,11 @@ var ColorAPI = class {
       "Material Redstone",
       "Material Copper",
       "Material Gold",
+      "Material Emerald",
       "Material Diamond",
       "Material Lapis",
-      "Material Amethyst"
+      "Material Amethyst",
+      "Rust"
     ];
   }
   getColorNamesColored() {
@@ -2955,6 +2959,7 @@ var ColorAPI = class {
     for (let i = 0; i < colorNames.length; i++) {
       names.push(`${colorCodes[i]}${colorNames[i]}`);
     }
+    return names;
   }
   isValidColorCode(code) {
     return this.getColorCodes().includes(code);
