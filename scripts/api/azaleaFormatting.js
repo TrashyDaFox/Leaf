@@ -34,7 +34,7 @@ function calculateCPS(clicks, player) {
 world.afterEvents.entityHitEntity.subscribe(e => {
     if (e.damagingEntity.typeId === "minecraft:player") {
         recordClick(e.damagingEntity);
-        setScore("azalea:cps", e.damagingEntity, calculateCPS(playersClicks.get(e.damagingEntity.id), e.damagingEntity));
+        setScore("leaf:cps", e.damagingEntity, calculateCPS(playersClicks.get(e.damagingEntity.id), e.damagingEntity));
     }
 });
 
@@ -53,16 +53,41 @@ world.afterEvents.entityDie.subscribe(e=>{
         if(projectile && projectile.owner) damageSource = projectile.owner;
     }
     if(e.deadEntity.typeId != "minecraft:player") return;
-    setScore("azalea:deaths", e.deadEntity, getScore("azalea:deaths", e.deadEntity) + 1)
+    setScore("leaf:deaths", e.deadEntity, getScore("leaf:deaths", e.deadEntity) + 1)
     if(!damageSource || damageSource.typeId != "minecraft:player") return;
-    setScore("azalea:kills", damageSource, getScore("azalea:kills", damageSource) + 1)
+    setScore("leaf:kills", damageSource, getScore("leaf:kills", damageSource) + 1)
 
 })
+
+let secondsScoreboard = "leaf:seconds"
+let minutesScorbeoard = "leaf:minutes"
+let hoursScoreboard = "leaf:hours"
+let daysScoreboard = "leaf:days"
 
 system.runInterval(() => {
     recursionSessions.clear();
     for (const player of world.getPlayers()) {
-        setScore("azalea:cps", player, calculateCPS(playersClicks.has(player.id) ? playersClicks.get(player.id) : [], player));
+        setScore("leaf:cps", player, calculateCPS(playersClicks.has(player.id) ? playersClicks.get(player.id) : [], player));
+        let seconds = getScore(secondsScoreboard, player);
+        if(seconds < 59) {
+            setScore(secondsScoreboard, player, seconds + 1);
+        } else {
+            setScore(secondsScoreboard, player, 0);
+            let minutes = getScore(minutesScorbeoard, player);
+            if(minutes < 59) {
+                setScore(minutesScorbeoard, player, minutes + 1)
+            } else {
+                setScore(minutesScorbeoard, player, 0)
+                let hours = getScore(hoursScoreboard, player)
+                if(hours < 23) {
+                    setScore(hoursScoreboard, player, hours + 1)
+                } else {
+                    setScore(hoursScoreboard, player, 0)
+                    let days = getScore(daysScoreboard, player);
+                    setScore(daysScoreboard, player, days + 1)
+                }
+            }
+        }
     }
 }, 20);
 
@@ -105,12 +130,17 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         vars.hp_min = `${Math.floor(health.effectiveMin)}`
         vars.hp_default = `${Math.floor(health.defaultValue)}`
         vars.rank = playerUtils.getRanks(player)[0];
-        vars.kills = `${getScore("azalea:kills", player)}`;
-        vars.deaths = `${getScore("azalea:deaths", player)}`;
+        vars.kills = `${getScore("leaf:kills", player)}`;
+        vars.deaths = `${getScore("leaf:deaths", player)}`;
         vars.blocks_broken = `${getScore("leaf:blocksBroken", player)}`;
         vars.blocks_placed = `${getScore("leaf:blocksPlaced", player)}`;
-        vars.cps = `${getScore("azalea:cps", player)}`;
+        vars.days_played = `${getScore(daysScoreboard, player)}`
+        vars.hours_played = `${getScore(hoursScoreboard, player)}`
+        vars.minutes_played = `${getScore(minutesScorbeoard, player)}`
+        vars.seconds_played = `${getScore(secondsScoreboard, player)}`
+        vars.cps = `${getScore("leaf:cps", player)}`;
         let clan = OpenClanAPI.getClan(player);
+        vars.clan = clan ? clan.data.name : "No Clan"
         vars.clanID = clan ? `${clan.id}` : "null";
         vars["k/d"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
         let zone = zones.getZoneAtVec3(player.location);
@@ -149,12 +179,20 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         vars.hp_default2 = `${Math.floor(health.defaultValue)}`
         vars.rank2 = playerUtils.getRanks(player)[0];
 
-        vars.kills2 = `${getScore("azalea:kills", player)}`;
-        vars.deaths2 = `${getScore("azalea:deaths", player)}`;
+        vars.kills2 = `${getScore("leaf:kills", player)}`;
+        vars.deaths2 = `${getScore("leaf:deaths", player)}`;
         vars.blocks_broken2 = `${getScore("leaf:blocksBroken", player)}`;
         vars.blocks_placed2 = `${getScore("leaf:blocksPlaced", player)}`;
+        vars.days_played2 = `${getScore(daysScoreboard, player)}`
+        vars.hours_played2 = `${getScore(hoursScoreboard, player)}`
+        vars.minutes_played2 = `${getScore(minutesScorbeoard, player)}`
+        vars.seconds_played2 = `${getScore(secondsScoreboard, player)}`
+        vars.cps2 = `${getScore("leaf:cps", player)}`;
+        let clan = OpenClanAPI.getClan(player);
+        vars.clan2 = clan ? clan.data.name : "No Clan"
+        vars.clanID2 = clan ? `${clan.id}` : "null";
 
-        vars.cps2 = `${getScore("azalea:cps", player)}`;
+        
         vars["k/d2"] = `${safeDivide(parseFloat(vars.kills), parseFloat(vars.deaths))}`;
         vars.claim2 = getClaimText(player);
     }
@@ -166,7 +204,8 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
     let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     vars["mo/n"] = monthNames[vars.mo-1];
     vars.m = `${new Date().getUTCMinutes()}`;
-    vars.h = `${new Date().getUTCHours()}`;
+    let num22 = new Date().getUTCHours();
+    vars.h = `${num22}`;
     vars.s = `${new Date().getUTCSeconds()}`;
     vars.ms = `${new Date().getUTCMilliseconds()}`;
     vars.d = `${new Date().getDate()}`;
@@ -218,8 +257,7 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         // if(key == "msg") continue;
         let val = vars[key];
         newStr = newStr.replaceAll(`<${key}>`, `${val}`);
-    }
-
+    }//
     // Restore original message after variable replacement
     // if (originalMsg !== undefined) {
     //     vars.msg = originalMsg;

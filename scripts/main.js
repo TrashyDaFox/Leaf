@@ -89,11 +89,12 @@ import './uis/sidebar/trashEdit';
 import './uis/currencyEditor/root';
 import './uis/currencyEditor/add';
 import './uis/uiBuilder/editActions.js';
-import './crates/main';
+// import './crates/main';
 import './uis/basic/basicConfirmation.js';
 import './features/chestLocking'
 import './commands/bind.js';
 import './uis/crates/root.js'
+import './features/crates.js'
 import './uis/RoleEditor/editperms.js'
 import './uis/RoleEditor/edittags.js'
 import icons from './api/icons';
@@ -183,6 +184,10 @@ import pjXML from './lib/pjxml.js';
 import { dynamicToast } from './lib/chatNotifs.js';
 import auctionhouse from './api/AH/auctionhouse.js';
 // uiBuilder.importUI()
+
+try { system.events.beforeWatchdogTerminate.subscribe(e => e.cancel = true); }
+catch (err) { system.beforeEvents.watchdogTerminate.subscribe(e => { system.run(() => { e.cancel = true; console.warn(`${e.terminateReason}`); }); }); }
+
 uiBuilder.addInternalUI({
     "name": "Navigator",
     "body": "",
@@ -927,6 +932,595 @@ uiBuilder.addInternalUI({
     "folder": 1741898363581751
 })
 uiBuilder.addInternalUI({
+  "name": "Config UI / Main",
+  "body": "",
+  "layout": 4,
+  "type": 0,
+  "buttons": [
+    {
+      "text": "§cDev Settings",
+      "subtext": "uwu kawaii settings please dont touch :trans:",
+      "action": "/scriptevent leafgui:dev",
+      "actions": [
+        "/scriptevent leafgui:dev"
+      ],
+      "iconID": "^textures/azalea_icons/DevSettings",
+      "iconOverrides": [],
+      "requiredTag": "$cfg/DevMode",
+      "id": 5,
+      "displayOverrides": [],
+      "nutUIHeaderButton": true,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": ""
+    },
+    {
+      "text": " ",
+      "subtext": null,
+      "action": "",
+      "actions": [
+        ""
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Main Settings",
+          "subtext": "",
+          "action": "/scriptevent leaf:open nutui/main",
+          "requiredTag": "",
+          "displayOverrides": [],
+          "nutUIColorCondition": "$thiseq/nutui/main",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false,
+          "id": 1,
+          "actions": [
+            "/scriptevent leaf:open nutui/main"
+          ]
+        },
+        {
+          "text": "Misc Settings",
+          "subtext": "",
+          "action": "/scriptevent leaf:open nutui/misc",
+          "requiredTag": "",
+          "displayOverrides": [],
+          "nutUIColorCondition": "$thiseq/nutui/misc",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false,
+          "id": 2,
+          "actions": [
+            "/scriptevent leaf:open nutui/misc"
+          ]
+        },
+        {
+          "text": "Info & Support",
+          "subtext": "",
+          "action": "/scriptevent leaf:open nutui/credits",
+          "requiredTag": "",
+          "displayOverrides": [],
+          "nutUIColorCondition": "$thiseq/nutui/credits",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false,
+          "id": 3,
+          "actions": [
+            "/scriptevent leaf:open nutui/credits"
+          ]
+        }
+      ],
+      "buttonRow": true,
+      "id": 22
+    },
+    {
+      "text": "CherryCloud",
+      "subtext": "",
+      "action": "/scriptevent leaf:open nutui/cc",
+      "actions": [
+        "/scriptevent leaf:open nutui/cc"
+      ],
+      "iconID": "^textures/azalea_icons/CherryCloud",
+      "iconOverrides": [],
+      "requiredTag": "$NETLIB_SETUP",
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "$thiseq/nutui/cc",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "id": 26
+    },
+    {
+      "text": "§m§0§1§r§aPreset §bBrowser",
+      "subtext": "Presets made by the leaf community!",
+      "action": "/scriptevent leafgui:preset_browser",
+      "actions": [
+        "/scriptevent leafgui:preset_browser"
+      ],
+      "iconID": "Packs/Asteroid/global",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 12,
+      "disabled": false,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false
+    },
+    {
+      "text": "§aFeatures & Experiments",
+      "subtext": "Toggle parts of leaf",
+      "action": "/scriptevent leafgui:modules_config",
+      "actions": [
+        "/scriptevent leafgui:modules_config"
+      ],
+      "iconID": "Packs/Asteroid/change",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 4,
+      "displayOverrides": [],
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": "",
+      "nutUIAlt": false
+    },
+    {
+      "text": "{{gay \"Customizer\"}}",
+      "subtext": "Customize leaf",
+      "action": "/scriptevent leafgui:ui_builder_main_page",
+      "actions": [
+        "/scriptevent leafgui:ui_builder_main_page"
+      ],
+      "iconID": "^textures/azalea_icons/RainbowPaintBrush",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 2,
+      "displayOverrides": [],
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": "",
+      "nutUIAlt": false,
+      "meta": "",
+      "nutUIColorCondition": ""
+    },
+    {
+      "text": "§eHelp Center",
+      "subtext": "Open help page",
+      "action": "/scriptevent leafgui:uihelp",
+      "actions": [
+        "/scriptevent leafgui:uihelp"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "false",
+      "id": 8,
+      "displayOverrides": [],
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 2,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": "",
+      "nutUIColorCondition": ""
+    },
+    {
+      "text": "§cModeration §dHub",
+      "subtext": "Reports, Bans & More!",
+      "action": "/scriptevent leafgui:moderation_hub",
+      "actions": [
+        "/scriptevent leafgui:moderation_hub"
+      ],
+      "iconID": "leaf/image-1191",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": false,
+      "id": 15
+    },
+    {
+      "text": "§qSidebar Editor",
+      "subtext": "Make Custom Sidebars Easily",
+      "action": "scriptevent leafgui:sidebar_editor_root",
+      "actions": [
+        "scriptevent leafgui:sidebar_editor_root"
+      ],
+      "iconID": "leaf/image-521",
+      "iconOverrides": [],
+      "requiredTag": "false",
+      "id": 7,
+      "displayOverrides": [
+        {
+          "condition": "$cfg/RefreshedSidebar",
+          "text": "§uSidebar §dV2",
+          "subtext": "The new and improved sidebar editor!",
+          "iconID": "leaf/image-521"
+        }
+      ],
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": "",
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "disabled": false
+    },
+    {
+      "text": "§aEconomy §2Settings",
+      "subtext": "Manage currencies and more",
+      "action": "/scriptevent leaf:open nutui/economy",
+      "actions": [
+        "/scriptevent leafgui:currency_editor"
+      ],
+      "iconID": "leaf/image-481",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 14,
+      "disabled": false
+    },
+    {
+      "text": "§vEvents",
+      "subtext": "Do things when things happen",
+      "action": "/scriptevent leafgui:actions",
+      "actions": [
+        "/scriptevent leafgui:events_editor_root"
+      ],
+      "iconID": "Packs/Asteroid/slash",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 13,
+      "disabled": false,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false
+    },
+    {
+      "text": "§eBack to old design",
+      "subtext": "Click to go back to old config UI design",
+      "action": "/tag @s add old-config",
+      "actions": [
+        "/tag @s add old-config",
+        "/scriptevent leafgui:config_menu_start_page"
+      ],
+      "iconID": "leaf/image-1135",
+      "iconOverrides": [],
+      "requiredTag": "!$cfg/DisableOldDesignButton",
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": true,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "id": 16
+    },
+    {
+      "text": "§aSkills",
+      "subtext": "Coming soon",
+      "action": "/scriptevent leafgui:skills",
+      "actions": [
+        "/scriptevent leafgui:skills"
+      ],
+      "iconID": "leaf/image-0973",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": true,
+      "id": 18,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false
+    },
+    {
+      "text": "§eZones §6Config",
+      "subtext": "Manage zones",
+      "action": "/scriptevent leafgui:zones",
+      "actions": [
+        "/scriptevent leafgui:zones"
+      ],
+      "iconID": "leaf/image-1190",
+      "iconOverrides": [],
+      "requiredTag": "$cfg/Zones",
+      "disabled": false,
+      "id": 19,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false
+    },
+    {
+      "text": "§bRoquefort",
+      "subtext": "Roquefort!",
+      "action": "/scriptevent leaf:open leaf/roquefort",
+      "actions": [
+        "/scriptevent leaf:open leaf/roquefort"
+      ],
+      "iconID": "leaf/roquefort-hd",
+      "iconOverrides": [],
+      "requiredTag": "asdasdasd",
+      "id": 24,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "text": "§eLand Claims",
+      "subtext": "Configure land claims",
+      "action": "/scriptevent leafgui:land_claims",
+      "actions": [
+        "/scriptevent leafgui:land_claims_config"
+      ],
+      "iconID": "leaf/image-0961",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": false,
+      "id": 27,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "§bAutomated Messages",
+      "subtext": "Send randomized automated messages",
+      "action": "/scriptevent leafgui:automized_messages",
+      "actions": [
+        "/scriptevent leafgui:automized_messages"
+      ],
+      "iconID": "leaf/image-482",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": true,
+      "id": 28,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "§fChat Ranks",
+      "subtext": "Manage chat rank config",
+      "action": "/scriptevent leafgui:chat_modules",
+      "actions": [
+        "/scriptevent leafgui:chatranks_config"
+      ],
+      "iconID": "leaf/image-477",
+      "iconOverrides": [],
+      "requiredTag": "$cfg/Chatranks",
+      "disabled": false,
+      "id": 29,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "§cTrading Settings",
+      "subtext": "Configure Trade UI",
+      "action": "/scriptevent leafgui:trades",
+      "actions": [
+        "/scriptevent leafgui:trades"
+      ],
+      "iconID": "leaf/image-772",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": true,
+      "id": 30,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "§cBackpack §6Settings",
+      "subtext": "Configure backpack",
+      "action": "/scriptevent leafgui:backpack_settings",
+      "actions": [
+        "/scriptevent leafgui:backpack_settings"
+      ],
+      "iconID": "leaf/image-517",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": true,
+      "id": 31,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "§cPlots",
+      "subtext": "Configure plots system",
+      "action": "/scriptevent leafgui:plots",
+      "actions": [
+        "/scriptevent leafgui:plots"
+      ],
+      "iconID": "leaf/image-613",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "disabled": true,
+      "id": 32,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    },
+    {
+      "text": "pfffffff",
+      "subtext": "",
+      "action": "/kill",
+      "actions": [
+        "/kill",
+        "/summon tnt"
+      ],
+      "iconID": "leaf/image-085",
+      "iconOverrides": [],
+      "requiredTag": "ASDDDDD:3",
+      "disabled": false,
+      "id": 115003427,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "buyButtonEnabled": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false
+    }
+  ],
+  "subuis": {},
+  "scriptevent": "nutui/main",
+  "lastID": 32,
+  "theme": 12,
+  "pinned": true,
+  "paperdoll": true,
+  "pin": null,
+  "pinSetBy": null,
+  "cancel": "",
+  "folder": 1741898363581751,
+  "original": {
     "name": "Config UI / Main",
     "body": "",
     "layout": 4,
@@ -1514,6 +2108,9 @@ uiBuilder.addInternalUI({
     "pinSetBy": null,
     "cancel": "",
     "folder": 1741898363581751
+  },
+  "internal": true,
+  "internalID": 4
 })
 uiBuilder.addInternalUI({
     "name": "Config UI / Support & Info",
@@ -1718,6 +2315,964 @@ uiBuilder.addInternalUI({
     "folder": 1741898363581751
 })
 uiBuilder.addInternalUI({
+  "name": "Features",
+  "body": "",
+  "layout": 4,
+  "type": 0,
+  "buttons": [
+    {
+      "text": "§l§cGo Back",
+      "subtext": "Go back to main settings.",
+      "action": "/scriptevent leaf:open nutui/main",
+      "actions": [
+        "/scriptevent leaf:open nutui/main"
+      ],
+      "iconID": "^textures/azalea_icons/2",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 0,
+      "displayOverrides": [],
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": true,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "text": "§bFeatures",
+      "subtext": "Main features of leaf",
+      "action": "/scriptevent leaf:open <this>",
+      "actions": [
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 1,
+      "displayOverrides": [],
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "disabled": false
+    },
+    {
+      "text": "Chatranks",
+      "subtext": "OFF",
+      "action": "/scriptevent leaf:set_bool_property Chatranks false",
+      "actions": [
+        "/scriptevent leaf:set_bool_property Chatranks false",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 2,
+      "displayOverrides": [],
+      "nutUIColorCondition": "!$cfg/Chatranks",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 1,
+      "nutUINoSizeKey": true,
+      "nutUIAlt": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": ""
+    },
+    {
+      "text": "Chatranks",
+      "subtext": "ON",
+      "action": "/scriptevent leaf:set_bool_property Chatranks true",
+      "actions": [
+        "/scriptevent leaf:set_bool_property Chatranks true",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 3,
+      "displayOverrides": [],
+      "nutUIColorCondition": "$cfg/Chatranks",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 2,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false,
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "sellButtonScoreboard": "money",
+      "buyButtonEnabled": false,
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "buyButtonItem": ""
+    },
+    {
+      "text": "Clans",
+      "subtext": "OFF",
+      "action": "/scriptevent leaf:set_bool_property Clans false",
+      "actions": [
+        "/scriptevent leaf:set_bool_property Clans false",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 4,
+      "displayOverrides": [],
+      "nutUIColorCondition": "!$cfg/Clans",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 1,
+      "nutUINoSizeKey": true,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "text": "Clans",
+      "subtext": "ON",
+      "action": "/scriptevent leaf:set_bool_property Clans true",
+      "actions": [
+        "/scriptevent leaf:set_bool_property Clans true",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 5,
+      "displayOverrides": [],
+      "nutUIColorCondition": "$cfg/Clans",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 2,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "text": "Land Claims",
+      "subtext": "OFF",
+      "action": "/scriptevent leaf:set_bool_property LandClaims false",
+      "actions": [
+        "/scriptevent leaf:set_bool_property LandClaims false",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 6,
+      "displayOverrides": [],
+      "nutUIColorCondition": "!$cfg/LandClaims",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 1,
+      "nutUINoSizeKey": true,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "text": "Land Claims",
+      "subtext": "ON",
+      "action": "/scriptevent leaf:set_bool_property LandClaims true",
+      "actions": [
+        "/scriptevent leaf:set_bool_property LandClaims true",
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconID": "",
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 7,
+      "displayOverrides": [],
+      "nutUIColorCondition": "$cfg/LandClaims",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 2,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false,
+      "disabled": false
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Pwarps",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Pwarps false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Pwarps false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Pwarps",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Pwarps",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Pwarps true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Pwarps true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "nutUIColorCondition": "$cfg/Pwarps",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false,
+          "id": 15
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Sidebar",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Pwarps false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Sidebar false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Sidebar",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Sidebar",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Pwarps true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Sidebar true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "nutUIColorCondition": "$cfg/Sidebar",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false,
+          "id": 15,
+          "sellButtonEnabled": false,
+          "buyButtonEnabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Shops",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Shops false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Shops false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Shops",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Shops",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Shops true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Shops true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/Shops",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "PlayerShops",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property PlayerShops false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property PlayerShops false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/PlayerShops",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "PlayerShops",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property PlayerShops true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property PlayerShops true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/PlayerShops",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "AFK System",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property PlayerShops false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property AFKSystem false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/AFKSystem",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "AFK System",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property PlayerShops true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property AFKSystem true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/AFKSystem",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Homes",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property AFKSystem false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Homes false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Homes",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Homes",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property AFKSystem true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Homes true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/Homes",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Auction House",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Homes false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property AuctionHouse false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/AuctionHouse",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Auction House",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Homes true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property AuctionHouse true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/AuctionHouse",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Gifts",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property AuctionHouse false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Gifts false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Gifts",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Gifts",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property AuctionHouse true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Gifts true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/Gifts",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Zones",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Gifts false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Zones false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Zones",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Zones",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Gifts true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Zones true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/Zones",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "text": "§aExperiments",
+      "subtext": "Experimental features",
+      "action": "/scriptevent leaf:open nutui/features",
+      "actions": [
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 16,
+      "disabled": false
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Generators",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Generators false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Generators false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/Generators",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Generators",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property PlayerShops true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property Generators true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/Generators",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Clans Admin",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property Generators false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property ClansAdmin false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/ClansAdmin",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Clans Admin",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property Generators true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property ClansAdmin true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/ClansAdmin",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "Refreshed Sidebar",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property ClansAdmin false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property RefreshedSidebar false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/RefreshedSidebar",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "Refreshed Sidebar",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property ClansAdmin true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property RefreshedSidebar true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/RefreshedSidebar",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    },
+    {
+      "text": "§bDeveloper",
+      "subtext": "Developers only :3",
+      "action": "/scriptevent leaf:open nutui/features",
+      "actions": [
+        "/scriptevent leaf:open nutui/features"
+      ],
+      "iconOverrides": [],
+      "requiredTag": "",
+      "id": 16,
+      "disabled": false,
+      "displayOverrides": [],
+      "sellButtonEnabled": false,
+      "sellButtonItem": "minecraft:coal",
+      "sellButtonItemCount": 4,
+      "sellButtonPrice": 20,
+      "buyButtonEnabled": false,
+      "buyButtonItem": "",
+      "buyButtonPrice": 20,
+      "buyButtonScoreboard": "money",
+      "nutUIColorCondition": "",
+      "nutUIHeaderButton": false,
+      "nutUIHalf": 0,
+      "nutUINoSizeKey": false,
+      "nutUIAlt": false
+    },
+    {
+      "type": "group",
+      "buttons": [
+        {
+          "text": "DevMode",
+          "subtext": "OFF",
+          "action": "/scriptevent leaf:set_bool_property RefreshedSidebar false",
+          "actions": [
+            "/scriptevent leaf:set_bool_property DevMode false",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "!$cfg/DevMode",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        },
+        {
+          "text": "DevMode",
+          "subtext": "ON",
+          "action": "/scriptevent leaf:set_bool_property RefreshedSidebar true",
+          "actions": [
+            "/scriptevent leaf:set_bool_property DevMode true",
+            "/scriptevent leaf:open nutui/features"
+          ],
+          "requiredTag": "",
+          "displayOverrides": [],
+          "sellButtonEnabled": false,
+          "sellButtonItem": "minecraft:coal",
+          "sellButtonItemCount": 4,
+          "sellButtonPrice": 20,
+          "buyButtonEnabled": false,
+          "buyButtonItem": "",
+          "buyButtonPrice": 20,
+          "buyButtonScoreboard": "money",
+          "nutUIColorCondition": "$cfg/DevMode",
+          "nutUIHeaderButton": false,
+          "nutUIHalf": 0,
+          "nutUINoSizeKey": false,
+          "nutUIAlt": false,
+          "disabled": false
+        }
+      ],
+      "buttonRow": true,
+      "id": 13
+    }
+  ],
+  "subuis": {},
+  "scriptevent": "nutui/features",
+  "lastID": 16,
+  "theme": 0,
+  "pinned": true,
+  "cancel": "",
+  "simplify": false,
+  "paperdoll": false,
+  "pin": null,
+  "pinSetBy": null,
+  "folder": 1741898363581751,
+  "original": {
     "name": "Features",
     "body": "",
     "layout": 4,
@@ -2623,6 +4178,9 @@ uiBuilder.addInternalUI({
     "pin": null,
     "pinSetBy": null,
     "folder": 1741898363581751
+  },
+  "internal": true, 
+  "internalID": 6
 })
 let blockTests = [
     {
@@ -2886,22 +4444,22 @@ commandManager.addCommand("redeem", { description: "Redeem codes", author: "Tras
         }
     });
 })
-commandManager.addCommand("shop", { description: "Open shop UI", author: "TrashyKitty", category: "Players" }, ({ msg, args }) => {
-    msg.sender.success("Close chat and move to open UI");
-    let ticks = 0;
-    let loc = { x: msg.sender.location.x, y: msg.sender.location.y, z: msg.sender.location.z };
-    let interval = system.runInterval(() => {
-        ticks++;
-        if (ticks >= (20 * 10)) {
-            system.clearRun(interval);
-            msg.sender.error("Timed out")
-            return;
-        }
-        if (msg.sender.location.x != loc.x || msg.sender.location.y != loc.y || msg.sender.location.z != loc.z) {
-            system.clearRun(interval);
-            uiManager.open(msg.sender, config.uiNames.Shop.Root)
-        }
-    });
+commandManager.addCommand("Crates", { description: "Open Cratew UI", author: "Otf5shotzz/Trashykitty", category: "Players" }, ({ msg, args }) => {
+  msg.sender.success("Close chat and move to open UI");
+  let ticks = 0;
+  let loc = { x: msg.sender.location.x, y: msg.sender.location.y, z: msg.sender.location.z };
+  let interval = system.runInterval(() => {
+      ticks++;
+      if (ticks >= (20 * 10)) {
+          system.clearRun(interval);
+          msg.sender.error("Timed out")
+          return;
+      }
+      if (msg.sender.location.x != loc.x || msg.sender.location.y != loc.y || msg.sender.location.z != loc.z) {
+          system.clearRun(interval);
+          uiManager.open(msg.sender, config.uiNames.Crate.Root)
+      }
+  });
 })
 icons.install(leafIconPack);
 icons.install(leafIconPack2, true);

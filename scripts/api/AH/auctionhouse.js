@@ -5,7 +5,7 @@ import playerStorage from "../playerStorage";
 import itemdb from "../itemdb";
 import { dynamicToast } from "../../lib/chatNotifs";
 
-// Only took me 3 years >:3
+// Only took me 3 years >:3 HA
 class AH {
     constructor() {
         this.db = prismarineDb.customStorage("AH", SegmentedStoragePrismarine)

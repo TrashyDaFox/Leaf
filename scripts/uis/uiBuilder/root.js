@@ -152,6 +152,9 @@ uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
     form.button(`§aAction Form\n§7Main UI type, recommended for buttons`, null, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderAdd)
     })
+    form.button(`§eSidebar\n§7Create high quality sidebars`, null, (player)=>{
+        uiManager.open(player, config.uiNames.SidebarEditorAdd)
+    })
     form.button(`§bModal Form\n§7Advanced UI type`, null, (player)=>{
         uiManager.open(player, config.uiNames.Modal.Add)
     })
@@ -200,6 +203,7 @@ function getIcon(ui) {
         : ui.data.internal ? `textures/azalea_icons/LeafyClickOwO`
         : ui.data.layout == 4 ? `textures/azalea_icons/DevSettingsClickyClick`
         : ui.data.type == 6 ? `textures/ui/infobulb`
+        : ui.data.type == 7 ? `textures/azalea_icons/Sidebar`
         : ui.data.type == 4 ? `textures/azalea_icons/ChestIcons/Chest${ui.data.rows ? ui.data.rows : 3}`
         : `textures/azalea_icons/ClickyClick`
 }
@@ -419,14 +423,14 @@ uiManager.addUI(config.uiNames.UIBuilderLeaf, "a", player=>{
 // Main UIs tab
 let showUI = (player) => {
     const buttons = [{
-        text: `§aAdd\n§r§7Add a UI`,
+        text: `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§aAdd\n§r§7Add a UI`,
         iconPath: `textures/azalea_icons/1`,
         callback: (player) => {
             uiManager.open(player, config.uiNames.UIBuilderAddSubmenu);
         }
     }];
     buttons.push({
-        text: `§l§e§f§1§r§aLeaf GUIs\n§7Edit internal leaf UIs`,
+        text: `${NUT_UI_LEFT_HALF}§r§l§e§f§1§r§aLeaf GUIs\n§7Edit leaf's UIs`,
         iconPath: `textures/azalea_icons/LeafyClickOwO`,
         callback: player => {
             uiManager.open(player, config.uiNames.UIBuilderLeaf)
@@ -559,13 +563,13 @@ let showUI = (player) => {
 uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
     let form = new ActionForm();
     form.button(`${NUT_UI_HEADER_BUTTON}§r§cGo Back\n§7Go back to main settings`, `textures/azalea_icons/2`, player => uiManager.open(player, config.uiNames.ConfigRoot))
-    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${NUT_UI_ALT}${themes[0][0]}§rMy UIs`, null, (player)=>{
+    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${NUT_UI_ALT}${themes[12][0]}§rMy Creations`, null, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderRoot)
     })
-    form.button(`${NUT_UI_LEFT_HALF}${themes[0][0]}§rTab UIs`, null, (player)=>{
+    form.button(`${NUT_UI_LEFT_HALF}${themes[0][0]}§rTab UIs (LEGACY)`, null, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderTabbed)
     })
-    form.title(`${NUT_UI_TAG}${themes[0][0]}§rUI Builder`)
+    form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[12][0]}§rCustomizer`)
     let { buttons } = showUI(player);
     for(const button of buttons) {
         form.button(button.text, button.iconPath, button.callback)

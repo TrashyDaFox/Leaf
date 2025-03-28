@@ -5,6 +5,7 @@ import { ActionForm } from "../../lib/form_func";
 import icons from "../../api/icons";
 import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
 uiManager.addUI(config.uiNames.SidebarEditorRoot, "Sidebar editor root", (player)=>{
+    return uiManager.open(player, config.uiNames.UIBuilderRoot)
     let form = new ActionForm();
     form.title(`${NUT_UI_TAG}§rSidebarsV2`)
     form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Click to go back`, `textures/azalea_icons/2`, (player)=>{

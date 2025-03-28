@@ -3,6 +3,7 @@ import { array_move } from './utils/array_move';
 import { formatStr } from './azaleaFormatting';
 import { system, world } from '@minecraft/server';
 import emojis from './emojis';
+import uiBuilder from './uiBuilder';
 const generateUUID = () => {
     let
       d = new Date().getTime(),
@@ -32,43 +33,50 @@ class SidebarEditor {
         this.lineCaches = {};
     }
     createSidebar(name) {
+        return uiBuilder.createSidebar(name)
         if(!name) return; // fix empty sidebar bug. reported by theboss12332397
-        let doc = this.db.findFirst({
+        let doc = uiBuilder.db.findFirst({
             _name: name
         })
         if(doc) return;
-        this.db.insertDocument({
+        uiBuilder.db.insertDocument({
             _type: "SIDEBAR",
             _name: name,
             lines: []
         });
     }
     deleteSidebar(name) {
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
         });
         if(!doc) return;
-        this.db.trashDocumentByID(doc.id);
+        uiBuilder.db.trashDocumentByID(doc.id);
     }
     getLines(name) {
         if(this.lineCaches[`!${name}`]) return this.lineCaches[`!${name}`];
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         });
         if(!doc) return [];
         this.lineCaches[`!${name}`] = doc.data.lines
         return doc.data.lines;
     }
     getLineByID(name, id) {
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         });
         if(!doc) return;
         return doc.data.lines.find(_=>_.id == id);
     }
     editLineTickSpeed(name, id, tickSpeed = 10) {
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
         });
         this.clearLineCache(name);
         if(!doc) return;
@@ -78,7 +86,7 @@ class SidebarEditor {
         lines[lineIndex].tickSpeed = tickSpeed
         doc.data.lines = lines;
         this.lineTickSpeeds[id] = tickSpeed
-        JSON.stringify(this.db.overwriteDataByID(doc.id, doc.data));
+        JSON.stringify(uiBuilder.db.overwriteDataByID(doc.id, doc.data));
     }
     containsSpecialPatterns(str) {
         // Regular expressions for {{}} and <> with text inside
@@ -168,47 +176,58 @@ class SidebarEditor {
         }).join(''), player);
     }
     duplicateSidebar(name, newName) {
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         });
         if(!doc) return;
-        let doc2 = this.db.findFirst({
-            _name: newName
+        let doc2 = uiBuilder.db.findFirst({
+            type: 7,
+            name: newName
+
         })
         if(doc2) return;
-        this.db.insertDocument({
+        uiBuilder.db.insertDocument({
             ...doc.data,
-            _name: newName
+            name: newName
+
         })
     }
     getSidebarNames() {
-        return this.db.findDocuments({_type:"SIDEBAR"}).map(_=>_.data._name);
+        return uiBuilder.db.findDocuments({type: 7}).map(_=>_.data.name);
     }
     addLine(name, text) {
         this.clearLineCache(name);
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         })
         if(!doc) return;
         doc.data.lines.push({
             id: generateUUID(),
             text
         });
-        this.db.overwriteDataByID(doc.id, doc.data);
+        uiBuilder.db.overwriteDataByID(doc.id, doc.data);
     }
     removeLine(name, id) {
         this.clearLineCache(name);
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         })
         if(!doc) return;
         doc.data.lines = doc.data.lines.filter(_=>_.id != id);
-        this.db.overwriteDataByID(doc.id, doc.data);
+        uiBuilder.db.overwriteDataByID(doc.id, doc.data);
     }
     editLine(name, id, text) {
         this.clearLineCache(name);
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         })
         if(!doc) return;
         let index = doc.data.lines.findIndex(_=>_.id == id);
@@ -217,13 +236,15 @@ class SidebarEditor {
             id,
             text
         };
-        this.db.overwriteDataByID(doc.id, doc.data);
+        uiBuilder.db.overwriteDataByID(doc.id, doc.data);
 
     }
     moveLineDown(name, id) {
         this.clearLineCache(name);
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         })
         if(!doc) return;
         let index = doc.data.lines.findIndex(_=>_.id == id);
@@ -231,12 +252,14 @@ class SidebarEditor {
         // world.sendMessage(JSON.stringify(doc.data.lines, null, 2));
         if(index + 1 >= doc.data.lines.length) return;
         array_move(doc.data.lines, index, index + 1);
-        this.db.overwriteDataByID(doc.id, doc.data);
+        uiBuilder.db.overwriteDataByID(doc.id, doc.data);
     }
     moveLineUp(name, id) {
         this.clearLineCache(name);
-        let doc = this.db.findFirst({
-            _name: name
+        let doc = uiBuilder.db.findFirst({
+            type: 7,
+            name: name
+
         })
         if(!doc) return;
         let index = doc.data.lines.findIndex(_=>_.id == id);
@@ -246,7 +269,7 @@ class SidebarEditor {
         
         array_move(doc.data.lines, index, index - 1);
 
-        this.db.overwriteDataByID(doc.id, doc.data);
+        uiBuilder.db.overwriteDataByID(doc.id, doc.data);
     }
 }
 

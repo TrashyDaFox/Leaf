@@ -10,6 +10,7 @@ import { themes } from "./cherryThemes";
 import './editCherryTheme';
 import { NUT_UI_ALT, NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_HEADER_BUTTON, NUT_UI_LEFT_HALF, NUT_UI_PAPERDOLL, NUT_UI_RIGHT_HALF, NUT_UI_TAG, NUT_UI_THEMED } from "../preset_browser/nutUIConsts";
 import configAPI from "../../api/config/configAPI";
+import sidebarEditor from "../../api/sidebarEditor";
 uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
     try {
         // let snippetBook = uiBuilder.getSnippetBook()
@@ -33,6 +34,23 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             })
             actionForm.button(`§dEdit controls\n§7Edit contents of this form`, `textures/azalea_icons/GUIMaker/ModalsV2/Edit controls`, (player)=>{
                 uiManager.open(player, config.uiNames.Modal.EditControls, id)
+            })
+        }
+        if(doc.data.type == 7) {
+            actionForm.button(`§cEdit Lines\n§7Edit the lines of this UI`, null, (player)=>{
+                uiManager.open(player, config.uiNames.SidebarEditorEdit, doc.data.name)
+            })
+            actionForm.button(`§cMake Default\n§7Make this the default sidebar`, null, (player)=>{
+                for(const data of uiBuilder.db.data) {
+                    if(data.data.type != 7) continue;
+
+                    data.data.isDefaultSidebar = false;
+                    uiBuilder.db.save();
+                }
+
+                doc.data.isDefaultSidebar = true;
+                uiBuilder.db.overwriteDataByID(doc.id, doc.data)
+                uiManager.open(player, config.uiNames.UIBuilderEdit, id)
             })
         }
         if(doc.data.type == 0) {
@@ -149,6 +167,16 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         })
         actionForm.button(`§3Duplicate\n§7Duplicate this UI`, `textures/azalea_icons/UI Copy and paste`, (player)=>{
+            if(doc.data.type == 7) {
+                let modal = new ModalForm();
+                modal.textField("New Name", "Name", "", ()=>{}, "Name for the cloned sidebar")
+                modal.show(player, false, (player, response)=>{
+                    if(response.canceled) return uiManager.open(player, config.uiNames.UIBuilderEdit, id)
+                    sidebarEditor.duplicateSidebar(doc.data.name, response.formValues[0])
+                    return uiManager.open(player, config.uiNames.UIBuilderRoot)
+                })
+                return;
+            }
             uiBuilder.duplicateUI(id);
             return uiManager.open(player, config.uiNames.UIBuilderRoot);
         })

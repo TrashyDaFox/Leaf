@@ -24,12 +24,14 @@ import icons from "./icons";
 import pjXML from "../lib/pjxml";
 import versionData from "../versionData";
 import { dynamicToast } from "../lib/chatNotifs";
+import sidebarEditor from "./sidebarEditor";
 
 class UIBuilder {
     constructor() {
         this.validRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.internalUIs = [];
         this.leafEpoch = 1741909421689;
+        this.db = prismarineDb.customStorage(config.tableNames.uis + "~new", SegmentedStoragePrismarine)
         this.initializeDatabases();
         // this.initializeStates();
         this.setupScriptEventListener();
@@ -40,6 +42,113 @@ class UIBuilder {
         this.addExampleUI();
         this.migrateChestGUIs();
         this.createSnippetBook()
+        this.db.waitLoad().then(()=>{
+            this.transitionSidebars();
+        })
+    }
+    transitionSidebars() {
+        sidebarEditor.db.waitLoad().then(()=>{
+            let sidebars = sidebarEditor.db.findDocuments({_type: "SIDEBAR"})
+            console.warn(sidebars.length)
+            let i = 0;
+            for(const sidebar of sidebars) {
+                if(sidebar.data.transition1) continue;
+                // if(this.db.findFirst({transitionedFrom: sidebar.id})) continue;
+                i++;
+                // _type: "SIDEBAR",
+                // _name: name, 
+                // developer chats
+                // remember the lag? from azalea and how its rep got ruined
+                // yeah, how could i forget?
+                // thats why i rewrote it
+                // lines: [] 
+    
+                this.db.insertDocument({
+                    type: 7,
+                    name: sidebar.data._name,
+                    lines: sidebar.data.lines,
+                    transitioned: true,
+                    transitionedFrom: sidebar.id,
+                    isDefaultSidebar: i == 1 ? true : false
+                })
+                sidebar.data.transition1 = true;
+                sidebarEditor.db.overwriteDataByID(sidebar.id, sidebar.data)
+            }
+    
+        })
+    }
+    base64Decode(input) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        let output = '';
+        let buffer = '';
+        
+        // Remove padding from the Base64 string
+        input = input.replace(/=+$/, '');
+        
+        // Process each Base64 character
+        for (let i = 0; i < input.length; i++) {
+            let char = input.charAt(i);
+            let base64Index = chars.indexOf(char);
+    
+            // Convert the Base64 character to 6 bits and append to buffer
+            if (base64Index !== -1) {
+                buffer += base64Index.toString(2).padStart(6, '0');
+            }
+        }
+    
+        // Convert the bits back to characters (8 bits per character)
+        while (buffer.length >= 8) {
+            let byte = parseInt(buffer.slice(0, 8), 2);
+            output += String.fromCharCode(byte);
+            buffer = buffer.slice(8); // Remove the first 8 bits processed
+        }
+    
+        return output;
+    }
+    
+    base64Encode(input) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        let output = '';
+        let buffer = '';
+        
+        for (let i = 0; i < input.length; i++) {
+            // Get the ASCII value of the character at position i
+            let byte = input.charCodeAt(i);
+            
+            // Append the 8-bit byte to the buffer (in binary format)
+            buffer += byte.toString(2).padStart(8, '0');
+            
+            // If we have enough bits to form a Base64 value (6 bits)
+            while (buffer.length >= 6) {
+                let base64Index = parseInt(buffer.slice(0, 6), 2);
+                output += chars[base64Index];
+                buffer = buffer.slice(6); // Remove the first 6 bits processed
+            }
+        }
+        
+        // If there are any leftover bits in the buffer, pad with 0s
+        if (buffer.length > 0) {
+            buffer = buffer.padEnd(6, '0');
+            let base64Index = parseInt(buffer, 2);
+            output += chars[base64Index];
+        }
+    
+        // Add padding ('=') to make the length of the string a multiple of 4
+        while (output.length % 4 !== 0) {
+            output += '=';
+        }
+    
+        return output;
+    }
+    createSidebar(name) {
+        if(this.db.findFirst({type: 7, name})) return;
+        this.db.insertDocument({
+            type: 7,
+            name: name,
+            lines: [],
+            transitioned: false,
+            isDefaultSidebar: !this.db.findFirst({isDefaultSidebar: true}) ? true : false
+        })
     }
     migrateOldButtonActions220() {
         // for(const doc of this.db.data) {
@@ -273,7 +382,6 @@ class UIBuilder {
 
     async initializeDatabases() {
         this.db1 = prismarineDb.table(config.tableNames.uis);
-        this.db = prismarineDb.customStorage(config.tableNames.uis + "~new", SegmentedStoragePrismarine)
         system.run(()=>{
 
             let flag = world.getDynamicProperty("TRANSITIONSHIT")
@@ -285,8 +393,8 @@ class UIBuilder {
                 world.setDynamicProperty("TRANSITIONSHIT", true)
 
             }
-    })
-    this.uiState = await this.db.keyval("state");
+        })
+        this.uiState = await this.db.keyval("state");
         this.tabbedDB = prismarineDb.table("TabbedUI_DB");
         this.tagsDb = prismarineDb.table(`${config.tableNames.uis}~tags`);
     }
@@ -345,6 +453,17 @@ class UIBuilder {
     setupScriptEventListener() {
         system.afterEvents.scriptEventReceive.subscribe(e => {
             if (e.sourceType === ScriptEventSource.Entity && e.id === config.scripteventNames.open) {
+                let a = e.message.replace(/\[.*?\]/g, "").trim()
+                let test2 = a == "default_sidebar" ? this.db.findFirst({isDefaultSidebar: true}) : this.db.findFirst({ name: a, type: 7 })
+                if(test2) {
+                    for(const tag of e.sourceEntity.getTags()) {
+                        if(tag.startsWith('sidebar:')) {
+                            e.sourceEntity.removeTag(tag)
+                        }
+                    }
+                    e.sourceEntity.addTag(`sidebar:${test2.data.name}`)
+                    return;
+                }
                 let internal = this.internalUIs.find(_=>_.scriptevent == e.message.replace(/\[.*?\]/g, "").trim())
                 let test = this.db.findFirst({ scriptevent: e.message.replace(/\[.*?\]/g, "").trim(), internal: true })
                 const ui = internal ? {data: internal} : test ? test : this.db.findFirst({ scriptevent: e.message.replace(/\[.*?\]/g, "").trim() });
@@ -640,10 +759,33 @@ class UIBuilder {
             player.sendMessage(dynamicToast(doc.data.hideTitleInNotification ? "" : doc.data.name, doc.data.body ? doc.data.body : "", doc.data.icon ? icons.resolve(doc.data.icon) : null))
         }
     }
+    
+    createScript(name, uniqueID, env) {
+        if(env < 0 || env >= scriptEnvTypes.length) return false;
+        this.db.insertDocument({
+            type: 8,
+            name,
+            uniqueID,
+            code: this.base64Encode([
+                `return class {`,
+                `  // put your code here`
+                `}`
+            ].join('\n'))
+        })
+        return true;
+    }
+    getAllUIs2() {
+        let uis = [];
+        for(const ui of this.db.data) {
+            if([0,3,4].includes(ui.data.type)) uis.push(ui)
+        }
+        return uis;
+    }
+
     getAllUIs() {
         let uis = [];
         for(const ui of this.db.data) {
-            if([0,3,4,6].includes(ui.data.type)) uis.push(ui)
+            if([0,3,4,6,7,8].includes(ui.data.type)) uis.push(ui)
         }
         return uis;
     }
@@ -714,10 +856,10 @@ class UIBuilder {
             internalID: versionData.versionInfo.versionInternalID
         }
         if(doc2) {
-            if(doc.type == 0) {
-                data.buttons = this.mixArrays(doc.buttons, doc2.data.buttons)
-            }
-            data.theme = doc2.data.theme ? doc2.data.theme : 0;
+            // if(doc.type == 0) {
+            //     data.buttons = this.mixArrays(doc.buttons, doc2.data.buttons)
+            // }
+            // data.theme = doc2.data.theme ? doc2.data.theme : 0;
             this.db.overwriteDataByID(doc2.id, data)
 
         } else {
@@ -1117,5 +1259,7 @@ class UIBuilder {
         })
     }
 }
+
+export let scriptEnvTypes = ["ChestUI", "ActionUI", "ActionUI/Button", "ModalUI", "ModalUI/Control"]
 
 export default new UIBuilder();

@@ -6,6 +6,62 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_HEADER_BUTTON, NUT_UI_LEFT_HALF, NUT_UI_RIGHT_HALF, NUT_UI_TAG } from "./preset_browser/nutUIConsts";
 let pages = [
     {
+        path: "formatting-vars",
+        title: "Formatting",
+        icon: "^textures/azalea_icons/RainbowPaintBrush",
+        text: [
+            "NOTE: Formatting can be used almost everywhere in leaf, not just sidebars",
+            "",
+            "- <drj> - default rank joiner, useful for chat rank formats",
+            "- <msg> - only available in chat rank formats, but is the players message",
+            "- <rc> - default rank color",
+            "- <nc> - name color",
+            "- <bc> - bracket color",
+            "- <mc> - message color",
+            "- <x> <y> <z> - players coordinates",
+            "- <name> - players name",
+            "- <username> - an alternative way to show players name",
+            "- <name_tag> - players nametag (not available in nametags+)",
+            "- <xp> - players XP",
+            "- <level> - players xp level",
+            "- <hp> - players hp",
+            "- <hp_max> - players max hp (without other addons, should always be 20",
+            "- <hp_min> - players min hp (always 0)",
+            "- <hp_default> - players default hp (should equal max)",
+            "- <rank> - players rank",
+            "- <kills> - players kill count",
+            "- <deaths> - players death count",
+            "- <blocks_broken> - players broken block count",
+            "- <blocks_placed> - players placed block count",
+            "- <cps> - players CPS",
+            "- <clanID> - players clan id (not useful for much)",
+            "- <k/d> - players kill/death ratio",
+            "- <claim> - the land claim/zone the player is in",
+            "- <tps> - the servers TPS",
+            "- <online> - the amount of online players",
+            "- <day> - the amount of ingame days",
+            "- <yr> - the current year",
+            "- <mo> - the current month (in number form)",
+            "- <mo/n> - the current month (in name form)",
+            "- <m> - the current minute",
+            "- <h> - the current hour (in UCT timezone)",
+            "- <s> - the current seconds",
+            "- <ms> - the current milliseconds",
+            "- <d> - the current irl day",
+            "- <dra> - double right arrow character",
+            "- <lra> - double left arrow character",
+            "- <moonPhase> - the current moon phase",
+            "- <h/12> - the hours (in 12 hour time)",
+            "- <am/pm> - if the time is AM or PM",
+            "- <days_played> - the amount of days the player has played",
+            "- <hours_played> - the amount of hours the player has played",
+            "- <minutes_played> - the amount of minutes the player has played",
+            "- <seconds_played> - the amount of seconds the player has played",
+            "- {{score objective}} - the players score",
+            "- {{scoreshort objective}} - the players score, but shortened (example: 1,234 becomes 1.2k)"
+        ]
+    },
+    {
         path: "freesex",
         title: "Notes - Top 10 Corn Categories",
         text: [
@@ -58,7 +114,9 @@ let pages = [
         links: [
             `ui_builder/root`,
             `292949402-icantfindaname`,
-            `how-to-properly-make-a-server`
+            `how-to-properly-make-a-server`,
+            `formatting-vars`
+
         ]
     },
     {
@@ -152,7 +210,7 @@ uiManager.addUI(config.uiNames.Help, "Help Page", (player, page = "home")=>{
         uiManager.open(player, config.uiNames.ConfigMain)
     })
     let form2 = new ActionFormData();
-    if(form2.label) {
+    if(false) {
         for(const line of pageData.text) {
             if(line.startsWith('# ')) form.header(line.substring(2))
             else form.label(line)

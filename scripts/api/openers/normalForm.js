@@ -152,7 +152,7 @@ class NormalFormOpener {
             return;
         }
         let form = new ActionForm();
-        form.setCustomFormID(data.scriptevent)
+        // form.setCustomFormID(data.scriptevent)
         let pre = `§r`;
         if(data.layout == 1) pre = `§g§r§i§d§u§i§r`;
         if(data.layout == 2) pre = `§f§u§l§l§s§c§r§e§e§n§r`;

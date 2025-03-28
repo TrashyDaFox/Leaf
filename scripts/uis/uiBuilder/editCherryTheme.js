@@ -18,7 +18,7 @@ uiManager.addUI("edit_cherry_theme", "Edits the cherry theme!", (player, id)=>{
         for(let i = 0;i < themes.length;i++) {
             let theme = themes[i];
             let themeIndex = i;
-            form.button(`${themeID == i ? "§o§1" : ""}§r§f${theme[1]}`, theme[2], (player)=>{
+            form.button(`${themeID == i ? "§o§1" : ""}§r§f${theme[1]} §7[${i}]`, theme[2], (player)=>{
                 doc.data.theme = themeIndex;
                 uiBuilder.db.overwriteDataByID(doc.id, doc.data)
                 uiManager.open(player, "edit_cherry_theme", id)

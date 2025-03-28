@@ -1,0 +1,51 @@
+{
+	"format_version": "1.21.80",
+	"animations": {
+		"animation.crate_particle": {
+			"loop": true,
+			"animation_length": 0.3,
+			"blend_weight": "1",
+			"timeline": {
+				"0.0": "/particle minecraft:end_chest ~ ~0.3 ~",
+				"0.1": "/particle minecraft:end_chest ~ ~0.3 ~",
+				"0.2": "/particle minecraft:end_chest ~ ~0.3 ~",
+				"0.3": "/particle minecraft:end_chest ~ ~0.3 ~"
+			}
+		},
+		"animation.crate_snowhalo": {
+			"loop": true,
+			"animation_length": 2.05,
+			"blend_weight": "1",
+			"timeline": {
+				"0.0": "/particle leaf:snow ~ ~ ~"
+			}
+		},
+		"animation.crate_enchanthalo": {
+			"loop": true,
+			"animation_length": 2.05,
+			"blend_weight": "1",
+			"timeline": {
+				"0.0": [
+					"/particle leaf:fallingchant1 ~ ~ ~",
+					"/particle leaf:fallingchant2 ~ ~ ~"
+				]
+			}
+		},
+		"animation.crate_lava": {
+			"loop": false,
+			"animation_length": 8,
+			"blend_weight": "1",
+			"timeline": {
+				"0.5": "/particle leaf:lava ~ ~0.6 ~"
+			}
+		},
+		"animation.crate_smoke": {
+			"loop": true,
+			"animation_length": 0.2,
+			"blend_weight": "1",
+			"timeline": {
+				"0.1": "/function showcaseparticle"
+			}
+		}
+	}
+}

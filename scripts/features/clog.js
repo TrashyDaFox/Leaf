@@ -78,7 +78,7 @@ world.afterEvents.playerLeave.subscribe(e=>{
     if(!world.gameRules.keepInventory) {
         worldTags.addTag(`clear-inv:${e.playerId}`)
     }
-    worldTags.addTag(`kill:${e.playerId}`)
+    worldTags.addTag(`kill:${e.playerId}`) 
 })
 
 system.runInterval(()=>{
