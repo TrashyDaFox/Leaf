@@ -11,7 +11,8 @@ export default function(e) {
         commandManager.run(e)
         return;
     }
-    let playerIsMuted = isMuted(e.sender);
+    if(e.sender.hasTag(`disable:chat`)) return e.sender.error("Chat is disabled")
+        let playerIsMuted = isMuted(e.sender);
     if(playerIsMuted) {
         e.cancel = true;
         e.sender.error("You are muted :<")

@@ -10,8 +10,8 @@ export default {
         chatformat: `{{has_tag clan-chat "<nc>:small_diamond: " "<bl>"}}{{is_afk "§7AFK "}}{{clan "<bc>[§r§7<nc>[@CLAN]§r<bc>] "}}{{has_tag staffchat "<bc>[<nc> StaffChat §r<bc>] " "<bl>"}}§r<bc>[ <rc>{{rank_joiner "<drj>"}}§r<bc> ] §r<nc><name> §r§l<bc><dra> §r<mc><msg>`
     },
     versionInfo: {
-        versionName: "v3.0",
-        versionInternalID: 7, // 1 starts with october 2024 update
+        versionName: "v2.9",
+        versionInternalID: 8, // 1 starts with october 2024 update
         versionData: new Map([
             [
                 1,
@@ -62,7 +62,15 @@ export default {
 					versionName: "Update 2.8.4",
 					versionInternalID: 3
 				}
-			]
+			],
+            [
+				8,
+				{
+					versionName: "Update 2.9",
+					versionInternalID: 8
+				}
+			],
+            
         ])
     },
     tableNames: {
@@ -165,6 +173,19 @@ export default {
             view: "view_custom_command | Leaf/CustomCommands/View",
             root: "custom_commands_root | Leaf/CustomCommands/Root",
         },
+        EventsV2: {
+            AddStepSelector: "eventsv2_add_selector | Leaf/Events/Add/Selector",
+            AddOptionCreator: "eventsv2_add_options | Leaf/Events/Add/Options",
+            EditActions: "eventsv2_edit_actions | Leaf/EventsV2/EditActions",
+            AddAction: "eventsv2_add_action | Leaf/EventsV2/AddAction",
+            AddActionTypeSelector: "eventsv2_add_action_type_selector | Leaf/EventsV2/AddActionTypeSelector",
+            EditAction: "eventsv2_edit_action | Leaf/EventsV2/EditAction"
+        },
+        InviteManager: {
+            Add: "invmgr_add | Leaf/InvMgr/Add",
+            EditActions: "invmgr_edit_actions | Leaf/InvMgr/EditActions",
+            Invite: "invite | Leaf/Invite"
+        },
         Leaf: "leaf | Leaf",
         Config: {
             Clans: "clans_config | Leaf/Config/Clans",
@@ -195,6 +216,8 @@ export default {
         ChestGuiAddAdvanced: "chest_gui_create_advanced_ui | Leaf/ChestGUIs/Add/Advanced",
         ChestGuiEdit: "chest_gui_edit_ui | Leaf/ChestGUIs/Edit",
         ChestGuiEditItems: "chest_gui_edit_items | Leaf/ChestGUIs/EditItems",
+        ChestGuiEditPattern: "chest_gui_edit_pattern | Leaf/ChestGUIs/EditPattern",
+        ChestGuiPatternSelect: "chest_gui_pattern_select | Leaf/ChestGUIs/PatternSelect",
         ChestGuiEditItem: "chest_gui_edit_item | Leaf/ChestGUIs/EditItem",
         ChestGuiAddItem: "chest_gui_add_item | Leaf/ChestGUIs/AddItem",
         ChestGuiAddItemAdvanced: "chest_gui_add_advanced_item | Leaf/ChestGUIs/AddItem/Advanced",
@@ -215,7 +238,13 @@ export default {
         ToastBuilderAdd: "toast_builder_add | Leaf/Toast/Add",
         ToastBuilderEdit: "toast_builder_edit | Leaf/Toast/Edit",
         ChatRanks: {
-            Config: "chatranks_config"
+            Main: "chatranks_config",
+            Config: "chatranks_defaults",
+            Ranks: {
+                Edit: "ranks_edit",
+                EditRank: "edit_rank",
+                AddRank: "add_rank"
+            }
         },
         PlayerShops: {
             Root: "player_shop_root | Leaf/PlayerShops/Root",
@@ -310,12 +339,20 @@ export default {
             ItemSelect: "item_select | Leaf/Basic/ItemSelect",
             NumberSelector: "number_select | Leaf/Basic/Number"
         },
+        Warps: {
+            Wizard: {
+                Root: "warps_wizard | Leaf/Warps/Wizard",
+                Automatic: "warps_wizard_automatic | Leaf/Warps/Wizard/Automatic",
+                Manual: "warps_wizard_manual | Leaf/Warps/Wizard/Manual",
+            }
+        },
         Homes: {
             Root: "homes | Leaf/Homes/Root",
             Create: "homes_create | Leaf/Homes/Create",
             View: "homes_view | Leaf/Homes/View",
             ViewShared: "homes_viewshared | Leaf/Homes/ViewShared",
             Shared: "homes_shared | Leaf/Homes/Shared",
+            Config: "homes_config | Leaf/Homes/Config"
         },
         Reports: {
             Dashboard: 'reports_dashboard | Leaf/Reports/Dashboard',
@@ -327,6 +364,9 @@ export default {
             },
         }
     },
+    PermissionList: [
+        ["Customize Leaf", "leaf.customize"]
+    ],
     Discord: {
         AvatarURL: "https://i.ibb.co/Sx1cF3h/c9268706406510b05e280005280a86ef.png",
         Username: "Leaf Essentials"

@@ -11,7 +11,6 @@ uiManager.addUI(versionData.uiNames.ToastBuilderAdd, "Add", (player, id = -1)=>{
     let modalForm = new ModalForm();
     modalForm.textField("Title", "Name for your notification", ui ? ui.data.name : "", ()=>{}, "A title for your notification. By default it will display, but if you prefer it not to you can disable it")
     modalForm.textField("Scriptevent", "Scriptevent to send your toast", ui ? ui.data.scriptevent : "", ()=>{}, "The scriptevent to open your UI. It is the part after /scriptevent leaf:open")
-    modalForm.divider()
     modalForm.toggle("Hide title on player view?", ui ? ui.data.hideTitleInNotification ? true : false : false, ()=>{}, "Hide the title for if you think it looks ugly")
     modalForm.show(player, false, (player, response)=>{
         if(!ui || !ui.data || !ui.data.type || ui.data.type != 6) {

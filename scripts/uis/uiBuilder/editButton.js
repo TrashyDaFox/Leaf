@@ -65,7 +65,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
         actionForm.button(`§aDuplicate\n§7Create a copy`, `textures/azalea_icons/copy`, (player)=>{
             // Create deep copy of the button
             const buttonCopy = JSON.parse(JSON.stringify(button));
-            
+            buttonCopy.id = Date.now();
             // Insert copy after current button
             let doc = uiBuilder.db.getByID(id);
             doc.data.buttons.splice(index + 1, 0, buttonCopy);
@@ -144,10 +144,10 @@ uiManager.addUI(config.uiNames.UIBuilderEditButton, "Edit Button", (player, id, 
     if(button.type != "header" && button.type != "label" && button.type != "divider" && button.type != "separator") {
         
         actionForm.button(`§dEdit Meta (Advanced)\n§7More features`, `textures/azalea_icons/ExtIcon`, (player)=>{
-            let form = new ModalFormData();
+            let form = new ModalForm();
             form.title("Edit Meta")
             form.textField("Meta", "Meta here...", button.meta ? button.meta : "")
-            form.show(player).then((res)=>{
+            form.show(player, false, (player, response)=>{}).then((res)=>{
                 if(res.canceled) return uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)
                 uiBuilder.editButtonMeta(id, button.id, res.formValues[0])
                 uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index)

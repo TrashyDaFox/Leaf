@@ -25,6 +25,10 @@ import pjXML from "../lib/pjxml";
 import versionData from "../versionData";
 import { dynamicToast } from "../lib/chatNotifs";
 import sidebarEditor from "./sidebarEditor";
+import eventsData from "../data/eventsData";
+import { formatStr } from "./azaleaFormatting";
+import { EventSerializer } from "./eventSerializerLeaf";
+import scripting from "./scripting";
 
 class UIBuilder {
     constructor() {
@@ -32,6 +36,7 @@ class UIBuilder {
         this.internalUIs = [];
         this.leafEpoch = 1741909421689;
         this.db = prismarineDb.customStorage(config.tableNames.uis + "~new", SegmentedStoragePrismarine)
+        this.initializeInvites();
         this.initializeDatabases();
         // this.initializeStates();
         this.setupScriptEventListener();
@@ -42,9 +47,185 @@ class UIBuilder {
         this.addExampleUI();
         this.migrateChestGUIs();
         this.createSnippetBook()
+        this.initializeEvents();
+        this.patternIDs = [
+            {
+                name: "NONE",
+                texture: null,
+                dispTexture: "textures/blocks/barrier"
+            },
+            {
+                name: "SILVER",
+                texture: "textures/blocks/glass_silver"
+            },
+            {
+                name: "WHITE",
+                texture: "textures/blocks/glass_white"
+            },
+            {
+                name: "GRAY",
+                texture: "textures/blocks/glass_gray"
+            },
+            {
+                name: "LIME",
+                texture: "textures/blocks/glass_lime"
+            },
+            {
+                name: "GREEM",
+                texture: "textures/blocks/glass_green"
+            },
+            {
+                name: "BLACK",
+                texture: "textures/blocks/glass_black"
+            },
+            {
+                name: "CYAN",
+                texture: "textures/blocks/glass_cyan"
+            },
+            {
+                name: "MAGENTA",
+                texture: "textures/blocks/glass_magenta"
+            },
+            {
+                name: "BROWN",
+                texture: "textures/blocks/glass_brown"
+            },
+            {
+                name: "LIGHT_BLUE",
+                texture: "textures/blocks/glass_light_blue"
+            },
+            {
+                name: "LIGHT_BLUE",
+                texture: "textures/blocks/glass_blue"
+            },
+            {
+                name: "ORANGE",
+                texture: "textures/blocks/glass_orange"
+            },
+            {
+                name: "RED",
+                texture: "textures/blocks/glass_red"
+            },
+            {
+                name: "PINK",
+                texture: "textures/blocks/glass_pink"
+            },
+            {
+                name: "PURPLE",
+                texture: "textures/blocks/glass_purple"
+            }
+        ]
         this.db.waitLoad().then(()=>{
             this.transitionSidebars();
+            this.fixBtnIds()
+            this.initializePluginSystem();
+            this.initializeScripts();
         })
+    }
+    initializeScripts() {
+        for(const doc of this.db.findDocuments({type: 8})) {
+            if(doc.data.disabled) continue;
+            try {
+                scripting.registerScript(doc.data.uniqueID, this.base64Decode(doc.data.code))
+            } catch {}
+        }
+    }
+    initializePluginSystem() {
+        let event = new EventSerializer("key");
+        // system.runInterval(()=>{
+        //     event.send("key2", {message: "MEOW MRRP"})
+        // }, 20)
+    }
+    execEvent(eventType, options) {
+        for(const event of this.db.findDocuments({type: 10, eventType})) {
+            let newTempOpts = {};
+            for(const opt of eventsData[eventType].initOptions) {
+                if(opt.type == "condition") {
+                    newTempOpts[opt.name] = normalForm.playerIsAllowed(opt.player == "player1" ? options.player1 : options.player2, event.data.opts[opt.name])
+                } else {
+                    newTempOpts[opt.name] = event.data.opts[opt.name]
+                }
+            }
+            let run = eventsData[eventType].runWhen ? eventsData[eventType].runWhen(newTempOpts, options) : true;
+            if(run) {
+                eventsData[eventType].run(event.data.opts, event.data.actions, options, event)
+            }
+        }
+    }
+    initializeInvites() {
+        this.invites = {};
+    }
+    inviteCMD(origin, invite_type, invite_name, sender, receiver) {
+        system.run(()=>{
+            let doc = this.db.findFirst({identifier: invite_name, type: 11})
+            if(!doc) return;
+            let key = `${invite_name}_${sender.id}_${receiver.id}`;
+            if(invite_type == "deny") {
+                if(this.invites[key]) {
+                    for(const action of doc.data.denyActions) {
+                        actionParser.runAction(this.invites[key].receiver, formatStr(action, this.invites[key].receiver, {}, {
+                            player2: this.invites[key].sender
+                        }))
+                    }
+                    delete this.invites[key]
+                }
+            }
+            if(invite_type == "accept") {
+                if(this.invites[key]) {
+                    for(const action of doc.data.acceptActions) {
+                        actionParser.runAction(this.invites[key].receiver, formatStr(action, this.invites[key].receiver, {}, {
+                            player2: this.invites[key].sender
+                        }))
+                    }
+                    delete this.invites[key]
+                }
+            }
+
+            if(invite_type == "send") {
+                this.invites[key] = {
+                    sender,
+                    receiver,
+                    invite_name
+                }
+                if(this.invites[key]) {
+                    for(const action of doc.data.sendActions) {
+                        actionParser.runAction(this.invites[key].receiver, formatStr(action, this.invites[key].receiver, {}, {
+                            player2: this.invites[key].sender
+                        }))
+                    }
+                }
+                system.runTimeout(()=>{
+                    if(this.invites[key]) {
+                        for(const action of doc.data.expireActions) {
+                            actionParser.runAction(this.invites[key].receiver, formatStr(action, this.invites[key].receiver, {}, {
+                                player2: this.invites[key].sender
+                            }))
+                        }
+                        delete this.invites[key]
+                    }
+                },doc.data.expirationTime)
+            }
+        })
+    }
+    createNewInvite(identifier, expirationTime = 20 * 60) {
+        if(this.db.findFirst({type: 11, identifier})) return;
+        return this.db.insertDocument({
+            type: 11,
+            identifier,
+            expirationTime,
+            denyActions: [],
+            expireActions: [],
+            sendActions: [],
+            acceptActions: []
+        })
+    }
+    initializeEvents() {
+        for(let i = 0;i < eventsData.length;i++) {
+            let event = eventsData[i]
+            event.setup((opts)=>{
+                this.execEvent(i, opts)
+            })
+        }
     }
     transitionSidebars() {
         sidebarEditor.db.waitLoad().then(()=>{
@@ -139,6 +320,15 @@ class UIBuilder {
         }
     
         return output;
+    }
+    createWarp(name, loc, rot) {
+        this.db.insertDocument({
+            type: 12,
+            name,
+            loc,
+            rot,
+            requiredTag: ""
+        })
     }
     createSidebar(name) {
         if(this.db.findFirst({type: 7, name})) return;
@@ -257,6 +447,22 @@ class UIBuilder {
         if(!chest.data.advanced) throw new Error("Chest GUI must be in advanced mode");
         chest.data.icons.push(code);
         this.db.overwriteDataByID(chest.id, chest.data);
+    }
+    setPatternSlot(id, slot, colID) {
+        let chest = this.db.getByID(id);
+        if(chest.data.type != 4) return;
+        if(!chest.data.patterns) chest.data.patterns = [];
+        let index = chest.data.patterns.findIndex(_=>_[0] == slot)
+        if(index > -1) {
+            if(colID == 0) {
+                chest.data.patterns.splice(index, 1)
+                return;
+            }
+            chest.data.patterns[index] = [slot, colID]
+        } else {
+            if(colID != 0) chest.data.patterns.push([slot, colID])
+        }
+        this.db.overwriteDataByID(chest.id, chest.data)
     }
     replaceIconInChestGUIAdvanced(id, code, index = 0) {
         let chest = this.db.getByID(id);
@@ -756,21 +962,87 @@ class UIBuilder {
             chestUIOpener.open(doc.data, player, ...args);
         }
         if(doc && doc.data.type == 6) {
-            player.sendMessage(dynamicToast(doc.data.hideTitleInNotification ? "" : doc.data.name, doc.data.body ? doc.data.body : "", doc.data.icon ? icons.resolve(doc.data.icon) : null))
+            let extraVars = {};
+            for(let i = 0;i < args.length;i++) {
+                extraVars[`$${i+1}`] = args[i]
+            }
+            player.sendMessage(dynamicToast(doc.data.hideTitleInNotification ? "" : doc.data.name, formatStr(doc.data.body ? doc.data.body : "", player, extraVars), doc.data.icon ? icons.resolve(doc.data.icon) : null))
         }
     }
     
-    createScript(name, uniqueID, env) {
-        if(env < 0 || env >= scriptEnvTypes.length) return false;
+    createCommand(label, commandName, description = "", category = "", requiredTag = "") {
+        if(this.db.findFirst({command: commandName})) return;
+        return this.db.insertDocument({
+            type: 9,
+            name: label,
+            command: commandName,
+            description,
+            category,
+            requiredTag,
+            actions: [], // lets hope this does not end up like azalea
+            subcommands: []
+        })
+    }
+
+    createSubcommand(parent, commandName, description, requiredTag) {
+        let doc = this.db.findFirst({command: parent});
+        if(!doc) return;
+        if(doc.data.subcommands.find(_=>_.name == commandName)) return;
+        doc.data.subcommands.push({
+            name: commandName,
+            description,
+            requiredTag,
+            actions: []
+        })
+        this.db.overwriteDataByID(doc.id, doc.data);
+    }
+
+    getCommandActions(commandName, subcommand = "") {
+        let doc = this.db.findFirst({command: commandName});
+        if(!doc) return [];
+        if(!subcommand) return doc.data.actions;
+        let subcommand2 = doc.data.subcommands.find(_=>_.name == commandName)
+        return subcommand2 ? subcommand2.actions : doc.data.actions;
+    }
+
+    getSubcommandIndex(commandName, subcommand = "") {
+        let doc = this.db.findFirst({command: commandName});
+        if(!doc) return -1;
+        if(!subcommand) return -1;
+        let subcommand2 = doc.data.subcommands.findIndex(_=>_.name == commandName)
+        return subcommand2;
+    }
+
+    addCommandAction(commandName, command, formatted = true, subcommnand = "") {
+        let doc = this.db.findFirst({command: commandName});
+        if(!doc) return;
+        let index = this.getSubcommandIndex(command, subcommnand)
+        if(index > -1) {
+            doc.data.subcommands[index].actions.push({type: "command", command, formatted})
+        } else {
+            doc.data.actions.push({type: "command", command, formatted})
+        }
+        this.db.overwriteDataByID(doc.id, doc.data);
+    }
+
+    addConditionalBreak(commandName, command, condition, subcommnand = "") {
+        let doc = this.db.findFirst({command: commandName});
+        if(!doc) return;
+        let index = this.getSubcommandIndex(command, subcommnand)
+        if(index > -1) {
+            doc.data.subcommands[index].actions.push({type: "command", command, condition})
+        } else {
+            doc.data.actions.push({type: "command", command, condition})
+        }
+        this.db.overwriteDataByID(doc.id, doc.data);
+    }
+
+    createScript(uniqueID) {
+        // if(env < 0 || env >= scriptEnvTypes.length) return false;
         this.db.insertDocument({
             type: 8,
-            name,
             uniqueID,
-            code: this.base64Encode([
-                `return class {`,
-                `  // put your code here`
-                `}`
-            ].join('\n'))
+            code: this.base64Encode(`// Put your code here`)
         })
         return true;
     }
@@ -785,7 +1057,7 @@ class UIBuilder {
     getAllUIs() {
         let uis = [];
         for(const ui of this.db.data) {
-            if([0,3,4,6,7,8].includes(ui.data.type)) uis.push(ui)
+            if([0,3,4,6,7,8,9,10,11,12].includes(ui.data.type)) uis.push(ui)
         }
         return uis;
     }
@@ -990,7 +1262,25 @@ class UIBuilder {
 
         return dependencies;
     }
-    
+    fixBtnIds() {
+        for(const doc of this.db.findDocuments({type: 0})) {
+            try {
+                let usedIDs = [];
+                let allIDs = doc.data.buttons.map(_=>_.id)
+                allIDs.sort((a,b)=>b - a)
+                let pp = 10;
+                for(const button of doc.data.buttons) {
+                    if(usedIDs.includes(button.id)) {
+                        button.id = allIDs[0] + pp;
+                        pp += 10;
+                    }
+                    usedIDs.push(button.id)
+                }
+            } catch {}
+        }
+        this.db.save();
+
+    }
     duplicateUI(id){
         const ui = this.getByID(id);
         if(!ui) return;
@@ -1251,8 +1541,9 @@ class UIBuilder {
     }
 
     createFolder(name) {
-        if(this.db.findFirst({name, type: 2})) return;
-        this.db.insertDocument({
+        let doc = this.db.findFirst({name, type: 2})
+        if(doc) return doc.id;
+        return this.db.insertDocument({
             type: 2,
             name,
             color: ""

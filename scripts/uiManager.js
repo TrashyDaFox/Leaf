@@ -1,3 +1,4 @@
+import { MessageFormData } from "@minecraft/server-ui";
 import configAPI from "./api/config/configAPI";
 import { combatMap } from "./features/clog";
 import versionData from "./versionData";
@@ -54,6 +55,14 @@ class UIManager {
             if (altUI) {
                 altUI(player, ...data);
                 return;
+            }
+
+            if(!altUI && !mainUI) {
+                let form = new MessageFormData();
+                form.body(`§cError: UI §e'${id.split(' | ')[0]}' §r§cdoes NOT exist.\n\n§fTell §vtrashy §r§fto get her shitt checked if you saw this §enormally without doing random scriptevents§r§f.`)
+                form.button1("Close")
+                form.button2("Meow")
+                form.show(player).then(()=>{})
             }
     
         } catch(e) {

@@ -14,6 +14,9 @@ What is night anyways?
 Is it a fragment of the imagination?
 
 Is this what it feels like to be gay?
+
+Wtf did i just find
+Lmfao
 */
 import { world } from '@minecraft/server'
 import { prismarineDb } from '../lib/prismarinedb'

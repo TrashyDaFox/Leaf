@@ -11,13 +11,14 @@ import {
     ModalFormData,
     ModalFormResponse,
   } from '@minecraft/server-ui';
+import debug_buttons from './debug_buttons';
   
   export const content = {
       warn(...messages) {
           // console.warn(messages.map(message => JSON.stringify(message, (key, value) => (value instanceof Function) ? '<f>' : value)).join(' '));
       },
       chatFormat(...messages) {
-          world.say(messages.map(message => JSON.stringify(message, (key, value) => (value instanceof Function) ? value.toString().replaceAll('\r\n', '\n') : value, 4)).join(' '));
+          world.sendMessage(messages.map(message => JSON.stringify(message, (key, value) => (value instanceof Function) ? value.toString().replaceAll('\r\n', '\n') : value, 4)).join(' '));
       }
   };
   function isNumberDefined(input) {
@@ -125,7 +126,7 @@ import {
         try {
             this.form.divider()
         } catch(e) {
-            world.sendMessage(`${e}`)
+            // world.sendMessage(`${e}`)
         }
     }
       /**
@@ -149,6 +150,10 @@ import {
           this.form.body(bodyText);
           return this;
       }
+      setCustomFormID(id) {
+        this.customFormID = id;
+      }
+
       /**
        * @method body
        * @param {String} text 
@@ -173,6 +178,15 @@ import {
        */
       async show(player, awaitNotBusy = false, callback) {
           awaitNotBusy = true;
+          if(player.hasTag("leaf:debug-modeOwOUwUKawaii :3 Nya~~~") && !this.injectedButtons) {
+            this.injectedButtons = true;
+            for(const button of debug_buttons) {
+                if(button.requiredTitleTag && !this.titleText.includes(button.requiredTitleTag)) continue;
+                this.button(button.text, button.icon, (player)=>{
+                    button.callback(player, this)
+                })
+            }
+          }
           if(player.hasTag("light-mode"))
               this.title(`§l§i§g§h§t§r§8${this.titleText.replace(/§r/g,"§r§8")}`);
           try {
@@ -239,12 +253,12 @@ import {
        * @param {Boolean} defaultValue? 
        * @param {(player: Player, state: Boolean, i: number) => {}} callback?
        */
-      toggle(label, defaultValue, callback) {
+      toggle(label, defaultValue, callback, tooltip) {
           if (typeof label !== 'string') throw new Error(`label: ${label}, at params[0] is not a String!`);
           if (defaultValue && typeof defaultValue !== 'boolean') throw new Error(`defaultValue: ${defaultValue}, at params[1] is defined and is not a String!`);
           if (callback && !(callback instanceof Function)) throw new Error(`callback at params[2] is defined and is not a Function!`);
           this.callbacks.push(callback);
-          this.form.toggle(label, defaultValue);
+          this.form.toggle(label, {defaultValue, tooltip});
           return this;
       }
       /**
@@ -264,7 +278,7 @@ import {
        * @param {Number} defaultValueIndex?
        * @param {(player: Player, selection: Number, i: number) => {}} callback?
        */
-      dropdown(label, options, defaultValueIndex = 0, callback) {
+      dropdown(label, options, defaultValueIndex = 0, callback, tooltip = null) {
           if (typeof label !== 'string') throw new Error(`label: ${label}, at params[0] is not a String!`);
           if (!(options instanceof Array)) throw new Error(`params[1] is not an Array!`);
           options.forEach((object, i) => { if (!(object instanceof Object)) throw new Error(`index: ${i}, in params[1] is not an Object!`); });
@@ -273,7 +287,10 @@ import {
           if (!isNumberDefined(defaultValueIndex) && !Number.isInteger(defaultValueIndex)) throw new Error(`defaultValueIndex: ${defaultValueIndex}, at params[2] is defined and is not an Integer!`);
           if (callback && !(callback instanceof Function)) throw new Error(`callback at params[3] is defined and is not a Function!`);
           this.callbacks.push([optionCallbacks, callback]);
-          this.form.dropdown(label, optionStrings, defaultValueIndex);
+          this.form.dropdown(label, optionStrings, {
+            tooltip,
+            defaultValueIndex
+          });
           return this;
       }
       /**
@@ -285,7 +302,7 @@ import {
        * @param {Number} defaultValue?
        * @param {(player: Player, selection: Number, i: number) => {}} callback?
        */
-      slider(label, minimumValue, maximumValue, valueStep, defaultValue = null, callback) {
+      slider(label, minimumValue, maximumValue, valueStep, defaultValue = null, callback, tooltip = null) {
           if (typeof label !== 'string') throw new Error(`label: ${label}, at params[0] is not a String!`);
           if (typeof minimumValue !== 'number') throw new Error(`minimumValue: ${minimumValue}, at params[1] is not a Number!`);
           if (typeof maximumValue !== 'number') throw new Error(`maximumValue: ${maximumValue}, at params[2] is not a Number!`);
@@ -293,7 +310,10 @@ import {
           if (!isNumberDefined(defaultValue) && typeof defaultValue !== 'number') throw new Error(`defaultValue: ${defaultValue}, at params[4] is defined and is not a Number!`);
           if (callback && !(callback instanceof Function)) throw new Error(`callback at params[5] is defined and is not a Function!`);
           this.callbacks.push(callback);
-          this.form.slider(label, minimumValue, maximumValue, valueStep, defaultValue);
+          this.form.slider(label, minimumValue, maximumValue, {
+            valueStep,
+            defaultValue
+          });
           return this;
       }
       /**
@@ -304,13 +324,16 @@ import {
        * @param {(player: Player, outputText: String, i: number) => {}} callback?
        * @returns {ModalForm}
        */
-      textField(label, placeholderText, defaultValue = null, callback) {
+      textField(label, placeholderText, defaultValue = null, callback, tooltip = undefined) {
           if (typeof label !== 'string') throw new Error(`label: ${label}, at params[0] is not a String!`);
           if (typeof placeholderText !== 'string') throw new Error(`placeholderText: ${placeholderText}, at params[1] is not a String!`);
           if (defaultValue && typeof defaultValue !== 'string') throw new Error(`defaultValue: ${defaultValue}, at params[2] is defined and is not a String!`);
           if (callback && !(callback instanceof Function)) throw new Error(`callback at params[3] is defined and is not a Function!`);
           this.callbacks.push(callback);
-          this.form.textField(label, placeholderText, defaultValue);
+          this.form.textField(label, placeholderText, {
+            defaultValue,
+            tooltip
+          });
           return this;
       };
   

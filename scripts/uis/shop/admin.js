@@ -3,12 +3,14 @@ import shopAPI from "../../api/shopAPI";
 import config from "../../versionData";
 import { ActionForm, ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
+import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
 
 uiManager.addUI(config.uiNames.Shop.RootAdmin, "Shop Root (Admin)", (player, id = shopAPI.getDefaultShop().id)=>{
     let shop = shopAPI.shops.getByID(id);
     let form = new ActionForm();
+    form.title(`${NUT_UI_TAG}§rEdit Shop`)
     form.body(`Shop ID: ${id}`)
-    form.button(`§cBack\n§7Go back`, `textures/blocks/barrier`, (player)=>{
+    form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`, `textures/azalea_icons/2`, (player)=>{
         uiManager.open(player, config.uiNames.Shop.Root, id);
     })
     form.button(`§bAdd Category\n§7Adds a new category`, icons.resolve("leaf/image-0876"), (player)=>{

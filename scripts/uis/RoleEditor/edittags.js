@@ -4,15 +4,15 @@ import config from "../../versionData";
 import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 
-configAPI.registerProperty("Clans", configAPI.Types.Boolean, true);
-configAPI.registerProperty("LandClaims", configAPI.Types.Boolean, true);
-configAPI.registerProperty("Generators", configAPI.Types.Boolean, false);
-configAPI.registerProperty("Shops", configAPI.Types.Boolean, true);
-configAPI.registerProperty("PlayerShops", configAPI.Types.Boolean, true);
-configAPI.registerProperty("ExtendedUIBuilder", configAPI.Types.Boolean, false);
-configAPI.registerProperty("ExperimentalChatRankFormatting", configAPI.Types.Boolean, false);
-configAPI.registerProperty("Chatranks", configAPI.Types.Boolean, true);
-configAPI.registerProperty("DevMode", configAPI.Types.Boolean, false);
+// configAPI.registerProperty("Clans", configAPI.Types.Boolean, true);
+// configAPI.registerProperty("LandClaims", configAPI.Types.Boolean, true);
+// configAPI.registerProperty("Generators", configAPI.Types.Boolean, false);
+// configAPI.registerProperty("Shops", configAPI.Types.Boolean, true);
+// configAPI.registerProperty("PlayerShops", configAPI.Types.Boolean, true);
+// configAPI.registerProperty("ExtendedUIBuilder", configAPI.Types.Boolean, false);
+// configAPI.registerProperty("ExperimentalChatRankFormatting", configAPI.Types.Boolean, false);
+// configAPI.registerProperty("Chatranks", configAPI.Types.Boolean, true);
+// configAPI.registerProperty("DevMode", configAPI.Types.Boolean, false);
 uiManager.addUI(config.uiNames.RoleEditor.EditTags, "Edit Tags", (player)=>{
     let modalForm = new ModalForm();
     modalForm.title("Edit tags");

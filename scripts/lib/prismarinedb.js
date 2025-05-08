@@ -1553,6 +1553,9 @@ var Economy = class {
   
     })
   }
+  getTable() {
+    return __privateGet(this, _table);
+  }
   getCurrencies() {
     let array = [];
     for (const doc2 of __privateGet(this, _table).findDocuments({ type: "CURRENCY" })) {

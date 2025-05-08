@@ -5,6 +5,7 @@ import config from "../../versionData";
 import { ActionForm, ModalForm } from "../../lib/form_func";
 import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
+import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
 function parseItemID(id) {
     let text = id.split(':')[1];
     return text.split('_').map(_=>`${_[0].toUpperCase()}${_.substring(1)}`).join(' ');
@@ -12,8 +13,9 @@ function parseItemID(id) {
 uiManager.addUI(config.uiNames.Shop.CategoryAdmin, "Category Admin", (player, shopID, categoryID)=>{
     let shop = shopAPI.shops.getByID(shopID);
     let form = new ActionForm();
+    form.title(`${NUT_UI_TAG}§rEdit category`)
     form.body(`Category ID: ${categoryID}\nShop ID: ${shopID}`)
-    form.button("§cBack\n§7Go back", `textures/blocks/barrier`, (player)=>{
+    form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`, `textures/azalea_icons/2`, (player)=>{
         uiManager.open(player, config.uiNames.Shop.RootAdmin, shopID);
     })
     let category = shop.data.categories.find(_=>_.id == categoryID);
@@ -68,6 +70,7 @@ uiManager.addUI(config.uiNames.Shop.CategoryAdmin, "Category Admin", (player, sh
         let item = category.items[i];
         if(item.type == "ITEMDB_ITEM") {
             let itemStack = itemdb.getItem(item.stash, item.slot);
+            if(!itemStack) continue;
             let currency = prismarineDb.economy.getCurrency(item.currency) ? prismarineDb.economy.getCurrency(item.currency) : prismarineDb.economy.getCurrency("default");
             form.button(`§e${item.displayName ? item.displayName : parseItemID(itemStack.typeId)}\n§r§7${currency.symbol} ${item.price}`, item.icon ? icons.resolve(item.icon) : undefined, (player)=>{
                 uiManager.open(player, config.uiNames.Shop.ItemAdmin, shopID, categoryID, i);

@@ -229,5 +229,3 @@
 // export const hoe = [];
 // export const shovel = [];
 // export const fishingrod = [];
-
-let meow = 47;

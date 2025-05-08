@@ -6,6 +6,7 @@ import config from "../../versionData";
 import { ChestFormData } from "../../lib/chestUI";
 import uiManager from "../../uiManager";
 import uiBuilder from "../../api/uiBuilder";
+import { world } from "@minecraft/server";
 
 uiManager.addUI(config.uiNames.ChestGuiEditItems, "Edit the items in Chest GUIs", (player, id)=>{
     let chest = uiBuilder.db.getByID(id);
@@ -49,12 +50,14 @@ uiManager.addUI(config.uiNames.ChestGuiEditItems, "Edit the items in Chest GUIs"
     }
     form.title(`Edit (${chest.data.title}§r)`)
     for(let i = 0;i < (chest.data.rows * 9);i++) {
+        // world.sendMessage(`${chest.data.patterns.findIndex(_=>_[0] == i)}`)
+        if(chest.data.patterns && chest.data.patterns.find(_=>_[0] == i)) continue;
         if(usedSlots.includes(i)) continue;
         form.button(i, `§8[§2+§8] §a§l${translation.getTranslation(player, "chestguis.additem")}`, [translation.getTranslation(player, "chestguis.additemlore.line1"), translation.getTranslation(player, "chestguis.additemlore.line2"), translation.getTranslation(player, "chestguis.additemlore.line3")], "textures/blocks/glass_lime", 1);
     }
     //player, id, defaultItemName = "", defaultIconID = "", defaultIconLore = "", defaultAction = "", defaultAmount = 1, defaultRow = 1, defaultColumn = 1, error = "", index = -1
     form.show(player).then(res=>{
-        if(res.canceled) return;
+        if(res.canceled) return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         if(res.cancelled) return;
         if(!usedSlots.includes(res.selection)) {
             let [row,col] = common.slotIdToRowCol(res.selection);

@@ -50,7 +50,8 @@ let creditsList = [
             discord: `asteroid3946`
         },
         icon: `textures/minidevs/Astroidboi`,
-        message: `i like femboys, but IM NOT GAY I SWEAR ON MY LIFE >_<`
+        // message: `i like femboys, but IM NOT GAY I SWEAR ON MY LIFE >_<`
+        message: `helped somewhat but kinda useless now ngl`
     },
     {
         name: `§vFeRaSs1429`,

@@ -1,3 +1,10 @@
+/*
+once a file, full of features, now just an ancient left behind remnant. why did i abandon tab uis for cherryui?
+either way, this was fucking usless
+
+!uis command FTW!!!!!
+*/
+
 // import { builderTabUI } from './root';
 // import { ModalForm } from "../../lib/form_func";
 // import uiManager from "../../uiManager";

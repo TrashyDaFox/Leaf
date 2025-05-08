@@ -240,6 +240,10 @@ uiManager.addUI(versionData.uiNames.AuctionHouse.ViewAuctions, "", (player, page
             chest.button((5 * 9) + i, `§eClaim Rewards (${rewards.length})`, [`§7Claim rewards stored for you`], icons.resolve(rewards.length ? "Packs/Asteroid/winPING" : "leaf/image-625"), Math.max(rewards.length, 1), false, ()=>{
                 let inventory = player.getComponent('inventory')
                 for(const reward of rewards) {
+                    if(inventory.container.firstEmptySlot() == -1) {
+                        player.error("You dont have enough inventory space for some items, please make some space.")
+                        break;
+                    }
                     let item = itemdb.getItem(reward.data.stash, reward.data.slot);
                     inventory.container.addItem(item)
                     auctionhouse.db.deleteDocumentByID(reward.id)

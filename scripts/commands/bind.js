@@ -12,6 +12,7 @@ if(!pdbKeyval.has(`leaf:navigator`)) {
 }
 commandManager.addCommand("bind", { description: "Bind items to commands", category: "Setup", format: "!bind <command>" }, ({ msg, args }) => {
     let player = msg.sender;
+    if(!prismarineDb.permissions.hasPermission(player, "bind")) return player.error(`Nuh uh`)
     let inventory = player.getComponent('inventory');
     let container = inventory.container;
     
@@ -24,7 +25,8 @@ commandManager.addCommand("bind", { description: "Bind items to commands", categ
 
 commandManager.addSubcommand("bind", "item", { description: "Binds a command to the specific item you are holding" }, ({ msg, args }) => {
     let player = msg.sender;
-    let inventory = player.getComponent("inventory");
+    if(!prismarineDb.permissions.hasPermission(player, "bind")) return player.error(`Nuh uh`)
+        let inventory = player.getComponent("inventory");
     let item = inventory.container.getItem(player.selectedSlotIndex);
     if (!item) return player.error("You need to hold an item.");
     if (item.isStackable) return player.error("This command only works on unstackable items.");
@@ -36,6 +38,7 @@ commandManager.addSubcommand("bind", "item", { description: "Binds a command to 
 
 commandManager.addSubcommand("bind", "name", { description: "Binds a command to items with matching type and name" }, ({ msg, args }) => {
     let player = msg.sender;
+    if(!prismarineDb.permissions.hasPermission(player, "bind")) return player.error(`Nuh uh`)
     let inventory = player.getComponent("inventory");
     let item = inventory.container.getItem(player.selectedSlotIndex);
     if (!item) return player.error("You need to hold an item.");
@@ -48,6 +51,7 @@ commandManager.addSubcommand("bind", "name", { description: "Binds a command to 
 
 commandManager.addSubcommand("bind", "list", { description: "Lists all binds" }, ({ msg }) => {
     let player = msg.sender;
+    if(!prismarineDb.permissions.hasPermission(player, "bind")) return player.error(`Nuh uh`)
     const binds = [];
     for (const key of pdbKeyval.keys()) {
         binds.push(`§b${key} §7-> §a${pdbKeyval.get(key)}`);
@@ -61,6 +65,7 @@ commandManager.addSubcommand("bind", "list", { description: "Lists all binds" },
 
 commandManager.addCommand("unbind", { description: "Removes any bind from the held item", category: "Setup", format: "!unbind" }, ({ msg }) => {
     let player = msg.sender;
+    if(!prismarineDb.permissions.hasPermission(player, "bind")) return player.error(`Nuh uh`)
     let inventory = player.getComponent("inventory");
     let item = inventory.container.getItem(player.selectedSlotIndex);
     if (!item) return player.error("You need to hold an item.");

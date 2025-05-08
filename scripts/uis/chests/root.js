@@ -5,6 +5,7 @@ import { ActionForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import uiBuilder from "../../api/uiBuilder";
 import { builderTabUI } from "../uiBuilder/root";
+import './pattern'
 let icons2 = new Map([
     [1,"leaf/image-651"],
     [2,"leaf/image-1303"],

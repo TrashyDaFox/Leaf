@@ -16,7 +16,8 @@ function sort(es) {
 let charsToReove = "_spawn_egg".length;
 // [...sort(mc.ItemTypes.getAll().filter(e=>!(e.id.endsWith("_spawn_egg") && mc.EntityTypes.get(e.id.slice(0, -charsToReove))))), ...sort(mc.ItemTypes.getAll().filter(e=>e.id.endsWith("_spawn_egg") && mc.EntityTypes.get(e.id.slice(0, -charsToReove))))].forEach((e)=>{
 mc.system.run(()=>{
-	[...sort(mc.ItemTypes.getAll())].forEach((e)=>{
+	mc.ItemTypes.getAll().forEach((e)=>{
+		
 		if(e.id.startsWith('minecraft:')) return;
 		// mc.world.sendMessage(e.id)
 		let isItem = mc.BlockTypes.get(e.id) ? false : true;
@@ -28,6 +29,7 @@ mc.system.run(()=>{
 		if(e.id.endsWith("_spawn_egg") && mc.EntityTypes.get(e.id.slice(0, -charsToReove))) return;
 	
 		if(isItem) {
+			// console.log(e.id)
 			// mc.world.sendMessage(e.id)
 			num_of_items += 1;
 		}

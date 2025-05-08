@@ -11,6 +11,7 @@ import playerStorage from "./playerStorage.js";
 import { temp } from "../pdbScriptevents.js";
 import zones from "./zones.js";
 import playerUtils from "./playerUtils.js";
+import configAPI from "./config/configAPI.js";
 let db1 = prismarineDb.table("LegacyConfig")
 const configDb = await db1.keyval("LegacyConfig");
 const startingRank = configDb.get("StartingRank", "Member");
@@ -257,12 +258,7 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
         // if(key == "msg") continue;
         let val = vars[key];
         newStr = newStr.replaceAll(`<${key}>`, `${val}`);
-    }//
-    // Restore original message after variable replacement
-    // if (originalMsg !== undefined) {
-    //     vars.msg = originalMsg;
-    //     newStr = newStr.replaceAll(`<msg>`, originalMsg);
-    // }
+    }
 
     let fnRegex = /\{\{([\s\S]*?)\}\}/g;
     let fnMatches = newStr.match(fnRegex);
@@ -278,6 +274,13 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
                 newText.push(`${codesList[i2 % codesList.length]}${text[i2]}`);
             }
             return newText.join('');
+        },
+        get_int_property(name) {
+            try {
+                return (configAPI.getProperty(`CSTM_I:${name}`) || 0).toString();
+            } catch {
+                return "0";
+            }
         },
         score(objective) {
             if(!player) return `0`;

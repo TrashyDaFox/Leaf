@@ -19,11 +19,11 @@ uiManager.addUI(versionData.uiNames.ChatRanks.Config, "a", (player)=>{
         return {option: _}
     }), Math.max(0, colors.getColorCodes().indexOf(configAPI.getProperty("DefaultMessageColor"))))
     modalForm.show(player, false, (player, response)=>{
-        if(response.canceled) return uiManager.open(player, versionData.uiNames.ConfigMain)
+        if(response.canceled) return uiManager.open(player, versionData.uiNames.ChatRanks.Main)
         configAPI.setProperty("DefaultRank", response.formValues[0])
         configAPI.setProperty("DefaultNameColor", colors.getColorCodes()[response.formValues[1]])
         configAPI.setProperty("DefaultBracketColor", colors.getColorCodes()[response.formValues[2]])
         configAPI.setProperty("DefaultMessageColor", colors.getColorCodes()[response.formValues[3]])
-        return uiManager.open(player, versionData.uiNames.ConfigMain)
+        return uiManager.open(player, versionData.uiNames.ChatRanks.Main)
     })
 })

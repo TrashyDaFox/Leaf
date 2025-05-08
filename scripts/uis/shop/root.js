@@ -7,20 +7,25 @@ import { ActionForm } from "../../lib/form_func";
 import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
 import { worldTags } from "../../worldTags";
+import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
+import { insertBackButton } from "../sharedUtils/insertBackButton";
 
 uiManager.addUI(config.uiNames.Shop.Root, "Shop Root", (player, id = shopAPI.getDefaultShop().id)=>{
     if(typeof id === "string") id = parseInt(id); // for compatibility with leafgui command
     let shop = shopAPI.shops.getByID(id);
     let form = new ActionForm();
-    form.title(formatStr(shop.data.title, player));
-    if(shop.data.description) form.body(formatStr(shop.data.description, player))
+    form.title(`${NUT_UI_TAG}§r§f${formatStr(shop.data.title, player)}`);
+    if(shop.data.description) form.body(`${NUT_UI_TAG}§r§f${formatStr(shop.data.description, player)}`)
     let hasPerms = false;
+    if(shop.data.type == "PLAYER_SHOP") {
+        insertBackButton(form, `/scriptevent leafgui:player_shop_root`)
+    }
     if(shop.data.type == "ADMIN_SHOP") {
         hasPerms = prismarineDb.permissions.hasPermission(player, "shopui.edit")
     } else if(shop.data.type == "PLAYER_SHOP") {
-        form.button(`§cGo back\n§7Go back`, `textures/blocks/barrier`, (player)=>{
-            uiManager.open(player, config.uiNames.PlayerShops.View)
-        })
+        // form.button(`§cGo back\n§7Go back`, `textures/blocks/barrier`, (player)=>{
+        //     uiManager.open(player, config.uiNames.PlayerShops.View)
+        // })
         if(shop.data.owner == playerStorage.getID(player) || prismarineDb.permissions.hasPermission(player, "playershops.delete-any")) {
             form.button(`§cDelete Shop\n§7Delete this shop`, icons.resolve(`leaf/image-557`), (player)=>{
                 uiManager.open(player, config.uiNames.Basic.Confirmation, `Are you sure you want to delete §e${shop.data.title}§r?`, ()=>{
@@ -32,7 +37,7 @@ uiManager.addUI(config.uiNames.Shop.Root, "Shop Root", (player, id = shopAPI.get
             })
         }
         if(prismarineDb.permissions.hasPermission(player, "playershops.feature")) {
-            form.button(`§e${worldTags.hasTag(`Featured-Shop:${id}`) ? `Unfeature` : `Feature`}\n§7Display this shop`, `textures/items/gold_ingot`, (player)=>{
+            form.button(`${NUT_UI_HEADER_BUTTON}§e${worldTags.hasTag(`Featured-Shop:${id}`) ? `Unfeature` : `Feature`}\n§7Display this shop`, `${worldTags.hasTag(`Featured-Shop:${id}`) ? `textures/azalea_icons/other/heart_delete` : `textures/azalea_icons/other/heart_add`}`, (player)=>{
                 if(worldTags.hasTag(`Featured-Shop:${id}`)) {
                     worldTags.removeTag(`Featured-Shop:${id}`)
                 } else {

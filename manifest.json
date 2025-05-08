@@ -1,11 +1,11 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "§2Leaf §aEssentials §7- §6v2.8.4",
+		"name": "§2Leaf §aEssentials §7- §6v2.9.1",
 		"description": "Probably the least stable version of leaf, please report any and all bugs!",
-		"min_engine_version": [1, 20, 80],
+		"min_engine_version": [1, 20, 70],
 		"uuid": "89ed7dc6-aace-431e-b02b-162b61ea2ea7",
-		"version": [1, 0, 75]
+		"version": [1, 0, 82]
 	},
 	"modules": [
 		{
@@ -13,14 +13,14 @@
 			"type": "script",
 			"language": "javascript",
 			"uuid": "193360c7-c32b-4eb1-8c5c-dd1d188d1fa3",
-			"entry": "scripts/main.js",
-			"version": [1, 0, 75]
+			"entry": "scripts/startup.js",
+			"version": [1, 0, 82]
 		},
 		{
 			"description": "Data Module",
 			"type": "data",
 			"uuid": "afecf66b-2000-443d-81d1-4064c97c7c1a",
-			"version": [1, 0, 75]
+			"version": [1, 0, 82]
 		}
 	],
 	"dependencies": [

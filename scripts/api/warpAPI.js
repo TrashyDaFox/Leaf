@@ -1,3 +1,4 @@
+import { Player, world } from "@minecraft/server";
 import { prismarineDb } from "../lib/prismarinedb";
 
 
@@ -36,16 +37,19 @@ class WarpAPI {
     constructor() {
         this.db = prismarineDb.table("Warps");
     }
-    setWarpAtVec3(vec3, name) {
+    setWarpAtVec3(vec3, name, dimension = "minecraft:overworld", rot = {}) {
         let doc = this.db.findFirst({name});
         if(doc) {
             doc.data.loc = vec3;
             doc.data.name = name;
+            doc.data.rot = rot;
             this.db.overwriteDataByID(doc.id, doc.data);
         } else {
             this.db.insertDocument({
+                rot,
                 loc: vec3,
-                name
+                name,
+                dimension
             })
         }
         return true;
@@ -66,12 +70,17 @@ class WarpAPI {
         return this.db.data;
     }
     tpToWarp(player, name) {
+        if(!(player instanceof Player)) return;
         let warp = this.getWarp(name);
         if(!warp) return false;
+        // if(warp.data.requiredTag && warp)
         player.teleport({
             x: warp.data.loc.x,
             y: warp.data.loc.y,
             z: warp.data.loc.z
+        }, {
+            rotation: warp.data.rot.x && warp.data.rot.y ? warp.data.rot : null,
+            dimension: world.getDimension(warp.data.dimension || "minecraft:overworld")
         });
         return true;
     }

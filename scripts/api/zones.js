@@ -146,6 +146,30 @@ class Zones {
             }
         }
     }
+    getZoneAtVec3ExcludeLandClaims(vec3) {
+        let zones = [...this.getZones()].sort((a,b)=>b.data.priority - a.data.priority)
+        let px = Math.floor(vec3.x);
+        let py = Math.floor(vec3.y);
+        let pz = Math.floor(vec3.z);
+        for(const zone of zones) {
+            if(zone.data.type == "ZONE") {
+                let {x1, y1, z1, x2, y2, z2} = zone.data;
+                if(isPointInCube(px, py, pz, x1, y1, z1, x2, y2, z2)) {
+                    return zone;
+                }
+            } else if(zone.data.type == "CLAIM") {
+                let x1 = zone.data.pos1.x;
+                let x2 = zone.data.pos2.x;
+                let y1 = zone.data.pos1.y;
+                let y2 = zone.data.pos2.y;
+                let z1 = zone.data.pos1.z;
+                let z2 = zone.data.pos2.z;
+                if(isPointInCube(px, py, pz, x1, y1, z1, x2, y2, z2)) {
+                    return zone;
+                }
+            }
+        }
+    }
     getZones() {
         return this.zonesDB.findDocuments({type: "ZONE"})
     }

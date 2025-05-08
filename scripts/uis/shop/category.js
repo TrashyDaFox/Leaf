@@ -8,24 +8,29 @@ import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
 import playerStorage from "../../api/playerStorage";
 import { SegmentedStoragePrismarine } from "../../prismarineDbStorages/segmented";
+import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
 function parseItemID(id) {
     let text = id.split(':')[1];
     return text.split('_').map(_=>`${_[0].toUpperCase()}${_.substring(1)}`).join(' ');
 }
 let shopSt = prismarineDb.customStorage("ShopStats", SegmentedStoragePrismarine);
-export let shopStats = shopSt.keyval("main")
+export let shopStats = await shopSt.keyval("main")
 uiManager.addUI(config.uiNames.Shop.Category, "Shop Category", (player, shopID, categoryID, error = null)=>{
     let shop = shopAPI.shops.getByID(shopID);
     let form = new ActionForm();
     if(error) form.body(`§c${error}`);
-    form.button("§cBack\n§7Go back", `textures/blocks/barrier`, (player)=>{
+    form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`, `textures/azalea_icons/2`, (player)=>{
         uiManager.open(player, config.uiNames.Shop.Root, shopID);
     })
+    // console.warn(JSON.stringify(shopAPI.shops.data).length)
     let category = shop.data.categories.find(_=>_.id == categoryID);
+    form.title(`${NUT_UI_TAG}§r${category.name}`)
     for(let i = 0;i < category.items.length;i++) {
         let item = category.items[i];
         if(item.type == "ITEMDB_ITEM") {
+            console.warn("E")
             let itemStack = itemdb.getItem(item.stash, item.slot);
+            if(!itemStack) continue;
             let currency = prismarineDb.economy.getCurrency(item.currency) ? prismarineDb.economy.getCurrency(item.currency) : prismarineDb.economy.getCurrency("default");
             form.button(`§e${item.displayName ? item.displayName : parseItemID(itemStack.typeId)}\n§r§7${currency.symbol} ${item.price}`, item.icon ? icons.resolve(item.icon) : undefined, (player)=>{
                 let count = prismarineDb.economy.getMoney(player, item.currency)

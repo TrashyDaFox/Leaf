@@ -17,9 +17,9 @@ import { system, world, EquipmentSlot, ScriptEventSource, ItemStack, BlockVolume
 import { prismarineDb } from "../lib/prismarinedb";
 const equipmentSlots = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand];
 
-async function saveInventory(player, invName) {
+export async function saveInventory(player, invName) {
     const stasherName = `invstash_${invName}`;
-    const stasher = player.dimension.spawnEntity("azalea:inventory_stasher", { ...player.location, y: 0 });
+    const stasher = player.dimension.spawnEntity("leaf:inventory_stasher", { ...player.location, y: 0 });
     stasher.nameTag = stasherName;
     const inv = player.getComponent("inventory").container;
     const invStash = stasher.getComponent("inventory").container;
@@ -30,13 +30,13 @@ async function saveInventory(player, invName) {
     for (let i = 0; i < 5; i++) {
         invStash.setItem(i + 36, equipment.getEquipment(equipmentSlots[i]));
     }
-    await player.runCommandAsync(`structure save "azalea:${stasherName}" ~ 0 ~ ~ 0 ~ true disk false`);
+    player.runCommand(`structure save "azalea:${stasherName}" ~ 0 ~ ~ 0 ~ true disk false`);
     stasher.triggerEvent("azalea:despawn");
     stasher.nameTag = "despawned";
 }
-async function loadInventory(player, invName) {
+export async function loadInventory(player, invName) {
     const stasherName = `invstash_${invName}`;
-    if ((await player.runCommandAsync(`structure load "azalea:${stasherName}" ~ 0 ~`)).successCount === 0) {
+    if ((player.runCommand(`structure load "azalea:${stasherName}" ~ 0 ~`)).successCount === 0) {
         throw `Failed to load inventory "${invName}"`;
     }
     ;
@@ -53,127 +53,103 @@ async function loadInventory(player, invName) {
     stasher.triggerEvent("azalea:despawn");
     stasher.nameTag = "despawned";
 }
-async function deleteInventory(invName) {
+export async function deleteInventory(invName) {
     const stasherName = `invstash_${invName}`;
-    await world.getDimension("overworld").runCommandAsync(`structure delete "azalea:${stasherName}"`);
+    await world.getDimension("overworld").runCommand(`structure delete "azalea:${stasherName}"`);
 }
+
 
 class ItemDB {
     constructor() {
         this.db = prismarineDb.table("ItemDB");
-        // this.db.clear();
         this.initializeKeyval();
     }
+
     async initializeKeyval() {
         this.keyval = await this.db.keyval("config");
     }
+
     getItemCount() {
         return this.keyval.get("itemCount") ? this.keyval.get("itemCount") : 0;
     }
+
     getStash() {
         return Math.floor(this.getItemCount() / 62);
     }
-    getItem(stash, slot) {
-        let id = `leaf_stash:stash_${stash}`;
-        let stasherName = `leaf_stash_${stash}`
-        let player = world.getPlayers()[0];
-        if(player) {
-            if(world.structureManager.get(id)) {
-                world.structureManager.place(id, player.dimension, { x: player.location.x, y: 0, z: player.location.z });
-                let entity = player.dimension.getEntities({name: stasherName})[0];
-                let inv = entity.getComponent('inventory');
-                let item = inv.container.getItem(slot);
-                entity.triggerEvent("azalea:despawn");
-                entity.nameTag = "despawned";
-                return item;
-            }
-        }
-    }
+
     saveItem(itemStack) {
-        if(!(itemStack instanceof ItemStack)) return;
-        let stash = this.getStash();
-        let id = `leaf_stash:stash_${stash}`;
-        let stasherName = `leaf_stash_${stash}`
-        let player = world.getPlayers()[0];
-        if(player) {
-            if(world.structureManager.get(id)) {
-                world.structureManager.place(id, player.dimension, { x: player.location.x, y: 0, z: player.location.z });
-                let entity = player.dimension.getEntities({name:stasherName})[0];
-                entity.nameTag = stasherName;
-                let inventory = entity.getComponent('inventory');
-                let slot = 0;
-                for(let i = 0;i < inventory.container.size;i++) {
-                    if(!inventory.container.getItem(i)) {
-                        inventory.container.setItem(i, itemStack);
-                        slot = i;
-                        break;
-                    }
-                }
-                if(slot == 0) {
-                    inventory.container.setItem(slot, itemStack);
+        if (!(itemStack instanceof ItemStack)) return;
+        
+        const stash = this.getStash();
+        const stasherName = `leaf_stash_${stash}`;
+        const id = `leaf_stash:stash_${stash}`;
+        const player = world.getPlayers()[0];
+        
+        if (!player) return;
 
-                }
-                // let struct = world.structureManager.createFromWorld(id, player.dimension, {
-                //     x: player.location.x,
-                //     y: 0,
-                //     z: player.location.z
-                // }, {
-                //     x: player.location.x,
-                //     y: 0,
-                //     z: player.location.z
-                // }, {
-                //     "includeBlocks": false,
-                //     "includeEntities": true
-                // });
-                // struct.
-                // struct.saveToWorld();
-                player.runCommand(`structure save "${id}" ~ 0 ~ ~ 0 ~ true disk false`)
-                entity.triggerEvent("azalea:despawn");
-                // system.run(()=>{
-                //     entity.kill();
-                // })
-                entity.nameTag = "despawned";
-                this.keyval.set("itemCount", this.getItemCount() + 1);
-                return [stash, slot];
-                
-            } else {
-                let entity = player.dimension.spawnEntity(`leaf:item_stasher`, {x: player.location.x, y: 0, z: player.location.z})
-                entity.nameTag = stasherName;
-                let inventory = entity.getComponent('inventory');
-                let slot = 0;
-                for(let i = 0;i < inventory.container.size;i++) {
-                    if(!inventory.container.getItem(i)) {
-                        inventory.container.setItem(i, itemStack);
-                        slot = i;
-                        break;
-                    }
-                }
-                // let struct = world.structureManager.createFromWorld(id, player.dimension, {
-                //     x: player.location.x,
-                //     y: 0,
-                //     z: player.location.z
-                // }, {
-                //     x: player.location.x,
-                //     y: 0,
-                //     z: player.location.z
-                // }, {
-                //     "includeBlocks": false,
-                //     "includeEntities": true
-                // });
-                // struct.saveToWorld();
-                player.runCommand(`structure save "${id}" ~ 0 ~ ~ 0 ~ true disk false`)
+        // Spawn the stasher entity
+        let stasher = player.dimension.getEntities({ name: stasherName })[0];
+        
+        if (!stasher) {
+            stasher = player.dimension.spawnEntity("leaf:item_stasher", { x: player.location.x, y: 0, z: player.location.z });
+            stasher.nameTag = stasherName;
+        }
 
-                entity.triggerEvent("azalea:despawn");
-                // system.run(()=>{
-                //     entity.kill();
-                // })
+        const inv = stasher.getComponent('inventory').container;
 
-                entity.nameTag = "despawned";
-                this.keyval.set("itemCount", this.getItemCount() + 1);
-                return [stash, slot];
+        // Find an empty slot or overwrite the first slot if needed
+        let slot = 0;
+        for (let i = 0; i < inv.size; i++) {
+            if (!inv.getItem(i)) {
+                inv.setItem(i, itemStack);
+                slot = i;
+                break;
             }
         }
+        if (slot === 0) {
+            inv.setItem(slot, itemStack);
+        }
+
+        // Save the structure
+        player.runCommand(`structure save "${id}" ~ 0 ~ ~ 0 ~ true disk false`);
+
+        // Mark the stasher as despawned
+        stasher.triggerEvent("azalea:despawn");
+        stasher.nameTag = "despawned";
+
+        this.keyval.set("itemCount", this.getItemCount() + 1);
+        return [stash, slot];
+    }
+
+    getItem(stash, slot) {
+        const id = `leaf_stash:stash_${stash}`;
+        const stasherName = `leaf_stash_${stash}`;
+        const player = world.getPlayers()[0];
+
+        if (!player) return;
+
+        // Load the structure
+        if ((player.runCommand(`structure load "${id}" ~ 0 ~`)).successCount === 0) {
+            throw `Failed to load stash "${stash}"`;
+        }
+
+        const stasher = player.dimension.getEntities({ name: stasherName })[0];
+        const inv = stasher.getComponent('inventory').container;
+
+        const item = inv.getItem(slot);
+
+        // Mark the stasher as despawned
+        stasher.triggerEvent("azalea:despawn");
+        stasher.nameTag = "despawned";
+
+        return item;
+    }
+
+    deleteItem(stash) {
+        const id = `leaf_stash:stash_${stash}`;
+        world.getDimension("overworld").runCommand(`structure delete "${id}"`);
     }
 }
+
 
 export default new ItemDB();

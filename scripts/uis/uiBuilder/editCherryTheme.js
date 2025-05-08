@@ -2,7 +2,7 @@ import uiBuilder from "../../api/uiBuilder";
 import { ActionForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import versionData from "../../versionData";
-import { NUT_UI_TAG, NUT_UI_HEADER_BUTTON, NUT_UI_THEMED } from "../preset_browser/nutUIConsts";
+import { NUT_UI_TAG, NUT_UI_HEADER_BUTTON, NUT_UI_THEMED, NUT_UI_LEFT_HALF, NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_RIGHT_HALF } from "../preset_browser/nutUIConsts";
 import { themes } from "./cherryThemes";
 
 uiManager.addUI("edit_cherry_theme", "Edits the cherry theme!", (player, id)=>{
@@ -18,7 +18,9 @@ uiManager.addUI("edit_cherry_theme", "Edits the cherry theme!", (player, id)=>{
         for(let i = 0;i < themes.length;i++) {
             let theme = themes[i];
             let themeIndex = i;
-            form.button(`${themeID == i ? "§o§1" : ""}§r§f${theme[1]} §7[${i}]`, theme[2], (player)=>{
+            let al1 = `${NUT_UI_LEFT_HALF}`;
+            let al2 = `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}`;
+            form.button(`${i % 2 != 0 ? al1 : i == themes.length - 1 ? themes.length % 2 != 0 ? "" : al2 : al2}${themeID == i ? "§o§1" : ""}§r§f${theme[1]} §7[${i}]`, theme[2], (player)=>{
                 doc.data.theme = themeIndex;
                 uiBuilder.db.overwriteDataByID(doc.id, doc.data)
                 uiManager.open(player, "edit_cherry_theme", id)

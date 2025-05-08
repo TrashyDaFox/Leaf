@@ -3,6 +3,7 @@ import actionParser from "../actionParser";
 import { formatStr } from "../azaleaFormatting";
 import icons from "../icons";
 import normalForm from "../openers/normalForm";
+import uiBuilder from "../uiBuilder";
 import common from "./common";
 
 class ChestGUIOpener {
@@ -17,6 +18,20 @@ class ChestGUIOpener {
         let chest = new ChestFormData(form.rows == 0.5 ? "5" : (Math.min(form.rows * 9, 6 * 9)).toString());
         chest.title(form.title);
         let advancedSlots = [];
+        if(form.background && form.background != 0) {
+            for(let i = 0;i < Math.min(form.rows * 9, 6 * 9);i++) {
+                chest.button(i, `§cX`, [], uiBuilder.patternIDs[form.background].dispTexture ? uiBuilder.patternIDs[form.background].dispTexture : uiBuilder.patternIDs[form.background].texture, 1, false, ()=>{
+                    this.open(form, player, ...args)
+                })
+            }
+        }
+        if(form.patterns) {
+            for(const pattern of form.patterns) {
+                chest.button(pattern[0], `§cX`, [], uiBuilder.patternIDs[pattern[1]].dispTexture ? uiBuilder.patternIDs[pattern[1]].dispTexture : uiBuilder.patternIDs[pattern[1]].texture, 1, false, ()=>{
+                    this.open(form, player, ...args)
+                })
+            }
+        }
         if(form.advanced) {
             for(let i = 0;i < form.icons.length;i++) {
                 let icon = form.icons[i];

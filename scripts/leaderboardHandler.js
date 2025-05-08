@@ -1,6 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { prismarineDb } from "./lib/prismarinedb";
 import playerStorage from "./api/playerStorage";
+import playerUtils from "./api/playerUtils";
 /*
   ∧,,,∧
 (  ̳• · • ̳)
@@ -105,16 +106,18 @@ class LeaderboardHandler {
                     tags: [`lbid:${lb.id}`],
                     type: "leaf:floating_text"
                 });
-                let lbText = [`${this.themes[lb.data.theme].headerSurroundings}-=-=-=-=- ${curnc ? `${curnc.symbol} ` : ""}§r${this.themes[lb.data.theme].header}§l${lb.data.displayName ? lb.data.displayName : lb.data.objective}${curnc ? ` ${curnc.symbol}` : ""} §r${this.themes[lb.data.theme].headerSurroundings}-=-=-=-=-`];
+                let lbText = [``];
                 let scores = [];
                 for(const player of playerStorage.keyval.keys()) {
+                    let playerID = player;
+                    if(scores.find(_=>_.playerID == playerID)) continue;
                     if(!lb.data.showOffline && !world.getPlayers().find(_=>playerStorage.getID(_))) continue;
                     let playerData = playerStorage.keyval.get(player);
                     let score = playerData.scores.find(_=>_.objective == lb.data.objective);
                     if(score) {
-                        scores.push({playerData,score:score.score});
+                        scores.push({playerID,playerData,score:score.score});
                     } else {
-                        scores.push({playerData,score:0});
+                        scores.push({playerID,playerData,score:0});
                     }
                 }
                 scores = scores.sort((a,b)=>b.score - a.score);
@@ -128,16 +131,22 @@ class LeaderboardHandler {
                     let enabledRanks = lb.data.disableRanks ? false : true;
                     if(enabledRanks) {
                         playerText = ""
-                        let ranks = score.playerData.tags.filter(_=>_.startsWith('rank:')).map(_=>_.substring(5));
-                        if(!ranks.length) ranks.push("§7Member");
+                        // let ranks = score.playerData.tags.filter(_=>_.startsWith('rank:')).map(_=>_.substring(5));
+                        // if(!ranks.length) ranks.push("§7Member");
+                        let ranks = playerUtils.getStrawberryRanksTags(score.playerData.tags)
                         // playerText += `§8[§r§7${ranks.join('§r§8] [§7')}§r§8] `
                         playerText += `§8[§r§7${ranks[0]}§r§8] `
 
                         let nameColor = score.playerData.tags.find(_=>_.startsWith('name-color:'));
                         playerText += `${nameColor ? nameColor.substring('name-color:'.length) : this.themes[lb.data.theme].player}${score.playerData.name}`;
                     }
-                    lbText.push(`${this.themes[lb.data.theme].num}${num}§7. ${playerText} §r${this.themes[lb.data.theme].scoreSurroundings}: §r${this.themes[lb.data.theme].score}${curnc ? "$" : ""}${lb.data.abbreviate ? abbrNum(score.score, 1) : score.score}`)
+                    lbText.push(`${this.themes[lb.data.theme].num}${num}§7. ${playerText}: §r${this.themes[lb.data.theme].scoreSurroundings}§r${this.themes[lb.data.theme].score}${num == 1 ? "§e" : num  == 2 ? "§f" : num == 3 ? "§n" : ""}${curnc ? "$" : ""}${lb.data.abbreviate ? abbrNum(score.score, 1) : score.score}`)
                 }
+                let longestLine = lbText.reduce((a, b) => (b.replace(/§./g,"").length > a.replace(/§./g,"").length ? b : a)).replace(/§./g,"");
+                let example = `§r§l${(lb.data.displayName ? lb.data.displayName : lb.data.objective).replace(/§./g,"")}`
+                let newLength = Math.floor((longestLine.length - (example.length + (curnc ? 4 : 2))) / 2)
+                lbText[0] = `${this.themes[lb.data.theme].headerSurroundings}${"-".repeat(newLength)} §r${this.themes[lb.data.theme].header}§l${lb.data.displayName ? lb.data.displayName : lb.data.objective} §r${this.themes[lb.data.theme].headerSurroundings}${"-".repeat(newLength)}`
+    
                 if(entities && entities.length) {
                     // console.warn('a')
                     entities[0].nameTag = lbText.join('\n§r');

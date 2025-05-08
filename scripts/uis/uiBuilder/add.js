@@ -4,7 +4,7 @@ import uiBuilder from "../../api/uiBuilder";
 import config from "../../versionData";
 import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
-
+// hey daddy i wanna turn myself into a vegetable
 uiManager.addUI(config.uiNames.UIBuilderAdd, "Add a UI", (player, defaultTitle = undefined, defaultBody = undefined, defaultScriptevent = undefined, error = undefined, id = undefined)=>{
     if(id == 1719775088275) return;
     let modalForm = new ModalForm();
