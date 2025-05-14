@@ -141,6 +141,7 @@ export default {
         ImportUI: "ui_import | Leaf/Import/UI",
         Lock: "lock | Leaf/ChestLocking/Lock",
         UIBuilderRoot: "ui_builder_main_page | Leaf/UIBuilder/Root",
+        CustomizerSettings: "customizer_settings | Leaf/Customizer/Settings",
         UIBuilderTrash: "ui_builder_trash | Leaf/UIBuilder/Trash",
         UIBuilderAddSeparator: "ui_builder_add_separator | Leaf/UIBuilder/Add/ViewSeparator",
         UIBuilderLeaf: "edit_leaf_uis | Leaf/UIBuilder/Edit/LeafUIs",
@@ -188,6 +189,8 @@ export default {
         },
         Leaf: "leaf | Leaf",
         Config: {
+            More: "more_settings",
+            ProximityChat: "proximity_chat",
             Clans: "clans_config | Leaf/Config/Clans",
             RTP: "rtp_config | Leaf/Config/RTP",
             Modules: "modules_config | Leaf/Config/Modules",

@@ -27,7 +27,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
         let themString = themID > 0 ? `${NUT_UI_THEMED}${themes[themID][0]}` : ``;
         let themString2 = themID > 0 ? `${NUT_UI_ALT}${themes[themID][0]}` : `${NUT_UI_ALT}`;
         if(doc.data.type != 10 && doc.data.type != 11) {
-            actionForm.title(`${doc.data.layout == 4 && doc.data.paperdoll ? NUT_UI_PAPERDOLL : ``}${NUT_UI_TAG}${themString}§rEditing "§b${(doc.data.type == 8 ? doc.data.uniqueID : doc.data.type == 4 ? doc.data.title : doc.data.name).replace('§g§r§i§d§u§i','').replace('§c§h§e§s§t','')}§r"`);
+            actionForm.title(`${doc.data.layout == 4 && doc.data.paperdoll ? NUT_UI_PAPERDOLL : ``}${NUT_UI_TAG}${themString}§rEditing "${(doc.data.type == 8 ? doc.data.uniqueID : doc.data.type == 4 ? doc.data.title : doc.data.name).replace('§g§r§i§d§u§i','').replace('§c§h§e§s§t','').replace(/§./g, '')}§r"`);
         } else if(doc.data.type == 11) {
             actionForm.title(`${NUT_UI_TAG}§rEditing Invite`)
         } else {
@@ -133,24 +133,24 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             } catch {}
         }
         if(doc.data.type == 11) {
-            actionForm.button(`§cEdit Deny Actions`, null, (player)=>{
+            actionForm.button(`§cEdit Deny Actions`, `textures/azalea_icons/other/delete`, (player)=>{
                 uiManager.open(player, versionData.uiNames.InviteManager.EditActions, doc.id, "denyActions")
             })
-            actionForm.button(`§aEdit Accept Actions`, null, (player)=>{
+            actionForm.button(`§aEdit Accept Actions`, `textures/azalea_icons/other/accept`, (player)=>{
                 uiManager.open(player, versionData.uiNames.InviteManager.EditActions, doc.id, "acceptActions")
             })
-            actionForm.button(`§6Edit Expiration Actions`, null, (player)=>{
+            actionForm.button(`§6Edit Expiration Actions`, `textures/azalea_icons/other/clock`, (player)=>{
                 uiManager.open(player, versionData.uiNames.InviteManager.EditActions, doc.id, "expireActions")
             })
-            actionForm.button(`§bEdit Send Actions`, null, (player)=>{
+            actionForm.button(`§bEdit Send Actions`, `textures/azalea_icons/other/platform`, (player)=>{
                 uiManager.open(player, versionData.uiNames.InviteManager.EditActions, doc.id, "sendActions")
             })
         }
         if(doc.data.type == 10) {
-            actionForm.button(`§dEdit General Settings\n§7Edit basic settings of this event`, null, (player)=>{
+            actionForm.button(`§dEdit General Settings\n§7Edit basic settings of this event`, `textures/azalea_icons/other/properties_edit`, (player)=>{
                 uiManager.open(player, config.uiNames.EventsV2.AddOptionCreator, doc.id)
             })
-            actionForm.button(`§6Edit Actions\n§7Edit the actions`, null, (player)=>{
+            actionForm.button(`§6Edit Actions\n§7Edit the actions`, `textures/azalea_icons/other/page_data`, (player)=>{
                 uiManager.open(player, config.uiNames.EventsV2.EditActions, doc.id)
             })
         }
@@ -180,14 +180,15 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             })
         }
         if(doc.data.type == 0) {
-            actionForm.button(`§aEdit Buttons\n§7[ Click to View ]`, `textures/azalea_icons/EditUi`, (player)=>{
+            actionForm.label("§eGeneral Options")
+            actionForm.button(`§aEdit Contents\n§7Edit elements inside the form`, `textures/azalea_icons/other/properties_edit`, (player)=>{
                 uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
             });
-            actionForm.button(`§dEdit Form\n§7Edit form name, and more`, `textures/azalea_icons/Extra UI settings`, (player)=>{
+            actionForm.button(`§dEdit General\n§7Edit form name, and more`, `textures/azalea_icons/other/page_edit`, (player)=>{
                 uiManager.open(player, config.uiNames.UIBuilderAdd, doc.data.name, doc.data.body, doc.data.scriptevent, undefined, doc.id);
             });
             if(scripting.getActiveScriptIDs().length) {
-                actionForm.button(`§vSet script dependencies${doc.data.scriptDeps && doc.data.scriptDeps.length ? ` (${doc.data.scriptDeps.length})` : ``}\n§7Set dependencies on a script`, null, (player)=>{
+                actionForm.button(`§vSet script dependencies${doc.data.scriptDeps && doc.data.scriptDeps.length ? ` (${doc.data.scriptDeps.length})` : ``}\n§7Set dependencies on a script`, `textures/azalea_icons/other/library`, (player)=>{
                     let modalForm = new ModalForm();
                     let ids = scripting.getActiveScriptIDs();
                     if(doc.data.scriptDeps && doc.data.scriptDeps.length) {
@@ -213,13 +214,13 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             }
         }
         if(doc.data.type == 4) {
-            actionForm.button(`§bEdit Items`, `textures/azalea_icons/icontextures/nether_star`, (player)=>{
+            actionForm.button(`§bEdit Items`, `textures/azalea_icons/other/item_drop`, (player)=>{
                 uiManager.open(player, config.uiNames.ChestGuiEditItems, id)
             })
-            actionForm.button(`§bEdit Pattern`, `textures/blocks/glass`, (player)=>{
+            actionForm.button(`§bEdit Pattern`, `textures/azalea_icons/other/palette`, (player)=>{
                 uiManager.open(player, config.uiNames.ChestGuiEditPattern, id)
             })
-            actionForm.button(`§cEdit Background`, `textures/blocks/glass_red`, (player)=>{
+            actionForm.button(`§cEdit Background`, `textures/azalea_icons/other/paint_can`, (player)=>{
                 uiManager.open(player, config.uiNames.ChestGuiPatternSelect, (patternID)=>{
                     if(patternID != null) {
                         doc.data.background = patternID;
@@ -228,7 +229,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
                     uiManager.open(player, config.uiNames.UIBuilderEdit, id)
                 })
             })
-            actionForm.button(`§eEdit Form`, `textures/azalea_icons/Extra UI settings`, (player)=>{
+            actionForm.button(`§eEdit Form`, `textures/azalea_icons/other/page_edit`, (player)=>{
                 let chest = doc;
                 if(chest.data.advanced) {
                     //player, defaultTitle = "", defaultScriptevent = "", defaultRows = 3, error = null, id = null
@@ -239,10 +240,10 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             })
         }
         if(doc.data.type == 6) {
-            actionForm.button(`§eEdit General\n§7Edit general settings of this notification`, null, (player)=>{
+            actionForm.button(`§eEdit General\n§7Edit general settings of this notification`, `textures/azalea_icons/other/properties_edit`, (player)=>{
                 uiManager.open(player, config.uiNames.ToastBuilderAdd, id)
             })
-            actionForm.button(`§6Set Body\n§7Set body text of this notification`, null, (player)=>{
+            actionForm.button(`§6Set Body\n§7Set body text of this notification`, `textures/azalea_icons/other/message`, (player)=>{
                 let modalForm = new ModalForm();
                 modalForm.title("Code Editor")
                 modalForm.textField("C", "Body text (leave empty for no body text)", doc.data.body ? doc.data.body : "")
@@ -253,7 +254,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
                     uiManager.open(player, config.uiNames.UIBuilderEdit, id)
                 })
             })
-            actionForm.button(`§dSet icon\n§7Set icon of this notification`, doc.data.icon ? icons.resolve(doc.data.icon) : null, (player)=>{
+            actionForm.button(`§dSet icon\n§7Set icon of this notification`, doc.data.icon ? icons.resolve(doc.data.icon) : `textures/azalea_icons/other/image`, (player)=>{
                 uiManager.open(player, config.uiNames.IconViewer, 0, (player, iconID)=>{
                     if(iconID != null) {
                         doc.data.icon = iconID;
@@ -262,16 +263,17 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
                     uiManager.open(player, config.uiNames.UIBuilderEdit, id)
                 })
             })
-            actionForm.button(`§aPreivew\n§7Preview the notification`, null, (player)=>{
+            actionForm.button(`§aPreivew\n§7Preview the notification`, `textures/azalea_icons/other/eye_show`, (player)=>{
                 player.runCommand(`scriptevent leaf:open ${doc.data.scriptevent}`)
                 uiManager.open(player, config.uiNames.UIBuilderEdit, id)
             })
         }
         if(doc.data.layout == 4) {
-            actionForm.button(`${formatStr("{{gay \"Edit Theme\"}}")}\n§7Current Theme: ${themes[themID] ? themes[themID][1] : "Unknown"}`, `textures/azalea_icons/RainbowPaintBrush`, (player)=>{
+            actionForm.label("§dCherryUI Options")
+            actionForm.button(`${formatStr("{{gay \"Edit Theme\"}}")}\n§7Current Theme: ${themes[themID] ? themes[themID][1] : "Unknown"}`, `textures/azalea_icons/other/palette`, (player)=>{
                 uiManager.open(player, "edit_cherry_theme", doc.id);
             }); 
-            actionForm.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${!doc.data.paperdoll ? themString2 : ``}§r§fPaperdoll\nOFF`, null, (player)=>{
+            actionForm.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${!doc.data.paperdoll ? themString2 : ``}§r§fPaperdoll\nOFF`, `textures/minidevs/TrashyKittyFem`, (player)=>{
                 doc.data.paperdoll = false;
                 uiBuilder.db.overwriteDataByID(doc.id, doc.data)
                 uiManager.open(player, config.uiNames.UIBuilderEdit, id);
@@ -284,14 +286,16 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
     
         }
         if(configAPI.getProperty("CLogDisableUIs") && configAPI.getProperty("CLog")) {
-            actionForm.button(`${doc.data.clog_allow ? `§cDisallow in combat` : `§aAllow in combat`}\n§7Change if this UI is allowed in combat`, null, (player)=>{
+            actionForm.label("§bCombat Options")
+            actionForm.button(`${doc.data.clog_allow ? `§cDisallow in combat` : `§aAllow in combat`}\n§7Change if this UI is allowed in combat`, `textures/azalea_icons/other/sword`, (player)=>{
                 doc.data.clog_allow = !doc.data.clog_allow;
                 uiBuilder.db.overwriteDataByID(doc.id, doc.data)
                 uiManager.open(player, config.uiNames.UIBuilderEdit, id);
                 
             })
         }
-        actionForm.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§nExport\n§7Get the UI code`, `textures/azalea_icons/export`, (player)=>{
+        actionForm.label("General Options")
+        actionForm.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§nExport\n§7Get the code`, `textures/azalea_icons/other/package`, (player)=>{
             let modal = new ModalForm();
             modal.title("Code Editor");
             modal.textField("Code", "Code", JSON.stringify(uiBuilder.db.getByID(id).data, null, 2));
@@ -307,14 +311,8 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
                 uiManager.open(player, config.uiNames.UIBuilderEdit, id);
             })
         })
-        if(doc.data.folder && uiBuilder.db.getByID(doc.data.folder)) {
-            actionForm.button(`§cRemove From Folder\n§7Remove this UI from the folder`, `textures/azalea_icons/Delete`, (player)=>{
-                doc.data.folder = null;
-                uiBuilder.db.overwriteDataByID(doc.id, doc.data)
-                uiManager.open(player, config.uiNames.UIBuilderRoot)
-            })
-        }
-        actionForm.button(`${NUT_UI_HEADER_BUTTON}§r§2${doc.data.pinned ? "Unpin" : "Pin"} UI\n§7${doc.data.pinned ? "Unpin" : "Pin"} this UI`, doc.data.pinned ? `textures/azalea_icons/10` : `textures/azalea_icons/10-2`, (player)=>{
+
+        actionForm.button(`${NUT_UI_HEADER_BUTTON}§r§2${doc.data.pinned ? "Unpin" : "Pin"} UI\n§7${doc.data.pinned ? "Unpin" : "Pin"} this UI`, doc.data.pinned ? `textures/azalea_icons/other/heart_delete` : `textures/azalea_icons/other/heart_add`, (player)=>{
             uiBuilder.setPinned(id, !doc.data.pinned);
             return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
         })
@@ -326,12 +324,12 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             });
         })
         if(doc.data.type == 0) {
-            actionForm.button(`${NUT_UI_HEADER_BUTTON}§r§bTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? icons.resolve("azalea/name_tag") : icons.resolve("azalea/wand_01"), (player)=>{
+            actionForm.button(`${NUT_UI_HEADER_BUTTON}§r§bTag Opener ${doc.data.useTagOpener ? "§7(§aEnabled§7)" : "§7(§cDisabled§7)"}\n§7Toggle if this UI is opened by a tag`, doc.data.useTagOpener ? `textures/azalea_icons/other/tag_id` : `textures/azalea_icons/other/computer`, (player)=>{
                 uiBuilder.toggleUseTagOpener(id);
                 return uiManager.open(player, config.uiNames.UIBuilderEdit, id);
             })
         }
-        actionForm.button(`§3Duplicate\n§7Duplicate this UI`, `textures/azalea_icons/UI Copy and paste`, (player)=>{
+        actionForm.button(`§3Duplicate\n§7Duplicate this creation`, `textures/azalea_icons/other/page_copy`, (player)=>{
             if(doc.data.type == 7) {
                 let modal = new ModalForm();
                 modal.textField("New Name", "Name", "", ()=>{}, "Name for the cloned sidebar")
@@ -345,11 +343,19 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             uiBuilder.duplicateUI(id);
             return uiManager.open(player, config.uiNames.UIBuilderRoot);
         })
+        actionForm.label("§cDangerous Options")
+        if(doc.data.folder && uiBuilder.db.getByID(doc.data.folder)) {
+            actionForm.button(`§cRemove From Folder\n§7Remove this UI from the folder`, `textures/azalea_icons/other/delete`, (player)=>{
+                doc.data.folder = null;
+                uiBuilder.db.overwriteDataByID(doc.id, doc.data)
+                uiManager.open(player, config.uiNames.UIBuilderRoot)
+            })
+        }
         if(http.player) {
             actionForm.label("Leaf Network")
             let published = doc.data.accessToken ? true : false
             if(published) {
-                actionForm.button(`§cDelete from Servers\n§7Delete this UI from leaf servers`, `textures/azalea_icons/Delete`, player=>{
+                actionForm.button(`§cDelete from Servers\n§7Delete this UI from leaf servers`, `textures/azalea_icons/other/delete`, player=>{
                     uiManager.open(player, config.uiNames.MCBEToolsAuth, (token)=>{
                         uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to remove this GUI from the public GUI list?", ()=>{
                             http.makeRequest({
@@ -412,7 +418,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
             })
         }
         // actionForm.label("§cDANGER ZONE")
-        actionForm.button(`§cDelete\n§7Delete this UI`, `textures/azalea_icons/SidebarTrash`, player=>{
+        actionForm.button(`§cDelete\n§7Delete this creation`, `textures/azalea_icons/other/delete`, player=>{
             uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this GUI?", ()=>{
                 uiBuilder.db.trashDocumentByID(doc.id)
                 return uiManager.open(player, config.uiNames.UIBuilderRoot)    
@@ -444,7 +450,7 @@ uiManager.addUI(config.uiNames.UIBuilderEdit, "UI Builder Edit", (player, id)=>{
                 })
             })
         } else {
-            actionForm.button(`§eSet Pin\n§7Set a pin for this UI for other players`, `textures/items/lock`, player=>{
+            actionForm.button(`§eSet Pin\n§7Set pin for this creation for other players`, `textures/azalea_icons/other/lock`, player=>{
                 uiManager.open(player, config.uiNames.Basic.PinCode, [], (inputs)=>{
                     if(inputs) {
                         doc.data.pin = inputs;

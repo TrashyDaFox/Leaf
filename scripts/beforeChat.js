@@ -4,6 +4,8 @@ import OpenClanAPI from "./api/OpenClanAPI";
 import config from "./versionData";
 import { createMessage } from "./createMessage";
 import { isMuted } from "./uis/moderation_hub/bans";
+import { chatRankHandler } from "./api/chat/handler";
+import { world } from "@minecraft/server";
 
 export default function(e) {
     if (e.message.startsWith('!')) {
@@ -28,6 +30,9 @@ export default function(e) {
                 return;
             }
         }
-        createMessage(e.sender, e.message);
+        // createMessage(e.sender, e.message);
+        let msg = chatRankHandler.getMessageContent(e)
+
+        world.sendMessage(msg ? msg : `[empty] ${e.sender.name}: ${e.message}`)
     }
 }

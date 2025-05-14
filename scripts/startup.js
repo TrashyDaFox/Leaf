@@ -599,13 +599,68 @@ if (system.beforeEvents.startup) {
 
         }
         let config = await import("./api/config/configAPI.js")
+        config.default.registerProperty("Activated", config.default.Types.Boolean, false)
         let worldTags = await import("./worldTags.js")
         let itemdb = await import("./api/itemdb.js")
         let libPDB = await import("./lib/prismarinedb.js")
         let SegmentedStoragePrismarine = await import("./prismarineDbStorages/segmented.js")
         let uiBuilder = await import("./api/uiBuilder.js")
         let inventories = libPDB.prismarineDb.customStorage("Inventories", SegmentedStoragePrismarine.SegmentedStoragePrismarine)
-})
+        if(config.default.getProperty("Activated")) {
+            setup()
+        }
+    })
 }
 await system.waitTicks(0)
+
+export let NUT_UI_TAG = "§f§0§0";
+export let NUT_UI_LEFT_HALF = "§p§1§2";
+export let NUT_UI_RIGHT_HALF = "§p§2§2";
+export let NUT_UI_LEFT_THIRD = "§p§2§2§p§2§1";
+export let NUT_UI_MIDDLE_THIRD = "§p§2§1§p§1§2";
+export let NUT_UI_RIGHT_THIRD = "§p§1§1§p§1§2";
+export let NUT_UI_THEMED = "§t§h§e§m§0§1";
+export let NUT_UI_PAPERDOLL = "§p§l§0§1";
+export let NUT_UI_OCEAN = "§o§c§e§a§n";
+export let NUT_UI_HEADER_BUTTON = "§p§4§0";
+export let NUT_UI_ALT = "§a§l§t§b§t§n";
+export let NUT_UI_DISABLE_VERTICAL_SIZE_KEY = "§p§0§0";
+
+function showSetupUI(player) {
+    let form = new ui.ActionFormData();
+    form.title(`${NUT_UI_TAG}§r§fWelcome to leaf essentials!`)
+    form.label(`To get started, make sure you do §e/tag @s add admin`)
+    form.label(`Documentation can be found at §ahttps://leaf.trashdev.org`)
+    form.label(`Addon made with §v<3 §r§fby §vTrashyDaFox`)
+    form.button(`§6Accept & Close\n§7[ Click to close ]`, `textures/azalea_icons/other/script_text`)
+    form.label(`§7§oNOTE: The only official sources of leaf essentials are curseforge, mcpedl and mcbetools (https://mcbetools.com). Any others are likely fake!`)
+    function yes(res) {
+        if(res.canceled) return form.show(player).then(yes)
+        if(res.selection == 0) {
+            player.success("Thank you for using leaf!")
+            player.playSound("random.levelup")
+            config.default.setProperty("Activated", true)
+        }
+    }
+    form.show(player).then(yes)
+}
+
+let config = await import("./api/config/configAPI.js")
+config.default.registerProperty("Activated", config.default.Types.Boolean, false)
+
+
+config.default.db.load().then(()=>{
+    if(world.getPlayers().length > 0 && !config.default.getProperty("Activated")) {
+        system.runTimeout(()=>{
+            showSetupUI(world.getPlayers()[0])
+        }, 100)
+    }
+    
+    world.afterEvents.playerSpawn.subscribe(e=>{
+        if(config.default.getProperty("Activated")) return;
+        showSetupUI(e.player)
+    })
+})
+
+function setup() {}
 import("./main.js")

@@ -7,6 +7,7 @@ import uiManager from "../../uiManager";
 import moment from '../../lib/moment';
 import emojis from '../../api/emojis';
 import tabUI from "../../api/tabUI";
+import './settings/root.js'
 import { ActionForm, MessageForm, ModalForm } from "../../lib/form_func";
 import './snippetBook'
 import './trash'
@@ -149,25 +150,11 @@ uiManager.addUI(config.uiNames.UIBuilderFolders, "UI Builder Folders", (player) 
 });
 uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
     let form = new ActionForm();
-    form.title(`${NUT_UI_TAG}§rNew creation`)
+    form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[38][0]}§rNew creation`)
     form.button(`${NUT_UI_HEADER_BUTTON}§r§c§lBack\n§r§7Go back to the main UI view`, `textures/azalea_icons/2`, (player)=>{
         uiManager.open(player, config.uiNames.UIBuilderRoot)
     })
-    form.button(`§aAction Form\n§7Main UI type, recommended for buttons`, `textures/azalea_icons/other/node`, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderAdd)
-    })
-    form.button(`§eSidebar\n§7Create high quality sidebars`, `textures/azalea_icons/other/text`, (player)=>{
-        uiManager.open(player, config.uiNames.SidebarEditorAdd)
-    })
-    form.button(`§bModal Form\n§7Advanced UI type`, `textures/azalea_icons/other/keyboard`, (player)=>{
-        uiManager.open(player, config.uiNames.Modal.Add)
-    })
-    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§eChest UI\n§7Chest UI type`, `textures/azalea_icons/other/inventory`, (player)=>{
-        uiManager.open(player, config.uiNames.ChestGuiAdd)
-    })
-    form.button(`${NUT_UI_LEFT_HALF}§r§6Adv. Chest UI\n§7Advanced Chest UI`, null, (player)=>{
-        uiManager.open(player, config.uiNames.ChestGuiAddAdvanced)
-    })
+    form.label("Organization:")
     form.button(`§5Folder\n§7Organize your UIs`, `textures/azalea_icons/other/folder`, (player)=>{
         let modalForm = new ModalForm()
         modalForm.textField("Name", "Name")
@@ -177,14 +164,32 @@ uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
             return uiManager.open(player, config.uiNames.UIBuilderRoot)
         })
     })
+    form.label("UIs:")
+    form.button(`§aAction Form\n§7Main UI type, recommended for buttons`, `textures/azalea_icons/other/node`, (player)=>{
+        uiManager.open(player, config.uiNames.UIBuilderAdd)
+    })
+    form.button(`§eModal Form\n§7Advanced UI type`, `textures/azalea_icons/other/keyboard`, (player)=>{
+        uiManager.open(player, config.uiNames.Modal.Add)
+    })
+    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§eChest UI\n§7Chest UI type`, `textures/azalea_icons/other/inventory`, (player)=>{
+        uiManager.open(player, config.uiNames.ChestGuiAdd)
+    })
+    form.button(`${NUT_UI_LEFT_HALF}§r§6Adv. Chest UI\n§7Advanced Chest UI`, null, (player)=>{
+        uiManager.open(player, config.uiNames.ChestGuiAddAdvanced)
+    })
+    form.button(`§eSidebar\n§7Create high quality sidebars`, `textures/azalea_icons/other/text`, (player)=>{
+        uiManager.open(player, config.uiNames.SidebarEditorAdd)
+    })
     form.button(`§dToast\n§7Create a customizable notification`, `textures/azalea_icons/other/information`, (player)=>{
         uiManager.open(player, config.uiNames.ToastBuilderAdd)
     })
-    form.button(`§uEvent\n§7Make a new V2 Event`, `textures/azalea_icons/other/clock`, (player)=>{
-        uiManager.open(player, config.uiNames.EventsV2.AddStepSelector)
-    })
+    form.button(`§cMessage Form\n§72 button form with text`, `textures/azalea_icons/other/window_dialogue`)
+    form.label("Utility:")
     form.button(`§bInvite\n§7Use leafs invite manager!`, `textures/azalea_icons/send_req`, (player)=>{
         uiManager.open(player, config.uiNames.InviteManager.Add)
+    })
+    form.button(`§uEvent\n§7Make a new V2 Event`, `textures/azalea_icons/other/clock`, (player)=>{
+        uiManager.open(player, config.uiNames.EventsV2.AddStepSelector)
     })
     form.button(`§eScript\n§7Edit functionality of your world with javascript`, `textures/azalea_icons/other/script_code`, (player)=>{
         let modal = new ModalForm();
@@ -194,17 +199,23 @@ uiManager.addUI(config.uiNames.UIBuilderAddSubmenu, "IAl", (player)=>{
             uiManager.open(player, config.uiNames.UIBuilderRoot)
         })
     })
-    form.button(`§aWarp\n§7Set a location players can teleport to`, `textures/azalea_icons/other/location`, (player)=>{
-        uiManager.open(player, versionData.uiNames.Warps.Wizard.Root)
-    })
     form.button(`§6Timer\n§7Run stuff on an interval`, `textures/azalea_icons/other/hourglass`)
-    form.button(`§qIsland\n§7Create an island`, `textures/azalea_icons/other/terrain`)
-    form.button(`§cMessage Form\n§72 button form with text`, `textures/azalea_icons/other/window_dialogue`)
-    form.button(`§fItem Definition\n§7Advanced binds!`, `textures/azalea_icons/other/sword_link`)
     form.button(`§vConditional Redirector\n§7Conditionally open different UIs`, `textures/azalea_icons/other/arrow_branch`, (player)=>{
         uiManager.open(player, config.uiNames.ToastBuilderAdd)
     })
-
+    form.label("Server setup:")
+    form.button(`§aWarp\n§7Set a location players can teleport to`, `textures/azalea_icons/other/location`, (player)=>{
+        uiManager.open(player, versionData.uiNames.Warps.Wizard.Root)
+    })
+    form.button(`§qIsland\n§7Create an island`, `textures/azalea_icons/other/terrain`)
+    form.button(`§fItem Definition\n§7Advanced binds!`, `textures/azalea_icons/other/sword_link`)
+    form.label("Chat:")
+    form.button(`§eChat Widget\n§7Customize chat :3`, `textures/azalea_icons/other/widget`)
+    form.button(`§bCommand\n§7Create chat commands`, `textures/azalea_icons/other/console`)
+    form.label("Legacy: ")
+    form.button(`§bModal Form (Legacy)\n§7Advanced UI type`, `textures/azalea_icons/other/keyboard`, (player)=>{
+        uiManager.open(player, config.uiNames.Modal.Add)
+    })
     form.show(player, false, ()=>{})
 })
 uiManager.addUI(config.uiNames.UIBuilderFoldersView, "UI Builder Folders View", (player, folder) => {
@@ -226,21 +237,58 @@ function getIcon(ui) {
     return ui.data.type == 11 ? `textures/azalea_icons/send_req`
         : ui.id == 1719775088275 ? `textures/azalea_icons/icontextures/uwu`
         : ui.data.icon ? icons.resolve(ui.data.icon)
+        : ui.data.type == 2 ? `textures/azalea_icons/other/folder`
         : ui.data.type == 12 ? `textures/azalea_icons/other/location`
         : ui.data.internal ? `textures/azalea_icons/LeafyClickOwO`
-        : ui.data.layout == 4 ? `textures/azalea_icons/DevSettingsClickyClick`
-        : ui.data.type == 6 ? `textures/ui/infobulb`
-        : ui.data.type == 10 ? `textures/items/clock_item.png`
+        // : ui.data.layout == 4 ? `textures/azalea_icons/DevSettingsClickyClick`
+        : ui.data.layout == 4 ? `textures/azalea_icons/other/glow`
+        : ui.data.type == 6 ? `textures/azalea_icons/other/information`
+        : ui.data.type == 10 ? `textures/azalea_icons/other/clock`
         : ui.data.type == 8 ? `textures/azalea_icons/other/script_code`
-        : ui.data.type == 7 ? `textures/azalea_icons/Sidebar`
-        : ui.data.type == 4 ? `textures/azalea_icons/ChestIcons/Chest${ui.data.rows ? ui.data.rows : 3}`
-        : `textures/azalea_icons/ClickyClick`
+        : ui.data.type == 7 ? `textures/azalea_icons/other/text`
+        // : ui.data.type == 4 ? `textures/azalea_icons/ChestIcons/Chest${ui.data.rows ? ui.data.rows : 3}`
+        : ui.data.type == 4 ? `textures/azalea_icons/other/inventory`
+        : ui.data.type == 3 ? `textures/azalea_icons/other/keyboard`
+        : `textures/azalea_icons/other/node`
 }
 function getBtnText(ui) {
     return `${ui.data.internal ? `§l§e§f§1§r§a` : ui.data.layout == 4 ? "§c§h§e§1§r§c" : ui.data.type == 12 ? `§a` : "§e"}${ui.data.type == 8 ? ui.data.uniqueID : ui.data.type == 11 ? `§bInvite: ${ui.data.identifier}` : ui.data.type == 10 ? ui.data.label ? ui.data.label : `Event: ${eventsData[ui.data.eventType].name}` : ui.data.type == 4 ? ui.data.title : ui.data.name}${ui.data.type == 6 ? " §r§7[§fTOAST§7] " : ""}${ui.data.pinned && !ui.data.internal ? ` \uE174` : ''}\n§r§7${emojis.clock} Updated ${moment(ui.updatedAt).fromNow()}`
 }
 
+function showImportingStuff(player, data) {
+    let logs = [];
+}
+
+let useNewImporting = false;
+
 function handleImportingFlow(player, data2) {
+    if(useNewImporting) {
+        function error(msg) {
+            player.error(msg)
+            uiManager.open(player, versionData.uiNames.UIBuilderRoot)
+        }
+        let data = typeof data2 == "object" ? data2 : JSON.parse(data2);
+        if(!data.type && typeof data.type != "number") return error("No 'type' value. Cancelling...")
+        let schema = uiBuilder.schemas.get(data.type)
+        if(schema) {
+            player.sendMessage("schema found")
+            try {
+                let validation = schema.validate(
+                    data,
+                    {strict: true}
+                )
+                let cast = schema.cast(data)
+                showImportingStuff(player, cast)
+                player.sendMessage("Schema validated!")
+            } catch(e) {
+                error(`UI did not match schema for UIType${data.type}`)
+                showImportingStuff(player, data)
+            }
+        } else {
+            player.sendMessage("schema not found")
+        }
+        return;
+    }
     try {
         let dat = typeof data2 == "object" ? data2 : JSON.parse(data2)
         if(!dat.version) {
@@ -383,6 +431,7 @@ uiManager.addUI(config.uiNames.UIBuilderFolder, "yes", (player, folder)=>{
             return b.updatedAt - a.updatedAt;
         }).filter(_=>!_.data.internal);
         for(const ui of sortedUIs) {
+            if(ui.data.folder && uiBuilder.db.getByID(ui.data.folder)) continue;
             newForm.button(getBtnText(ui), getIcon(ui), (player)=>{
                 uiBuilder.setFolder(ui.id, folderData.data.name);
                 uiManager.open(player, config.uiNames.UIBuilderFolder, folder)
@@ -403,7 +452,7 @@ uiManager.addUI(config.uiNames.UIBuilderFolder, "yes", (player, folder)=>{
     })
     form.button(`§vExport Folder\n§7Get code for all UIs in this folder`, null, (player)=>{
         let uis = uiBuilder.db.findDocuments({folder});
-        let data = {version: '1.0', timestamp: Date.now(), exportSource: 'folder', data: uis[0].data, dependencies: uis.slice(1).map(_=>_.data)};
+        let data = {version: '1.0', timestamp: Date.now(), exportSource: 'folder', ui: uis[0].data, dependencies: uis.slice(1).map(_=>_.data)};
         let modalForm = new ModalForm();
         modalForm.title(`Code Editor`);
         modalForm.textField("yes", "Code", JSON.stringify(data))
@@ -452,17 +501,31 @@ uiManager.addUI(config.uiNames.UIBuilderLeaf, "a", player=>{
 // Main UIs tab
 let showUI = (player) => {
     const buttons = [{
-        text: `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§aNew\n§r§7Make a new thing`,
-        iconPath: `textures/azalea_icons/1`,
+        text: `${NUT_UI_HEADER_BUTTON}§r§l§e§f§1§r§r§fNew creation\n§r§7Make a new creation`,
+        iconPath: `textures/azalea_icons/other/add`,
         callback: (player) => {
             uiManager.open(player, config.uiNames.UIBuilderAddSubmenu);
         }
     }];
     buttons.push({
-        text: `${NUT_UI_LEFT_HALF}§r§l§e§f§1§r§aLeaf GUIs\n§7Edit leaf's UIs`,
-        iconPath: `textures/azalea_icons/LeafyClickOwO`,
-        callback: player => {
-            uiManager.open(player, config.uiNames.UIBuilderLeaf)
+        text: `${NUT_UI_HEADER_BUTTON}§r§vSettings`,
+        iconPath: `textures/azalea_icons/Settings`,
+        callback(player) {
+            uiManager.open(player, versionData.uiNames.CustomizerSettings)
+        }
+    })
+    buttons.push({
+        text: `${NUT_UI_HEADER_BUTTON}§r§bFilter by tags\n§7Tags :D`,
+        iconPath: `textures/azalea_icons/other/tag_blue`,
+        callback(player) {
+
+        }
+    })
+    buttons.push({
+        text: `${NUT_UI_HEADER_BUTTON}§r§dLibrary\n§7Folder groups?`,
+        iconPath: `textures/azalea_icons/other/node_library`,
+        callback() {
+
         }
     })
     if (http.player) {
@@ -481,7 +544,7 @@ let showUI = (player) => {
             }
         });
     }
-    if(configAPI.getProperty("DevMode")) {
+    if(!configAPI.getProperty("DevMode") && !!configAPI.getProperty("DevMode")) {
         buttons.push({
             text: `§cDev: Switch CTX`,
             iconPath: `textures/update_pings_icons/main-settings/extraTools`,
@@ -508,7 +571,9 @@ let showUI = (player) => {
     //         uiManager.open(player, config.uiNames.UIBuilderFolders);
     //     }
     // });
-
+    if(uiBuilder.db.findDocuments({type: 2}).length) {
+        buttons.push({type: "LABEL", text: "§6Folders:"})
+    }
     for(const folder of uiBuilder.db.findDocuments({type: 2})) {
         buttons.push({
             text: `§d${folder.data.name}\n§7Click to open folder`,
@@ -530,7 +595,9 @@ let showUI = (player) => {
     
     // Add browse button if http player is available
     
-    
+    if(uiBuilder.db.findDocuments({type: 2}).length) {
+        buttons.push({type: "LABEL", text: "§dCreations:"})
+    }
     // Add UI list buttons
     // const sortedUIs = uiBuilder.getUIs().sort((a, b) => b.updatedAt - a.updatedAt);
     const sortedUIs = uiBuilder.getAllUIs().sort((a, b) => {
@@ -568,39 +635,71 @@ let showUI = (player) => {
         });
     });
 
+    buttons.push({type: "DIVIDER"})
+
+    buttons.push({
+        text: `§r§l§e§f§1§r§aLeaf GUIs\n§7Edit leaf's UIs`,
+        iconPath: `textures/azalea_icons/other/package`,
+        callback: player => {
+            uiManager.open(player, config.uiNames.UIBuilderLeaf)
+        }
+    })
     buttons.push({
         text: `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}§r§aImport\n§r§7Import a UI`,
-        iconPath: `textures/azalea_icons/import`,
+        iconPath: `textures/azalea_icons/other/anvil_in`,
         callback: (player) => {
             uiManager.open(player, config.uiNames.ImportUI)
         }
     });
     buttons.push({
         text: `${NUT_UI_LEFT_HALF}§r§6Trash\n§r§7View trash`,
-        iconPath: `textures/azalea_icons/SidebarTrash`,
+        iconPath: `textures/azalea_icons/other/delete`,
         callback: (player) => {
             uiManager.open(player, config.uiNames.UIBuilderTrash)
         }
     });
 
+    // buttons.push({type:"DIVIDER"})
+    // buttons.push({type:"LABEL", text: "§7Leaf Customizer v3.0"})
+    // buttons.push({type:"LABEL", text: "§7Made with §v<3 §r§7by §6TrashyDaFox"})
+    
     return {
         buttons
     };
 };
-
+world.beforeEvents.itemUse.subscribe(e=>{
+    // world.sendMessage(`${e.source.isOp()}`)
+    // return;
+    if(!prismarineDb.permissions.hasPermission(e.source, "creator-item")) return;
+    if(e.itemStack.typeId == "leaf:customizer") {
+        e.cancel = true;
+        system.run(()=>{
+            uiManager.open(e.source, config.uiNames.UIBuilderRoot, true)
+        })
+    }
+})
 // Update the UI registration to use the tab UI
-uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player) => {
+uiManager.addUI(config.uiNames.UIBuilderRoot, "UI Builder Root", (player, hideBackButton = false) => {
     let form = new ActionForm();
-    form.button(`${NUT_UI_HEADER_BUTTON}§r§cGo Back\n§7Go back to main settings`, `textures/azalea_icons/2`, player => uiManager.open(player, config.uiNames.ConfigRoot))
-    form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${NUT_UI_ALT}${themes[12][0]}§rMy Creations`, null, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderRoot)
-    })
-    form.button(`${NUT_UI_LEFT_HALF}${themes[0][0]}§rTab UIs (LEGACY)`, null, (player)=>{
-        uiManager.open(player, config.uiNames.UIBuilderTabbed)
-    })
-    form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[12][0]}§rCustomizer`)
+    if(!hideBackButton) form.button(`${NUT_UI_HEADER_BUTTON}§r§cGo Back\n§7Go back to main settings`, `textures/azalea_icons/2`, player => uiManager.open(player, config.uiNames.ConfigRoot))
+    // form.button(`${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}${NUT_UI_ALT}${themes[38][0]}§rMy Creations`, null, (player)=>{
+    //     uiManager.open(player, config.uiNames.UIBuilderRoot)
+    // })
+    // form.button(`${NUT_UI_LEFT_HALF}${themes[0][0]}§rTab UIs (LEGACY)`, null, (player)=>{
+    //     uiManager.open(player, config.uiNames.UIBuilderTabbed)
+    // })
+    
+    form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[38][0]}§rCustomizer`)
     let { buttons } = showUI(player);
     for(const button of buttons) {
+        if(button.type == "DIVIDER") {
+            form.divider()
+            continue;
+        }
+        if(button.type == "LABEL") {
+            form.label(button.text)
+            continue;
+        }
         form.button(button.text, button.iconPath, button.callback)
     }
     form.show(player, false, (player, response)=>{

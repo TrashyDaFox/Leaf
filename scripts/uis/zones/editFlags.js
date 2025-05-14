@@ -3,6 +3,8 @@ import { ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import versionData from "../../versionData";
 
+// wow gotta love how i coded this in a way where people have like no customization at all and i cant fix it its really nice
+
 uiManager.addUI(versionData.uiNames.Zones.EditFlags, "Edit Flags", (player, id)=>{
     let zone = zones.zonesDB.getByID(id);
     let modal = new ModalForm();

@@ -14,10 +14,12 @@ class Icons {
             ["vanilla/iron_sword", "textures/items/iron_sword"]
         ]);
         this.iconData = new Map();
+        this.iconPacks = new Map();
     }
     install(pack, ignoreNamespace = false) {
         let data = pack.get("pack_data");
         let namespace = pack.get("pack_namespace");
+        this.iconPacks.set(namespace, pack)
         for(const key of data.keys()) {
             let path = typeof data.get(key) === "object" ? data.get(key).icon ? data.get(key).icon : data.get(key).path : data.get(key);
             if(typeof data.get(key) === "object") {

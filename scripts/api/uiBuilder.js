@@ -29,6 +29,7 @@ import eventsData from "../data/eventsData";
 import { formatStr } from "./azaleaFormatting";
 import { EventSerializer } from "./eventSerializerLeaf";
 import scripting from "./scripting";
+import { array, bool, boolean, number, object, string } from "../lib/yup.esm";
 
 class UIBuilder {
     constructor() {
@@ -121,6 +122,49 @@ class UIBuilder {
             this.initializePluginSystem();
             this.initializeScripts();
         })
+        this.schemas = new Map();
+        this.ui_type_meta = new Map();
+        this.registerSchema(0, object({
+            type: number().required(),
+            name: string().required(),
+            buttons: array().of(object({
+                type: string().optional().oneOf(["button", "header", "label", "divider"]),
+                text: string().required(),
+                subtext: string().optional(),
+                action: string().optional(),
+                actions: array().of(string().optional()),
+                meta: string().optional(),
+                sellButtonEnabled: boolean().optional(),
+                buyButtonEnabled: boolean().optional(),
+                buyButtonItem: string().matches(/^\d+:\d+$/).optional(),
+                buyButtonPrice: number().optional(),
+                buyButtonScoreboard: string().optional(),
+                sellButtonItemCount: number().optional(),
+                sellButtonItem: string().optional(),
+                sellButtonPrice: number().optional(),
+                sellButtonScoreboard: number().optional()
+            })).required(),
+            cancel: string().optional(),
+            scriptevent: string().required(),
+            body: string().optional(),
+            scriptDeps: array().of(string()).optional(),
+            clog_allow: boolean().optional(),
+            layout: number().optional().min(0).max(5),
+            theme: number().optional()
+        }))
+        this.registerMeta(0, {
+            name: "Action Form",
+            handleWarnings: (data)=> {
+                let logs = [];
+                if(this.db.findFirst({scriptevent: data.scriptevent})) {
+                    logs.push(`§eClashing Action Form scriptevent§7: §f${data.scriptevent}`)
+                }
+                return logs;
+            }
+        })
+    }
+    registerMeta(type, meta) {
+        this.ui_type_meta.set(type, meta)
     }
     initializeScripts() {
         for(const doc of this.db.findDocuments({type: 8})) {
@@ -135,6 +179,9 @@ class UIBuilder {
         // system.runInterval(()=>{
         //     event.send("key2", {message: "MEOW MRRP"})
         // }, 20)
+    }
+    registerSchema(type, schema) {
+        this.schemas.set(type, schema)
     }
     execEvent(eventType, options) {
         for(const event of this.db.findDocuments({type: 10, eventType})) {

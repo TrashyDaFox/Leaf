@@ -1,6 +1,6 @@
 let map = new Map([
-    ["pack_name", "Vanilla"],
-    ["pack_icon", "textures/items/iron_sword"],
+    ["pack_name", "Azalea Icons"],
+    ["pack_icon", "textures/azalea_icons/other/object"],
     ["pack_namespace", "azalea"],
     ["pack_data", new Map(
         [

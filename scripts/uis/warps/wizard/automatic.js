@@ -5,6 +5,13 @@ import versionData from "../../../versionData";
 
 uiManager.addUI(versionData.uiNames.Warps.Wizard.Automatic, "", (player)=>{
     let loc = player.location;
+    /*
+    seriously, why the fuck did mojang make player.getRotation() a function?!
+    like, its not an unreasonable way to do it
+    but for location its just "player.location"
+    WHY IS IT SO INCONSISTENT?
+    PLAYER.ROTATION WOULD HAVE BEEN FINE
+    */
     let rot = player.getRotation();
     let modal = new ModalForm();
     modal.textField("Name", "Name of your warp", "", ()=>{})

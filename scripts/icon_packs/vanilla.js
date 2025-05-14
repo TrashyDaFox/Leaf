@@ -9,7 +9,7 @@ let map = new Map([
 
 export let blockIcons = new Map([
     ["pack_name", "Vanilla Blocks"],
-    ["pack_icon", "textures/blocks/dirt"],
+    ["pack_icon", "textures/azalea_icons/other/voxel"],
     ["pack_namespace", "vanilla_blocks"],
     ["pack_data", new Map([
         [
@@ -2649,7 +2649,7 @@ export let blockIcons = new Map([
 
 export let itemIcons = new Map([
     ["pack_name", "Vanilla Items"],
-    ["pack_icon", "textures/items/iron_sword"],
+    ["pack_icon", "textures/azalea_icons/other/sword"],
     ["pack_namespace", "vanilla_items"],
     ["pack_data", new Map([
         [

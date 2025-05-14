@@ -1,6 +1,6 @@
 let leafIconPack = new Map([
     ["pack_name", "Leaf"],
-    ["pack_icon", "textures/items/diamond_sword"],
+    ["pack_icon", "textures/azalea_icons/other/node"],
     ["pack_namespace", "leaf"],
     ["pack_data", new Map([
   [
@@ -4570,9 +4570,9 @@ let leafIconPack = new Map([
 ])]
 ]);
 let leafIconPack2 = new Map([
-    ["pack_name", "Leaf"],
-    ["pack_icon", "textures/items/diamond_sword"],
-    ["pack_namespace", "leaf2"],
+    ["pack_name", "Azalea Icons (Packs/********)"],
+    ["pack_icon", "textures/azalea_icons/other/navigation"],
+    ["pack_namespace", "packs_asstorid"],
     ["pack_data", new Map([
         [
             "Packs/Asteroid/custom",

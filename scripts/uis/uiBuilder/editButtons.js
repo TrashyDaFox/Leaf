@@ -64,7 +64,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
     }
     if(!multiselectMode) {
         if(form.data.layout == 4 || form.data.layout == 1) {
-            actionForm.button(`${form.data.layout == 4 && nutUIPreview ? "§p§1§2§r" : ""}§dPreview ${nutUIPreview ? "OFF" : "ON"}\n§7[ Click to Toggle ]`, `textures/ui/icon_preview`, (player)=>{
+            actionForm.button(`${form.data.layout == 4 && nutUIPreview ? "§p§1§2§r" : ""}§dPreview ${nutUIPreview ? "ON" : "OFF"}\n§7[ Click to Toggle ]`, nutUIPreview ? `textures/azalea_icons/other/play` : `textures/azalea_icons/other/stop`, (player)=>{
                 if(player.hasTag("nut-ui-preview-disable")) {
                     player.removeTag("nut-ui-preview-disable")
                 } else {
@@ -74,7 +74,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
             })
         }
         if(!selectingButton) {
-            actionForm.button(`§aAdd Element\n§7Add button, header, or label`, `textures/azalea_icons/1`, (player)=>{
+            actionForm.button(`§aAdd Element\n§7Add button, header, or label`, `textures/azalea_icons/other/add`, (player)=>{
                 let addMenu = new ActionForm();
                 addMenu.title(`${NUT_UI_TAG}${themString}§rAdd Element`);
                 
@@ -82,11 +82,11 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                     uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
                 });
         
-                addMenu.button("§aAdd Button\n§7Interactive button", "textures/azalea_icons/add_button", (player)=>{
+                addMenu.button("§aAdd Button\n§7Interactive button", "textures/azalea_icons/other/cursor", (player)=>{
                     uiManager.open(player, config.uiNames.UIBuilderAddButton, id);
                 });
         
-                addMenu.button("§dAdd Button Group\n§7Group of buttons", "textures/azalea_icons/add_button", (player)=>{
+                addMenu.button("§dAdd Button Group\n§7Group of buttons", "textures/azalea_icons/other/group_tiles", (player)=>{
                     let modal = new ModalForm();
                     modal.title("Create Button Group");
                     
@@ -108,7 +108,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                 let form2 = new ActionFormData();
                 if(form2.divider && form2.header && form2.label) {
                 // if(true) {
-                    addMenu.button("§bAdd Header\n§7Large text display", "textures/azalea_icons/add_header", (player)=>{
+                    addMenu.button("§bAdd Header\n§7Large text display", "textures/azalea_icons/other/font", (player)=>{
                         let modal = new ModalForm();
                         modal.textField("Header Text", "Enter header text", "");
                         modal.show(player, false, (player, response)=>{
@@ -122,7 +122,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                             uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
                         });
                     });
-                    addMenu.button("§eAdd Label\n§7Regular text display", "textures/azalea_icons/add_label", (player)=>{
+                    addMenu.button("§eAdd Label\n§7Regular text display", "textures/azalea_icons/other/text", (player)=>{
                         let modal = new ModalForm();
                         modal.textField("Label Text", "Enter label text", "", ()=>{}, "Meow meow meow! (test)");
                         modal.show(player, false, (player, response)=>{
@@ -137,18 +137,18 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                         });
                     });
             
-                    addMenu.button("§vAdd Divider\n§7Separator Line", "textures/items/add_divider", (player)=>{
+                    addMenu.button("§vAdd Divider\n§7Separator Line", "textures/azalea_icons/other/group", (player)=>{
                         uiBuilder.addButtonToUI(id, " ", null, "", "", "", {
                             type: "divider",
                         });
                         uiManager.open(player, config.uiNames.UIBuilderEditButtons, id);
                     });
                 }
-                addMenu.button("§dView Separator\n§7Invisible utility component", "textures/items/add_divider", (player)=>{
+                addMenu.button("§dView Separator\n§7Invisible utility component", "textures/azalea_icons/other/door", (player)=>{
                     uiManager.open(player, config.uiNames.UIBuilderAddSeparator, id)
                 })
                 if(id != snippetBook.id) {
-                    addMenu.button("§cAdd From Snippet Book\n§7Snippet book component", icons.resolve(`leaf/image-0876`), (player)=>{
+                    addMenu.button("§cAdd From Snippet Book\n§7Snippet book component", icons.resolve(`^textures/azalea_icons/other/book`), (player)=>{
                         uiManager.open(player, config.uiNames.UIBuilderEditButtons, snippetBook.id, [], true, (snID)=>{
                             if(snID != null) {
                                 uiBuilder.addButtonToUI(id, " ", null, "", "", "", {
@@ -169,7 +169,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
     }
 
     if(!selectingButton) {
-        actionForm.button(`§aMultiselect ${multiselectMode ? "OFF" : "ON"}\n§7Do stuff`, `textures/ui/multiselection`, (player)=>{
+        actionForm.button(`§aMultiselect ${multiselectMode ? "OFF" : "ON"}\n§7Multiselect buttons`, `textures/azalea_icons/other/checkmark`, (player)=>{
             if(multiselectMode) {
                 player.removeTag("ui-builder-multiselect")
             } else {
@@ -479,7 +479,7 @@ uiManager.addUI(config.uiNames.UIBuilderEditButtons, "Edit Buttons in a UI", (pl
                          button.type == "divider" ? `§vDivider` :
                          formatStr(`${form.data.layout == 4 && nutUIPreview ? `${nutUIText}§r§f` : ""}${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``}`, player);
         
-        actionForm.button(displayText, multiselectMode ? multiselect.includes(button.id) ? "textures/ui/checkbox_check" : "textures/ui/checkbox_space" : button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
+        actionForm.button(displayText, multiselectMode ? multiselect.includes(button.id) ? "textures/azalea_icons/other/checkbox" : "textures/azalea_icons/other/checkbox_off" : button.iconID ? icons.resolve(button.iconID) : null, (player)=>{
             if(multiselectMode) {
                 if(multiselect.includes(button.id)) {
                     multiselect = multiselect.filter(_=>_ != button.id)

@@ -5,6 +5,8 @@ import { NUT_UI_TAG, NUT_UI_THEMED } from "../../preset_browser/nutUIConsts";
 import { insertBackButton } from "../../sharedUtils/insertBackButton";
 import { themes } from "../../uiBuilder/cherryThemes";
 
+// naming this wizard cuz it sounds way cooler than "setup" smh
+
 uiManager.addUI(versionData.uiNames.Warps.Wizard.Root, "meow mrrp nya mrrp", (player)=>{
     let form = new ActionForm();
     form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[43][0]}§r§fWarps Wizard`)
