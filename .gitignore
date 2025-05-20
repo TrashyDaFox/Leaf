@@ -3,3 +3,4 @@ package-lock.json
 temp/
 staging/
 leaf.mcaddon
+lp.json

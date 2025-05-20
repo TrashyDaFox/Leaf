@@ -13,7 +13,8 @@
                         "items": [
                             "leaf:config_ui",
                             "leaf:entity_editor",
-                            "leaf:block_editor"
+                            "leaf:block_editor",
+                            "leaf:customizer"
                         ]
                     }
                 ]
