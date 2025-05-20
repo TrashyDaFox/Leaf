@@ -617,11 +617,11 @@ class NormalFormOpener {
         const buttons = await this.getButtons(player, data, ...args);
         for (const button of buttons) {
             if (button.type === "header") {
-                form.header(button.text);
+                form.header(formatStr(button.text, player));
                 continue;
             }
             if (button.type === "label") {
-                form.label(button.text);
+                form.label(formatStr(button.text, player));
                 continue;
             }
             if (button.type === "divider") {

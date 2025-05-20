@@ -12,6 +12,7 @@ import { temp } from "../pdbScriptevents.js";
 import zones from "./zones.js";
 import playerUtils from "./playerUtils.js";
 import configAPI from "./config/configAPI.js";
+import versionData from "../versionData.js";
 let db1 = prismarineDb.table("LegacyConfig")
 const configDb = await db1.keyval("LegacyConfig");
 const startingRank = configDb.get("StartingRank", "Member");
@@ -212,7 +213,7 @@ export function formatStr(str, player = null, extraVars = {}, formatcfg = {}, se
     vars.d = `${new Date().getDate()}`;
     vars.dra = `»`;
     vars.dla = `«`;
-
+    vars.lv = versionData.versionInfo.versionName
     let moonPhase = world.getMoonPhase();
     let moonPhaseText = moonPhase == MoonPhase.FirstQuarter ? "First Quarter" :
         moonPhase == MoonPhase.FullMoon ? "Full Moon" :

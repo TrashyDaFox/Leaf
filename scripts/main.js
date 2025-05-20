@@ -191,6 +191,7 @@ import { dynamicToast } from './lib/chatNotifs.js';
 import auctionhouse from './api/AH/auctionhouse.js';
 import './bcd.js'
 import scripting from './api/scripting.js';
+import { rpgiabIconPack } from './icon_packs/rpgiab.js';
 // uiBuilder.importUI()
 // world.sendMessage("AAAAAAAAAAAAA")
 
@@ -7046,6 +7047,7 @@ commandManager.addCommand("Crates", { description: "Open Cratew UI", author: "Ot
       }
   });
 })
+icons.install(rpgiabIconPack);
 icons.install(leafIconPack);
 icons.install(leafIconPack2, true);
 icons.install(azaleaIconPack, false);

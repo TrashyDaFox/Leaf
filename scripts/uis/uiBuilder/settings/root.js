@@ -15,10 +15,12 @@ uiManager.addUI(versionData.uiNames.CustomizerSettings, "a", (player)=>{
         form2.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[38][0]}§rIcon Packs`)
         insertBackButton(form2, `scriptevent leafgui:customizer_settings`)
         for(const iconPack of icons.iconPacks.entries()) {
-            form2.button(`§a${iconPack[1].get("pack_name")}\n§7${iconPack[0]}`, iconPack[1].has("pack_icon") ? iconPack[1].get("pack_icon") : `textures/azalea_icons/other/missing`)
+            form2.button(`§a${iconPack[1].get("pack_name")}\n§7${iconPack[0]}`, iconPack[1].has("pack_icon") ? iconPack[1].get("pack_icon") : `textures/azalea_icons/other/missing`, (player)=>{
+                uiManager.open(player, versionData.uiNames.CustomizerSettings)
+            })
         }
         form2.show(player, false, (player, response)=>{
-            uiManager.open(player, versionData.uiNames.CustomizerSettings)
+
         })
     })
     form.show(player, false, (player, response)=>{

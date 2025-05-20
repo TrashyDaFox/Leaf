@@ -1,20 +1,20 @@
 <div align="center">
-//
-![Title](title.png)
+
+![Title](./readme_assets/title.png)
 
 </div>
 
-![Divider](divider.png)
+![Divider](./readme_assets/divider.png)
 
 Leaf Essentials is a free and open source MCBE (Minecraft Bedrock Edition) addon that aims to **improve** your servers with many features.
 
 We think customization is very important. You can customize many things in leaf. If there is not a UI that you need, chances are you can just make it yourself
 
-![Divider](divider.png)
+![Divider](./readme_assets/divider.png)
 
-![A picture of the leaf Config UI](image.png)
+![A picture of the leaf Config UI](./readme_assets/image.png)
 
-![Divider](divider.png)
+![Divider](./readme_assets/divider.png)
 
 # Features
 - 🎨 Custom UIs
@@ -33,12 +33,12 @@ Go to the [MCBETools](https://mcbetools.com/s/leaf) page or the [MCPEDL](https:/
 
 *NOTE: MCPEDL isnt recommended as its usually out of date. Please use MCBETools if possible*
 
-![Divider](divider.png)
+![Divider](./readme_assets/divider.png)
 
 # Support
 
 Join the [Discord Server](https://discord.gg/EU7dcxUr2F) for support and to get announcements, and interact with other people in the MCBE community!
 
-![Divider](divider.png)
+![Divider](./readme_assets/divider.png)
 
 ✨ Addon made by TrashyKitty! :3 ✨

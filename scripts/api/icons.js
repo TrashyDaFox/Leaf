@@ -11,9 +11,17 @@ Maybe it isnt so bad here, theres tons of miku plushies here too.
 class Icons {
     constructor() {
         this.icons = new Map([
-            ["vanilla/iron_sword", "textures/items/iron_sword"]
+            ["vanilla/iron_sword", "textures/items/gold_sword"] // FUCK YOU LOL
         ]);
-        this.iconData = new Map();
+        this.iconData = new Map([
+            [
+                "vanilla/iron_sword",
+                {
+                    name: "Gold sword cuz fuckk you lol"
+                }
+    
+            ]
+        ]);
         this.iconPacks = new Map();
     }
     install(pack, ignoreNamespace = false) {
