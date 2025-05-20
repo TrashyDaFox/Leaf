@@ -1,0 +1,24 @@
+{
+    "paths": [
+        {
+            "name": "Behavior Pack",
+            "path": "C:\\Users\\trashy\\Downloads\\bedrock-server-1.21.61.01\\development_behavior_packs\\LeafBP",
+            "tempOut": "bp.zip",
+            "whitelist": [
+                "manifest.json",
+                "scripts",
+                "pack_icon.png",
+                "items",
+                "item_catalog",
+                "entities",
+                "blocks",
+                "animations"
+            ]
+        },
+        {
+            "name": "Resource Pack",
+            "path": "C:\\Users\\trashy\\Downloads\\bedrock-server-1.21.61.01\\development_resource_packs\\LeafRP",
+            "tempOut": "rp.zip"
+        }
+    ]
+}
