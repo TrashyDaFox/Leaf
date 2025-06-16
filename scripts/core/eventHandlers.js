@@ -1,11 +1,11 @@
-import { world, system, ScriptEventSource } from '@minecraft/server';
-import { uiManager } from './uiManager.js';
-import { createMessage } from './createMessage.js';
-import config from './config.js';
-import { betterArgs } from './utils.js';
-import playerStorage from './api/playerStorage.js';
-import OpenClanAPI from './api/OpenClanAPI.js';
-import configAPI from './api/config/configAPI.js';
+import { world, system, ScriptEventSource } from "@minecraft/server";
+import { uiManager } from "./uiManager.js";
+import { createMessage } from "./createMessage.js";
+import config from "./config.js";
+import { betterArgs } from "./utils.js";
+import playerStorage from "./api/playerStorage.js";
+import OpenClanAPI from "./api/OpenClanAPI.js";
+import configAPI from "./api/config/configAPI.js";
 
 export function setupEventHandlers() {
     // Chat events
@@ -23,15 +23,15 @@ export function setupEventHandlers() {
 }
 
 function handleChat(e) {
-    if (e.message.startsWith('!')) {
+    if (e.message.startsWith("!")) {
         e.cancel = true;
         commandManager.run(e);
         return;
     }
-    
+
     if (configAPI.getProperty("Chatranks")) {
         e.cancel = true;
-        if (e.message.startsWith('.') && config.HTTPEnabled) return;
+        if (e.message.startsWith(".") && config.HTTPEnabled) return;
         if (e.sender.hasTag("clan-chat")) {
             let clan = OpenClanAPI.getClan(e.sender);
             if (clan) {
@@ -43,4 +43,4 @@ function handleChat(e) {
     }
 }
 
-// ... implement other event handlers 
+// ... implement other event handlers

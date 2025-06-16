@@ -1,6 +1,10 @@
 import { SecureRandom } from "./rng";
 export declare class BigInteger {
-    constructor(a: number | number[] | string, b?: number | SecureRandom, c?: number | SecureRandom);
+    constructor(
+        a: number | number[] | string,
+        b?: number | SecureRandom,
+        c?: number | SecureRandom
+    );
     toString(b: number): string;
     protected negate(): BigInteger;
     abs(): BigInteger;
@@ -59,9 +63,20 @@ export declare class BigInteger {
     protected chunkSize(r: number): number;
     protected toRadix(b: number): string;
     fromRadix(s: string, b: number): void;
-    protected fromNumber(a: number, b: number | SecureRandom, c?: number | SecureRandom): void;
-    protected bitwiseTo(a: BigInteger, op: (a: number, b: number) => number, r: BigInteger): void;
-    protected changeBit(n: number, op: (a: number, b: number) => number): BigInteger;
+    protected fromNumber(
+        a: number,
+        b: number | SecureRandom,
+        c?: number | SecureRandom
+    ): void;
+    protected bitwiseTo(
+        a: BigInteger,
+        op: (a: number, b: number) => number,
+        r: BigInteger
+    ): void;
+    protected changeBit(
+        n: number,
+        op: (a: number, b: number) => number
+    ): BigInteger;
     protected addTo(a: BigInteger, r: BigInteger): void;
     protected dMultiply(n: number): void;
     dAddOffset(n: number, w: number): void;
@@ -71,7 +86,12 @@ export declare class BigInteger {
     protected millerRabin(t: number): boolean;
     protected square(): BigInteger;
     gcda(a: BigInteger, callback: (x: BigInteger) => void): void;
-    fromNumberAsync(a: number, b: number | SecureRandom, c: number | SecureRandom, callback: () => void): void;
+    fromNumberAsync(
+        a: number,
+        b: number | SecureRandom,
+        c: number | SecureRandom,
+        callback: () => void
+    ): void;
     s: number;
     t: number;
     DB: number;
@@ -80,7 +100,14 @@ export declare class BigInteger {
     FV: number;
     F1: number;
     F2: number;
-    am: (i: number, x: number, w: BigInteger, j: number, c: number, n: number) => number;
+    am: (
+        i: number,
+        x: number,
+        w: BigInteger,
+        j: number,
+        c: number,
+        n: number
+    ) => number;
     [index: number]: number;
     static ONE: BigInteger;
     static ZERO: BigInteger;

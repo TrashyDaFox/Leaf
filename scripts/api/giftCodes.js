@@ -31,20 +31,20 @@ class GiftCodes {
     }
     createCode(code, action, useOnce = false) {
         let doc = this.db.findFirst({
-            code
+            code,
         });
-        if(doc) return;
+        if (doc) return;
         this.db.insertDocument({
             code,
             action,
-            useOnce
-        })
+            useOnce,
+        });
     }
     deleteCodeByCode(code) {
         let doc = this.db.findDocuments({
-            code
+            code,
         });
-        if(!doc) return;
+        if (!doc) return;
         this.db.deleteDocumentByID(doc.id);
     }
     deleteCodeByID(id) {
@@ -52,9 +52,9 @@ class GiftCodes {
     }
     getCode(code) {
         let doc = this.db.findFirst({
-            code
+            code,
         });
-        if(!doc) return;
+        if (!doc) return;
         return doc.data;
     }
 }

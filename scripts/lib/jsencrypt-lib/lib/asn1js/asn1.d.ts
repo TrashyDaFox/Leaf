@@ -18,7 +18,13 @@ export declare class Stream {
     parseOID(start: number, end: number, maxLength: number): string;
 }
 export declare class ASN1 {
-    constructor(stream: Stream, header: number, length: number, tag: ASN1Tag, sub: ASN1[]);
+    constructor(
+        stream: Stream,
+        header: number,
+        length: number,
+        tag: ASN1Tag,
+        sub: ASN1[]
+    );
     private stream;
     private header;
     private length;

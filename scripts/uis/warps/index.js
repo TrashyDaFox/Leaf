@@ -1,2 +1,2 @@
-import './wizard/root'
-import './wizard/automatic'
+import "./wizard/root";
+import "./wizard/automatic";

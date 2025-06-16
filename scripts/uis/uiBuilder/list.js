@@ -12,7 +12,7 @@ either way, this was fucking usless
 // builderTabUI.registerTab("\uE186 Leaf UIs", (player) => {
 //     const buttons = [];
 //     let uiList = uiManager.uis.slice().sort((a, b) => a.id.localeCompare(b.id));
-    
+
 //     // buttons.push({
 //     //     text: "§bSearch\n§7Search through the list",
 //     //     callback: (player) => {
@@ -36,7 +36,7 @@ either way, this was fucking usless
 //             text: `§e${ui.ui.length > 1 ? " §d" : ""}${ui.id}\n§7${ui.description ? ui.description : "No Description"}`,
 //             callback: (player) => {
 //                 if(ui.ui.length > 1) {
-//                     uiManager.open(player, "confirmation", 
+//                     uiManager.open(player, "confirmation",
 //                         "Are you sure you want to open this UI? It requires data to be passed to it, and might not work if you open it this way.",
 //                         () => uiManager.open(player, ui.id),
 //                         () => builderTabUI.open(player, 3)

@@ -1,1 +1,1 @@
-import './clansAdmin.js'
+import "./clansAdmin.js";

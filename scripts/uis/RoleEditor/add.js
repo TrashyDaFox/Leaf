@@ -1,19 +1,17 @@
 import { prismarineDb } from "../../lib/prismarinedb";
 import uiManager from "../../uiManager";
-import config from '../../versionData'
-import { ActionForm } from "../../lib/form_func";
+import config from "../../versionData";
+import { ActionForm, ModalForm } from "../../lib/form_func";
 import icons from "../../api/icons";
-import { world } from '@minecraft/server'
-uiManager.addUI(config.uiNames.RoleEditor.Add, "edit roles OwO", (player)=>{ // what am i even supposed to add
-    let form = new ActionForm();
-    form.button("§dAdd role", icons.resolve("loading"), (player)=>{
-        let role = "Placeholder Role"
-        prismarineDb.permissions.createRole("Placeholder Role")
-    }),
-    form.button("§dAdd admin role", icons.resolve("loading"), (player)=>{
-        let adminRole = "Placeholder Admin Role"
-        prismarineDb.permissions.createRole(`${adminRole}`)
-        prismarineDb.permissions.setAdmin(`${adminRole}`, true)
-    }),
-    form.show(player) 
-})
+import { world } from "@minecraft/server";
+import versionData from "../../versionData";
+uiManager.addUI(config.uiNames.RoleEditor.Add, "edit roles OwO", (player) => {
+    let modal = new ModalForm();
+    modal.title(`Create Role`)
+    modal.textField("Role Tag", "Set this role tag", "")
+    modal.show(player, false, (player, response)=>{
+        if(response.canceled || !response.formValues[0]) return uiManager.open(player, versionData.uiNames.RoleEditor.Root)
+        prismarineDb.permissions.createRole(response.formValues[0])
+        return uiManager.open(player, versionData.uiNames.RoleEditor.Root)
+    })
+});

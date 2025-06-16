@@ -2,4519 +2,1727 @@ let map = new Map([
     ["pack_name", "Vanilla"],
     ["pack_icon", "textures/items/iron_sword"],
     ["pack_namespace", "vanilla"],
-    ["pack_data", new Map([
-        ["iron_sword", "textures/items/iron_sword"]
-    ])]
-])
+    ["pack_data", new Map([["iron_sword", "textures/items/iron_sword"]])],
+]);
 
 export let blockIcons = new Map([
     ["pack_name", "Vanilla Blocks"],
     ["pack_icon", "textures/azalea_icons/other/voxel"],
     ["pack_namespace", "vanilla_blocks"],
-    ["pack_data", new Map([
-        [
-          "acacia_trapdoor",
-          "textures/blocks/acacia_trapdoor"
-        ],
-        [
-          "anvil_base",
-          "textures/blocks/anvil_base"
-        ],
-        [
-          "anvil_top_damaged_0",
-          "textures/blocks/anvil_top_damaged_0"
-        ],
-        [
-          "anvil_top_damaged_1",
-          "textures/blocks/anvil_top_damaged_1"
-        ],
-        [
-          "anvil_top_damaged_2",
-          "textures/blocks/anvil_top_damaged_2"
-        ],
-        [
-          "bamboo_leaf",
-          "textures/blocks/bamboo_leaf"
-        ],
-        [
-          "bamboo_sapling",
-          "textures/blocks/bamboo_sapling"
-        ],
-        [
-          "bamboo_singleleaf",
-          "textures/blocks/bamboo_singleleaf"
-        ],
-        [
-          "bamboo_small_leaf",
-          "textures/blocks/bamboo_small_leaf"
-        ],
-        [
-          "bamboo_stem",
-          "textures/blocks/bamboo_stem"
-        ],
-        [
-          "barrel_bottom",
-          "textures/blocks/barrel_bottom"
-        ],
-        [
-          "barrel_side",
-          "textures/blocks/barrel_side"
-        ],
-        [
-          "barrel_top",
-          "textures/blocks/barrel_top"
-        ],
-        [
-          "barrel_top_open",
-          "textures/blocks/barrel_top_open"
-        ],
-        [
-          "barrier",
-          "textures/blocks/barrier"
-        ],
-        [
-          "beacon",
-          "textures/blocks/beacon"
-        ],
-        [
-          "bedrock",
-          "textures/blocks/bedrock"
-        ],
-        [
-          "bed_feet_end",
-          "textures/blocks/bed_feet_end"
-        ],
-        [
-          "bed_feet_side",
-          "textures/blocks/bed_feet_side"
-        ],
-        [
-          "bed_feet_top",
-          "textures/blocks/bed_feet_top"
-        ],
-        [
-          "bed_head_end",
-          "textures/blocks/bed_head_end"
-        ],
-        [
-          "bed_head_side",
-          "textures/blocks/bed_head_side"
-        ],
-        [
-          "bed_head_top",
-          "textures/blocks/bed_head_top"
-        ],
-        [
-          "beetroots_stage_0",
-          "textures/blocks/beetroots_stage_0"
-        ],
-        [
-          "beetroots_stage_1",
-          "textures/blocks/beetroots_stage_1"
-        ],
-        [
-          "beetroots_stage_2",
-          "textures/blocks/beetroots_stage_2"
-        ],
-        [
-          "beetroots_stage_3",
-          "textures/blocks/beetroots_stage_3"
-        ],
-        [
-          "bell_bottom",
-          "textures/blocks/bell_bottom"
-        ],
-        [
-          "bell_side",
-          "textures/blocks/bell_side"
-        ],
-        [
-          "bell_top",
-          "textures/blocks/bell_top"
-        ],
-        [
-          "birch_trapdoor",
-          "textures/blocks/birch_trapdoor"
-        ],
-        [
-          "blast_furnace_front_off",
-          "textures/blocks/blast_furnace_front_off"
-        ],
-        [
-          "blast_furnace_front_on",
-          "textures/blocks/blast_furnace_front_on"
-        ],
-        [
-          "blast_furnace_side",
-          "textures/blocks/blast_furnace_side"
-        ],
-        [
-          "blast_furnace_top",
-          "textures/blocks/blast_furnace_top"
-        ],
-        [
-          "blue_ice",
-          "textures/blocks/blue_ice"
-        ],
-        [
-          "bone_block_side",
-          "textures/blocks/bone_block_side"
-        ],
-        [
-          "bone_block_top",
-          "textures/blocks/bone_block_top"
-        ],
-        [
-          "bookshelf",
-          "textures/blocks/bookshelf"
-        ],
-        [
-          "border",
-          "textures/blocks/border"
-        ],
-        [
-          "brewing_stand",
-          "textures/blocks/brewing_stand"
-        ],
-        [
-          "brewing_stand_base",
-          "textures/blocks/brewing_stand_base"
-        ],
-        [
-          "brick",
-          "textures/blocks/brick"
-        ],
-        [
-          "bubble_column_down_top_a",
-          "textures/blocks/bubble_column_down_top_a"
-        ],
-        [
-          "bubble_column_down_top_b",
-          "textures/blocks/bubble_column_down_top_b"
-        ],
-        [
-          "bubble_column_down_top_c",
-          "textures/blocks/bubble_column_down_top_c"
-        ],
-        [
-          "bubble_column_down_top_d",
-          "textures/blocks/bubble_column_down_top_d"
-        ],
-        [
-          "bubble_column_inner_a",
-          "textures/blocks/bubble_column_inner_a"
-        ],
-        [
-          "bubble_column_inner_b",
-          "textures/blocks/bubble_column_inner_b"
-        ],
-        [
-          "bubble_column_outer_a",
-          "textures/blocks/bubble_column_outer_a"
-        ],
-        [
-          "bubble_column_outer_b",
-          "textures/blocks/bubble_column_outer_b"
-        ],
-        [
-          "bubble_column_outer_c",
-          "textures/blocks/bubble_column_outer_c"
-        ],
-        [
-          "bubble_column_outer_d",
-          "textures/blocks/bubble_column_outer_d"
-        ],
-        [
-          "bubble_column_outer_e",
-          "textures/blocks/bubble_column_outer_e"
-        ],
-        [
-          "bubble_column_outer_f",
-          "textures/blocks/bubble_column_outer_f"
-        ],
-        [
-          "bubble_column_outer_g",
-          "textures/blocks/bubble_column_outer_g"
-        ],
-        [
-          "bubble_column_outer_h",
-          "textures/blocks/bubble_column_outer_h"
-        ],
-        [
-          "bubble_column_up_top_a",
-          "textures/blocks/bubble_column_up_top_a"
-        ],
-        [
-          "bubble_column_up_top_b",
-          "textures/blocks/bubble_column_up_top_b"
-        ],
-        [
-          "bubble_column_up_top_c",
-          "textures/blocks/bubble_column_up_top_c"
-        ],
-        [
-          "bubble_column_up_top_d",
-          "textures/blocks/bubble_column_up_top_d"
-        ],
-        [
-          "build_allow",
-          "textures/blocks/build_allow"
-        ],
-        [
-          "build_deny",
-          "textures/blocks/build_deny"
-        ],
-        [
-          "cake_bottom",
-          "textures/blocks/cake_bottom"
-        ],
-        [
-          "cake_inner",
-          "textures/blocks/cake_inner"
-        ],
-        [
-          "cake_side",
-          "textures/blocks/cake_side"
-        ],
-        [
-          "cake_top",
-          "textures/blocks/cake_top"
-        ],
-        [
-          "camera_back",
-          "textures/blocks/camera_back"
-        ],
-        [
-          "camera_front",
-          "textures/blocks/camera_front"
-        ],
-        [
-          "camera_side",
-          "textures/blocks/camera_side"
-        ],
-        [
-          "camera_top",
-          "textures/blocks/camera_top"
-        ],
-        [
-          "campfire",
-          "textures/blocks/campfire"
-        ],
-        [
-          "campfire_log",
-          "textures/blocks/campfire_log"
-        ],
-        [
-          "campfire_log_lit",
-          "textures/blocks/campfire_log_lit"
-        ],
-        [
-          "carried_waterlily",
-          "textures/blocks/carried_waterlily"
-        ],
-        [
-          "carrots_stage_0",
-          "textures/blocks/carrots_stage_0"
-        ],
-        [
-          "carrots_stage_1",
-          "textures/blocks/carrots_stage_1"
-        ],
-        [
-          "carrots_stage_2",
-          "textures/blocks/carrots_stage_2"
-        ],
-        [
-          "carrots_stage_3",
-          "textures/blocks/carrots_stage_3"
-        ],
-        [
-          "cartography_table_side1",
-          "textures/blocks/cartography_table_side1"
-        ],
-        [
-          "cartography_table_side2",
-          "textures/blocks/cartography_table_side2"
-        ],
-        [
-          "cartography_table_side3",
-          "textures/blocks/cartography_table_side3"
-        ],
-        [
-          "cartography_table_top",
-          "textures/blocks/cartography_table_top"
-        ],
-        [
-          "cauldron_bottom",
-          "textures/blocks/cauldron_bottom"
-        ],
-        [
-          "cauldron_inner",
-          "textures/blocks/cauldron_inner"
-        ],
-        [
-          "cauldron_side",
-          "textures/blocks/cauldron_side"
-        ],
-        [
-          "cauldron_top",
-          "textures/blocks/cauldron_top"
-        ],
-        [
-          "cauldron_water",
-          "textures/blocks/cauldron_water"
-        ],
-        [
-          "cauldron_water_placeholder",
-          "textures/blocks/cauldron_water_placeholder"
-        ],
-        [
-          "chain_command_block_back",
-          "textures/blocks/chain_command_block_back"
-        ],
-        [
-          "chain_command_block_back_mipmap",
-          "textures/blocks/chain_command_block_back_mipmap"
-        ],
-        [
-          "chain_command_block_conditional",
-          "textures/blocks/chain_command_block_conditional"
-        ],
-        [
-          "chain_command_block_conditional_mipmap",
-          "textures/blocks/chain_command_block_conditional_mipmap"
-        ],
-        [
-          "chain_command_block_front",
-          "textures/blocks/chain_command_block_front"
-        ],
-        [
-          "chain_command_block_front_mipmap",
-          "textures/blocks/chain_command_block_front_mipmap"
-        ],
-        [
-          "chain_command_block_side",
-          "textures/blocks/chain_command_block_side"
-        ],
-        [
-          "chain_command_block_side_mipmap",
-          "textures/blocks/chain_command_block_side_mipmap"
-        ],
-        [
-          "chest_front",
-          "textures/blocks/chest_front"
-        ],
-        [
-          "chest_side",
-          "textures/blocks/chest_side"
-        ],
-        [
-          "chest_top",
-          "textures/blocks/chest_top"
-        ],
-        [
-          "chorus_flower",
-          "textures/blocks/chorus_flower"
-        ],
-        [
-          "chorus_flower_dead",
-          "textures/blocks/chorus_flower_dead"
-        ],
-        [
-          "chorus_plant",
-          "textures/blocks/chorus_plant"
-        ],
-        [
-          "clay",
-          "textures/blocks/clay"
-        ],
-        [
-          "coal_block",
-          "textures/blocks/coal_block"
-        ],
-        [
-          "coal_ore",
-          "textures/blocks/coal_ore"
-        ],
-        [
-          "coarse_dirt",
-          "textures/blocks/coarse_dirt"
-        ],
-        [
-          "cobblestone",
-          "textures/blocks/cobblestone"
-        ],
-        [
-          "cobblestone_mossy",
-          "textures/blocks/cobblestone_mossy"
-        ],
-        [
-          "cocoa_stage_0",
-          "textures/blocks/cocoa_stage_0"
-        ],
-        [
-          "cocoa_stage_1",
-          "textures/blocks/cocoa_stage_1"
-        ],
-        [
-          "cocoa_stage_2",
-          "textures/blocks/cocoa_stage_2"
-        ],
-        [
-          "command_block",
-          "textures/blocks/command_block"
-        ],
-        [
-          "command_block_back",
-          "textures/blocks/command_block_back"
-        ],
-        [
-          "command_block_back_mipmap",
-          "textures/blocks/command_block_back_mipmap"
-        ],
-        [
-          "command_block_conditional",
-          "textures/blocks/command_block_conditional"
-        ],
-        [
-          "command_block_conditional_mipmap",
-          "textures/blocks/command_block_conditional_mipmap"
-        ],
-        [
-          "command_block_front",
-          "textures/blocks/command_block_front"
-        ],
-        [
-          "command_block_front_mipmap",
-          "textures/blocks/command_block_front_mipmap"
-        ],
-        [
-          "command_block_side",
-          "textures/blocks/command_block_side"
-        ],
-        [
-          "command_block_side_mipmap",
-          "textures/blocks/command_block_side_mipmap"
-        ],
-        [
-          "comparator_off",
-          "textures/blocks/comparator_off"
-        ],
-        [
-          "comparator_on",
-          "textures/blocks/comparator_on"
-        ],
-        [
-          "compost",
-          "textures/blocks/compost"
-        ],
-        [
-          "composter_bottom",
-          "textures/blocks/composter_bottom"
-        ],
-        [
-          "composter_side",
-          "textures/blocks/composter_side"
-        ],
-        [
-          "composter_top",
-          "textures/blocks/composter_top"
-        ],
-        [
-          "compost_ready",
-          "textures/blocks/compost_ready"
-        ],
-        [
-          "concrete_black",
-          "textures/blocks/concrete_black"
-        ],
-        [
-          "concrete_blue",
-          "textures/blocks/concrete_blue"
-        ],
-        [
-          "concrete_brown",
-          "textures/blocks/concrete_brown"
-        ],
-        [
-          "concrete_cyan",
-          "textures/blocks/concrete_cyan"
-        ],
-        [
-          "concrete_gray",
-          "textures/blocks/concrete_gray"
-        ],
-        [
-          "concrete_green",
-          "textures/blocks/concrete_green"
-        ],
-        [
-          "concrete_light_blue",
-          "textures/blocks/concrete_light_blue"
-        ],
-        [
-          "concrete_lime",
-          "textures/blocks/concrete_lime"
-        ],
-        [
-          "concrete_magenta",
-          "textures/blocks/concrete_magenta"
-        ],
-        [
-          "concrete_orange",
-          "textures/blocks/concrete_orange"
-        ],
-        [
-          "concrete_pink",
-          "textures/blocks/concrete_pink"
-        ],
-        [
-          "concrete_powder_black",
-          "textures/blocks/concrete_powder_black"
-        ],
-        [
-          "concrete_powder_blue",
-          "textures/blocks/concrete_powder_blue"
-        ],
-        [
-          "concrete_powder_brown",
-          "textures/blocks/concrete_powder_brown"
-        ],
-        [
-          "concrete_powder_cyan",
-          "textures/blocks/concrete_powder_cyan"
-        ],
-        [
-          "concrete_powder_gray",
-          "textures/blocks/concrete_powder_gray"
-        ],
-        [
-          "concrete_powder_green",
-          "textures/blocks/concrete_powder_green"
-        ],
-        [
-          "concrete_powder_light_blue",
-          "textures/blocks/concrete_powder_light_blue"
-        ],
-        [
-          "concrete_powder_lime",
-          "textures/blocks/concrete_powder_lime"
-        ],
-        [
-          "concrete_powder_magenta",
-          "textures/blocks/concrete_powder_magenta"
-        ],
-        [
-          "concrete_powder_orange",
-          "textures/blocks/concrete_powder_orange"
-        ],
-        [
-          "concrete_powder_pink",
-          "textures/blocks/concrete_powder_pink"
-        ],
-        [
-          "concrete_powder_purple",
-          "textures/blocks/concrete_powder_purple"
-        ],
-        [
-          "concrete_powder_red",
-          "textures/blocks/concrete_powder_red"
-        ],
-        [
-          "concrete_powder_silver",
-          "textures/blocks/concrete_powder_silver"
-        ],
-        [
-          "concrete_powder_white",
-          "textures/blocks/concrete_powder_white"
-        ],
-        [
-          "concrete_powder_yellow",
-          "textures/blocks/concrete_powder_yellow"
-        ],
-        [
-          "concrete_purple",
-          "textures/blocks/concrete_purple"
-        ],
-        [
-          "concrete_red",
-          "textures/blocks/concrete_red"
-        ],
-        [
-          "concrete_silver",
-          "textures/blocks/concrete_silver"
-        ],
-        [
-          "concrete_white",
-          "textures/blocks/concrete_white"
-        ],
-        [
-          "concrete_yellow",
-          "textures/blocks/concrete_yellow"
-        ],
-        [
-          "conduit_base",
-          "textures/blocks/conduit_base"
-        ],
-        [
-          "conduit_cage",
-          "textures/blocks/conduit_cage"
-        ],
-        [
-          "conduit_closed",
-          "textures/blocks/conduit_closed"
-        ],
-        [
-          "conduit_open",
-          "textures/blocks/conduit_open"
-        ],
-        [
-          "conduit_wind_horizontal",
-          "textures/blocks/conduit_wind_horizontal"
-        ],
-        [
-          "conduit_wind_vertical",
-          "textures/blocks/conduit_wind_vertical"
-        ],
-        [
-          "coral_blue",
-          "textures/blocks/coral_blue"
-        ],
-        [
-          "coral_blue_dead",
-          "textures/blocks/coral_blue_dead"
-        ],
-        [
-          "coral_fan_blue",
-          "textures/blocks/coral_fan_blue"
-        ],
-        [
-          "coral_fan_blue_dead",
-          "textures/blocks/coral_fan_blue_dead"
-        ],
-        [
-          "coral_fan_pink",
-          "textures/blocks/coral_fan_pink"
-        ],
-        [
-          "coral_fan_pink_dead",
-          "textures/blocks/coral_fan_pink_dead"
-        ],
-        [
-          "coral_fan_purple",
-          "textures/blocks/coral_fan_purple"
-        ],
-        [
-          "coral_fan_purple_dead",
-          "textures/blocks/coral_fan_purple_dead"
-        ],
-        [
-          "coral_fan_red",
-          "textures/blocks/coral_fan_red"
-        ],
-        [
-          "coral_fan_red_dead",
-          "textures/blocks/coral_fan_red_dead"
-        ],
-        [
-          "coral_fan_yellow",
-          "textures/blocks/coral_fan_yellow"
-        ],
-        [
-          "coral_fan_yellow_dead",
-          "textures/blocks/coral_fan_yellow_dead"
-        ],
-        [
-          "coral_pink",
-          "textures/blocks/coral_pink"
-        ],
-        [
-          "coral_pink_dead",
-          "textures/blocks/coral_pink_dead"
-        ],
-        [
-          "coral_plant_blue",
-          "textures/blocks/coral_plant_blue"
-        ],
-        [
-          "coral_plant_blue_dead",
-          "textures/blocks/coral_plant_blue_dead"
-        ],
-        [
-          "coral_plant_pink",
-          "textures/blocks/coral_plant_pink"
-        ],
-        [
-          "coral_plant_pink_dead",
-          "textures/blocks/coral_plant_pink_dead"
-        ],
-        [
-          "coral_plant_purple",
-          "textures/blocks/coral_plant_purple"
-        ],
-        [
-          "coral_plant_purple_dead",
-          "textures/blocks/coral_plant_purple_dead"
-        ],
-        [
-          "coral_plant_red",
-          "textures/blocks/coral_plant_red"
-        ],
-        [
-          "coral_plant_red_dead",
-          "textures/blocks/coral_plant_red_dead"
-        ],
-        [
-          "coral_plant_yellow",
-          "textures/blocks/coral_plant_yellow"
-        ],
-        [
-          "coral_plant_yellow_dead",
-          "textures/blocks/coral_plant_yellow_dead"
-        ],
-        [
-          "coral_purple",
-          "textures/blocks/coral_purple"
-        ],
-        [
-          "coral_purple_dead",
-          "textures/blocks/coral_purple_dead"
-        ],
-        [
-          "coral_red",
-          "textures/blocks/coral_red"
-        ],
-        [
-          "coral_red_dead",
-          "textures/blocks/coral_red_dead"
-        ],
-        [
-          "coral_yellow",
-          "textures/blocks/coral_yellow"
-        ],
-        [
-          "coral_yellow_dead",
-          "textures/blocks/coral_yellow_dead"
-        ],
-        [
-          "crafting_table_front",
-          "textures/blocks/crafting_table_front"
-        ],
-        [
-          "crafting_table_side",
-          "textures/blocks/crafting_table_side"
-        ],
-        [
-          "crafting_table_top",
-          "textures/blocks/crafting_table_top"
-        ],
-        [
-          "dark_oak_trapdoor",
-          "textures/blocks/dark_oak_trapdoor"
-        ],
-        [
-          "daylight_detector_inverted_top",
-          "textures/blocks/daylight_detector_inverted_top"
-        ],
-        [
-          "daylight_detector_side",
-          "textures/blocks/daylight_detector_side"
-        ],
-        [
-          "daylight_detector_top",
-          "textures/blocks/daylight_detector_top"
-        ],
-        [
-          "deadbush",
-          "textures/blocks/deadbush"
-        ],
-        [
-          "diamond_block",
-          "textures/blocks/diamond_block"
-        ],
-        [
-          "diamond_ore",
-          "textures/blocks/diamond_ore"
-        ],
-        [
-          "dirt",
-          "textures/blocks/dirt"
-        ],
-        [
-          "dirt_podzol_side",
-          "textures/blocks/dirt_podzol_side"
-        ],
-        [
-          "dirt_podzol_top",
-          "textures/blocks/dirt_podzol_top"
-        ],
-        [
-          "dispenser_front_horizontal",
-          "textures/blocks/dispenser_front_horizontal"
-        ],
-        [
-          "dispenser_front_vertical",
-          "textures/blocks/dispenser_front_vertical"
-        ],
-        [
-          "door_acacia_lower",
-          "textures/blocks/door_acacia_lower"
-        ],
-        [
-          "door_acacia_upper",
-          "textures/blocks/door_acacia_upper"
-        ],
-        [
-          "door_birch_lower",
-          "textures/blocks/door_birch_lower"
-        ],
-        [
-          "door_birch_upper",
-          "textures/blocks/door_birch_upper"
-        ],
-        [
-          "door_dark_oak_lower",
-          "textures/blocks/door_dark_oak_lower"
-        ],
-        [
-          "door_dark_oak_upper",
-          "textures/blocks/door_dark_oak_upper"
-        ],
-        [
-          "door_iron_lower",
-          "textures/blocks/door_iron_lower"
-        ],
-        [
-          "door_iron_upper",
-          "textures/blocks/door_iron_upper"
-        ],
-        [
-          "door_jungle_lower",
-          "textures/blocks/door_jungle_lower"
-        ],
-        [
-          "door_jungle_upper",
-          "textures/blocks/door_jungle_upper"
-        ],
-        [
-          "door_spruce_lower",
-          "textures/blocks/door_spruce_lower"
-        ],
-        [
-          "door_spruce_upper",
-          "textures/blocks/door_spruce_upper"
-        ],
-        [
-          "door_wood_lower",
-          "textures/blocks/door_wood_lower"
-        ],
-        [
-          "door_wood_upper",
-          "textures/blocks/door_wood_upper"
-        ],
-        [
-          "double_plant_fern_carried",
-          "textures/blocks/double_plant_fern_carried"
-        ],
-        [
-          "double_plant_grass_carried",
-          "textures/blocks/double_plant_grass_carried"
-        ],
-        [
-          "double_plant_paeonia_bottom",
-          "textures/blocks/double_plant_paeonia_bottom"
-        ],
-        [
-          "double_plant_paeonia_top",
-          "textures/blocks/double_plant_paeonia_top"
-        ],
-        [
-          "double_plant_rose_bottom",
-          "textures/blocks/double_plant_rose_bottom"
-        ],
-        [
-          "double_plant_rose_top",
-          "textures/blocks/double_plant_rose_top"
-        ],
-        [
-          "double_plant_sunflower_back",
-          "textures/blocks/double_plant_sunflower_back"
-        ],
-        [
-          "double_plant_sunflower_bottom",
-          "textures/blocks/double_plant_sunflower_bottom"
-        ],
-        [
-          "double_plant_sunflower_front",
-          "textures/blocks/double_plant_sunflower_front"
-        ],
-        [
-          "double_plant_sunflower_top",
-          "textures/blocks/double_plant_sunflower_top"
-        ],
-        [
-          "dragon_egg",
-          "textures/blocks/dragon_egg"
-        ],
-        [
-          "dried_kelp_side_a",
-          "textures/blocks/dried_kelp_side_a"
-        ],
-        [
-          "dried_kelp_side_b",
-          "textures/blocks/dried_kelp_side_b"
-        ],
-        [
-          "dried_kelp_top",
-          "textures/blocks/dried_kelp_top"
-        ],
-        [
-          "dropper_front_horizontal",
-          "textures/blocks/dropper_front_horizontal"
-        ],
-        [
-          "dropper_front_vertical",
-          "textures/blocks/dropper_front_vertical"
-        ],
-        [
-          "emerald_block",
-          "textures/blocks/emerald_block"
-        ],
-        [
-          "emerald_ore",
-          "textures/blocks/emerald_ore"
-        ],
-        [
-          "enchanting_table_bottom",
-          "textures/blocks/enchanting_table_bottom"
-        ],
-        [
-          "enchanting_table_side",
-          "textures/blocks/enchanting_table_side"
-        ],
-        [
-          "enchanting_table_top",
-          "textures/blocks/enchanting_table_top"
-        ],
-        [
-          "ender_chest_front",
-          "textures/blocks/ender_chest_front"
-        ],
-        [
-          "ender_chest_side",
-          "textures/blocks/ender_chest_side"
-        ],
-        [
-          "ender_chest_top",
-          "textures/blocks/ender_chest_top"
-        ],
-        [
-          "endframe_eye",
-          "textures/blocks/endframe_eye"
-        ],
-        [
-          "endframe_side",
-          "textures/blocks/endframe_side"
-        ],
-        [
-          "endframe_top",
-          "textures/blocks/endframe_top"
-        ],
-        [
-          "end_bricks",
-          "textures/blocks/end_bricks"
-        ],
-        [
-          "end_gateway",
-          "textures/blocks/end_gateway"
-        ],
-        [
-          "end_portal",
-          "textures/blocks/end_portal"
-        ],
-        [
-          "end_rod",
-          "textures/blocks/end_rod"
-        ],
-        [
-          "end_stone",
-          "textures/blocks/end_stone"
-        ],
-        [
-          "farmland_dry",
-          "textures/blocks/farmland_dry"
-        ],
-        [
-          "farmland_wet",
-          "textures/blocks/farmland_wet"
-        ],
-        [
-          "fire_0",
-          "textures/blocks/fire_0"
-        ],
-        [
-          "fire_0_placeholder",
-          "textures/blocks/fire_0_placeholder"
-        ],
-        [
-          "fire_1",
-          "textures/blocks/fire_1"
-        ],
-        [
-          "fire_1_placeholder",
-          "textures/blocks/fire_1_placeholder"
-        ],
-        [
-          "fletcher_table_side1",
-          "textures/blocks/fletcher_table_side1"
-        ],
-        [
-          "fletcher_table_side2",
-          "textures/blocks/fletcher_table_side2"
-        ],
-        [
-          "fletcher_table_top",
-          "textures/blocks/fletcher_table_top"
-        ],
-        [
-          "flower_allium",
-          "textures/blocks/flower_allium"
-        ],
-        [
-          "flower_blue_orchid",
-          "textures/blocks/flower_blue_orchid"
-        ],
-        [
-          "flower_cornflower",
-          "textures/blocks/flower_cornflower"
-        ],
-        [
-          "flower_dandelion",
-          "textures/blocks/flower_dandelion"
-        ],
-        [
-          "flower_houstonia",
-          "textures/blocks/flower_houstonia"
-        ],
-        [
-          "flower_lily_of_the_valley",
-          "textures/blocks/flower_lily_of_the_valley"
-        ],
-        [
-          "flower_oxeye_daisy",
-          "textures/blocks/flower_oxeye_daisy"
-        ],
-        [
-          "flower_paeonia",
-          "textures/blocks/flower_paeonia"
-        ],
-        [
-          "flower_pot",
-          "textures/blocks/flower_pot"
-        ],
-        [
-          "flower_rose",
-          "textures/blocks/flower_rose"
-        ],
-        [
-          "flower_rose_blue",
-          "textures/blocks/flower_rose_blue"
-        ],
-        [
-          "flower_tulip_orange",
-          "textures/blocks/flower_tulip_orange"
-        ],
-        [
-          "flower_tulip_pink",
-          "textures/blocks/flower_tulip_pink"
-        ],
-        [
-          "flower_tulip_red",
-          "textures/blocks/flower_tulip_red"
-        ],
-        [
-          "flower_tulip_white",
-          "textures/blocks/flower_tulip_white"
-        ],
-        [
-          "flower_wither_rose",
-          "textures/blocks/flower_wither_rose"
-        ],
-        [
-          "frosted_ice_0",
-          "textures/blocks/frosted_ice_0"
-        ],
-        [
-          "frosted_ice_1",
-          "textures/blocks/frosted_ice_1"
-        ],
-        [
-          "frosted_ice_2",
-          "textures/blocks/frosted_ice_2"
-        ],
-        [
-          "frosted_ice_3",
-          "textures/blocks/frosted_ice_3"
-        ],
-        [
-          "furnace_front_off",
-          "textures/blocks/furnace_front_off"
-        ],
-        [
-          "furnace_front_on",
-          "textures/blocks/furnace_front_on"
-        ],
-        [
-          "furnace_side",
-          "textures/blocks/furnace_side"
-        ],
-        [
-          "furnace_top",
-          "textures/blocks/furnace_top"
-        ],
-        [
-          "glass",
-          "textures/blocks/glass"
-        ],
-        [
-          "glass_black",
-          "textures/blocks/glass_black"
-        ],
-        [
-          "glass_blue",
-          "textures/blocks/glass_blue"
-        ],
-        [
-          "glass_brown",
-          "textures/blocks/glass_brown"
-        ],
-        [
-          "glass_cyan",
-          "textures/blocks/glass_cyan"
-        ],
-        [
-          "glass_gray",
-          "textures/blocks/glass_gray"
-        ],
-        [
-          "glass_green",
-          "textures/blocks/glass_green"
-        ],
-        [
-          "glass_light_blue",
-          "textures/blocks/glass_light_blue"
-        ],
-        [
-          "glass_lime",
-          "textures/blocks/glass_lime"
-        ],
-        [
-          "glass_magenta",
-          "textures/blocks/glass_magenta"
-        ],
-        [
-          "glass_orange",
-          "textures/blocks/glass_orange"
-        ],
-        [
-          "glass_pane_top",
-          "textures/blocks/glass_pane_top"
-        ],
-        [
-          "glass_pane_top_black",
-          "textures/blocks/glass_pane_top_black"
-        ],
-        [
-          "glass_pane_top_blue",
-          "textures/blocks/glass_pane_top_blue"
-        ],
-        [
-          "glass_pane_top_brown",
-          "textures/blocks/glass_pane_top_brown"
-        ],
-        [
-          "glass_pane_top_cyan",
-          "textures/blocks/glass_pane_top_cyan"
-        ],
-        [
-          "glass_pane_top_gray",
-          "textures/blocks/glass_pane_top_gray"
-        ],
-        [
-          "glass_pane_top_green",
-          "textures/blocks/glass_pane_top_green"
-        ],
-        [
-          "glass_pane_top_light_blue",
-          "textures/blocks/glass_pane_top_light_blue"
-        ],
-        [
-          "glass_pane_top_lime",
-          "textures/blocks/glass_pane_top_lime"
-        ],
-        [
-          "glass_pane_top_magenta",
-          "textures/blocks/glass_pane_top_magenta"
-        ],
-        [
-          "glass_pane_top_orange",
-          "textures/blocks/glass_pane_top_orange"
-        ],
-        [
-          "glass_pane_top_pink",
-          "textures/blocks/glass_pane_top_pink"
-        ],
-        [
-          "glass_pane_top_purple",
-          "textures/blocks/glass_pane_top_purple"
-        ],
-        [
-          "glass_pane_top_red",
-          "textures/blocks/glass_pane_top_red"
-        ],
-        [
-          "glass_pane_top_silver",
-          "textures/blocks/glass_pane_top_silver"
-        ],
-        [
-          "glass_pane_top_white",
-          "textures/blocks/glass_pane_top_white"
-        ],
-        [
-          "glass_pane_top_yellow",
-          "textures/blocks/glass_pane_top_yellow"
-        ],
-        [
-          "glass_pink",
-          "textures/blocks/glass_pink"
-        ],
-        [
-          "glass_purple",
-          "textures/blocks/glass_purple"
-        ],
-        [
-          "glass_red",
-          "textures/blocks/glass_red"
-        ],
-        [
-          "glass_silver",
-          "textures/blocks/glass_silver"
-        ],
-        [
-          "glass_white",
-          "textures/blocks/glass_white"
-        ],
-        [
-          "glass_yellow",
-          "textures/blocks/glass_yellow"
-        ],
-        [
-          "glazed_terracotta_black",
-          "textures/blocks/glazed_terracotta_black"
-        ],
-        [
-          "glazed_terracotta_blue",
-          "textures/blocks/glazed_terracotta_blue"
-        ],
-        [
-          "glazed_terracotta_brown",
-          "textures/blocks/glazed_terracotta_brown"
-        ],
-        [
-          "glazed_terracotta_cyan",
-          "textures/blocks/glazed_terracotta_cyan"
-        ],
-        [
-          "glazed_terracotta_gray",
-          "textures/blocks/glazed_terracotta_gray"
-        ],
-        [
-          "glazed_terracotta_green",
-          "textures/blocks/glazed_terracotta_green"
-        ],
-        [
-          "glazed_terracotta_light_blue",
-          "textures/blocks/glazed_terracotta_light_blue"
-        ],
-        [
-          "glazed_terracotta_lime",
-          "textures/blocks/glazed_terracotta_lime"
-        ],
-        [
-          "glazed_terracotta_magenta",
-          "textures/blocks/glazed_terracotta_magenta"
-        ],
-        [
-          "glazed_terracotta_orange",
-          "textures/blocks/glazed_terracotta_orange"
-        ],
-        [
-          "glazed_terracotta_pink",
-          "textures/blocks/glazed_terracotta_pink"
-        ],
-        [
-          "glazed_terracotta_purple",
-          "textures/blocks/glazed_terracotta_purple"
-        ],
-        [
-          "glazed_terracotta_red",
-          "textures/blocks/glazed_terracotta_red"
-        ],
-        [
-          "glazed_terracotta_silver",
-          "textures/blocks/glazed_terracotta_silver"
-        ],
-        [
-          "glazed_terracotta_white",
-          "textures/blocks/glazed_terracotta_white"
-        ],
-        [
-          "glazed_terracotta_yellow",
-          "textures/blocks/glazed_terracotta_yellow"
-        ],
-        [
-          "glowing_obsidian",
-          "textures/blocks/glowing_obsidian"
-        ],
-        [
-          "glowstone",
-          "textures/blocks/glowstone"
-        ],
-        [
-          "gold_block",
-          "textures/blocks/gold_block"
-        ],
-        [
-          "gold_ore",
-          "textures/blocks/gold_ore"
-        ],
-        [
-          "grass_carried",
-          "textures/blocks/grass_carried"
-        ],
-        [
-          "grass_path_side",
-          "textures/blocks/grass_path_side"
-        ],
-        [
-          "grass_path_top",
-          "textures/blocks/grass_path_top"
-        ],
-        [
-          "grass_side_carried",
-          "textures/blocks/grass_side_carried"
-        ],
-        [
-          "grass_side_snowed",
-          "textures/blocks/grass_side_snowed"
-        ],
-        [
-          "grass_top",
-          "textures/blocks/grass_top"
-        ],
-        [
-          "gravel",
-          "textures/blocks/gravel"
-        ],
-        [
-          "hardened_clay",
-          "textures/blocks/hardened_clay"
-        ],
-        [
-          "hardened_clay_stained_black",
-          "textures/blocks/hardened_clay_stained_black"
-        ],
-        [
-          "hardened_clay_stained_blue",
-          "textures/blocks/hardened_clay_stained_blue"
-        ],
-        [
-          "hardened_clay_stained_brown",
-          "textures/blocks/hardened_clay_stained_brown"
-        ],
-        [
-          "hardened_clay_stained_cyan",
-          "textures/blocks/hardened_clay_stained_cyan"
-        ],
-        [
-          "hardened_clay_stained_gray",
-          "textures/blocks/hardened_clay_stained_gray"
-        ],
-        [
-          "hardened_clay_stained_green",
-          "textures/blocks/hardened_clay_stained_green"
-        ],
-        [
-          "hardened_clay_stained_light_blue",
-          "textures/blocks/hardened_clay_stained_light_blue"
-        ],
-        [
-          "hardened_clay_stained_lime",
-          "textures/blocks/hardened_clay_stained_lime"
-        ],
-        [
-          "hardened_clay_stained_magenta",
-          "textures/blocks/hardened_clay_stained_magenta"
-        ],
-        [
-          "hardened_clay_stained_orange",
-          "textures/blocks/hardened_clay_stained_orange"
-        ],
-        [
-          "hardened_clay_stained_pink",
-          "textures/blocks/hardened_clay_stained_pink"
-        ],
-        [
-          "hardened_clay_stained_purple",
-          "textures/blocks/hardened_clay_stained_purple"
-        ],
-        [
-          "hardened_clay_stained_red",
-          "textures/blocks/hardened_clay_stained_red"
-        ],
-        [
-          "hardened_clay_stained_silver",
-          "textures/blocks/hardened_clay_stained_silver"
-        ],
-        [
-          "hardened_clay_stained_white",
-          "textures/blocks/hardened_clay_stained_white"
-        ],
-        [
-          "hardened_clay_stained_yellow",
-          "textures/blocks/hardened_clay_stained_yellow"
-        ],
-        [
-          "hay_block_side",
-          "textures/blocks/hay_block_side"
-        ],
-        [
-          "hay_block_top",
-          "textures/blocks/hay_block_top"
-        ],
-        [
-          "hopper_inside",
-          "textures/blocks/hopper_inside"
-        ],
-        [
-          "hopper_outside",
-          "textures/blocks/hopper_outside"
-        ],
-        [
-          "hopper_top",
-          "textures/blocks/hopper_top"
-        ],
-        [
-          "ice",
-          "textures/blocks/ice"
-        ],
-        [
-          "ice_packed",
-          "textures/blocks/ice_packed"
-        ],
-        [
-          "iron_bars",
-          "textures/blocks/iron_bars"
-        ],
-        [
-          "iron_block",
-          "textures/blocks/iron_block"
-        ],
-        [
-          "iron_ore",
-          "textures/blocks/iron_ore"
-        ],
-        [
-          "iron_trapdoor",
-          "textures/blocks/iron_trapdoor"
-        ],
-        [
-          "itemframe_background",
-          "textures/blocks/itemframe_background"
-        ],
-        [
-          "jigsaw_back",
-          "textures/blocks/jigsaw_back"
-        ],
-        [
-          "jigsaw_front",
-          "textures/blocks/jigsaw_front"
-        ],
-        [
-          "jigsaw_side",
-          "textures/blocks/jigsaw_side"
-        ],
-        [
-          "jukebox_side",
-          "textures/blocks/jukebox_side"
-        ],
-        [
-          "jukebox_top",
-          "textures/blocks/jukebox_top"
-        ],
-        [
-          "jungle_trapdoor",
-          "textures/blocks/jungle_trapdoor"
-        ],
-        [
-          "ladder",
-          "textures/blocks/ladder"
-        ],
-        [
-          "lantern",
-          "textures/blocks/lantern"
-        ],
-        [
-          "lapis_block",
-          "textures/blocks/lapis_block"
-        ],
-        [
-          "lapis_ore",
-          "textures/blocks/lapis_ore"
-        ],
-        [
-          "lava_flow",
-          "textures/blocks/lava_flow"
-        ],
-        [
-          "lava_placeholder",
-          "textures/blocks/lava_placeholder"
-        ],
-        [
-          "lava_still",
-          "textures/blocks/lava_still"
-        ],
-        [
-          "leaves_acacia_opaque",
-          "textures/blocks/leaves_acacia_opaque"
-        ],
-        [
-          "leaves_big_oak_opaque",
-          "textures/blocks/leaves_big_oak_opaque"
-        ],
-        [
-          "leaves_birch_opaque",
-          "textures/blocks/leaves_birch_opaque"
-        ],
-        [
-          "leaves_jungle_opaque",
-          "textures/blocks/leaves_jungle_opaque"
-        ],
-        [
-          "leaves_oak_opaque",
-          "textures/blocks/leaves_oak_opaque"
-        ],
-        [
-          "leaves_spruce_opaque",
-          "textures/blocks/leaves_spruce_opaque"
-        ],
-        [
-          "lectern_base",
-          "textures/blocks/lectern_base"
-        ],
-        [
-          "lectern_front",
-          "textures/blocks/lectern_front"
-        ],
-        [
-          "lectern_sides",
-          "textures/blocks/lectern_sides"
-        ],
-        [
-          "lectern_top",
-          "textures/blocks/lectern_top"
-        ],
-        [
-          "lever",
-          "textures/blocks/lever"
-        ],
-        [
-          "log_acacia",
-          "textures/blocks/log_acacia"
-        ],
-        [
-          "log_acacia_top",
-          "textures/blocks/log_acacia_top"
-        ],
-        [
-          "log_big_oak",
-          "textures/blocks/log_big_oak"
-        ],
-        [
-          "log_big_oak_top",
-          "textures/blocks/log_big_oak_top"
-        ],
-        [
-          "log_birch",
-          "textures/blocks/log_birch"
-        ],
-        [
-          "log_birch_top",
-          "textures/blocks/log_birch_top"
-        ],
-        [
-          "log_jungle",
-          "textures/blocks/log_jungle"
-        ],
-        [
-          "log_jungle_top",
-          "textures/blocks/log_jungle_top"
-        ],
-        [
-          "log_oak",
-          "textures/blocks/log_oak"
-        ],
-        [
-          "log_oak_top",
-          "textures/blocks/log_oak_top"
-        ],
-        [
-          "log_spruce",
-          "textures/blocks/log_spruce"
-        ],
-        [
-          "log_spruce_top",
-          "textures/blocks/log_spruce_top"
-        ],
-        [
-          "loom_bottom",
-          "textures/blocks/loom_bottom"
-        ],
-        [
-          "loom_front",
-          "textures/blocks/loom_front"
-        ],
-        [
-          "loom_side",
-          "textures/blocks/loom_side"
-        ],
-        [
-          "loom_top",
-          "textures/blocks/loom_top"
-        ],
-        [
-          "magma",
-          "textures/blocks/magma"
-        ],
-        [
-          "melon_side",
-          "textures/blocks/melon_side"
-        ],
-        [
-          "melon_stem_connected",
-          "textures/blocks/melon_stem_connected"
-        ],
-        [
-          "melon_stem_disconnected",
-          "textures/blocks/melon_stem_disconnected"
-        ],
-        [
-          "melon_top",
-          "textures/blocks/melon_top"
-        ],
-        [
-          "missing_tile",
-          "textures/blocks/missing_tile"
-        ],
-        [
-          "mob_spawner",
-          "textures/blocks/mob_spawner"
-        ],
-        [
-          "mushroom_block_inside",
-          "textures/blocks/mushroom_block_inside"
-        ],
-        [
-          "mushroom_block_skin_brown",
-          "textures/blocks/mushroom_block_skin_brown"
-        ],
-        [
-          "mushroom_block_skin_red",
-          "textures/blocks/mushroom_block_skin_red"
-        ],
-        [
-          "mushroom_block_skin_stem",
-          "textures/blocks/mushroom_block_skin_stem"
-        ],
-        [
-          "mushroom_brown",
-          "textures/blocks/mushroom_brown"
-        ],
-        [
-          "mushroom_red",
-          "textures/blocks/mushroom_red"
-        ],
-        [
-          "mycelium_side",
-          "textures/blocks/mycelium_side"
-        ],
-        [
-          "mycelium_top",
-          "textures/blocks/mycelium_top"
-        ],
-        [
-          "netherrack",
-          "textures/blocks/netherrack"
-        ],
-        [
-          "nether_brick",
-          "textures/blocks/nether_brick"
-        ],
-        [
-          "nether_wart_block",
-          "textures/blocks/nether_wart_block"
-        ],
-        [
-          "nether_wart_stage_0",
-          "textures/blocks/nether_wart_stage_0"
-        ],
-        [
-          "nether_wart_stage_1",
-          "textures/blocks/nether_wart_stage_1"
-        ],
-        [
-          "nether_wart_stage_2",
-          "textures/blocks/nether_wart_stage_2"
-        ],
-        [
-          "noteblock",
-          "textures/blocks/noteblock"
-        ],
-        [
-          "observer_back",
-          "textures/blocks/observer_back"
-        ],
-        [
-          "observer_back_lit",
-          "textures/blocks/observer_back_lit"
-        ],
-        [
-          "observer_front",
-          "textures/blocks/observer_front"
-        ],
-        [
-          "observer_side",
-          "textures/blocks/observer_side"
-        ],
-        [
-          "observer_top",
-          "textures/blocks/observer_top"
-        ],
-        [
-          "obsidian",
-          "textures/blocks/obsidian"
-        ],
-        [
-          "piston_bottom",
-          "textures/blocks/piston_bottom"
-        ],
-        [
-          "piston_inner",
-          "textures/blocks/piston_inner"
-        ],
-        [
-          "piston_side",
-          "textures/blocks/piston_side"
-        ],
-        [
-          "piston_top_normal",
-          "textures/blocks/piston_top_normal"
-        ],
-        [
-          "piston_top_sticky",
-          "textures/blocks/piston_top_sticky"
-        ],
-        [
-          "planks_acacia",
-          "textures/blocks/planks_acacia"
-        ],
-        [
-          "planks_big_oak",
-          "textures/blocks/planks_big_oak"
-        ],
-        [
-          "planks_birch",
-          "textures/blocks/planks_birch"
-        ],
-        [
-          "planks_jungle",
-          "textures/blocks/planks_jungle"
-        ],
-        [
-          "planks_oak",
-          "textures/blocks/planks_oak"
-        ],
-        [
-          "planks_spruce",
-          "textures/blocks/planks_spruce"
-        ],
-        [
-          "portal",
-          "textures/blocks/portal"
-        ],
-        [
-          "portal_placeholder",
-          "textures/blocks/portal_placeholder"
-        ],
-        [
-          "potatoes_stage_0",
-          "textures/blocks/potatoes_stage_0"
-        ],
-        [
-          "potatoes_stage_1",
-          "textures/blocks/potatoes_stage_1"
-        ],
-        [
-          "potatoes_stage_2",
-          "textures/blocks/potatoes_stage_2"
-        ],
-        [
-          "potatoes_stage_3",
-          "textures/blocks/potatoes_stage_3"
-        ],
-        [
-          "prismarine_bricks",
-          "textures/blocks/prismarine_bricks"
-        ],
-        [
-          "prismarine_dark",
-          "textures/blocks/prismarine_dark"
-        ],
-        [
-          "prismarine_rough",
-          "textures/blocks/prismarine_rough"
-        ],
-        [
-          "pumpkin_face_off",
-          "textures/blocks/pumpkin_face_off"
-        ],
-        [
-          "pumpkin_face_on",
-          "textures/blocks/pumpkin_face_on"
-        ],
-        [
-          "pumpkin_side",
-          "textures/blocks/pumpkin_side"
-        ],
-        [
-          "pumpkin_stem_connected",
-          "textures/blocks/pumpkin_stem_connected"
-        ],
-        [
-          "pumpkin_stem_disconnected",
-          "textures/blocks/pumpkin_stem_disconnected"
-        ],
-        [
-          "pumpkin_top",
-          "textures/blocks/pumpkin_top"
-        ],
-        [
-          "purpur_block",
-          "textures/blocks/purpur_block"
-        ],
-        [
-          "purpur_pillar",
-          "textures/blocks/purpur_pillar"
-        ],
-        [
-          "purpur_pillar_top",
-          "textures/blocks/purpur_pillar_top"
-        ],
-        [
-          "quartz_block_bottom",
-          "textures/blocks/quartz_block_bottom"
-        ],
-        [
-          "quartz_block_chiseled",
-          "textures/blocks/quartz_block_chiseled"
-        ],
-        [
-          "quartz_block_chiseled_top",
-          "textures/blocks/quartz_block_chiseled_top"
-        ],
-        [
-          "quartz_block_lines",
-          "textures/blocks/quartz_block_lines"
-        ],
-        [
-          "quartz_block_lines_top",
-          "textures/blocks/quartz_block_lines_top"
-        ],
-        [
-          "quartz_block_side",
-          "textures/blocks/quartz_block_side"
-        ],
-        [
-          "quartz_block_top",
-          "textures/blocks/quartz_block_top"
-        ],
-        [
-          "quartz_ore",
-          "textures/blocks/quartz_ore"
-        ],
-        [
-          "rail_activator",
-          "textures/blocks/rail_activator"
-        ],
-        [
-          "rail_activator_powered",
-          "textures/blocks/rail_activator_powered"
-        ],
-        [
-          "rail_detector",
-          "textures/blocks/rail_detector"
-        ],
-        [
-          "rail_detector_powered",
-          "textures/blocks/rail_detector_powered"
-        ],
-        [
-          "rail_golden",
-          "textures/blocks/rail_golden"
-        ],
-        [
-          "rail_golden_powered",
-          "textures/blocks/rail_golden_powered"
-        ],
-        [
-          "rail_normal",
-          "textures/blocks/rail_normal"
-        ],
-        [
-          "rail_normal_turned",
-          "textures/blocks/rail_normal_turned"
-        ],
-        [
-          "reactor_core_stage_0",
-          "textures/blocks/reactor_core_stage_0"
-        ],
-        [
-          "reactor_core_stage_1",
-          "textures/blocks/reactor_core_stage_1"
-        ],
-        [
-          "reactor_core_stage_2",
-          "textures/blocks/reactor_core_stage_2"
-        ],
-        [
-          "redstone_block",
-          "textures/blocks/redstone_block"
-        ],
-        [
-          "redstone_dust_cross",
-          "textures/blocks/redstone_dust_cross"
-        ],
-        [
-          "redstone_dust_line",
-          "textures/blocks/redstone_dust_line"
-        ],
-        [
-          "redstone_lamp_off",
-          "textures/blocks/redstone_lamp_off"
-        ],
-        [
-          "redstone_lamp_on",
-          "textures/blocks/redstone_lamp_on"
-        ],
-        [
-          "redstone_ore",
-          "textures/blocks/redstone_ore"
-        ],
-        [
-          "redstone_torch_off",
-          "textures/blocks/redstone_torch_off"
-        ],
-        [
-          "redstone_torch_on",
-          "textures/blocks/redstone_torch_on"
-        ],
-        [
-          "red_nether_brick",
-          "textures/blocks/red_nether_brick"
-        ],
-        [
-          "red_sand",
-          "textures/blocks/red_sand"
-        ],
-        [
-          "red_sandstone_bottom",
-          "textures/blocks/red_sandstone_bottom"
-        ],
-        [
-          "red_sandstone_carved",
-          "textures/blocks/red_sandstone_carved"
-        ],
-        [
-          "red_sandstone_normal",
-          "textures/blocks/red_sandstone_normal"
-        ],
-        [
-          "red_sandstone_smooth",
-          "textures/blocks/red_sandstone_smooth"
-        ],
-        [
-          "red_sandstone_top",
-          "textures/blocks/red_sandstone_top"
-        ],
-        [
-          "repeater_off",
-          "textures/blocks/repeater_off"
-        ],
-        [
-          "repeater_on",
-          "textures/blocks/repeater_on"
-        ],
-        [
-          "repeating_command_block_back",
-          "textures/blocks/repeating_command_block_back"
-        ],
-        [
-          "repeating_command_block_back_mipmap",
-          "textures/blocks/repeating_command_block_back_mipmap"
-        ],
-        [
-          "repeating_command_block_conditional",
-          "textures/blocks/repeating_command_block_conditional"
-        ],
-        [
-          "repeating_command_block_conditional_mipmap",
-          "textures/blocks/repeating_command_block_conditional_mipmap"
-        ],
-        [
-          "repeating_command_block_front",
-          "textures/blocks/repeating_command_block_front"
-        ],
-        [
-          "repeating_command_block_front_mipmap",
-          "textures/blocks/repeating_command_block_front_mipmap"
-        ],
-        [
-          "repeating_command_block_side",
-          "textures/blocks/repeating_command_block_side"
-        ],
-        [
-          "repeating_command_block_side_mipmap",
-          "textures/blocks/repeating_command_block_side_mipmap"
-        ],
-        [
-          "sand",
-          "textures/blocks/sand"
-        ],
-        [
-          "sandstone_bottom",
-          "textures/blocks/sandstone_bottom"
-        ],
-        [
-          "sandstone_carved",
-          "textures/blocks/sandstone_carved"
-        ],
-        [
-          "sandstone_normal",
-          "textures/blocks/sandstone_normal"
-        ],
-        [
-          "sandstone_smooth",
-          "textures/blocks/sandstone_smooth"
-        ],
-        [
-          "sandstone_top",
-          "textures/blocks/sandstone_top"
-        ],
-        [
-          "sapling_acacia",
-          "textures/blocks/sapling_acacia"
-        ],
-        [
-          "sapling_birch",
-          "textures/blocks/sapling_birch"
-        ],
-        [
-          "sapling_jungle",
-          "textures/blocks/sapling_jungle"
-        ],
-        [
-          "sapling_oak",
-          "textures/blocks/sapling_oak"
-        ],
-        [
-          "sapling_roofed_oak",
-          "textures/blocks/sapling_roofed_oak"
-        ],
-        [
-          "sapling_spruce",
-          "textures/blocks/sapling_spruce"
-        ],
-        [
-          "seagrass",
-          "textures/blocks/seagrass"
-        ],
-        [
-          "seagrass_carried",
-          "textures/blocks/seagrass_carried"
-        ],
-        [
-          "sea_lantern",
-          "textures/blocks/sea_lantern"
-        ],
-        [
-          "sea_pickle",
-          "textures/blocks/sea_pickle"
-        ],
-        [
-          "shulker_top_black",
-          "textures/blocks/shulker_top_black"
-        ],
-        [
-          "shulker_top_blue",
-          "textures/blocks/shulker_top_blue"
-        ],
-        [
-          "shulker_top_brown",
-          "textures/blocks/shulker_top_brown"
-        ],
-        [
-          "shulker_top_cyan",
-          "textures/blocks/shulker_top_cyan"
-        ],
-        [
-          "shulker_top_gray",
-          "textures/blocks/shulker_top_gray"
-        ],
-        [
-          "shulker_top_green",
-          "textures/blocks/shulker_top_green"
-        ],
-        [
-          "shulker_top_light_blue",
-          "textures/blocks/shulker_top_light_blue"
-        ],
-        [
-          "shulker_top_lime",
-          "textures/blocks/shulker_top_lime"
-        ],
-        [
-          "shulker_top_magenta",
-          "textures/blocks/shulker_top_magenta"
-        ],
-        [
-          "shulker_top_orange",
-          "textures/blocks/shulker_top_orange"
-        ],
-        [
-          "shulker_top_pink",
-          "textures/blocks/shulker_top_pink"
-        ],
-        [
-          "shulker_top_purple",
-          "textures/blocks/shulker_top_purple"
-        ],
-        [
-          "shulker_top_red",
-          "textures/blocks/shulker_top_red"
-        ],
-        [
-          "shulker_top_silver",
-          "textures/blocks/shulker_top_silver"
-        ],
-        [
-          "shulker_top_undyed",
-          "textures/blocks/shulker_top_undyed"
-        ],
-        [
-          "shulker_top_white",
-          "textures/blocks/shulker_top_white"
-        ],
-        [
-          "shulker_top_yellow",
-          "textures/blocks/shulker_top_yellow"
-        ],
-        [
-          "slime",
-          "textures/blocks/slime"
-        ],
-        [
-          "smithing_table_bottom",
-          "textures/blocks/smithing_table_bottom"
-        ],
-        [
-          "smithing_table_front",
-          "textures/blocks/smithing_table_front"
-        ],
-        [
-          "smithing_table_side",
-          "textures/blocks/smithing_table_side"
-        ],
-        [
-          "smithing_table_top",
-          "textures/blocks/smithing_table_top"
-        ],
-        [
-          "smoker_bottom",
-          "textures/blocks/smoker_bottom"
-        ],
-        [
-          "smoker_front_off",
-          "textures/blocks/smoker_front_off"
-        ],
-        [
-          "smoker_front_on",
-          "textures/blocks/smoker_front_on"
-        ],
-        [
-          "smoker_side",
-          "textures/blocks/smoker_side"
-        ],
-        [
-          "smoker_top",
-          "textures/blocks/smoker_top"
-        ],
-        [
-          "snow",
-          "textures/blocks/snow"
-        ],
-        [
-          "soul_sand",
-          "textures/blocks/soul_sand"
-        ],
-        [
-          "sponge",
-          "textures/blocks/sponge"
-        ],
-        [
-          "sponge_wet",
-          "textures/blocks/sponge_wet"
-        ],
-        [
-          "spruce_trapdoor",
-          "textures/blocks/spruce_trapdoor"
-        ],
-        [
-          "stone",
-          "textures/blocks/stone"
-        ],
-        [
-          "stonebrick",
-          "textures/blocks/stonebrick"
-        ],
-        [
-          "stonebrick_carved",
-          "textures/blocks/stonebrick_carved"
-        ],
-        [
-          "stonebrick_cracked",
-          "textures/blocks/stonebrick_cracked"
-        ],
-        [
-          "stonebrick_mossy",
-          "textures/blocks/stonebrick_mossy"
-        ],
-        [
-          "stonecutter2_bottom",
-          "textures/blocks/stonecutter2_bottom"
-        ],
-        [
-          "stonecutter2_side",
-          "textures/blocks/stonecutter2_side"
-        ],
-        [
-          "stonecutter2_top",
-          "textures/blocks/stonecutter2_top"
-        ],
-        [
-          "stonecutter_bottom",
-          "textures/blocks/stonecutter_bottom"
-        ],
-        [
-          "stonecutter_other_side",
-          "textures/blocks/stonecutter_other_side"
-        ],
-        [
-          "stonecutter_side",
-          "textures/blocks/stonecutter_side"
-        ],
-        [
-          "stonecutter_top",
-          "textures/blocks/stonecutter_top"
-        ],
-        [
-          "stone_andesite",
-          "textures/blocks/stone_andesite"
-        ],
-        [
-          "stone_andesite_smooth",
-          "textures/blocks/stone_andesite_smooth"
-        ],
-        [
-          "stone_diorite",
-          "textures/blocks/stone_diorite"
-        ],
-        [
-          "stone_diorite_smooth",
-          "textures/blocks/stone_diorite_smooth"
-        ],
-        [
-          "stone_granite",
-          "textures/blocks/stone_granite"
-        ],
-        [
-          "stone_granite_smooth",
-          "textures/blocks/stone_granite_smooth"
-        ],
-        [
-          "stone_slab_side",
-          "textures/blocks/stone_slab_side"
-        ],
-        [
-          "stone_slab_top",
-          "textures/blocks/stone_slab_top"
-        ],
-        [
-          "stripped_acacia_log",
-          "textures/blocks/stripped_acacia_log"
-        ],
-        [
-          "stripped_acacia_log_top",
-          "textures/blocks/stripped_acacia_log_top"
-        ],
-        [
-          "stripped_birch_log",
-          "textures/blocks/stripped_birch_log"
-        ],
-        [
-          "stripped_birch_log_top",
-          "textures/blocks/stripped_birch_log_top"
-        ],
-        [
-          "stripped_dark_oak_log",
-          "textures/blocks/stripped_dark_oak_log"
-        ],
-        [
-          "stripped_dark_oak_log_top",
-          "textures/blocks/stripped_dark_oak_log_top"
-        ],
-        [
-          "stripped_jungle_log",
-          "textures/blocks/stripped_jungle_log"
-        ],
-        [
-          "stripped_jungle_log_top",
-          "textures/blocks/stripped_jungle_log_top"
-        ],
-        [
-          "stripped_oak_log",
-          "textures/blocks/stripped_oak_log"
-        ],
-        [
-          "stripped_oak_log_top",
-          "textures/blocks/stripped_oak_log_top"
-        ],
-        [
-          "stripped_spruce_log",
-          "textures/blocks/stripped_spruce_log"
-        ],
-        [
-          "stripped_spruce_log_top",
-          "textures/blocks/stripped_spruce_log_top"
-        ],
-        [
-          "structure_air",
-          "textures/blocks/structure_air"
-        ],
-        [
-          "structure_block",
-          "textures/blocks/structure_block"
-        ],
-        [
-          "structure_block_corner",
-          "textures/blocks/structure_block_corner"
-        ],
-        [
-          "structure_block_data",
-          "textures/blocks/structure_block_data"
-        ],
-        [
-          "structure_block_export",
-          "textures/blocks/structure_block_export"
-        ],
-        [
-          "structure_block_load",
-          "textures/blocks/structure_block_load"
-        ],
-        [
-          "structure_block_save",
-          "textures/blocks/structure_block_save"
-        ],
-        [
-          "structure_void",
-          "textures/blocks/structure_void"
-        ],
-        [
-          "sweet_berry_bush_stage0",
-          "textures/blocks/sweet_berry_bush_stage0"
-        ],
-        [
-          "sweet_berry_bush_stage1",
-          "textures/blocks/sweet_berry_bush_stage1"
-        ],
-        [
-          "sweet_berry_bush_stage2",
-          "textures/blocks/sweet_berry_bush_stage2"
-        ],
-        [
-          "sweet_berry_bush_stage3",
-          "textures/blocks/sweet_berry_bush_stage3"
-        ],
-        [
-          "tallgrass",
-          "textures/blocks/tallgrass"
-        ],
-        [
-          "tnt_bottom",
-          "textures/blocks/tnt_bottom"
-        ],
-        [
-          "tnt_side",
-          "textures/blocks/tnt_side"
-        ],
-        [
-          "tnt_top",
-          "textures/blocks/tnt_top"
-        ],
-        [
-          "torch_on",
-          "textures/blocks/torch_on"
-        ],
-        [
-          "trapdoor",
-          "textures/blocks/trapdoor"
-        ],
-        [
-          "trapped_chest_front",
-          "textures/blocks/trapped_chest_front"
-        ],
-        [
-          "trip_wire",
-          "textures/blocks/trip_wire"
-        ],
-        [
-          "trip_wire_source",
-          "textures/blocks/trip_wire_source"
-        ],
-        [
-          "turtle_egg_not_cracked",
-          "textures/blocks/turtle_egg_not_cracked"
-        ],
-        [
-          "turtle_egg_slightly_cracked",
-          "textures/blocks/turtle_egg_slightly_cracked"
-        ],
-        [
-          "turtle_egg_very_cracked",
-          "textures/blocks/turtle_egg_very_cracked"
-        ],
-        [
-          "vine",
-          "textures/blocks/vine"
-        ],
-        [
-          "vine_carried",
-          "textures/blocks/vine_carried"
-        ],
-        [
-          "waterlily",
-          "textures/blocks/waterlily"
-        ],
-        [
-          "water_flow",
-          "textures/blocks/water_flow"
-        ],
-        [
-          "water_flow_grey",
-          "textures/blocks/water_flow_grey"
-        ],
-        [
-          "water_placeholder",
-          "textures/blocks/water_placeholder"
-        ],
-        [
-          "water_still",
-          "textures/blocks/water_still"
-        ],
-        [
-          "water_still_grey",
-          "textures/blocks/water_still_grey"
-        ],
-        [
-          "web",
-          "textures/blocks/web"
-        ],
-        [
-          "wheat_stage_0",
-          "textures/blocks/wheat_stage_0"
-        ],
-        [
-          "wheat_stage_1",
-          "textures/blocks/wheat_stage_1"
-        ],
-        [
-          "wheat_stage_2",
-          "textures/blocks/wheat_stage_2"
-        ],
-        [
-          "wheat_stage_3",
-          "textures/blocks/wheat_stage_3"
-        ],
-        [
-          "wheat_stage_4",
-          "textures/blocks/wheat_stage_4"
-        ],
-        [
-          "wheat_stage_5",
-          "textures/blocks/wheat_stage_5"
-        ],
-        [
-          "wheat_stage_6",
-          "textures/blocks/wheat_stage_6"
-        ],
-        [
-          "wheat_stage_7",
-          "textures/blocks/wheat_stage_7"
-        ],
-        [
-          "wool_colored_black",
-          "textures/blocks/wool_colored_black"
-        ],
-        [
-          "wool_colored_blue",
-          "textures/blocks/wool_colored_blue"
-        ],
-        [
-          "wool_colored_brown",
-          "textures/blocks/wool_colored_brown"
-        ],
-        [
-          "wool_colored_cyan",
-          "textures/blocks/wool_colored_cyan"
-        ],
-        [
-          "wool_colored_gray",
-          "textures/blocks/wool_colored_gray"
-        ],
-        [
-          "wool_colored_green",
-          "textures/blocks/wool_colored_green"
-        ],
-        [
-          "wool_colored_light_blue",
-          "textures/blocks/wool_colored_light_blue"
-        ],
-        [
-          "wool_colored_lime",
-          "textures/blocks/wool_colored_lime"
-        ],
-        [
-          "wool_colored_magenta",
-          "textures/blocks/wool_colored_magenta"
-        ],
-        [
-          "wool_colored_orange",
-          "textures/blocks/wool_colored_orange"
-        ],
-        [
-          "wool_colored_pink",
-          "textures/blocks/wool_colored_pink"
-        ],
-        [
-          "wool_colored_purple",
-          "textures/blocks/wool_colored_purple"
-        ],
-        [
-          "wool_colored_red",
-          "textures/blocks/wool_colored_red"
-        ],
-        [
-          "wool_colored_silver",
-          "textures/blocks/wool_colored_silver"
-        ],
-        [
-          "wool_colored_white",
-          "textures/blocks/wool_colored_white"
-        ],
-        [
-          "wool_colored_yellow",
-          "textures/blocks/wool_colored_yellow"
-        ]
-    ])]
-])
+    [
+        "pack_data",
+        new Map([
+            ["acacia_trapdoor", "textures/blocks/acacia_trapdoor"],
+            ["anvil_base", "textures/blocks/anvil_base"],
+            ["anvil_top_damaged_0", "textures/blocks/anvil_top_damaged_0"],
+            ["anvil_top_damaged_1", "textures/blocks/anvil_top_damaged_1"],
+            ["anvil_top_damaged_2", "textures/blocks/anvil_top_damaged_2"],
+            ["bamboo_leaf", "textures/blocks/bamboo_leaf"],
+            ["bamboo_sapling", "textures/blocks/bamboo_sapling"],
+            ["bamboo_singleleaf", "textures/blocks/bamboo_singleleaf"],
+            ["bamboo_small_leaf", "textures/blocks/bamboo_small_leaf"],
+            ["bamboo_stem", "textures/blocks/bamboo_stem"],
+            ["barrel_bottom", "textures/blocks/barrel_bottom"],
+            ["barrel_side", "textures/blocks/barrel_side"],
+            ["barrel_top", "textures/blocks/barrel_top"],
+            ["barrel_top_open", "textures/blocks/barrel_top_open"],
+            ["barrier", "textures/blocks/barrier"],
+            ["beacon", "textures/blocks/beacon"],
+            ["bedrock", "textures/blocks/bedrock"],
+            ["bed_feet_end", "textures/blocks/bed_feet_end"],
+            ["bed_feet_side", "textures/blocks/bed_feet_side"],
+            ["bed_feet_top", "textures/blocks/bed_feet_top"],
+            ["bed_head_end", "textures/blocks/bed_head_end"],
+            ["bed_head_side", "textures/blocks/bed_head_side"],
+            ["bed_head_top", "textures/blocks/bed_head_top"],
+            ["beetroots_stage_0", "textures/blocks/beetroots_stage_0"],
+            ["beetroots_stage_1", "textures/blocks/beetroots_stage_1"],
+            ["beetroots_stage_2", "textures/blocks/beetroots_stage_2"],
+            ["beetroots_stage_3", "textures/blocks/beetroots_stage_3"],
+            ["bell_bottom", "textures/blocks/bell_bottom"],
+            ["bell_side", "textures/blocks/bell_side"],
+            ["bell_top", "textures/blocks/bell_top"],
+            ["birch_trapdoor", "textures/blocks/birch_trapdoor"],
+            [
+                "blast_furnace_front_off",
+                "textures/blocks/blast_furnace_front_off",
+            ],
+            [
+                "blast_furnace_front_on",
+                "textures/blocks/blast_furnace_front_on",
+            ],
+            ["blast_furnace_side", "textures/blocks/blast_furnace_side"],
+            ["blast_furnace_top", "textures/blocks/blast_furnace_top"],
+            ["blue_ice", "textures/blocks/blue_ice"],
+            ["bone_block_side", "textures/blocks/bone_block_side"],
+            ["bone_block_top", "textures/blocks/bone_block_top"],
+            ["bookshelf", "textures/blocks/bookshelf"],
+            ["border", "textures/blocks/border"],
+            ["brewing_stand", "textures/blocks/brewing_stand"],
+            ["brewing_stand_base", "textures/blocks/brewing_stand_base"],
+            ["brick", "textures/blocks/brick"],
+            [
+                "bubble_column_down_top_a",
+                "textures/blocks/bubble_column_down_top_a",
+            ],
+            [
+                "bubble_column_down_top_b",
+                "textures/blocks/bubble_column_down_top_b",
+            ],
+            [
+                "bubble_column_down_top_c",
+                "textures/blocks/bubble_column_down_top_c",
+            ],
+            [
+                "bubble_column_down_top_d",
+                "textures/blocks/bubble_column_down_top_d",
+            ],
+            ["bubble_column_inner_a", "textures/blocks/bubble_column_inner_a"],
+            ["bubble_column_inner_b", "textures/blocks/bubble_column_inner_b"],
+            ["bubble_column_outer_a", "textures/blocks/bubble_column_outer_a"],
+            ["bubble_column_outer_b", "textures/blocks/bubble_column_outer_b"],
+            ["bubble_column_outer_c", "textures/blocks/bubble_column_outer_c"],
+            ["bubble_column_outer_d", "textures/blocks/bubble_column_outer_d"],
+            ["bubble_column_outer_e", "textures/blocks/bubble_column_outer_e"],
+            ["bubble_column_outer_f", "textures/blocks/bubble_column_outer_f"],
+            ["bubble_column_outer_g", "textures/blocks/bubble_column_outer_g"],
+            ["bubble_column_outer_h", "textures/blocks/bubble_column_outer_h"],
+            [
+                "bubble_column_up_top_a",
+                "textures/blocks/bubble_column_up_top_a",
+            ],
+            [
+                "bubble_column_up_top_b",
+                "textures/blocks/bubble_column_up_top_b",
+            ],
+            [
+                "bubble_column_up_top_c",
+                "textures/blocks/bubble_column_up_top_c",
+            ],
+            [
+                "bubble_column_up_top_d",
+                "textures/blocks/bubble_column_up_top_d",
+            ],
+            ["build_allow", "textures/blocks/build_allow"],
+            ["build_deny", "textures/blocks/build_deny"],
+            ["cake_bottom", "textures/blocks/cake_bottom"],
+            ["cake_inner", "textures/blocks/cake_inner"],
+            ["cake_side", "textures/blocks/cake_side"],
+            ["cake_top", "textures/blocks/cake_top"],
+            ["camera_back", "textures/blocks/camera_back"],
+            ["camera_front", "textures/blocks/camera_front"],
+            ["camera_side", "textures/blocks/camera_side"],
+            ["camera_top", "textures/blocks/camera_top"],
+            ["campfire", "textures/blocks/campfire"],
+            ["campfire_log", "textures/blocks/campfire_log"],
+            ["campfire_log_lit", "textures/blocks/campfire_log_lit"],
+            ["carried_waterlily", "textures/blocks/carried_waterlily"],
+            ["carrots_stage_0", "textures/blocks/carrots_stage_0"],
+            ["carrots_stage_1", "textures/blocks/carrots_stage_1"],
+            ["carrots_stage_2", "textures/blocks/carrots_stage_2"],
+            ["carrots_stage_3", "textures/blocks/carrots_stage_3"],
+            [
+                "cartography_table_side1",
+                "textures/blocks/cartography_table_side1",
+            ],
+            [
+                "cartography_table_side2",
+                "textures/blocks/cartography_table_side2",
+            ],
+            [
+                "cartography_table_side3",
+                "textures/blocks/cartography_table_side3",
+            ],
+            ["cartography_table_top", "textures/blocks/cartography_table_top"],
+            ["cauldron_bottom", "textures/blocks/cauldron_bottom"],
+            ["cauldron_inner", "textures/blocks/cauldron_inner"],
+            ["cauldron_side", "textures/blocks/cauldron_side"],
+            ["cauldron_top", "textures/blocks/cauldron_top"],
+            ["cauldron_water", "textures/blocks/cauldron_water"],
+            [
+                "cauldron_water_placeholder",
+                "textures/blocks/cauldron_water_placeholder",
+            ],
+            [
+                "chain_command_block_back",
+                "textures/blocks/chain_command_block_back",
+            ],
+            [
+                "chain_command_block_back_mipmap",
+                "textures/blocks/chain_command_block_back_mipmap",
+            ],
+            [
+                "chain_command_block_conditional",
+                "textures/blocks/chain_command_block_conditional",
+            ],
+            [
+                "chain_command_block_conditional_mipmap",
+                "textures/blocks/chain_command_block_conditional_mipmap",
+            ],
+            [
+                "chain_command_block_front",
+                "textures/blocks/chain_command_block_front",
+            ],
+            [
+                "chain_command_block_front_mipmap",
+                "textures/blocks/chain_command_block_front_mipmap",
+            ],
+            [
+                "chain_command_block_side",
+                "textures/blocks/chain_command_block_side",
+            ],
+            [
+                "chain_command_block_side_mipmap",
+                "textures/blocks/chain_command_block_side_mipmap",
+            ],
+            ["chest_front", "textures/blocks/chest_front"],
+            ["chest_side", "textures/blocks/chest_side"],
+            ["chest_top", "textures/blocks/chest_top"],
+            ["chorus_flower", "textures/blocks/chorus_flower"],
+            ["chorus_flower_dead", "textures/blocks/chorus_flower_dead"],
+            ["chorus_plant", "textures/blocks/chorus_plant"],
+            ["clay", "textures/blocks/clay"],
+            ["coal_block", "textures/blocks/coal_block"],
+            ["coal_ore", "textures/blocks/coal_ore"],
+            ["coarse_dirt", "textures/blocks/coarse_dirt"],
+            ["cobblestone", "textures/blocks/cobblestone"],
+            ["cobblestone_mossy", "textures/blocks/cobblestone_mossy"],
+            ["cocoa_stage_0", "textures/blocks/cocoa_stage_0"],
+            ["cocoa_stage_1", "textures/blocks/cocoa_stage_1"],
+            ["cocoa_stage_2", "textures/blocks/cocoa_stage_2"],
+            ["command_block", "textures/blocks/command_block"],
+            ["command_block_back", "textures/blocks/command_block_back"],
+            [
+                "command_block_back_mipmap",
+                "textures/blocks/command_block_back_mipmap",
+            ],
+            [
+                "command_block_conditional",
+                "textures/blocks/command_block_conditional",
+            ],
+            [
+                "command_block_conditional_mipmap",
+                "textures/blocks/command_block_conditional_mipmap",
+            ],
+            ["command_block_front", "textures/blocks/command_block_front"],
+            [
+                "command_block_front_mipmap",
+                "textures/blocks/command_block_front_mipmap",
+            ],
+            ["command_block_side", "textures/blocks/command_block_side"],
+            [
+                "command_block_side_mipmap",
+                "textures/blocks/command_block_side_mipmap",
+            ],
+            ["comparator_off", "textures/blocks/comparator_off"],
+            ["comparator_on", "textures/blocks/comparator_on"],
+            ["compost", "textures/blocks/compost"],
+            ["composter_bottom", "textures/blocks/composter_bottom"],
+            ["composter_side", "textures/blocks/composter_side"],
+            ["composter_top", "textures/blocks/composter_top"],
+            ["compost_ready", "textures/blocks/compost_ready"],
+            ["concrete_black", "textures/blocks/concrete_black"],
+            ["concrete_blue", "textures/blocks/concrete_blue"],
+            ["concrete_brown", "textures/blocks/concrete_brown"],
+            ["concrete_cyan", "textures/blocks/concrete_cyan"],
+            ["concrete_gray", "textures/blocks/concrete_gray"],
+            ["concrete_green", "textures/blocks/concrete_green"],
+            ["concrete_light_blue", "textures/blocks/concrete_light_blue"],
+            ["concrete_lime", "textures/blocks/concrete_lime"],
+            ["concrete_magenta", "textures/blocks/concrete_magenta"],
+            ["concrete_orange", "textures/blocks/concrete_orange"],
+            ["concrete_pink", "textures/blocks/concrete_pink"],
+            ["concrete_powder_black", "textures/blocks/concrete_powder_black"],
+            ["concrete_powder_blue", "textures/blocks/concrete_powder_blue"],
+            ["concrete_powder_brown", "textures/blocks/concrete_powder_brown"],
+            ["concrete_powder_cyan", "textures/blocks/concrete_powder_cyan"],
+            ["concrete_powder_gray", "textures/blocks/concrete_powder_gray"],
+            ["concrete_powder_green", "textures/blocks/concrete_powder_green"],
+            [
+                "concrete_powder_light_blue",
+                "textures/blocks/concrete_powder_light_blue",
+            ],
+            ["concrete_powder_lime", "textures/blocks/concrete_powder_lime"],
+            [
+                "concrete_powder_magenta",
+                "textures/blocks/concrete_powder_magenta",
+            ],
+            [
+                "concrete_powder_orange",
+                "textures/blocks/concrete_powder_orange",
+            ],
+            ["concrete_powder_pink", "textures/blocks/concrete_powder_pink"],
+            [
+                "concrete_powder_purple",
+                "textures/blocks/concrete_powder_purple",
+            ],
+            ["concrete_powder_red", "textures/blocks/concrete_powder_red"],
+            [
+                "concrete_powder_silver",
+                "textures/blocks/concrete_powder_silver",
+            ],
+            ["concrete_powder_white", "textures/blocks/concrete_powder_white"],
+            [
+                "concrete_powder_yellow",
+                "textures/blocks/concrete_powder_yellow",
+            ],
+            ["concrete_purple", "textures/blocks/concrete_purple"],
+            ["concrete_red", "textures/blocks/concrete_red"],
+            ["concrete_silver", "textures/blocks/concrete_silver"],
+            ["concrete_white", "textures/blocks/concrete_white"],
+            ["concrete_yellow", "textures/blocks/concrete_yellow"],
+            ["conduit_base", "textures/blocks/conduit_base"],
+            ["conduit_cage", "textures/blocks/conduit_cage"],
+            ["conduit_closed", "textures/blocks/conduit_closed"],
+            ["conduit_open", "textures/blocks/conduit_open"],
+            [
+                "conduit_wind_horizontal",
+                "textures/blocks/conduit_wind_horizontal",
+            ],
+            ["conduit_wind_vertical", "textures/blocks/conduit_wind_vertical"],
+            ["coral_blue", "textures/blocks/coral_blue"],
+            ["coral_blue_dead", "textures/blocks/coral_blue_dead"],
+            ["coral_fan_blue", "textures/blocks/coral_fan_blue"],
+            ["coral_fan_blue_dead", "textures/blocks/coral_fan_blue_dead"],
+            ["coral_fan_pink", "textures/blocks/coral_fan_pink"],
+            ["coral_fan_pink_dead", "textures/blocks/coral_fan_pink_dead"],
+            ["coral_fan_purple", "textures/blocks/coral_fan_purple"],
+            ["coral_fan_purple_dead", "textures/blocks/coral_fan_purple_dead"],
+            ["coral_fan_red", "textures/blocks/coral_fan_red"],
+            ["coral_fan_red_dead", "textures/blocks/coral_fan_red_dead"],
+            ["coral_fan_yellow", "textures/blocks/coral_fan_yellow"],
+            ["coral_fan_yellow_dead", "textures/blocks/coral_fan_yellow_dead"],
+            ["coral_pink", "textures/blocks/coral_pink"],
+            ["coral_pink_dead", "textures/blocks/coral_pink_dead"],
+            ["coral_plant_blue", "textures/blocks/coral_plant_blue"],
+            ["coral_plant_blue_dead", "textures/blocks/coral_plant_blue_dead"],
+            ["coral_plant_pink", "textures/blocks/coral_plant_pink"],
+            ["coral_plant_pink_dead", "textures/blocks/coral_plant_pink_dead"],
+            ["coral_plant_purple", "textures/blocks/coral_plant_purple"],
+            [
+                "coral_plant_purple_dead",
+                "textures/blocks/coral_plant_purple_dead",
+            ],
+            ["coral_plant_red", "textures/blocks/coral_plant_red"],
+            ["coral_plant_red_dead", "textures/blocks/coral_plant_red_dead"],
+            ["coral_plant_yellow", "textures/blocks/coral_plant_yellow"],
+            [
+                "coral_plant_yellow_dead",
+                "textures/blocks/coral_plant_yellow_dead",
+            ],
+            ["coral_purple", "textures/blocks/coral_purple"],
+            ["coral_purple_dead", "textures/blocks/coral_purple_dead"],
+            ["coral_red", "textures/blocks/coral_red"],
+            ["coral_red_dead", "textures/blocks/coral_red_dead"],
+            ["coral_yellow", "textures/blocks/coral_yellow"],
+            ["coral_yellow_dead", "textures/blocks/coral_yellow_dead"],
+            ["crafting_table_front", "textures/blocks/crafting_table_front"],
+            ["crafting_table_side", "textures/blocks/crafting_table_side"],
+            ["crafting_table_top", "textures/blocks/crafting_table_top"],
+            ["dark_oak_trapdoor", "textures/blocks/dark_oak_trapdoor"],
+            [
+                "daylight_detector_inverted_top",
+                "textures/blocks/daylight_detector_inverted_top",
+            ],
+            [
+                "daylight_detector_side",
+                "textures/blocks/daylight_detector_side",
+            ],
+            ["daylight_detector_top", "textures/blocks/daylight_detector_top"],
+            ["deadbush", "textures/blocks/deadbush"],
+            ["diamond_block", "textures/blocks/diamond_block"],
+            ["diamond_ore", "textures/blocks/diamond_ore"],
+            ["dirt", "textures/blocks/dirt"],
+            ["dirt_podzol_side", "textures/blocks/dirt_podzol_side"],
+            ["dirt_podzol_top", "textures/blocks/dirt_podzol_top"],
+            [
+                "dispenser_front_horizontal",
+                "textures/blocks/dispenser_front_horizontal",
+            ],
+            [
+                "dispenser_front_vertical",
+                "textures/blocks/dispenser_front_vertical",
+            ],
+            ["door_acacia_lower", "textures/blocks/door_acacia_lower"],
+            ["door_acacia_upper", "textures/blocks/door_acacia_upper"],
+            ["door_birch_lower", "textures/blocks/door_birch_lower"],
+            ["door_birch_upper", "textures/blocks/door_birch_upper"],
+            ["door_dark_oak_lower", "textures/blocks/door_dark_oak_lower"],
+            ["door_dark_oak_upper", "textures/blocks/door_dark_oak_upper"],
+            ["door_iron_lower", "textures/blocks/door_iron_lower"],
+            ["door_iron_upper", "textures/blocks/door_iron_upper"],
+            ["door_jungle_lower", "textures/blocks/door_jungle_lower"],
+            ["door_jungle_upper", "textures/blocks/door_jungle_upper"],
+            ["door_spruce_lower", "textures/blocks/door_spruce_lower"],
+            ["door_spruce_upper", "textures/blocks/door_spruce_upper"],
+            ["door_wood_lower", "textures/blocks/door_wood_lower"],
+            ["door_wood_upper", "textures/blocks/door_wood_upper"],
+            [
+                "double_plant_fern_carried",
+                "textures/blocks/double_plant_fern_carried",
+            ],
+            [
+                "double_plant_grass_carried",
+                "textures/blocks/double_plant_grass_carried",
+            ],
+            [
+                "double_plant_paeonia_bottom",
+                "textures/blocks/double_plant_paeonia_bottom",
+            ],
+            [
+                "double_plant_paeonia_top",
+                "textures/blocks/double_plant_paeonia_top",
+            ],
+            [
+                "double_plant_rose_bottom",
+                "textures/blocks/double_plant_rose_bottom",
+            ],
+            ["double_plant_rose_top", "textures/blocks/double_plant_rose_top"],
+            [
+                "double_plant_sunflower_back",
+                "textures/blocks/double_plant_sunflower_back",
+            ],
+            [
+                "double_plant_sunflower_bottom",
+                "textures/blocks/double_plant_sunflower_bottom",
+            ],
+            [
+                "double_plant_sunflower_front",
+                "textures/blocks/double_plant_sunflower_front",
+            ],
+            [
+                "double_plant_sunflower_top",
+                "textures/blocks/double_plant_sunflower_top",
+            ],
+            ["dragon_egg", "textures/blocks/dragon_egg"],
+            ["dried_kelp_side_a", "textures/blocks/dried_kelp_side_a"],
+            ["dried_kelp_side_b", "textures/blocks/dried_kelp_side_b"],
+            ["dried_kelp_top", "textures/blocks/dried_kelp_top"],
+            [
+                "dropper_front_horizontal",
+                "textures/blocks/dropper_front_horizontal",
+            ],
+            [
+                "dropper_front_vertical",
+                "textures/blocks/dropper_front_vertical",
+            ],
+            ["emerald_block", "textures/blocks/emerald_block"],
+            ["emerald_ore", "textures/blocks/emerald_ore"],
+            [
+                "enchanting_table_bottom",
+                "textures/blocks/enchanting_table_bottom",
+            ],
+            ["enchanting_table_side", "textures/blocks/enchanting_table_side"],
+            ["enchanting_table_top", "textures/blocks/enchanting_table_top"],
+            ["ender_chest_front", "textures/blocks/ender_chest_front"],
+            ["ender_chest_side", "textures/blocks/ender_chest_side"],
+            ["ender_chest_top", "textures/blocks/ender_chest_top"],
+            ["endframe_eye", "textures/blocks/endframe_eye"],
+            ["endframe_side", "textures/blocks/endframe_side"],
+            ["endframe_top", "textures/blocks/endframe_top"],
+            ["end_bricks", "textures/blocks/end_bricks"],
+            ["end_gateway", "textures/blocks/end_gateway"],
+            ["end_portal", "textures/blocks/end_portal"],
+            ["end_rod", "textures/blocks/end_rod"],
+            ["end_stone", "textures/blocks/end_stone"],
+            ["farmland_dry", "textures/blocks/farmland_dry"],
+            ["farmland_wet", "textures/blocks/farmland_wet"],
+            ["fire_0", "textures/blocks/fire_0"],
+            ["fire_0_placeholder", "textures/blocks/fire_0_placeholder"],
+            ["fire_1", "textures/blocks/fire_1"],
+            ["fire_1_placeholder", "textures/blocks/fire_1_placeholder"],
+            ["fletcher_table_side1", "textures/blocks/fletcher_table_side1"],
+            ["fletcher_table_side2", "textures/blocks/fletcher_table_side2"],
+            ["fletcher_table_top", "textures/blocks/fletcher_table_top"],
+            ["flower_allium", "textures/blocks/flower_allium"],
+            ["flower_blue_orchid", "textures/blocks/flower_blue_orchid"],
+            ["flower_cornflower", "textures/blocks/flower_cornflower"],
+            ["flower_dandelion", "textures/blocks/flower_dandelion"],
+            ["flower_houstonia", "textures/blocks/flower_houstonia"],
+            [
+                "flower_lily_of_the_valley",
+                "textures/blocks/flower_lily_of_the_valley",
+            ],
+            ["flower_oxeye_daisy", "textures/blocks/flower_oxeye_daisy"],
+            ["flower_paeonia", "textures/blocks/flower_paeonia"],
+            ["flower_pot", "textures/blocks/flower_pot"],
+            ["flower_rose", "textures/blocks/flower_rose"],
+            ["flower_rose_blue", "textures/blocks/flower_rose_blue"],
+            ["flower_tulip_orange", "textures/blocks/flower_tulip_orange"],
+            ["flower_tulip_pink", "textures/blocks/flower_tulip_pink"],
+            ["flower_tulip_red", "textures/blocks/flower_tulip_red"],
+            ["flower_tulip_white", "textures/blocks/flower_tulip_white"],
+            ["flower_wither_rose", "textures/blocks/flower_wither_rose"],
+            ["frosted_ice_0", "textures/blocks/frosted_ice_0"],
+            ["frosted_ice_1", "textures/blocks/frosted_ice_1"],
+            ["frosted_ice_2", "textures/blocks/frosted_ice_2"],
+            ["frosted_ice_3", "textures/blocks/frosted_ice_3"],
+            ["furnace_front_off", "textures/blocks/furnace_front_off"],
+            ["furnace_front_on", "textures/blocks/furnace_front_on"],
+            ["furnace_side", "textures/blocks/furnace_side"],
+            ["furnace_top", "textures/blocks/furnace_top"],
+            ["glass", "textures/blocks/glass"],
+            ["glass_black", "textures/blocks/glass_black"],
+            ["glass_blue", "textures/blocks/glass_blue"],
+            ["glass_brown", "textures/blocks/glass_brown"],
+            ["glass_cyan", "textures/blocks/glass_cyan"],
+            ["glass_gray", "textures/blocks/glass_gray"],
+            ["glass_green", "textures/blocks/glass_green"],
+            ["glass_light_blue", "textures/blocks/glass_light_blue"],
+            ["glass_lime", "textures/blocks/glass_lime"],
+            ["glass_magenta", "textures/blocks/glass_magenta"],
+            ["glass_orange", "textures/blocks/glass_orange"],
+            ["glass_pane_top", "textures/blocks/glass_pane_top"],
+            ["glass_pane_top_black", "textures/blocks/glass_pane_top_black"],
+            ["glass_pane_top_blue", "textures/blocks/glass_pane_top_blue"],
+            ["glass_pane_top_brown", "textures/blocks/glass_pane_top_brown"],
+            ["glass_pane_top_cyan", "textures/blocks/glass_pane_top_cyan"],
+            ["glass_pane_top_gray", "textures/blocks/glass_pane_top_gray"],
+            ["glass_pane_top_green", "textures/blocks/glass_pane_top_green"],
+            [
+                "glass_pane_top_light_blue",
+                "textures/blocks/glass_pane_top_light_blue",
+            ],
+            ["glass_pane_top_lime", "textures/blocks/glass_pane_top_lime"],
+            [
+                "glass_pane_top_magenta",
+                "textures/blocks/glass_pane_top_magenta",
+            ],
+            ["glass_pane_top_orange", "textures/blocks/glass_pane_top_orange"],
+            ["glass_pane_top_pink", "textures/blocks/glass_pane_top_pink"],
+            ["glass_pane_top_purple", "textures/blocks/glass_pane_top_purple"],
+            ["glass_pane_top_red", "textures/blocks/glass_pane_top_red"],
+            ["glass_pane_top_silver", "textures/blocks/glass_pane_top_silver"],
+            ["glass_pane_top_white", "textures/blocks/glass_pane_top_white"],
+            ["glass_pane_top_yellow", "textures/blocks/glass_pane_top_yellow"],
+            ["glass_pink", "textures/blocks/glass_pink"],
+            ["glass_purple", "textures/blocks/glass_purple"],
+            ["glass_red", "textures/blocks/glass_red"],
+            ["glass_silver", "textures/blocks/glass_silver"],
+            ["glass_white", "textures/blocks/glass_white"],
+            ["glass_yellow", "textures/blocks/glass_yellow"],
+            [
+                "glazed_terracotta_black",
+                "textures/blocks/glazed_terracotta_black",
+            ],
+            [
+                "glazed_terracotta_blue",
+                "textures/blocks/glazed_terracotta_blue",
+            ],
+            [
+                "glazed_terracotta_brown",
+                "textures/blocks/glazed_terracotta_brown",
+            ],
+            [
+                "glazed_terracotta_cyan",
+                "textures/blocks/glazed_terracotta_cyan",
+            ],
+            [
+                "glazed_terracotta_gray",
+                "textures/blocks/glazed_terracotta_gray",
+            ],
+            [
+                "glazed_terracotta_green",
+                "textures/blocks/glazed_terracotta_green",
+            ],
+            [
+                "glazed_terracotta_light_blue",
+                "textures/blocks/glazed_terracotta_light_blue",
+            ],
+            [
+                "glazed_terracotta_lime",
+                "textures/blocks/glazed_terracotta_lime",
+            ],
+            [
+                "glazed_terracotta_magenta",
+                "textures/blocks/glazed_terracotta_magenta",
+            ],
+            [
+                "glazed_terracotta_orange",
+                "textures/blocks/glazed_terracotta_orange",
+            ],
+            [
+                "glazed_terracotta_pink",
+                "textures/blocks/glazed_terracotta_pink",
+            ],
+            [
+                "glazed_terracotta_purple",
+                "textures/blocks/glazed_terracotta_purple",
+            ],
+            ["glazed_terracotta_red", "textures/blocks/glazed_terracotta_red"],
+            [
+                "glazed_terracotta_silver",
+                "textures/blocks/glazed_terracotta_silver",
+            ],
+            [
+                "glazed_terracotta_white",
+                "textures/blocks/glazed_terracotta_white",
+            ],
+            [
+                "glazed_terracotta_yellow",
+                "textures/blocks/glazed_terracotta_yellow",
+            ],
+            ["glowing_obsidian", "textures/blocks/glowing_obsidian"],
+            ["glowstone", "textures/blocks/glowstone"],
+            ["gold_block", "textures/blocks/gold_block"],
+            ["gold_ore", "textures/blocks/gold_ore"],
+            ["grass_carried", "textures/blocks/grass_carried"],
+            ["grass_path_side", "textures/blocks/grass_path_side"],
+            ["grass_path_top", "textures/blocks/grass_path_top"],
+            ["grass_side_carried", "textures/blocks/grass_side_carried"],
+            ["grass_side_snowed", "textures/blocks/grass_side_snowed"],
+            ["grass_top", "textures/blocks/grass_top"],
+            ["gravel", "textures/blocks/gravel"],
+            ["hardened_clay", "textures/blocks/hardened_clay"],
+            [
+                "hardened_clay_stained_black",
+                "textures/blocks/hardened_clay_stained_black",
+            ],
+            [
+                "hardened_clay_stained_blue",
+                "textures/blocks/hardened_clay_stained_blue",
+            ],
+            [
+                "hardened_clay_stained_brown",
+                "textures/blocks/hardened_clay_stained_brown",
+            ],
+            [
+                "hardened_clay_stained_cyan",
+                "textures/blocks/hardened_clay_stained_cyan",
+            ],
+            [
+                "hardened_clay_stained_gray",
+                "textures/blocks/hardened_clay_stained_gray",
+            ],
+            [
+                "hardened_clay_stained_green",
+                "textures/blocks/hardened_clay_stained_green",
+            ],
+            [
+                "hardened_clay_stained_light_blue",
+                "textures/blocks/hardened_clay_stained_light_blue",
+            ],
+            [
+                "hardened_clay_stained_lime",
+                "textures/blocks/hardened_clay_stained_lime",
+            ],
+            [
+                "hardened_clay_stained_magenta",
+                "textures/blocks/hardened_clay_stained_magenta",
+            ],
+            [
+                "hardened_clay_stained_orange",
+                "textures/blocks/hardened_clay_stained_orange",
+            ],
+            [
+                "hardened_clay_stained_pink",
+                "textures/blocks/hardened_clay_stained_pink",
+            ],
+            [
+                "hardened_clay_stained_purple",
+                "textures/blocks/hardened_clay_stained_purple",
+            ],
+            [
+                "hardened_clay_stained_red",
+                "textures/blocks/hardened_clay_stained_red",
+            ],
+            [
+                "hardened_clay_stained_silver",
+                "textures/blocks/hardened_clay_stained_silver",
+            ],
+            [
+                "hardened_clay_stained_white",
+                "textures/blocks/hardened_clay_stained_white",
+            ],
+            [
+                "hardened_clay_stained_yellow",
+                "textures/blocks/hardened_clay_stained_yellow",
+            ],
+            ["hay_block_side", "textures/blocks/hay_block_side"],
+            ["hay_block_top", "textures/blocks/hay_block_top"],
+            ["hopper_inside", "textures/blocks/hopper_inside"],
+            ["hopper_outside", "textures/blocks/hopper_outside"],
+            ["hopper_top", "textures/blocks/hopper_top"],
+            ["ice", "textures/blocks/ice"],
+            ["ice_packed", "textures/blocks/ice_packed"],
+            ["iron_bars", "textures/blocks/iron_bars"],
+            ["iron_block", "textures/blocks/iron_block"],
+            ["iron_ore", "textures/blocks/iron_ore"],
+            ["iron_trapdoor", "textures/blocks/iron_trapdoor"],
+            ["itemframe_background", "textures/blocks/itemframe_background"],
+            ["jigsaw_back", "textures/blocks/jigsaw_back"],
+            ["jigsaw_front", "textures/blocks/jigsaw_front"],
+            ["jigsaw_side", "textures/blocks/jigsaw_side"],
+            ["jukebox_side", "textures/blocks/jukebox_side"],
+            ["jukebox_top", "textures/blocks/jukebox_top"],
+            ["jungle_trapdoor", "textures/blocks/jungle_trapdoor"],
+            ["ladder", "textures/blocks/ladder"],
+            ["lantern", "textures/blocks/lantern"],
+            ["lapis_block", "textures/blocks/lapis_block"],
+            ["lapis_ore", "textures/blocks/lapis_ore"],
+            ["lava_flow", "textures/blocks/lava_flow"],
+            ["lava_placeholder", "textures/blocks/lava_placeholder"],
+            ["lava_still", "textures/blocks/lava_still"],
+            ["leaves_acacia_opaque", "textures/blocks/leaves_acacia_opaque"],
+            ["leaves_big_oak_opaque", "textures/blocks/leaves_big_oak_opaque"],
+            ["leaves_birch_opaque", "textures/blocks/leaves_birch_opaque"],
+            ["leaves_jungle_opaque", "textures/blocks/leaves_jungle_opaque"],
+            ["leaves_oak_opaque", "textures/blocks/leaves_oak_opaque"],
+            ["leaves_spruce_opaque", "textures/blocks/leaves_spruce_opaque"],
+            ["lectern_base", "textures/blocks/lectern_base"],
+            ["lectern_front", "textures/blocks/lectern_front"],
+            ["lectern_sides", "textures/blocks/lectern_sides"],
+            ["lectern_top", "textures/blocks/lectern_top"],
+            ["lever", "textures/blocks/lever"],
+            ["log_acacia", "textures/blocks/log_acacia"],
+            ["log_acacia_top", "textures/blocks/log_acacia_top"],
+            ["log_big_oak", "textures/blocks/log_big_oak"],
+            ["log_big_oak_top", "textures/blocks/log_big_oak_top"],
+            ["log_birch", "textures/blocks/log_birch"],
+            ["log_birch_top", "textures/blocks/log_birch_top"],
+            ["log_jungle", "textures/blocks/log_jungle"],
+            ["log_jungle_top", "textures/blocks/log_jungle_top"],
+            ["log_oak", "textures/blocks/log_oak"],
+            ["log_oak_top", "textures/blocks/log_oak_top"],
+            ["log_spruce", "textures/blocks/log_spruce"],
+            ["log_spruce_top", "textures/blocks/log_spruce_top"],
+            ["loom_bottom", "textures/blocks/loom_bottom"],
+            ["loom_front", "textures/blocks/loom_front"],
+            ["loom_side", "textures/blocks/loom_side"],
+            ["loom_top", "textures/blocks/loom_top"],
+            ["magma", "textures/blocks/magma"],
+            ["melon_side", "textures/blocks/melon_side"],
+            ["melon_stem_connected", "textures/blocks/melon_stem_connected"],
+            [
+                "melon_stem_disconnected",
+                "textures/blocks/melon_stem_disconnected",
+            ],
+            ["melon_top", "textures/blocks/melon_top"],
+            ["missing_tile", "textures/blocks/missing_tile"],
+            ["mob_spawner", "textures/blocks/mob_spawner"],
+            ["mushroom_block_inside", "textures/blocks/mushroom_block_inside"],
+            [
+                "mushroom_block_skin_brown",
+                "textures/blocks/mushroom_block_skin_brown",
+            ],
+            [
+                "mushroom_block_skin_red",
+                "textures/blocks/mushroom_block_skin_red",
+            ],
+            [
+                "mushroom_block_skin_stem",
+                "textures/blocks/mushroom_block_skin_stem",
+            ],
+            ["mushroom_brown", "textures/blocks/mushroom_brown"],
+            ["mushroom_red", "textures/blocks/mushroom_red"],
+            ["mycelium_side", "textures/blocks/mycelium_side"],
+            ["mycelium_top", "textures/blocks/mycelium_top"],
+            ["netherrack", "textures/blocks/netherrack"],
+            ["nether_brick", "textures/blocks/nether_brick"],
+            ["nether_wart_block", "textures/blocks/nether_wart_block"],
+            ["nether_wart_stage_0", "textures/blocks/nether_wart_stage_0"],
+            ["nether_wart_stage_1", "textures/blocks/nether_wart_stage_1"],
+            ["nether_wart_stage_2", "textures/blocks/nether_wart_stage_2"],
+            ["noteblock", "textures/blocks/noteblock"],
+            ["observer_back", "textures/blocks/observer_back"],
+            ["observer_back_lit", "textures/blocks/observer_back_lit"],
+            ["observer_front", "textures/blocks/observer_front"],
+            ["observer_side", "textures/blocks/observer_side"],
+            ["observer_top", "textures/blocks/observer_top"],
+            ["obsidian", "textures/blocks/obsidian"],
+            ["piston_bottom", "textures/blocks/piston_bottom"],
+            ["piston_inner", "textures/blocks/piston_inner"],
+            ["piston_side", "textures/blocks/piston_side"],
+            ["piston_top_normal", "textures/blocks/piston_top_normal"],
+            ["piston_top_sticky", "textures/blocks/piston_top_sticky"],
+            ["planks_acacia", "textures/blocks/planks_acacia"],
+            ["planks_big_oak", "textures/blocks/planks_big_oak"],
+            ["planks_birch", "textures/blocks/planks_birch"],
+            ["planks_jungle", "textures/blocks/planks_jungle"],
+            ["planks_oak", "textures/blocks/planks_oak"],
+            ["planks_spruce", "textures/blocks/planks_spruce"],
+            ["portal", "textures/blocks/portal"],
+            ["portal_placeholder", "textures/blocks/portal_placeholder"],
+            ["potatoes_stage_0", "textures/blocks/potatoes_stage_0"],
+            ["potatoes_stage_1", "textures/blocks/potatoes_stage_1"],
+            ["potatoes_stage_2", "textures/blocks/potatoes_stage_2"],
+            ["potatoes_stage_3", "textures/blocks/potatoes_stage_3"],
+            ["prismarine_bricks", "textures/blocks/prismarine_bricks"],
+            ["prismarine_dark", "textures/blocks/prismarine_dark"],
+            ["prismarine_rough", "textures/blocks/prismarine_rough"],
+            ["pumpkin_face_off", "textures/blocks/pumpkin_face_off"],
+            ["pumpkin_face_on", "textures/blocks/pumpkin_face_on"],
+            ["pumpkin_side", "textures/blocks/pumpkin_side"],
+            [
+                "pumpkin_stem_connected",
+                "textures/blocks/pumpkin_stem_connected",
+            ],
+            [
+                "pumpkin_stem_disconnected",
+                "textures/blocks/pumpkin_stem_disconnected",
+            ],
+            ["pumpkin_top", "textures/blocks/pumpkin_top"],
+            ["purpur_block", "textures/blocks/purpur_block"],
+            ["purpur_pillar", "textures/blocks/purpur_pillar"],
+            ["purpur_pillar_top", "textures/blocks/purpur_pillar_top"],
+            ["quartz_block_bottom", "textures/blocks/quartz_block_bottom"],
+            ["quartz_block_chiseled", "textures/blocks/quartz_block_chiseled"],
+            [
+                "quartz_block_chiseled_top",
+                "textures/blocks/quartz_block_chiseled_top",
+            ],
+            ["quartz_block_lines", "textures/blocks/quartz_block_lines"],
+            [
+                "quartz_block_lines_top",
+                "textures/blocks/quartz_block_lines_top",
+            ],
+            ["quartz_block_side", "textures/blocks/quartz_block_side"],
+            ["quartz_block_top", "textures/blocks/quartz_block_top"],
+            ["quartz_ore", "textures/blocks/quartz_ore"],
+            ["rail_activator", "textures/blocks/rail_activator"],
+            [
+                "rail_activator_powered",
+                "textures/blocks/rail_activator_powered",
+            ],
+            ["rail_detector", "textures/blocks/rail_detector"],
+            ["rail_detector_powered", "textures/blocks/rail_detector_powered"],
+            ["rail_golden", "textures/blocks/rail_golden"],
+            ["rail_golden_powered", "textures/blocks/rail_golden_powered"],
+            ["rail_normal", "textures/blocks/rail_normal"],
+            ["rail_normal_turned", "textures/blocks/rail_normal_turned"],
+            ["reactor_core_stage_0", "textures/blocks/reactor_core_stage_0"],
+            ["reactor_core_stage_1", "textures/blocks/reactor_core_stage_1"],
+            ["reactor_core_stage_2", "textures/blocks/reactor_core_stage_2"],
+            ["redstone_block", "textures/blocks/redstone_block"],
+            ["redstone_dust_cross", "textures/blocks/redstone_dust_cross"],
+            ["redstone_dust_line", "textures/blocks/redstone_dust_line"],
+            ["redstone_lamp_off", "textures/blocks/redstone_lamp_off"],
+            ["redstone_lamp_on", "textures/blocks/redstone_lamp_on"],
+            ["redstone_ore", "textures/blocks/redstone_ore"],
+            ["redstone_torch_off", "textures/blocks/redstone_torch_off"],
+            ["redstone_torch_on", "textures/blocks/redstone_torch_on"],
+            ["red_nether_brick", "textures/blocks/red_nether_brick"],
+            ["red_sand", "textures/blocks/red_sand"],
+            ["red_sandstone_bottom", "textures/blocks/red_sandstone_bottom"],
+            ["red_sandstone_carved", "textures/blocks/red_sandstone_carved"],
+            ["red_sandstone_normal", "textures/blocks/red_sandstone_normal"],
+            ["red_sandstone_smooth", "textures/blocks/red_sandstone_smooth"],
+            ["red_sandstone_top", "textures/blocks/red_sandstone_top"],
+            ["repeater_off", "textures/blocks/repeater_off"],
+            ["repeater_on", "textures/blocks/repeater_on"],
+            [
+                "repeating_command_block_back",
+                "textures/blocks/repeating_command_block_back",
+            ],
+            [
+                "repeating_command_block_back_mipmap",
+                "textures/blocks/repeating_command_block_back_mipmap",
+            ],
+            [
+                "repeating_command_block_conditional",
+                "textures/blocks/repeating_command_block_conditional",
+            ],
+            [
+                "repeating_command_block_conditional_mipmap",
+                "textures/blocks/repeating_command_block_conditional_mipmap",
+            ],
+            [
+                "repeating_command_block_front",
+                "textures/blocks/repeating_command_block_front",
+            ],
+            [
+                "repeating_command_block_front_mipmap",
+                "textures/blocks/repeating_command_block_front_mipmap",
+            ],
+            [
+                "repeating_command_block_side",
+                "textures/blocks/repeating_command_block_side",
+            ],
+            [
+                "repeating_command_block_side_mipmap",
+                "textures/blocks/repeating_command_block_side_mipmap",
+            ],
+            ["sand", "textures/blocks/sand"],
+            ["sandstone_bottom", "textures/blocks/sandstone_bottom"],
+            ["sandstone_carved", "textures/blocks/sandstone_carved"],
+            ["sandstone_normal", "textures/blocks/sandstone_normal"],
+            ["sandstone_smooth", "textures/blocks/sandstone_smooth"],
+            ["sandstone_top", "textures/blocks/sandstone_top"],
+            ["sapling_acacia", "textures/blocks/sapling_acacia"],
+            ["sapling_birch", "textures/blocks/sapling_birch"],
+            ["sapling_jungle", "textures/blocks/sapling_jungle"],
+            ["sapling_oak", "textures/blocks/sapling_oak"],
+            ["sapling_roofed_oak", "textures/blocks/sapling_roofed_oak"],
+            ["sapling_spruce", "textures/blocks/sapling_spruce"],
+            ["seagrass", "textures/blocks/seagrass"],
+            ["seagrass_carried", "textures/blocks/seagrass_carried"],
+            ["sea_lantern", "textures/blocks/sea_lantern"],
+            ["sea_pickle", "textures/blocks/sea_pickle"],
+            ["shulker_top_black", "textures/blocks/shulker_top_black"],
+            ["shulker_top_blue", "textures/blocks/shulker_top_blue"],
+            ["shulker_top_brown", "textures/blocks/shulker_top_brown"],
+            ["shulker_top_cyan", "textures/blocks/shulker_top_cyan"],
+            ["shulker_top_gray", "textures/blocks/shulker_top_gray"],
+            ["shulker_top_green", "textures/blocks/shulker_top_green"],
+            [
+                "shulker_top_light_blue",
+                "textures/blocks/shulker_top_light_blue",
+            ],
+            ["shulker_top_lime", "textures/blocks/shulker_top_lime"],
+            ["shulker_top_magenta", "textures/blocks/shulker_top_magenta"],
+            ["shulker_top_orange", "textures/blocks/shulker_top_orange"],
+            ["shulker_top_pink", "textures/blocks/shulker_top_pink"],
+            ["shulker_top_purple", "textures/blocks/shulker_top_purple"],
+            ["shulker_top_red", "textures/blocks/shulker_top_red"],
+            ["shulker_top_silver", "textures/blocks/shulker_top_silver"],
+            ["shulker_top_undyed", "textures/blocks/shulker_top_undyed"],
+            ["shulker_top_white", "textures/blocks/shulker_top_white"],
+            ["shulker_top_yellow", "textures/blocks/shulker_top_yellow"],
+            ["slime", "textures/blocks/slime"],
+            ["smithing_table_bottom", "textures/blocks/smithing_table_bottom"],
+            ["smithing_table_front", "textures/blocks/smithing_table_front"],
+            ["smithing_table_side", "textures/blocks/smithing_table_side"],
+            ["smithing_table_top", "textures/blocks/smithing_table_top"],
+            ["smoker_bottom", "textures/blocks/smoker_bottom"],
+            ["smoker_front_off", "textures/blocks/smoker_front_off"],
+            ["smoker_front_on", "textures/blocks/smoker_front_on"],
+            ["smoker_side", "textures/blocks/smoker_side"],
+            ["smoker_top", "textures/blocks/smoker_top"],
+            ["snow", "textures/blocks/snow"],
+            ["soul_sand", "textures/blocks/soul_sand"],
+            ["sponge", "textures/blocks/sponge"],
+            ["sponge_wet", "textures/blocks/sponge_wet"],
+            ["spruce_trapdoor", "textures/blocks/spruce_trapdoor"],
+            ["stone", "textures/blocks/stone"],
+            ["stonebrick", "textures/blocks/stonebrick"],
+            ["stonebrick_carved", "textures/blocks/stonebrick_carved"],
+            ["stonebrick_cracked", "textures/blocks/stonebrick_cracked"],
+            ["stonebrick_mossy", "textures/blocks/stonebrick_mossy"],
+            ["stonecutter2_bottom", "textures/blocks/stonecutter2_bottom"],
+            ["stonecutter2_side", "textures/blocks/stonecutter2_side"],
+            ["stonecutter2_top", "textures/blocks/stonecutter2_top"],
+            ["stonecutter_bottom", "textures/blocks/stonecutter_bottom"],
+            [
+                "stonecutter_other_side",
+                "textures/blocks/stonecutter_other_side",
+            ],
+            ["stonecutter_side", "textures/blocks/stonecutter_side"],
+            ["stonecutter_top", "textures/blocks/stonecutter_top"],
+            ["stone_andesite", "textures/blocks/stone_andesite"],
+            ["stone_andesite_smooth", "textures/blocks/stone_andesite_smooth"],
+            ["stone_diorite", "textures/blocks/stone_diorite"],
+            ["stone_diorite_smooth", "textures/blocks/stone_diorite_smooth"],
+            ["stone_granite", "textures/blocks/stone_granite"],
+            ["stone_granite_smooth", "textures/blocks/stone_granite_smooth"],
+            ["stone_slab_side", "textures/blocks/stone_slab_side"],
+            ["stone_slab_top", "textures/blocks/stone_slab_top"],
+            ["stripped_acacia_log", "textures/blocks/stripped_acacia_log"],
+            [
+                "stripped_acacia_log_top",
+                "textures/blocks/stripped_acacia_log_top",
+            ],
+            ["stripped_birch_log", "textures/blocks/stripped_birch_log"],
+            [
+                "stripped_birch_log_top",
+                "textures/blocks/stripped_birch_log_top",
+            ],
+            ["stripped_dark_oak_log", "textures/blocks/stripped_dark_oak_log"],
+            [
+                "stripped_dark_oak_log_top",
+                "textures/blocks/stripped_dark_oak_log_top",
+            ],
+            ["stripped_jungle_log", "textures/blocks/stripped_jungle_log"],
+            [
+                "stripped_jungle_log_top",
+                "textures/blocks/stripped_jungle_log_top",
+            ],
+            ["stripped_oak_log", "textures/blocks/stripped_oak_log"],
+            ["stripped_oak_log_top", "textures/blocks/stripped_oak_log_top"],
+            ["stripped_spruce_log", "textures/blocks/stripped_spruce_log"],
+            [
+                "stripped_spruce_log_top",
+                "textures/blocks/stripped_spruce_log_top",
+            ],
+            ["structure_air", "textures/blocks/structure_air"],
+            ["structure_block", "textures/blocks/structure_block"],
+            [
+                "structure_block_corner",
+                "textures/blocks/structure_block_corner",
+            ],
+            ["structure_block_data", "textures/blocks/structure_block_data"],
+            [
+                "structure_block_export",
+                "textures/blocks/structure_block_export",
+            ],
+            ["structure_block_load", "textures/blocks/structure_block_load"],
+            ["structure_block_save", "textures/blocks/structure_block_save"],
+            ["structure_void", "textures/blocks/structure_void"],
+            [
+                "sweet_berry_bush_stage0",
+                "textures/blocks/sweet_berry_bush_stage0",
+            ],
+            [
+                "sweet_berry_bush_stage1",
+                "textures/blocks/sweet_berry_bush_stage1",
+            ],
+            [
+                "sweet_berry_bush_stage2",
+                "textures/blocks/sweet_berry_bush_stage2",
+            ],
+            [
+                "sweet_berry_bush_stage3",
+                "textures/blocks/sweet_berry_bush_stage3",
+            ],
+            ["tallgrass", "textures/blocks/tallgrass"],
+            ["tnt_bottom", "textures/blocks/tnt_bottom"],
+            ["tnt_side", "textures/blocks/tnt_side"],
+            ["tnt_top", "textures/blocks/tnt_top"],
+            ["torch_on", "textures/blocks/torch_on"],
+            ["trapdoor", "textures/blocks/trapdoor"],
+            ["trapped_chest_front", "textures/blocks/trapped_chest_front"],
+            ["trip_wire", "textures/blocks/trip_wire"],
+            ["trip_wire_source", "textures/blocks/trip_wire_source"],
+            [
+                "turtle_egg_not_cracked",
+                "textures/blocks/turtle_egg_not_cracked",
+            ],
+            [
+                "turtle_egg_slightly_cracked",
+                "textures/blocks/turtle_egg_slightly_cracked",
+            ],
+            [
+                "turtle_egg_very_cracked",
+                "textures/blocks/turtle_egg_very_cracked",
+            ],
+            ["vine", "textures/blocks/vine"],
+            ["vine_carried", "textures/blocks/vine_carried"],
+            ["waterlily", "textures/blocks/waterlily"],
+            ["water_flow", "textures/blocks/water_flow"],
+            ["water_flow_grey", "textures/blocks/water_flow_grey"],
+            ["water_placeholder", "textures/blocks/water_placeholder"],
+            ["water_still", "textures/blocks/water_still"],
+            ["water_still_grey", "textures/blocks/water_still_grey"],
+            ["web", "textures/blocks/web"],
+            ["wheat_stage_0", "textures/blocks/wheat_stage_0"],
+            ["wheat_stage_1", "textures/blocks/wheat_stage_1"],
+            ["wheat_stage_2", "textures/blocks/wheat_stage_2"],
+            ["wheat_stage_3", "textures/blocks/wheat_stage_3"],
+            ["wheat_stage_4", "textures/blocks/wheat_stage_4"],
+            ["wheat_stage_5", "textures/blocks/wheat_stage_5"],
+            ["wheat_stage_6", "textures/blocks/wheat_stage_6"],
+            ["wheat_stage_7", "textures/blocks/wheat_stage_7"],
+            ["wool_colored_black", "textures/blocks/wool_colored_black"],
+            ["wool_colored_blue", "textures/blocks/wool_colored_blue"],
+            ["wool_colored_brown", "textures/blocks/wool_colored_brown"],
+            ["wool_colored_cyan", "textures/blocks/wool_colored_cyan"],
+            ["wool_colored_gray", "textures/blocks/wool_colored_gray"],
+            ["wool_colored_green", "textures/blocks/wool_colored_green"],
+            [
+                "wool_colored_light_blue",
+                "textures/blocks/wool_colored_light_blue",
+            ],
+            ["wool_colored_lime", "textures/blocks/wool_colored_lime"],
+            ["wool_colored_magenta", "textures/blocks/wool_colored_magenta"],
+            ["wool_colored_orange", "textures/blocks/wool_colored_orange"],
+            ["wool_colored_pink", "textures/blocks/wool_colored_pink"],
+            ["wool_colored_purple", "textures/blocks/wool_colored_purple"],
+            ["wool_colored_red", "textures/blocks/wool_colored_red"],
+            ["wool_colored_silver", "textures/blocks/wool_colored_silver"],
+            ["wool_colored_white", "textures/blocks/wool_colored_white"],
+            ["wool_colored_yellow", "textures/blocks/wool_colored_yellow"],
+        ]),
+    ],
+]);
 
 export let itemIcons = new Map([
     ["pack_name", "Vanilla Items"],
     ["pack_icon", "textures/azalea_icons/other/sword"],
     ["pack_namespace", "vanilla_items"],
-    ["pack_data", new Map([
-        [
-          "apple",
-          "textures/items/apple"
-        ],
-        [
-          "apple_golden",
-          "textures/items/apple_golden"
-        ],
-        [
-          "armor_stand",
-          "textures/items/armor_stand"
-        ],
-        [
-          "arrow",
-          "textures/items/arrow"
-        ],
-        [
-          "bamboo",
-          "textures/items/bamboo"
-        ],
-        [
-          "banner_pattern",
-          "textures/items/banner_pattern"
-        ],
-        [
-          "bed_black",
-          "textures/items/bed_black"
-        ],
-        [
-          "bed_blue",
-          "textures/items/bed_blue"
-        ],
-        [
-          "bed_brown",
-          "textures/items/bed_brown"
-        ],
-        [
-          "bed_cyan",
-          "textures/items/bed_cyan"
-        ],
-        [
-          "bed_gray",
-          "textures/items/bed_gray"
-        ],
-        [
-          "bed_green",
-          "textures/items/bed_green"
-        ],
-        [
-          "bed_light_blue",
-          "textures/items/bed_light_blue"
-        ],
-        [
-          "bed_lime",
-          "textures/items/bed_lime"
-        ],
-        [
-          "bed_magenta",
-          "textures/items/bed_magenta"
-        ],
-        [
-          "bed_orange",
-          "textures/items/bed_orange"
-        ],
-        [
-          "bed_pink",
-          "textures/items/bed_pink"
-        ],
-        [
-          "bed_purple",
-          "textures/items/bed_purple"
-        ],
-        [
-          "bed_red",
-          "textures/items/bed_red"
-        ],
-        [
-          "bed_silver",
-          "textures/items/bed_silver"
-        ],
-        [
-          "bed_white",
-          "textures/items/bed_white"
-        ],
-        [
-          "bed_yellow",
-          "textures/items/bed_yellow"
-        ],
-        [
-          "beef_cooked",
-          "textures/items/beef_cooked"
-        ],
-        [
-          "beef_raw",
-          "textures/items/beef_raw"
-        ],
-        [
-          "beetroot",
-          "textures/items/beetroot"
-        ],
-        [
-          "beetroot_soup",
-          "textures/items/beetroot_soup"
-        ],
-        [
-          "blaze_powder",
-          "textures/items/blaze_powder"
-        ],
-        [
-          "blaze_rod",
-          "textures/items/blaze_rod"
-        ],
-        [
-          "boat",
-          "textures/items/boat"
-        ],
-        [
-          "boat_acacia",
-          "textures/items/boat_acacia"
-        ],
-        [
-          "boat_birch",
-          "textures/items/boat_birch"
-        ],
-        [
-          "boat_darkoak",
-          "textures/items/boat_darkoak"
-        ],
-        [
-          "boat_jungle",
-          "textures/items/boat_jungle"
-        ],
-        [
-          "boat_oak",
-          "textures/items/boat_oak"
-        ],
-        [
-          "boat_spruce",
-          "textures/items/boat_spruce"
-        ],
-        [
-          "bone",
-          "textures/items/bone"
-        ],
-        [
-          "book_enchanted",
-          "textures/items/book_enchanted"
-        ],
-        [
-          "book_normal",
-          "textures/items/book_normal"
-        ],
-        [
-          "book_portfolio",
-          "textures/items/book_portfolio"
-        ],
-        [
-          "book_writable",
-          "textures/items/book_writable"
-        ],
-        [
-          "book_written",
-          "textures/items/book_written"
-        ],
-        [
-          "bowl",
-          "textures/items/bowl"
-        ],
-        [
-          "bow_pulling_0",
-          "textures/items/bow_pulling_0"
-        ],
-        [
-          "bow_pulling_1",
-          "textures/items/bow_pulling_1"
-        ],
-        [
-          "bow_pulling_2",
-          "textures/items/bow_pulling_2"
-        ],
-        [
-          "bow_standby",
-          "textures/items/bow_standby"
-        ],
-        [
-          "bread",
-          "textures/items/bread"
-        ],
-        [
-          "brewing_stand",
-          "textures/items/brewing_stand"
-        ],
-        [
-          "brick",
-          "textures/items/brick"
-        ],
-        [
-          "broken_elytra",
-          "textures/items/broken_elytra"
-        ],
-        [
-          "bucket_cod",
-          "textures/items/bucket_cod"
-        ],
-        [
-          "bucket_empty",
-          "textures/items/bucket_empty"
-        ],
-        [
-          "bucket_lava",
-          "textures/items/bucket_lava"
-        ],
-        [
-          "bucket_milk",
-          "textures/items/bucket_milk"
-        ],
-        [
-          "bucket_pufferfish",
-          "textures/items/bucket_pufferfish"
-        ],
-        [
-          "bucket_salmon",
-          "textures/items/bucket_salmon"
-        ],
-        [
-          "bucket_tropical",
-          "textures/items/bucket_tropical"
-        ],
-        [
-          "bucket_water",
-          "textures/items/bucket_water"
-        ],
-        [
-          "cake",
-          "textures/items/cake"
-        ],
-        [
-          "campfire",
-          "textures/items/campfire"
-        ],
-        [
-          "carrot",
-          "textures/items/carrot"
-        ],
-        [
-          "carrot_golden",
-          "textures/items/carrot_golden"
-        ],
-        [
-          "carrot_on_a_stick",
-          "textures/items/carrot_on_a_stick"
-        ],
-        [
-          "cauldron",
-          "textures/items/cauldron"
-        ],
-        [
-          "chainmail_boots",
-          "textures/items/chainmail_boots"
-        ],
-        [
-          "chainmail_chestplate",
-          "textures/items/chainmail_chestplate"
-        ],
-        [
-          "chainmail_helmet",
-          "textures/items/chainmail_helmet"
-        ],
-        [
-          "chainmail_leggings",
-          "textures/items/chainmail_leggings"
-        ],
-        [
-          "chalkboard_large",
-          "textures/items/chalkboard_large"
-        ],
-        [
-          "chalkboard_medium",
-          "textures/items/chalkboard_medium"
-        ],
-        [
-          "chalkboard_small",
-          "textures/items/chalkboard_small"
-        ],
-        [
-          "charcoal",
-          "textures/items/charcoal"
-        ],
-        [
-          "chicken_cooked",
-          "textures/items/chicken_cooked"
-        ],
-        [
-          "chicken_raw",
-          "textures/items/chicken_raw"
-        ],
-        [
-          "chorus_fruit",
-          "textures/items/chorus_fruit"
-        ],
-        [
-          "chorus_fruit_popped",
-          "textures/items/chorus_fruit_popped"
-        ],
-        [
-          "clay_ball",
-          "textures/items/clay_ball"
-        ],
-        [
-          "clock_item",
-          "textures/items/clock_item"
-        ],
-        [
-          "coal",
-          "textures/items/coal"
-        ],
-        [
-          "comparator",
-          "textures/items/comparator"
-        ],
-        [
-          "compass_atlas",
-          "textures/items/compass_atlas"
-        ],
-        [
-          "compass_item",
-          "textures/items/compass_item"
-        ],
-        [
-          "cookie",
-          "textures/items/cookie"
-        ],
-        [
-          "crossbow_arrow",
-          "textures/items/crossbow_arrow"
-        ],
-        [
-          "crossbow_firework",
-          "textures/items/crossbow_firework"
-        ],
-        [
-          "crossbow_pulling_0",
-          "textures/items/crossbow_pulling_0"
-        ],
-        [
-          "crossbow_pulling_1",
-          "textures/items/crossbow_pulling_1"
-        ],
-        [
-          "crossbow_pulling_2",
-          "textures/items/crossbow_pulling_2"
-        ],
-        [
-          "crossbow_standby",
-          "textures/items/crossbow_standby"
-        ],
-        [
-          "diamond",
-          "textures/items/diamond"
-        ],
-        [
-          "diamond_axe",
-          "textures/items/diamond_axe"
-        ],
-        [
-          "diamond_boots",
-          "textures/items/diamond_boots"
-        ],
-        [
-          "diamond_chestplate",
-          "textures/items/diamond_chestplate"
-        ],
-        [
-          "diamond_helmet",
-          "textures/items/diamond_helmet"
-        ],
-        [
-          "diamond_hoe",
-          "textures/items/diamond_hoe"
-        ],
-        [
-          "diamond_horse_armor",
-          "textures/items/diamond_horse_armor"
-        ],
-        [
-          "diamond_leggings",
-          "textures/items/diamond_leggings"
-        ],
-        [
-          "diamond_pickaxe",
-          "textures/items/diamond_pickaxe"
-        ],
-        [
-          "diamond_shovel",
-          "textures/items/diamond_shovel"
-        ],
-        [
-          "diamond_sword",
-          "textures/items/diamond_sword"
-        ],
-        [
-          "door_acacia",
-          "textures/items/door_acacia"
-        ],
-        [
-          "door_birch",
-          "textures/items/door_birch"
-        ],
-        [
-          "door_dark_oak",
-          "textures/items/door_dark_oak"
-        ],
-        [
-          "door_iron",
-          "textures/items/door_iron"
-        ],
-        [
-          "door_jungle",
-          "textures/items/door_jungle"
-        ],
-        [
-          "door_spruce",
-          "textures/items/door_spruce"
-        ],
-        [
-          "door_wood",
-          "textures/items/door_wood"
-        ],
-        [
-          "dragons_breath",
-          "textures/items/dragons_breath"
-        ],
-        [
-          "dragon_fireball",
-          "textures/items/dragon_fireball"
-        ],
-        [
-          "dried_kelp",
-          "textures/items/dried_kelp"
-        ],
-        [
-          "dye_powder_black",
-          "textures/items/dye_powder_black"
-        ],
-        [
-          "dye_powder_black_new",
-          "textures/items/dye_powder_black_new"
-        ],
-        [
-          "dye_powder_blue",
-          "textures/items/dye_powder_blue"
-        ],
-        [
-          "dye_powder_blue_new",
-          "textures/items/dye_powder_blue_new"
-        ],
-        [
-          "dye_powder_brown",
-          "textures/items/dye_powder_brown"
-        ],
-        [
-          "dye_powder_brown_new",
-          "textures/items/dye_powder_brown_new"
-        ],
-        [
-          "dye_powder_cyan",
-          "textures/items/dye_powder_cyan"
-        ],
-        [
-          "dye_powder_gray",
-          "textures/items/dye_powder_gray"
-        ],
-        [
-          "dye_powder_green",
-          "textures/items/dye_powder_green"
-        ],
-        [
-          "dye_powder_light_blue",
-          "textures/items/dye_powder_light_blue"
-        ],
-        [
-          "dye_powder_lime",
-          "textures/items/dye_powder_lime"
-        ],
-        [
-          "dye_powder_magenta",
-          "textures/items/dye_powder_magenta"
-        ],
-        [
-          "dye_powder_orange",
-          "textures/items/dye_powder_orange"
-        ],
-        [
-          "dye_powder_pink",
-          "textures/items/dye_powder_pink"
-        ],
-        [
-          "dye_powder_purple",
-          "textures/items/dye_powder_purple"
-        ],
-        [
-          "dye_powder_red",
-          "textures/items/dye_powder_red"
-        ],
-        [
-          "dye_powder_silver",
-          "textures/items/dye_powder_silver"
-        ],
-        [
-          "dye_powder_white",
-          "textures/items/dye_powder_white"
-        ],
-        [
-          "dye_powder_white_new",
-          "textures/items/dye_powder_white_new"
-        ],
-        [
-          "dye_powder_yellow",
-          "textures/items/dye_powder_yellow"
-        ],
-        [
-          "egg",
-          "textures/items/egg"
-        ],
-        [
-          "egg_agent",
-          "textures/items/egg_agent"
-        ],
-        [
-          "egg_bat",
-          "textures/items/egg_bat"
-        ],
-        [
-          "egg_blaze",
-          "textures/items/egg_blaze"
-        ],
-        [
-          "egg_cat",
-          "textures/items/egg_cat"
-        ],
-        [
-          "egg_cave_spider",
-          "textures/items/egg_cave_spider"
-        ],
-        [
-          "egg_chicken",
-          "textures/items/egg_chicken"
-        ],
-        [
-          "egg_clownfish",
-          "textures/items/egg_clownfish"
-        ],
-        [
-          "egg_cod",
-          "textures/items/egg_cod"
-        ],
-        [
-          "egg_cow",
-          "textures/items/egg_cow"
-        ],
-        [
-          "egg_creeper",
-          "textures/items/egg_creeper"
-        ],
-        [
-          "egg_dolphin",
-          "textures/items/egg_dolphin"
-        ],
-        [
-          "egg_donkey",
-          "textures/items/egg_donkey"
-        ],
-        [
-          "egg_drowned",
-          "textures/items/egg_drowned"
-        ],
-        [
-          "egg_elderguardian",
-          "textures/items/egg_elderguardian"
-        ],
-        [
-          "egg_enderman",
-          "textures/items/egg_enderman"
-        ],
-        [
-          "egg_endermite",
-          "textures/items/egg_endermite"
-        ],
-        [
-          "egg_evoker",
-          "textures/items/egg_evoker"
-        ],
-        [
-          "egg_fish",
-          "textures/items/egg_fish"
-        ],
-        [
-          "egg_fox",
-          "textures/items/egg_fox"
-        ],
-        [
-          "egg_ghast",
-          "textures/items/egg_ghast"
-        ],
-        [
-          "egg_guardian",
-          "textures/items/egg_guardian"
-        ],
-        [
-          "egg_horse",
-          "textures/items/egg_horse"
-        ],
-        [
-          "egg_husk",
-          "textures/items/egg_husk"
-        ],
-        [
-          "egg_lava_slime",
-          "textures/items/egg_lava_slime"
-        ],
-        [
-          "egg_llama",
-          "textures/items/egg_llama"
-        ],
-        [
-          "egg_mask",
-          "textures/items/egg_mask"
-        ],
-        [
-          "egg_mule",
-          "textures/items/egg_mule"
-        ],
-        [
-          "egg_mushroomcow",
-          "textures/items/egg_mushroomcow"
-        ],
-        [
-          "egg_npc",
-          "textures/items/egg_npc"
-        ],
-        [
-          "egg_null",
-          "textures/items/egg_null"
-        ],
-        [
-          "egg_ocelot",
-          "textures/items/egg_ocelot"
-        ],
-        [
-          "egg_panda",
-          "textures/items/egg_panda"
-        ],
-        [
-          "egg_parrot",
-          "textures/items/egg_parrot"
-        ],
-        [
-          "egg_phantom",
-          "textures/items/egg_phantom"
-        ],
-        [
-          "egg_pig",
-          "textures/items/egg_pig"
-        ],
-        [
-          "egg_pigzombie",
-          "textures/items/egg_pigzombie"
-        ],
-        [
-          "egg_pillager",
-          "textures/items/egg_pillager"
-        ],
-        [
-          "egg_polarbear",
-          "textures/items/egg_polarbear"
-        ],
-        [
-          "egg_pufferfish",
-          "textures/items/egg_pufferfish"
-        ],
-        [
-          "egg_rabbit",
-          "textures/items/egg_rabbit"
-        ],
-        [
-          "egg_ravager",
-          "textures/items/egg_ravager"
-        ],
-        [
-          "egg_salmon",
-          "textures/items/egg_salmon"
-        ],
-        [
-          "egg_sheep",
-          "textures/items/egg_sheep"
-        ],
-        [
-          "egg_shulker",
-          "textures/items/egg_shulker"
-        ],
-        [
-          "egg_silverfish",
-          "textures/items/egg_silverfish"
-        ],
-        [
-          "egg_skeleton",
-          "textures/items/egg_skeleton"
-        ],
-        [
-          "egg_skeletonhorse",
-          "textures/items/egg_skeletonhorse"
-        ],
-        [
-          "egg_slime",
-          "textures/items/egg_slime"
-        ],
-        [
-          "egg_spider",
-          "textures/items/egg_spider"
-        ],
-        [
-          "egg_squid",
-          "textures/items/egg_squid"
-        ],
-        [
-          "egg_stray",
-          "textures/items/egg_stray"
-        ],
-        [
-          "egg_turtle",
-          "textures/items/egg_turtle"
-        ],
-        [
-          "egg_vex",
-          "textures/items/egg_vex"
-        ],
-        [
-          "egg_villager",
-          "textures/items/egg_villager"
-        ],
-        [
-          "egg_vindicator",
-          "textures/items/egg_vindicator"
-        ],
-        [
-          "egg_wanderingtrader",
-          "textures/items/egg_wanderingtrader"
-        ],
-        [
-          "egg_witch",
-          "textures/items/egg_witch"
-        ],
-        [
-          "egg_wither",
-          "textures/items/egg_wither"
-        ],
-        [
-          "egg_wolf",
-          "textures/items/egg_wolf"
-        ],
-        [
-          "egg_zombie",
-          "textures/items/egg_zombie"
-        ],
-        [
-          "egg_zombiehorse",
-          "textures/items/egg_zombiehorse"
-        ],
-        [
-          "egg_zombievillager",
-          "textures/items/egg_zombievillager"
-        ],
-        [
-          "elytra",
-          "textures/items/elytra"
-        ],
-        [
-          "emerald",
-          "textures/items/emerald"
-        ],
-        [
-          "empty_armor_slot_boots",
-          "textures/items/empty_armor_slot_boots"
-        ],
-        [
-          "empty_armor_slot_chestplate",
-          "textures/items/empty_armor_slot_chestplate"
-        ],
-        [
-          "empty_armor_slot_helmet",
-          "textures/items/empty_armor_slot_helmet"
-        ],
-        [
-          "empty_armor_slot_leggings",
-          "textures/items/empty_armor_slot_leggings"
-        ],
-        [
-          "empty_armor_slot_shield",
-          "textures/items/empty_armor_slot_shield"
-        ],
-        [
-          "ender_eye",
-          "textures/items/ender_eye"
-        ],
-        [
-          "ender_pearl",
-          "textures/items/ender_pearl"
-        ],
-        [
-          "end_crystal",
-          "textures/items/end_crystal"
-        ],
-        [
-          "experience_bottle",
-          "textures/items/experience_bottle"
-        ],
-        [
-          "feather",
-          "textures/items/feather"
-        ],
-        [
-          "fireball",
-          "textures/items/fireball"
-        ],
-        [
-          "fireworks",
-          "textures/items/fireworks"
-        ],
-        [
-          "fishing_rod_cast",
-          "textures/items/fishing_rod_cast"
-        ],
-        [
-          "fishing_rod_uncast",
-          "textures/items/fishing_rod_uncast"
-        ],
-        [
-          "fish_clownfish_raw",
-          "textures/items/fish_clownfish_raw"
-        ],
-        [
-          "fish_cooked",
-          "textures/items/fish_cooked"
-        ],
-        [
-          "fish_pufferfish_raw",
-          "textures/items/fish_pufferfish_raw"
-        ],
-        [
-          "fish_raw",
-          "textures/items/fish_raw"
-        ],
-        [
-          "fish_salmon_cooked",
-          "textures/items/fish_salmon_cooked"
-        ],
-        [
-          "fish_salmon_raw",
-          "textures/items/fish_salmon_raw"
-        ],
-        [
-          "flint",
-          "textures/items/flint"
-        ],
-        [
-          "flint_and_steel",
-          "textures/items/flint_and_steel"
-        ],
-        [
-          "flower_pot",
-          "textures/items/flower_pot"
-        ],
-        [
-          "ghast_tear",
-          "textures/items/ghast_tear"
-        ],
-        [
-          "glowstone_dust",
-          "textures/items/glowstone_dust"
-        ],
-        [
-          "gold_axe",
-          "textures/items/gold_axe"
-        ],
-        [
-          "gold_boots",
-          "textures/items/gold_boots"
-        ],
-        [
-          "gold_chestplate",
-          "textures/items/gold_chestplate"
-        ],
-        [
-          "gold_helmet",
-          "textures/items/gold_helmet"
-        ],
-        [
-          "gold_hoe",
-          "textures/items/gold_hoe"
-        ],
-        [
-          "gold_horse_armor",
-          "textures/items/gold_horse_armor"
-        ],
-        [
-          "gold_ingot",
-          "textures/items/gold_ingot"
-        ],
-        [
-          "gold_leggings",
-          "textures/items/gold_leggings"
-        ],
-        [
-          "gold_nugget",
-          "textures/items/gold_nugget"
-        ],
-        [
-          "gold_pickaxe",
-          "textures/items/gold_pickaxe"
-        ],
-        [
-          "gold_shovel",
-          "textures/items/gold_shovel"
-        ],
-        [
-          "gold_sword",
-          "textures/items/gold_sword"
-        ],
-        [
-          "gunpowder",
-          "textures/items/gunpowder"
-        ],
-        [
-          "heartofthesea_closed",
-          "textures/items/heartofthesea_closed"
-        ],
-        [
-          "hopper",
-          "textures/items/hopper"
-        ],
-        [
-          "iron_axe",
-          "textures/items/iron_axe"
-        ],
-        [
-          "iron_boots",
-          "textures/items/iron_boots"
-        ],
-        [
-          "iron_chestplate",
-          "textures/items/iron_chestplate"
-        ],
-        [
-          "iron_helmet",
-          "textures/items/iron_helmet"
-        ],
-        [
-          "iron_hoe",
-          "textures/items/iron_hoe"
-        ],
-        [
-          "iron_horse_armor",
-          "textures/items/iron_horse_armor"
-        ],
-        [
-          "iron_ingot",
-          "textures/items/iron_ingot"
-        ],
-        [
-          "iron_leggings",
-          "textures/items/iron_leggings"
-        ],
-        [
-          "iron_nugget",
-          "textures/items/iron_nugget"
-        ],
-        [
-          "iron_pickaxe",
-          "textures/items/iron_pickaxe"
-        ],
-        [
-          "iron_shovel",
-          "textures/items/iron_shovel"
-        ],
-        [
-          "iron_sword",
-          "textures/items/iron_sword"
-        ],
-        [
-          "item_frame",
-          "textures/items/item_frame"
-        ],
-        [
-          "kelp",
-          "textures/items/kelp"
-        ],
-        [
-          "lantern",
-          "textures/items/lantern"
-        ],
-        [
-          "lead",
-          "textures/items/lead"
-        ],
-        [
-          "leather",
-          "textures/items/leather"
-        ],
-        [
-          "leather_chestplate",
-          "textures/items/leather_chestplate"
-        ],
-        [
-          "lever",
-          "textures/items/lever"
-        ],
-        [
-          "light_block_0",
-          "textures/items/light_block_0"
-        ],
-        [
-          "light_block_1",
-          "textures/items/light_block_1"
-        ],
-        [
-          "light_block_10",
-          "textures/items/light_block_10"
-        ],
-        [
-          "light_block_11",
-          "textures/items/light_block_11"
-        ],
-        [
-          "light_block_12",
-          "textures/items/light_block_12"
-        ],
-        [
-          "light_block_13",
-          "textures/items/light_block_13"
-        ],
-        [
-          "light_block_14",
-          "textures/items/light_block_14"
-        ],
-        [
-          "light_block_15",
-          "textures/items/light_block_15"
-        ],
-        [
-          "light_block_2",
-          "textures/items/light_block_2"
-        ],
-        [
-          "light_block_3",
-          "textures/items/light_block_3"
-        ],
-        [
-          "light_block_4",
-          "textures/items/light_block_4"
-        ],
-        [
-          "light_block_5",
-          "textures/items/light_block_5"
-        ],
-        [
-          "light_block_6",
-          "textures/items/light_block_6"
-        ],
-        [
-          "light_block_7",
-          "textures/items/light_block_7"
-        ],
-        [
-          "light_block_8",
-          "textures/items/light_block_8"
-        ],
-        [
-          "light_block_9",
-          "textures/items/light_block_9"
-        ],
-        [
-          "magma_cream",
-          "textures/items/magma_cream"
-        ],
-        [
-          "map_empty",
-          "textures/items/map_empty"
-        ],
-        [
-          "map_filled",
-          "textures/items/map_filled"
-        ],
-        [
-          "map_locked",
-          "textures/items/map_locked"
-        ],
-        [
-          "map_mansion",
-          "textures/items/map_mansion"
-        ],
-        [
-          "map_monument",
-          "textures/items/map_monument"
-        ],
-        [
-          "map_nautilus",
-          "textures/items/map_nautilus"
-        ],
-        [
-          "melon",
-          "textures/items/melon"
-        ],
-        [
-          "melon_speckled",
-          "textures/items/melon_speckled"
-        ],
-        [
-          "minecart_chest",
-          "textures/items/minecart_chest"
-        ],
-        [
-          "minecart_command_block",
-          "textures/items/minecart_command_block"
-        ],
-        [
-          "minecart_furnace",
-          "textures/items/minecart_furnace"
-        ],
-        [
-          "minecart_hopper",
-          "textures/items/minecart_hopper"
-        ],
-        [
-          "minecart_normal",
-          "textures/items/minecart_normal"
-        ],
-        [
-          "minecart_tnt",
-          "textures/items/minecart_tnt"
-        ],
-        [
-          "mushroom_stew",
-          "textures/items/mushroom_stew"
-        ],
-        [
-          "mutton_cooked",
-          "textures/items/mutton_cooked"
-        ],
-        [
-          "mutton_raw",
-          "textures/items/mutton_raw"
-        ],
-        [
-          "name_tag",
-          "textures/items/name_tag"
-        ],
-        [
-          "nautilus",
-          "textures/items/nautilus"
-        ],
-        [
-          "netherbrick",
-          "textures/items/netherbrick"
-        ],
-        [
-          "nether_star",
-          "textures/items/nether_star"
-        ],
-        [
-          "nether_wart",
-          "textures/items/nether_wart"
-        ],
-        [
-          "painting",
-          "textures/items/painting"
-        ],
-        [
-          "paper",
-          "textures/items/paper"
-        ],
-        [
-          "phantom_membrane",
-          "textures/items/phantom_membrane"
-        ],
-        [
-          "porkchop_cooked",
-          "textures/items/porkchop_cooked"
-        ],
-        [
-          "porkchop_raw",
-          "textures/items/porkchop_raw"
-        ],
-        [
-          "potato",
-          "textures/items/potato"
-        ],
-        [
-          "potato_baked",
-          "textures/items/potato_baked"
-        ],
-        [
-          "potato_poisonous",
-          "textures/items/potato_poisonous"
-        ],
-        [
-          "potion_bottle_absorption",
-          "textures/items/potion_bottle_absorption"
-        ],
-        [
-          "potion_bottle_blindness",
-          "textures/items/potion_bottle_blindness"
-        ],
-        [
-          "potion_bottle_confusion",
-          "textures/items/potion_bottle_confusion"
-        ],
-        [
-          "potion_bottle_damageBoost",
-          "textures/items/potion_bottle_damageBoost"
-        ],
-        [
-          "potion_bottle_digSlowdown",
-          "textures/items/potion_bottle_digSlowdown"
-        ],
-        [
-          "potion_bottle_digSpeed",
-          "textures/items/potion_bottle_digSpeed"
-        ],
-        [
-          "potion_bottle_drinkable",
-          "textures/items/potion_bottle_drinkable"
-        ],
-        [
-          "potion_bottle_empty",
-          "textures/items/potion_bottle_empty"
-        ],
-        [
-          "potion_bottle_fireResistance",
-          "textures/items/potion_bottle_fireResistance"
-        ],
-        [
-          "potion_bottle_harm",
-          "textures/items/potion_bottle_harm"
-        ],
-        [
-          "potion_bottle_heal",
-          "textures/items/potion_bottle_heal"
-        ],
-        [
-          "potion_bottle_healthBoost",
-          "textures/items/potion_bottle_healthBoost"
-        ],
-        [
-          "potion_bottle_hunger",
-          "textures/items/potion_bottle_hunger"
-        ],
-        [
-          "potion_bottle_invisibility",
-          "textures/items/potion_bottle_invisibility"
-        ],
-        [
-          "potion_bottle_jump",
-          "textures/items/potion_bottle_jump"
-        ],
-        [
-          "potion_bottle_levitation",
-          "textures/items/potion_bottle_levitation"
-        ],
-        [
-          "potion_bottle_lingering",
-          "textures/items/potion_bottle_lingering"
-        ],
-        [
-          "potion_bottle_lingering_damageBoost",
-          "textures/items/potion_bottle_lingering_damageBoost"
-        ],
-        [
-          "potion_bottle_lingering_empty",
-          "textures/items/potion_bottle_lingering_empty"
-        ],
-        [
-          "potion_bottle_lingering_fireResistance",
-          "textures/items/potion_bottle_lingering_fireResistance"
-        ],
-        [
-          "potion_bottle_lingering_harm",
-          "textures/items/potion_bottle_lingering_harm"
-        ],
-        [
-          "potion_bottle_lingering_heal",
-          "textures/items/potion_bottle_lingering_heal"
-        ],
-        [
-          "potion_bottle_lingering_invisibility",
-          "textures/items/potion_bottle_lingering_invisibility"
-        ],
-        [
-          "potion_bottle_lingering_jump",
-          "textures/items/potion_bottle_lingering_jump"
-        ],
-        [
-          "potion_bottle_lingering_luck",
-          "textures/items/potion_bottle_lingering_luck"
-        ],
-        [
-          "potion_bottle_lingering_moveSlowdown",
-          "textures/items/potion_bottle_lingering_moveSlowdown"
-        ],
-        [
-          "potion_bottle_lingering_moveSpeed",
-          "textures/items/potion_bottle_lingering_moveSpeed"
-        ],
-        [
-          "potion_bottle_lingering_nightVision",
-          "textures/items/potion_bottle_lingering_nightVision"
-        ],
-        [
-          "potion_bottle_lingering_poison",
-          "textures/items/potion_bottle_lingering_poison"
-        ],
-        [
-          "potion_bottle_lingering_regeneration",
-          "textures/items/potion_bottle_lingering_regeneration"
-        ],
-        [
-          "potion_bottle_lingering_slowFall",
-          "textures/items/potion_bottle_lingering_slowFall"
-        ],
-        [
-          "potion_bottle_lingering_turtleMaster",
-          "textures/items/potion_bottle_lingering_turtleMaster"
-        ],
-        [
-          "potion_bottle_lingering_waterBreathing",
-          "textures/items/potion_bottle_lingering_waterBreathing"
-        ],
-        [
-          "potion_bottle_lingering_weakness",
-          "textures/items/potion_bottle_lingering_weakness"
-        ],
-        [
-          "potion_bottle_lingering_wither",
-          "textures/items/potion_bottle_lingering_wither"
-        ],
-        [
-          "potion_bottle_moveSlowdown",
-          "textures/items/potion_bottle_moveSlowdown"
-        ],
-        [
-          "potion_bottle_moveSpeed",
-          "textures/items/potion_bottle_moveSpeed"
-        ],
-        [
-          "potion_bottle_nightVision",
-          "textures/items/potion_bottle_nightVision"
-        ],
-        [
-          "potion_bottle_poison",
-          "textures/items/potion_bottle_poison"
-        ],
-        [
-          "potion_bottle_regeneration",
-          "textures/items/potion_bottle_regeneration"
-        ],
-        [
-          "potion_bottle_resistance",
-          "textures/items/potion_bottle_resistance"
-        ],
-        [
-          "potion_bottle_saturation",
-          "textures/items/potion_bottle_saturation"
-        ],
-        [
-          "potion_bottle_slowFall",
-          "textures/items/potion_bottle_slowFall"
-        ],
-        [
-          "potion_bottle_splash",
-          "textures/items/potion_bottle_splash"
-        ],
-        [
-          "potion_bottle_splash_absorption",
-          "textures/items/potion_bottle_splash_absorption"
-        ],
-        [
-          "potion_bottle_splash_blindness",
-          "textures/items/potion_bottle_splash_blindness"
-        ],
-        [
-          "potion_bottle_splash_confusion",
-          "textures/items/potion_bottle_splash_confusion"
-        ],
-        [
-          "potion_bottle_splash_damageBoost",
-          "textures/items/potion_bottle_splash_damageBoost"
-        ],
-        [
-          "potion_bottle_splash_digSlowdown",
-          "textures/items/potion_bottle_splash_digSlowdown"
-        ],
-        [
-          "potion_bottle_splash_digSpeed",
-          "textures/items/potion_bottle_splash_digSpeed"
-        ],
-        [
-          "potion_bottle_splash_fireResistance",
-          "textures/items/potion_bottle_splash_fireResistance"
-        ],
-        [
-          "potion_bottle_splash_harm",
-          "textures/items/potion_bottle_splash_harm"
-        ],
-        [
-          "potion_bottle_splash_heal",
-          "textures/items/potion_bottle_splash_heal"
-        ],
-        [
-          "potion_bottle_splash_healthBoost",
-          "textures/items/potion_bottle_splash_healthBoost"
-        ],
-        [
-          "potion_bottle_splash_hunger",
-          "textures/items/potion_bottle_splash_hunger"
-        ],
-        [
-          "potion_bottle_splash_invisibility",
-          "textures/items/potion_bottle_splash_invisibility"
-        ],
-        [
-          "potion_bottle_splash_jump",
-          "textures/items/potion_bottle_splash_jump"
-        ],
-        [
-          "potion_bottle_splash_levitation",
-          "textures/items/potion_bottle_splash_levitation"
-        ],
-        [
-          "potion_bottle_splash_moveSlowdown",
-          "textures/items/potion_bottle_splash_moveSlowdown"
-        ],
-        [
-          "potion_bottle_splash_moveSpeed",
-          "textures/items/potion_bottle_splash_moveSpeed"
-        ],
-        [
-          "potion_bottle_splash_nightVision",
-          "textures/items/potion_bottle_splash_nightVision"
-        ],
-        [
-          "potion_bottle_splash_poison",
-          "textures/items/potion_bottle_splash_poison"
-        ],
-        [
-          "potion_bottle_splash_regeneration",
-          "textures/items/potion_bottle_splash_regeneration"
-        ],
-        [
-          "potion_bottle_splash_resistance",
-          "textures/items/potion_bottle_splash_resistance"
-        ],
-        [
-          "potion_bottle_splash_saturation",
-          "textures/items/potion_bottle_splash_saturation"
-        ],
-        [
-          "potion_bottle_splash_slowFall",
-          "textures/items/potion_bottle_splash_slowFall"
-        ],
-        [
-          "potion_bottle_splash_turtleMaster",
-          "textures/items/potion_bottle_splash_turtleMaster"
-        ],
-        [
-          "potion_bottle_splash_waterBreathing",
-          "textures/items/potion_bottle_splash_waterBreathing"
-        ],
-        [
-          "potion_bottle_splash_weakness",
-          "textures/items/potion_bottle_splash_weakness"
-        ],
-        [
-          "potion_bottle_splash_wither",
-          "textures/items/potion_bottle_splash_wither"
-        ],
-        [
-          "potion_bottle_turtleMaster",
-          "textures/items/potion_bottle_turtleMaster"
-        ],
-        [
-          "potion_bottle_waterBreathing",
-          "textures/items/potion_bottle_waterBreathing"
-        ],
-        [
-          "potion_bottle_weakness",
-          "textures/items/potion_bottle_weakness"
-        ],
-        [
-          "potion_bottle_wither",
-          "textures/items/potion_bottle_wither"
-        ],
-        [
-          "potion_overlay",
-          "textures/items/potion_overlay"
-        ],
-        [
-          "prismarine_crystals",
-          "textures/items/prismarine_crystals"
-        ],
-        [
-          "prismarine_shard",
-          "textures/items/prismarine_shard"
-        ],
-        [
-          "pumpkin_pie",
-          "textures/items/pumpkin_pie"
-        ],
-        [
-          "quartz",
-          "textures/items/quartz"
-        ],
-        [
-          "quiver",
-          "textures/items/quiver"
-        ],
-        [
-          "rabbit_cooked",
-          "textures/items/rabbit_cooked"
-        ],
-        [
-          "rabbit_foot",
-          "textures/items/rabbit_foot"
-        ],
-        [
-          "rabbit_hide",
-          "textures/items/rabbit_hide"
-        ],
-        [
-          "rabbit_raw",
-          "textures/items/rabbit_raw"
-        ],
-        [
-          "rabbit_stew",
-          "textures/items/rabbit_stew"
-        ],
-        [
-          "record_11",
-          "textures/items/record_11"
-        ],
-        [
-          "record_13",
-          "textures/items/record_13"
-        ],
-        [
-          "record_blocks",
-          "textures/items/record_blocks"
-        ],
-        [
-          "record_cat",
-          "textures/items/record_cat"
-        ],
-        [
-          "record_chirp",
-          "textures/items/record_chirp"
-        ],
-        [
-          "record_far",
-          "textures/items/record_far"
-        ],
-        [
-          "record_mall",
-          "textures/items/record_mall"
-        ],
-        [
-          "record_mellohi",
-          "textures/items/record_mellohi"
-        ],
-        [
-          "record_stal",
-          "textures/items/record_stal"
-        ],
-        [
-          "record_strad",
-          "textures/items/record_strad"
-        ],
-        [
-          "record_wait",
-          "textures/items/record_wait"
-        ],
-        [
-          "record_ward",
-          "textures/items/record_ward"
-        ],
-        [
-          "redstone_dust",
-          "textures/items/redstone_dust"
-        ],
-        [
-          "reeds",
-          "textures/items/reeds"
-        ],
-        [
-          "repeater",
-          "textures/items/repeater"
-        ],
-        [
-          "rotten_flesh",
-          "textures/items/rotten_flesh"
-        ],
-        [
-          "ruby",
-          "textures/items/ruby"
-        ],
-        [
-          "saddle",
-          "textures/items/saddle"
-        ],
-        [
-          "sea_pickle",
-          "textures/items/sea_pickle"
-        ],
-        [
-          "seeds_beetroot",
-          "textures/items/seeds_beetroot"
-        ],
-        [
-          "seeds_melon",
-          "textures/items/seeds_melon"
-        ],
-        [
-          "seeds_pumpkin",
-          "textures/items/seeds_pumpkin"
-        ],
-        [
-          "seeds_wheat",
-          "textures/items/seeds_wheat"
-        ],
-        [
-          "shears",
-          "textures/items/shears"
-        ],
-        [
-          "shulker_shell",
-          "textures/items/shulker_shell"
-        ],
-        [
-          "sign",
-          "textures/items/sign"
-        ],
-        [
-          "sign_acacia",
-          "textures/items/sign_acacia"
-        ],
-        [
-          "sign_birch",
-          "textures/items/sign_birch"
-        ],
-        [
-          "sign_darkoak",
-          "textures/items/sign_darkoak"
-        ],
-        [
-          "sign_jungle",
-          "textures/items/sign_jungle"
-        ],
-        [
-          "sign_spruce",
-          "textures/items/sign_spruce"
-        ],
-        [
-          "slimeball",
-          "textures/items/slimeball"
-        ],
-        [
-          "snowball",
-          "textures/items/snowball"
-        ],
-        [
-          "spawn_egg",
-          "textures/items/spawn_egg"
-        ],
-        [
-          "spawn_egg_overlay",
-          "textures/items/spawn_egg_overlay"
-        ],
-        [
-          "spider_eye",
-          "textures/items/spider_eye"
-        ],
-        [
-          "spider_eye_fermented",
-          "textures/items/spider_eye_fermented"
-        ],
-        [
-          "stick",
-          "textures/items/stick"
-        ],
-        [
-          "stone_axe",
-          "textures/items/stone_axe"
-        ],
-        [
-          "stone_hoe",
-          "textures/items/stone_hoe"
-        ],
-        [
-          "stone_pickaxe",
-          "textures/items/stone_pickaxe"
-        ],
-        [
-          "stone_shovel",
-          "textures/items/stone_shovel"
-        ],
-        [
-          "stone_sword",
-          "textures/items/stone_sword"
-        ],
-        [
-          "string",
-          "textures/items/string"
-        ],
-        [
-          "sugar",
-          "textures/items/sugar"
-        ],
-        [
-          "suspicious_stew",
-          "textures/items/suspicious_stew"
-        ],
-        [
-          "sweet_berries",
-          "textures/items/sweet_berries"
-        ],
-        [
-          "tipped_arrow",
-          "textures/items/tipped_arrow"
-        ],
-        [
-          "tipped_arrow_base",
-          "textures/items/tipped_arrow_base"
-        ],
-        [
-          "tipped_arrow_fireres",
-          "textures/items/tipped_arrow_fireres"
-        ],
-        [
-          "tipped_arrow_harm",
-          "textures/items/tipped_arrow_harm"
-        ],
-        [
-          "tipped_arrow_head",
-          "textures/items/tipped_arrow_head"
-        ],
-        [
-          "tipped_arrow_healing",
-          "textures/items/tipped_arrow_healing"
-        ],
-        [
-          "tipped_arrow_invisibility",
-          "textures/items/tipped_arrow_invisibility"
-        ],
-        [
-          "tipped_arrow_leaping",
-          "textures/items/tipped_arrow_leaping"
-        ],
-        [
-          "tipped_arrow_luck",
-          "textures/items/tipped_arrow_luck"
-        ],
-        [
-          "tipped_arrow_nightvision",
-          "textures/items/tipped_arrow_nightvision"
-        ],
-        [
-          "tipped_arrow_poison",
-          "textures/items/tipped_arrow_poison"
-        ],
-        [
-          "tipped_arrow_regen",
-          "textures/items/tipped_arrow_regen"
-        ],
-        [
-          "tipped_arrow_slow",
-          "textures/items/tipped_arrow_slow"
-        ],
-        [
-          "tipped_arrow_slowfalling",
-          "textures/items/tipped_arrow_slowfalling"
-        ],
-        [
-          "tipped_arrow_strength",
-          "textures/items/tipped_arrow_strength"
-        ],
-        [
-          "tipped_arrow_swift",
-          "textures/items/tipped_arrow_swift"
-        ],
-        [
-          "tipped_arrow_turtlemaster",
-          "textures/items/tipped_arrow_turtlemaster"
-        ],
-        [
-          "tipped_arrow_waterbreathing",
-          "textures/items/tipped_arrow_waterbreathing"
-        ],
-        [
-          "tipped_arrow_weakness",
-          "textures/items/tipped_arrow_weakness"
-        ],
-        [
-          "tipped_arrow_wither",
-          "textures/items/tipped_arrow_wither"
-        ],
-        [
-          "totem",
-          "textures/items/totem"
-        ],
-        [
-          "trident",
-          "textures/items/trident"
-        ],
-        [
-          "turtle_egg",
-          "textures/items/turtle_egg"
-        ],
-        [
-          "turtle_helmet",
-          "textures/items/turtle_helmet"
-        ],
-        [
-          "turtle_shell_piece",
-          "textures/items/turtle_shell_piece"
-        ],
-        [
-          "villagebell",
-          "textures/items/villagebell"
-        ],
-        [
-          "watch_atlas",
-          "textures/items/watch_atlas"
-        ],
-        [
-          "wheat",
-          "textures/items/wheat"
-        ],
-        [
-          "wood_axe",
-          "textures/items/wood_axe"
-        ],
-        [
-          "wood_hoe",
-          "textures/items/wood_hoe"
-        ],
-        [
-          "wood_pickaxe",
-          "textures/items/wood_pickaxe"
-        ],
-        [
-          "wood_shovel",
-          "textures/items/wood_shovel"
-        ],
-        [
-          "wood_sword",
-          "textures/items/wood_sword"
-        ]
-      ])]
-])
+    [
+        "pack_data",
+        new Map([
+            ["apple", "textures/items/apple"],
+            ["apple_golden", "textures/items/apple_golden"],
+            ["armor_stand", "textures/items/armor_stand"],
+            ["arrow", "textures/items/arrow"],
+            ["bamboo", "textures/items/bamboo"],
+            ["banner_pattern", "textures/items/banner_pattern"],
+            ["bed_black", "textures/items/bed_black"],
+            ["bed_blue", "textures/items/bed_blue"],
+            ["bed_brown", "textures/items/bed_brown"],
+            ["bed_cyan", "textures/items/bed_cyan"],
+            ["bed_gray", "textures/items/bed_gray"],
+            ["bed_green", "textures/items/bed_green"],
+            ["bed_light_blue", "textures/items/bed_light_blue"],
+            ["bed_lime", "textures/items/bed_lime"],
+            ["bed_magenta", "textures/items/bed_magenta"],
+            ["bed_orange", "textures/items/bed_orange"],
+            ["bed_pink", "textures/items/bed_pink"],
+            ["bed_purple", "textures/items/bed_purple"],
+            ["bed_red", "textures/items/bed_red"],
+            ["bed_silver", "textures/items/bed_silver"],
+            ["bed_white", "textures/items/bed_white"],
+            ["bed_yellow", "textures/items/bed_yellow"],
+            ["beef_cooked", "textures/items/beef_cooked"],
+            ["beef_raw", "textures/items/beef_raw"],
+            ["beetroot", "textures/items/beetroot"],
+            ["beetroot_soup", "textures/items/beetroot_soup"],
+            ["blaze_powder", "textures/items/blaze_powder"],
+            ["blaze_rod", "textures/items/blaze_rod"],
+            ["boat", "textures/items/boat"],
+            ["boat_acacia", "textures/items/boat_acacia"],
+            ["boat_birch", "textures/items/boat_birch"],
+            ["boat_darkoak", "textures/items/boat_darkoak"],
+            ["boat_jungle", "textures/items/boat_jungle"],
+            ["boat_oak", "textures/items/boat_oak"],
+            ["boat_spruce", "textures/items/boat_spruce"],
+            ["bone", "textures/items/bone"],
+            ["book_enchanted", "textures/items/book_enchanted"],
+            ["book_normal", "textures/items/book_normal"],
+            ["book_portfolio", "textures/items/book_portfolio"],
+            ["book_writable", "textures/items/book_writable"],
+            ["book_written", "textures/items/book_written"],
+            ["bowl", "textures/items/bowl"],
+            ["bow_pulling_0", "textures/items/bow_pulling_0"],
+            ["bow_pulling_1", "textures/items/bow_pulling_1"],
+            ["bow_pulling_2", "textures/items/bow_pulling_2"],
+            ["bow_standby", "textures/items/bow_standby"],
+            ["bread", "textures/items/bread"],
+            ["brewing_stand", "textures/items/brewing_stand"],
+            ["brick", "textures/items/brick"],
+            ["broken_elytra", "textures/items/broken_elytra"],
+            ["bucket_cod", "textures/items/bucket_cod"],
+            ["bucket_empty", "textures/items/bucket_empty"],
+            ["bucket_lava", "textures/items/bucket_lava"],
+            ["bucket_milk", "textures/items/bucket_milk"],
+            ["bucket_pufferfish", "textures/items/bucket_pufferfish"],
+            ["bucket_salmon", "textures/items/bucket_salmon"],
+            ["bucket_tropical", "textures/items/bucket_tropical"],
+            ["bucket_water", "textures/items/bucket_water"],
+            ["cake", "textures/items/cake"],
+            ["campfire", "textures/items/campfire"],
+            ["carrot", "textures/items/carrot"],
+            ["carrot_golden", "textures/items/carrot_golden"],
+            ["carrot_on_a_stick", "textures/items/carrot_on_a_stick"],
+            ["cauldron", "textures/items/cauldron"],
+            ["chainmail_boots", "textures/items/chainmail_boots"],
+            ["chainmail_chestplate", "textures/items/chainmail_chestplate"],
+            ["chainmail_helmet", "textures/items/chainmail_helmet"],
+            ["chainmail_leggings", "textures/items/chainmail_leggings"],
+            ["chalkboard_large", "textures/items/chalkboard_large"],
+            ["chalkboard_medium", "textures/items/chalkboard_medium"],
+            ["chalkboard_small", "textures/items/chalkboard_small"],
+            ["charcoal", "textures/items/charcoal"],
+            ["chicken_cooked", "textures/items/chicken_cooked"],
+            ["chicken_raw", "textures/items/chicken_raw"],
+            ["chorus_fruit", "textures/items/chorus_fruit"],
+            ["chorus_fruit_popped", "textures/items/chorus_fruit_popped"],
+            ["clay_ball", "textures/items/clay_ball"],
+            ["clock_item", "textures/items/clock_item"],
+            ["coal", "textures/items/coal"],
+            ["comparator", "textures/items/comparator"],
+            ["compass_atlas", "textures/items/compass_atlas"],
+            ["compass_item", "textures/items/compass_item"],
+            ["cookie", "textures/items/cookie"],
+            ["crossbow_arrow", "textures/items/crossbow_arrow"],
+            ["crossbow_firework", "textures/items/crossbow_firework"],
+            ["crossbow_pulling_0", "textures/items/crossbow_pulling_0"],
+            ["crossbow_pulling_1", "textures/items/crossbow_pulling_1"],
+            ["crossbow_pulling_2", "textures/items/crossbow_pulling_2"],
+            ["crossbow_standby", "textures/items/crossbow_standby"],
+            ["diamond", "textures/items/diamond"],
+            ["diamond_axe", "textures/items/diamond_axe"],
+            ["diamond_boots", "textures/items/diamond_boots"],
+            ["diamond_chestplate", "textures/items/diamond_chestplate"],
+            ["diamond_helmet", "textures/items/diamond_helmet"],
+            ["diamond_hoe", "textures/items/diamond_hoe"],
+            ["diamond_horse_armor", "textures/items/diamond_horse_armor"],
+            ["diamond_leggings", "textures/items/diamond_leggings"],
+            ["diamond_pickaxe", "textures/items/diamond_pickaxe"],
+            ["diamond_shovel", "textures/items/diamond_shovel"],
+            ["diamond_sword", "textures/items/diamond_sword"],
+            ["door_acacia", "textures/items/door_acacia"],
+            ["door_birch", "textures/items/door_birch"],
+            ["door_dark_oak", "textures/items/door_dark_oak"],
+            ["door_iron", "textures/items/door_iron"],
+            ["door_jungle", "textures/items/door_jungle"],
+            ["door_spruce", "textures/items/door_spruce"],
+            ["door_wood", "textures/items/door_wood"],
+            ["dragons_breath", "textures/items/dragons_breath"],
+            ["dragon_fireball", "textures/items/dragon_fireball"],
+            ["dried_kelp", "textures/items/dried_kelp"],
+            ["dye_powder_black", "textures/items/dye_powder_black"],
+            ["dye_powder_black_new", "textures/items/dye_powder_black_new"],
+            ["dye_powder_blue", "textures/items/dye_powder_blue"],
+            ["dye_powder_blue_new", "textures/items/dye_powder_blue_new"],
+            ["dye_powder_brown", "textures/items/dye_powder_brown"],
+            ["dye_powder_brown_new", "textures/items/dye_powder_brown_new"],
+            ["dye_powder_cyan", "textures/items/dye_powder_cyan"],
+            ["dye_powder_gray", "textures/items/dye_powder_gray"],
+            ["dye_powder_green", "textures/items/dye_powder_green"],
+            ["dye_powder_light_blue", "textures/items/dye_powder_light_blue"],
+            ["dye_powder_lime", "textures/items/dye_powder_lime"],
+            ["dye_powder_magenta", "textures/items/dye_powder_magenta"],
+            ["dye_powder_orange", "textures/items/dye_powder_orange"],
+            ["dye_powder_pink", "textures/items/dye_powder_pink"],
+            ["dye_powder_purple", "textures/items/dye_powder_purple"],
+            ["dye_powder_red", "textures/items/dye_powder_red"],
+            ["dye_powder_silver", "textures/items/dye_powder_silver"],
+            ["dye_powder_white", "textures/items/dye_powder_white"],
+            ["dye_powder_white_new", "textures/items/dye_powder_white_new"],
+            ["dye_powder_yellow", "textures/items/dye_powder_yellow"],
+            ["egg", "textures/items/egg"],
+            ["egg_agent", "textures/items/egg_agent"],
+            ["egg_bat", "textures/items/egg_bat"],
+            ["egg_blaze", "textures/items/egg_blaze"],
+            ["egg_cat", "textures/items/egg_cat"],
+            ["egg_cave_spider", "textures/items/egg_cave_spider"],
+            ["egg_chicken", "textures/items/egg_chicken"],
+            ["egg_clownfish", "textures/items/egg_clownfish"],
+            ["egg_cod", "textures/items/egg_cod"],
+            ["egg_cow", "textures/items/egg_cow"],
+            ["egg_creeper", "textures/items/egg_creeper"],
+            ["egg_dolphin", "textures/items/egg_dolphin"],
+            ["egg_donkey", "textures/items/egg_donkey"],
+            ["egg_drowned", "textures/items/egg_drowned"],
+            ["egg_elderguardian", "textures/items/egg_elderguardian"],
+            ["egg_enderman", "textures/items/egg_enderman"],
+            ["egg_endermite", "textures/items/egg_endermite"],
+            ["egg_evoker", "textures/items/egg_evoker"],
+            ["egg_fish", "textures/items/egg_fish"],
+            ["egg_fox", "textures/items/egg_fox"],
+            ["egg_ghast", "textures/items/egg_ghast"],
+            ["egg_guardian", "textures/items/egg_guardian"],
+            ["egg_horse", "textures/items/egg_horse"],
+            ["egg_husk", "textures/items/egg_husk"],
+            ["egg_lava_slime", "textures/items/egg_lava_slime"],
+            ["egg_llama", "textures/items/egg_llama"],
+            ["egg_mask", "textures/items/egg_mask"],
+            ["egg_mule", "textures/items/egg_mule"],
+            ["egg_mushroomcow", "textures/items/egg_mushroomcow"],
+            ["egg_npc", "textures/items/egg_npc"],
+            ["egg_null", "textures/items/egg_null"],
+            ["egg_ocelot", "textures/items/egg_ocelot"],
+            ["egg_panda", "textures/items/egg_panda"],
+            ["egg_parrot", "textures/items/egg_parrot"],
+            ["egg_phantom", "textures/items/egg_phantom"],
+            ["egg_pig", "textures/items/egg_pig"],
+            ["egg_pigzombie", "textures/items/egg_pigzombie"],
+            ["egg_pillager", "textures/items/egg_pillager"],
+            ["egg_polarbear", "textures/items/egg_polarbear"],
+            ["egg_pufferfish", "textures/items/egg_pufferfish"],
+            ["egg_rabbit", "textures/items/egg_rabbit"],
+            ["egg_ravager", "textures/items/egg_ravager"],
+            ["egg_salmon", "textures/items/egg_salmon"],
+            ["egg_sheep", "textures/items/egg_sheep"],
+            ["egg_shulker", "textures/items/egg_shulker"],
+            ["egg_silverfish", "textures/items/egg_silverfish"],
+            ["egg_skeleton", "textures/items/egg_skeleton"],
+            ["egg_skeletonhorse", "textures/items/egg_skeletonhorse"],
+            ["egg_slime", "textures/items/egg_slime"],
+            ["egg_spider", "textures/items/egg_spider"],
+            ["egg_squid", "textures/items/egg_squid"],
+            ["egg_stray", "textures/items/egg_stray"],
+            ["egg_turtle", "textures/items/egg_turtle"],
+            ["egg_vex", "textures/items/egg_vex"],
+            ["egg_villager", "textures/items/egg_villager"],
+            ["egg_vindicator", "textures/items/egg_vindicator"],
+            ["egg_wanderingtrader", "textures/items/egg_wanderingtrader"],
+            ["egg_witch", "textures/items/egg_witch"],
+            ["egg_wither", "textures/items/egg_wither"],
+            ["egg_wolf", "textures/items/egg_wolf"],
+            ["egg_zombie", "textures/items/egg_zombie"],
+            ["egg_zombiehorse", "textures/items/egg_zombiehorse"],
+            ["egg_zombievillager", "textures/items/egg_zombievillager"],
+            ["elytra", "textures/items/elytra"],
+            ["emerald", "textures/items/emerald"],
+            ["empty_armor_slot_boots", "textures/items/empty_armor_slot_boots"],
+            [
+                "empty_armor_slot_chestplate",
+                "textures/items/empty_armor_slot_chestplate",
+            ],
+            [
+                "empty_armor_slot_helmet",
+                "textures/items/empty_armor_slot_helmet",
+            ],
+            [
+                "empty_armor_slot_leggings",
+                "textures/items/empty_armor_slot_leggings",
+            ],
+            [
+                "empty_armor_slot_shield",
+                "textures/items/empty_armor_slot_shield",
+            ],
+            ["ender_eye", "textures/items/ender_eye"],
+            ["ender_pearl", "textures/items/ender_pearl"],
+            ["end_crystal", "textures/items/end_crystal"],
+            ["experience_bottle", "textures/items/experience_bottle"],
+            ["feather", "textures/items/feather"],
+            ["fireball", "textures/items/fireball"],
+            ["fireworks", "textures/items/fireworks"],
+            ["fishing_rod_cast", "textures/items/fishing_rod_cast"],
+            ["fishing_rod_uncast", "textures/items/fishing_rod_uncast"],
+            ["fish_clownfish_raw", "textures/items/fish_clownfish_raw"],
+            ["fish_cooked", "textures/items/fish_cooked"],
+            ["fish_pufferfish_raw", "textures/items/fish_pufferfish_raw"],
+            ["fish_raw", "textures/items/fish_raw"],
+            ["fish_salmon_cooked", "textures/items/fish_salmon_cooked"],
+            ["fish_salmon_raw", "textures/items/fish_salmon_raw"],
+            ["flint", "textures/items/flint"],
+            ["flint_and_steel", "textures/items/flint_and_steel"],
+            ["flower_pot", "textures/items/flower_pot"],
+            ["ghast_tear", "textures/items/ghast_tear"],
+            ["glowstone_dust", "textures/items/glowstone_dust"],
+            ["gold_axe", "textures/items/gold_axe"],
+            ["gold_boots", "textures/items/gold_boots"],
+            ["gold_chestplate", "textures/items/gold_chestplate"],
+            ["gold_helmet", "textures/items/gold_helmet"],
+            ["gold_hoe", "textures/items/gold_hoe"],
+            ["gold_horse_armor", "textures/items/gold_horse_armor"],
+            ["gold_ingot", "textures/items/gold_ingot"],
+            ["gold_leggings", "textures/items/gold_leggings"],
+            ["gold_nugget", "textures/items/gold_nugget"],
+            ["gold_pickaxe", "textures/items/gold_pickaxe"],
+            ["gold_shovel", "textures/items/gold_shovel"],
+            ["gold_sword", "textures/items/gold_sword"],
+            ["gunpowder", "textures/items/gunpowder"],
+            ["heartofthesea_closed", "textures/items/heartofthesea_closed"],
+            ["hopper", "textures/items/hopper"],
+            ["iron_axe", "textures/items/iron_axe"],
+            ["iron_boots", "textures/items/iron_boots"],
+            ["iron_chestplate", "textures/items/iron_chestplate"],
+            ["iron_helmet", "textures/items/iron_helmet"],
+            ["iron_hoe", "textures/items/iron_hoe"],
+            ["iron_horse_armor", "textures/items/iron_horse_armor"],
+            ["iron_ingot", "textures/items/iron_ingot"],
+            ["iron_leggings", "textures/items/iron_leggings"],
+            ["iron_nugget", "textures/items/iron_nugget"],
+            ["iron_pickaxe", "textures/items/iron_pickaxe"],
+            ["iron_shovel", "textures/items/iron_shovel"],
+            ["iron_sword", "textures/items/iron_sword"],
+            ["item_frame", "textures/items/item_frame"],
+            ["kelp", "textures/items/kelp"],
+            ["lantern", "textures/items/lantern"],
+            ["lead", "textures/items/lead"],
+            ["leather", "textures/items/leather"],
+            ["leather_chestplate", "textures/items/leather_chestplate"],
+            ["lever", "textures/items/lever"],
+            ["light_block_0", "textures/items/light_block_0"],
+            ["light_block_1", "textures/items/light_block_1"],
+            ["light_block_10", "textures/items/light_block_10"],
+            ["light_block_11", "textures/items/light_block_11"],
+            ["light_block_12", "textures/items/light_block_12"],
+            ["light_block_13", "textures/items/light_block_13"],
+            ["light_block_14", "textures/items/light_block_14"],
+            ["light_block_15", "textures/items/light_block_15"],
+            ["light_block_2", "textures/items/light_block_2"],
+            ["light_block_3", "textures/items/light_block_3"],
+            ["light_block_4", "textures/items/light_block_4"],
+            ["light_block_5", "textures/items/light_block_5"],
+            ["light_block_6", "textures/items/light_block_6"],
+            ["light_block_7", "textures/items/light_block_7"],
+            ["light_block_8", "textures/items/light_block_8"],
+            ["light_block_9", "textures/items/light_block_9"],
+            ["magma_cream", "textures/items/magma_cream"],
+            ["map_empty", "textures/items/map_empty"],
+            ["map_filled", "textures/items/map_filled"],
+            ["map_locked", "textures/items/map_locked"],
+            ["map_mansion", "textures/items/map_mansion"],
+            ["map_monument", "textures/items/map_monument"],
+            ["map_nautilus", "textures/items/map_nautilus"],
+            ["melon", "textures/items/melon"],
+            ["melon_speckled", "textures/items/melon_speckled"],
+            ["minecart_chest", "textures/items/minecart_chest"],
+            ["minecart_command_block", "textures/items/minecart_command_block"],
+            ["minecart_furnace", "textures/items/minecart_furnace"],
+            ["minecart_hopper", "textures/items/minecart_hopper"],
+            ["minecart_normal", "textures/items/minecart_normal"],
+            ["minecart_tnt", "textures/items/minecart_tnt"],
+            ["mushroom_stew", "textures/items/mushroom_stew"],
+            ["mutton_cooked", "textures/items/mutton_cooked"],
+            ["mutton_raw", "textures/items/mutton_raw"],
+            ["name_tag", "textures/items/name_tag"],
+            ["nautilus", "textures/items/nautilus"],
+            ["netherbrick", "textures/items/netherbrick"],
+            ["nether_star", "textures/items/nether_star"],
+            ["nether_wart", "textures/items/nether_wart"],
+            ["painting", "textures/items/painting"],
+            ["paper", "textures/items/paper"],
+            ["phantom_membrane", "textures/items/phantom_membrane"],
+            ["porkchop_cooked", "textures/items/porkchop_cooked"],
+            ["porkchop_raw", "textures/items/porkchop_raw"],
+            ["potato", "textures/items/potato"],
+            ["potato_baked", "textures/items/potato_baked"],
+            ["potato_poisonous", "textures/items/potato_poisonous"],
+            [
+                "potion_bottle_absorption",
+                "textures/items/potion_bottle_absorption",
+            ],
+            [
+                "potion_bottle_blindness",
+                "textures/items/potion_bottle_blindness",
+            ],
+            [
+                "potion_bottle_confusion",
+                "textures/items/potion_bottle_confusion",
+            ],
+            [
+                "potion_bottle_damageBoost",
+                "textures/items/potion_bottle_damageBoost",
+            ],
+            [
+                "potion_bottle_digSlowdown",
+                "textures/items/potion_bottle_digSlowdown",
+            ],
+            ["potion_bottle_digSpeed", "textures/items/potion_bottle_digSpeed"],
+            [
+                "potion_bottle_drinkable",
+                "textures/items/potion_bottle_drinkable",
+            ],
+            ["potion_bottle_empty", "textures/items/potion_bottle_empty"],
+            [
+                "potion_bottle_fireResistance",
+                "textures/items/potion_bottle_fireResistance",
+            ],
+            ["potion_bottle_harm", "textures/items/potion_bottle_harm"],
+            ["potion_bottle_heal", "textures/items/potion_bottle_heal"],
+            [
+                "potion_bottle_healthBoost",
+                "textures/items/potion_bottle_healthBoost",
+            ],
+            ["potion_bottle_hunger", "textures/items/potion_bottle_hunger"],
+            [
+                "potion_bottle_invisibility",
+                "textures/items/potion_bottle_invisibility",
+            ],
+            ["potion_bottle_jump", "textures/items/potion_bottle_jump"],
+            [
+                "potion_bottle_levitation",
+                "textures/items/potion_bottle_levitation",
+            ],
+            [
+                "potion_bottle_lingering",
+                "textures/items/potion_bottle_lingering",
+            ],
+            [
+                "potion_bottle_lingering_damageBoost",
+                "textures/items/potion_bottle_lingering_damageBoost",
+            ],
+            [
+                "potion_bottle_lingering_empty",
+                "textures/items/potion_bottle_lingering_empty",
+            ],
+            [
+                "potion_bottle_lingering_fireResistance",
+                "textures/items/potion_bottle_lingering_fireResistance",
+            ],
+            [
+                "potion_bottle_lingering_harm",
+                "textures/items/potion_bottle_lingering_harm",
+            ],
+            [
+                "potion_bottle_lingering_heal",
+                "textures/items/potion_bottle_lingering_heal",
+            ],
+            [
+                "potion_bottle_lingering_invisibility",
+                "textures/items/potion_bottle_lingering_invisibility",
+            ],
+            [
+                "potion_bottle_lingering_jump",
+                "textures/items/potion_bottle_lingering_jump",
+            ],
+            [
+                "potion_bottle_lingering_luck",
+                "textures/items/potion_bottle_lingering_luck",
+            ],
+            [
+                "potion_bottle_lingering_moveSlowdown",
+                "textures/items/potion_bottle_lingering_moveSlowdown",
+            ],
+            [
+                "potion_bottle_lingering_moveSpeed",
+                "textures/items/potion_bottle_lingering_moveSpeed",
+            ],
+            [
+                "potion_bottle_lingering_nightVision",
+                "textures/items/potion_bottle_lingering_nightVision",
+            ],
+            [
+                "potion_bottle_lingering_poison",
+                "textures/items/potion_bottle_lingering_poison",
+            ],
+            [
+                "potion_bottle_lingering_regeneration",
+                "textures/items/potion_bottle_lingering_regeneration",
+            ],
+            [
+                "potion_bottle_lingering_slowFall",
+                "textures/items/potion_bottle_lingering_slowFall",
+            ],
+            [
+                "potion_bottle_lingering_turtleMaster",
+                "textures/items/potion_bottle_lingering_turtleMaster",
+            ],
+            [
+                "potion_bottle_lingering_waterBreathing",
+                "textures/items/potion_bottle_lingering_waterBreathing",
+            ],
+            [
+                "potion_bottle_lingering_weakness",
+                "textures/items/potion_bottle_lingering_weakness",
+            ],
+            [
+                "potion_bottle_lingering_wither",
+                "textures/items/potion_bottle_lingering_wither",
+            ],
+            [
+                "potion_bottle_moveSlowdown",
+                "textures/items/potion_bottle_moveSlowdown",
+            ],
+            [
+                "potion_bottle_moveSpeed",
+                "textures/items/potion_bottle_moveSpeed",
+            ],
+            [
+                "potion_bottle_nightVision",
+                "textures/items/potion_bottle_nightVision",
+            ],
+            ["potion_bottle_poison", "textures/items/potion_bottle_poison"],
+            [
+                "potion_bottle_regeneration",
+                "textures/items/potion_bottle_regeneration",
+            ],
+            [
+                "potion_bottle_resistance",
+                "textures/items/potion_bottle_resistance",
+            ],
+            [
+                "potion_bottle_saturation",
+                "textures/items/potion_bottle_saturation",
+            ],
+            ["potion_bottle_slowFall", "textures/items/potion_bottle_slowFall"],
+            ["potion_bottle_splash", "textures/items/potion_bottle_splash"],
+            [
+                "potion_bottle_splash_absorption",
+                "textures/items/potion_bottle_splash_absorption",
+            ],
+            [
+                "potion_bottle_splash_blindness",
+                "textures/items/potion_bottle_splash_blindness",
+            ],
+            [
+                "potion_bottle_splash_confusion",
+                "textures/items/potion_bottle_splash_confusion",
+            ],
+            [
+                "potion_bottle_splash_damageBoost",
+                "textures/items/potion_bottle_splash_damageBoost",
+            ],
+            [
+                "potion_bottle_splash_digSlowdown",
+                "textures/items/potion_bottle_splash_digSlowdown",
+            ],
+            [
+                "potion_bottle_splash_digSpeed",
+                "textures/items/potion_bottle_splash_digSpeed",
+            ],
+            [
+                "potion_bottle_splash_fireResistance",
+                "textures/items/potion_bottle_splash_fireResistance",
+            ],
+            [
+                "potion_bottle_splash_harm",
+                "textures/items/potion_bottle_splash_harm",
+            ],
+            [
+                "potion_bottle_splash_heal",
+                "textures/items/potion_bottle_splash_heal",
+            ],
+            [
+                "potion_bottle_splash_healthBoost",
+                "textures/items/potion_bottle_splash_healthBoost",
+            ],
+            [
+                "potion_bottle_splash_hunger",
+                "textures/items/potion_bottle_splash_hunger",
+            ],
+            [
+                "potion_bottle_splash_invisibility",
+                "textures/items/potion_bottle_splash_invisibility",
+            ],
+            [
+                "potion_bottle_splash_jump",
+                "textures/items/potion_bottle_splash_jump",
+            ],
+            [
+                "potion_bottle_splash_levitation",
+                "textures/items/potion_bottle_splash_levitation",
+            ],
+            [
+                "potion_bottle_splash_moveSlowdown",
+                "textures/items/potion_bottle_splash_moveSlowdown",
+            ],
+            [
+                "potion_bottle_splash_moveSpeed",
+                "textures/items/potion_bottle_splash_moveSpeed",
+            ],
+            [
+                "potion_bottle_splash_nightVision",
+                "textures/items/potion_bottle_splash_nightVision",
+            ],
+            [
+                "potion_bottle_splash_poison",
+                "textures/items/potion_bottle_splash_poison",
+            ],
+            [
+                "potion_bottle_splash_regeneration",
+                "textures/items/potion_bottle_splash_regeneration",
+            ],
+            [
+                "potion_bottle_splash_resistance",
+                "textures/items/potion_bottle_splash_resistance",
+            ],
+            [
+                "potion_bottle_splash_saturation",
+                "textures/items/potion_bottle_splash_saturation",
+            ],
+            [
+                "potion_bottle_splash_slowFall",
+                "textures/items/potion_bottle_splash_slowFall",
+            ],
+            [
+                "potion_bottle_splash_turtleMaster",
+                "textures/items/potion_bottle_splash_turtleMaster",
+            ],
+            [
+                "potion_bottle_splash_waterBreathing",
+                "textures/items/potion_bottle_splash_waterBreathing",
+            ],
+            [
+                "potion_bottle_splash_weakness",
+                "textures/items/potion_bottle_splash_weakness",
+            ],
+            [
+                "potion_bottle_splash_wither",
+                "textures/items/potion_bottle_splash_wither",
+            ],
+            [
+                "potion_bottle_turtleMaster",
+                "textures/items/potion_bottle_turtleMaster",
+            ],
+            [
+                "potion_bottle_waterBreathing",
+                "textures/items/potion_bottle_waterBreathing",
+            ],
+            ["potion_bottle_weakness", "textures/items/potion_bottle_weakness"],
+            ["potion_bottle_wither", "textures/items/potion_bottle_wither"],
+            ["potion_overlay", "textures/items/potion_overlay"],
+            ["prismarine_crystals", "textures/items/prismarine_crystals"],
+            ["prismarine_shard", "textures/items/prismarine_shard"],
+            ["pumpkin_pie", "textures/items/pumpkin_pie"],
+            ["quartz", "textures/items/quartz"],
+            ["quiver", "textures/items/quiver"],
+            ["rabbit_cooked", "textures/items/rabbit_cooked"],
+            ["rabbit_foot", "textures/items/rabbit_foot"],
+            ["rabbit_hide", "textures/items/rabbit_hide"],
+            ["rabbit_raw", "textures/items/rabbit_raw"],
+            ["rabbit_stew", "textures/items/rabbit_stew"],
+            ["record_11", "textures/items/record_11"],
+            ["record_13", "textures/items/record_13"],
+            ["record_blocks", "textures/items/record_blocks"],
+            ["record_cat", "textures/items/record_cat"],
+            ["record_chirp", "textures/items/record_chirp"],
+            ["record_far", "textures/items/record_far"],
+            ["record_mall", "textures/items/record_mall"],
+            ["record_mellohi", "textures/items/record_mellohi"],
+            ["record_stal", "textures/items/record_stal"],
+            ["record_strad", "textures/items/record_strad"],
+            ["record_wait", "textures/items/record_wait"],
+            ["record_ward", "textures/items/record_ward"],
+            ["redstone_dust", "textures/items/redstone_dust"],
+            ["reeds", "textures/items/reeds"],
+            ["repeater", "textures/items/repeater"],
+            ["rotten_flesh", "textures/items/rotten_flesh"],
+            ["ruby", "textures/items/ruby"],
+            ["saddle", "textures/items/saddle"],
+            ["sea_pickle", "textures/items/sea_pickle"],
+            ["seeds_beetroot", "textures/items/seeds_beetroot"],
+            ["seeds_melon", "textures/items/seeds_melon"],
+            ["seeds_pumpkin", "textures/items/seeds_pumpkin"],
+            ["seeds_wheat", "textures/items/seeds_wheat"],
+            ["shears", "textures/items/shears"],
+            ["shulker_shell", "textures/items/shulker_shell"],
+            ["sign", "textures/items/sign"],
+            ["sign_acacia", "textures/items/sign_acacia"],
+            ["sign_birch", "textures/items/sign_birch"],
+            ["sign_darkoak", "textures/items/sign_darkoak"],
+            ["sign_jungle", "textures/items/sign_jungle"],
+            ["sign_spruce", "textures/items/sign_spruce"],
+            ["slimeball", "textures/items/slimeball"],
+            ["snowball", "textures/items/snowball"],
+            ["spawn_egg", "textures/items/spawn_egg"],
+            ["spawn_egg_overlay", "textures/items/spawn_egg_overlay"],
+            ["spider_eye", "textures/items/spider_eye"],
+            ["spider_eye_fermented", "textures/items/spider_eye_fermented"],
+            ["stick", "textures/items/stick"],
+            ["stone_axe", "textures/items/stone_axe"],
+            ["stone_hoe", "textures/items/stone_hoe"],
+            ["stone_pickaxe", "textures/items/stone_pickaxe"],
+            ["stone_shovel", "textures/items/stone_shovel"],
+            ["stone_sword", "textures/items/stone_sword"],
+            ["string", "textures/items/string"],
+            ["sugar", "textures/items/sugar"],
+            ["suspicious_stew", "textures/items/suspicious_stew"],
+            ["sweet_berries", "textures/items/sweet_berries"],
+            ["tipped_arrow", "textures/items/tipped_arrow"],
+            ["tipped_arrow_base", "textures/items/tipped_arrow_base"],
+            ["tipped_arrow_fireres", "textures/items/tipped_arrow_fireres"],
+            ["tipped_arrow_harm", "textures/items/tipped_arrow_harm"],
+            ["tipped_arrow_head", "textures/items/tipped_arrow_head"],
+            ["tipped_arrow_healing", "textures/items/tipped_arrow_healing"],
+            [
+                "tipped_arrow_invisibility",
+                "textures/items/tipped_arrow_invisibility",
+            ],
+            ["tipped_arrow_leaping", "textures/items/tipped_arrow_leaping"],
+            ["tipped_arrow_luck", "textures/items/tipped_arrow_luck"],
+            [
+                "tipped_arrow_nightvision",
+                "textures/items/tipped_arrow_nightvision",
+            ],
+            ["tipped_arrow_poison", "textures/items/tipped_arrow_poison"],
+            ["tipped_arrow_regen", "textures/items/tipped_arrow_regen"],
+            ["tipped_arrow_slow", "textures/items/tipped_arrow_slow"],
+            [
+                "tipped_arrow_slowfalling",
+                "textures/items/tipped_arrow_slowfalling",
+            ],
+            ["tipped_arrow_strength", "textures/items/tipped_arrow_strength"],
+            ["tipped_arrow_swift", "textures/items/tipped_arrow_swift"],
+            [
+                "tipped_arrow_turtlemaster",
+                "textures/items/tipped_arrow_turtlemaster",
+            ],
+            [
+                "tipped_arrow_waterbreathing",
+                "textures/items/tipped_arrow_waterbreathing",
+            ],
+            ["tipped_arrow_weakness", "textures/items/tipped_arrow_weakness"],
+            ["tipped_arrow_wither", "textures/items/tipped_arrow_wither"],
+            ["totem", "textures/items/totem"],
+            ["trident", "textures/items/trident"],
+            ["turtle_egg", "textures/items/turtle_egg"],
+            ["turtle_helmet", "textures/items/turtle_helmet"],
+            ["turtle_shell_piece", "textures/items/turtle_shell_piece"],
+            ["villagebell", "textures/items/villagebell"],
+            ["watch_atlas", "textures/items/watch_atlas"],
+            ["wheat", "textures/items/wheat"],
+            ["wood_axe", "textures/items/wood_axe"],
+            ["wood_hoe", "textures/items/wood_hoe"],
+            ["wood_pickaxe", "textures/items/wood_pickaxe"],
+            ["wood_shovel", "textures/items/wood_shovel"],
+            ["wood_sword", "textures/items/wood_sword"],
+        ]),
+    ],
+]);

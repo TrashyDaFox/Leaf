@@ -2,1607 +2,548 @@ let rpgiabIconPack = new Map([
     ["pack_name", "RPGIAB Icon Pack"],
     ["pack_icon", "textures/azalea_icons/other/rpgiab_logo"],
     ["pack_namespace", "rpgiab"],
-    ["pack_data", new Map([
-  [
-    "2d",
-    "textures/azalea_icons/other/2d"
-  ],
-  [
-    "accept",
-    "textures/azalea_icons/other/accept"
-  ],
-  [
-    "add",
-    "textures/azalea_icons/other/add"
-  ],
-  [
-    "ambient_occlusion",
-    "textures/azalea_icons/other/ambient_occlusion"
-  ],
-  [
-    "ambient_occlusion_voxel",
-    "textures/azalea_icons/other/ambient_occlusion_voxel"
-  ],
-  [
-    "ammo",
-    "textures/azalea_icons/other/ammo"
-  ],
-  [
-    "angle",
-    "textures/azalea_icons/other/angle"
-  ],
-  [
-    "anim_frame",
-    "textures/azalea_icons/other/anim_frame"
-  ],
-  [
-    "anim_frame_add",
-    "textures/azalea_icons/other/anim_frame_add"
-  ],
-  [
-    "anim_frame_character",
-    "textures/azalea_icons/other/anim_frame_character"
-  ],
-  [
-    "anim_frame_delete",
-    "textures/azalea_icons/other/anim_frame_delete"
-  ],
-  [
-    "anim_frame_duplicate",
-    "textures/azalea_icons/other/anim_frame_duplicate"
-  ],
-  [
-    "anim_frame_edit",
-    "textures/azalea_icons/other/anim_frame_edit"
-  ],
-  [
-    "anim_frame_move_left",
-    "textures/azalea_icons/other/anim_frame_move_left"
-  ],
-  [
-    "anim_frame_move_right",
-    "textures/azalea_icons/other/anim_frame_move_right"
-  ],
-  [
-    "anim_frame_speed",
-    "textures/azalea_icons/other/anim_frame_speed"
-  ],
-  [
-    "anvil_in",
-    "textures/azalea_icons/other/anvil_in"
-  ],
-  [
-    "anvil_out",
-    "textures/azalea_icons/other/anvil_out"
-  ],
-  [
-    "arguments",
-    "textures/azalea_icons/other/arguments"
-  ],
-  [
-    "arrow_blue_first",
-    "textures/azalea_icons/other/arrow_blue_first"
-  ],
-  [
-    "arrow_blue_last",
-    "textures/azalea_icons/other/arrow_blue_last"
-  ],
-  [
-    "arrow_blue_left",
-    "textures/azalea_icons/other/arrow_blue_left"
-  ],
-  [
-    "arrow_blue_right",
-    "textures/azalea_icons/other/arrow_blue_right"
-  ],
-  [
-    "arrow_branch",
-    "textures/azalea_icons/other/arrow_branch"
-  ],
-  [
-    "arrow_down",
-    "textures/azalea_icons/other/arrow_down"
-  ],
-  [
-    "arrow_in",
-    "textures/azalea_icons/other/arrow_in"
-  ],
-  [
-    "arrow_in_out",
-    "textures/azalea_icons/other/arrow_in_out"
-  ],
-  [
-    "arrow_left",
-    "textures/azalea_icons/other/arrow_left"
-  ],
-  [
-    "arrow_left_right",
-    "textures/azalea_icons/other/arrow_left_right"
-  ],
-  [
-    "arrow_lower",
-    "textures/azalea_icons/other/arrow_lower"
-  ],
-  [
-    "arrow_lower_step",
-    "textures/azalea_icons/other/arrow_lower_step"
-  ],
-  [
-    "arrow_out",
-    "textures/azalea_icons/other/arrow_out"
-  ],
-  [
-    "arrow_play",
-    "textures/azalea_icons/other/arrow_play"
-  ],
-  [
-    "arrow_prompt",
-    "textures/azalea_icons/other/arrow_prompt"
-  ],
-  [
-    "arrow_raise",
-    "textures/azalea_icons/other/arrow_raise"
-  ],
-  [
-    "arrow_raise_step",
-    "textures/azalea_icons/other/arrow_raise_step"
-  ],
-  [
-    "arrow_refresh",
-    "textures/azalea_icons/other/arrow_refresh"
-  ],
-  [
-    "arrow_right",
-    "textures/azalea_icons/other/arrow_right"
-  ],
-  [
-    "arrow_rotate_anticlockwise",
-    "textures/azalea_icons/other/arrow_rotate_anticlockwise"
-  ],
-  [
-    "arrow_rotate_clockwise",
-    "textures/azalea_icons/other/arrow_rotate_clockwise"
-  ],
-  [
-    "arrow_speed",
-    "textures/azalea_icons/other/arrow_speed"
-  ],
-  [
-    "arrow_switch",
-    "textures/azalea_icons/other/arrow_switch"
-  ],
-  [
-    "arrow_up",
-    "textures/azalea_icons/other/arrow_up"
-  ],
-  [
-    "arrow_up_down",
-    "textures/azalea_icons/other/arrow_up_down"
-  ],
-  [
-    "attach",
-    "textures/azalea_icons/other/attach"
-  ],
-  [
-    "autotile",
-    "textures/azalea_icons/other/autotile"
-  ],
-  [
-    "blip_orange",
-    "textures/azalea_icons/other/blip_orange"
-  ],
-  [
-    "bomb",
-    "textures/azalea_icons/other/bomb"
-  ],
-  [
-    "book",
-    "textures/azalea_icons/other/book"
-  ],
-  [
-    "boolean",
-    "textures/azalea_icons/other/boolean"
-  ],
-  [
-    "button",
-    "textures/azalea_icons/other/button"
-  ],
-  [
-    "button_xbox_a",
-    "textures/azalea_icons/other/button_xbox_a"
-  ],
-  [
-    "button_xbox_b",
-    "textures/azalea_icons/other/button_xbox_b"
-  ],
-  [
-    "button_xbox_x",
-    "textures/azalea_icons/other/button_xbox_x"
-  ],
-  [
-    "button_xbox_y",
-    "textures/azalea_icons/other/button_xbox_y"
-  ],
-  [
-    "camera",
-    "textures/azalea_icons/other/camera"
-  ],
-  [
-    "camera_add",
-    "textures/azalea_icons/other/camera_add"
-  ],
-  [
-    "camera_edit",
-    "textures/azalea_icons/other/camera_edit"
-  ],
-  [
-    "camera_first_person",
-    "textures/azalea_icons/other/camera_first_person"
-  ],
-  [
-    "camera_free",
-    "textures/azalea_icons/other/camera_free"
-  ],
-  [
-    "camera_isometric",
-    "textures/azalea_icons/other/camera_isometric"
-  ],
-  [
-    "camera_lock",
-    "textures/azalea_icons/other/camera_lock"
-  ],
-  [
-    "camera_move",
-    "textures/azalea_icons/other/camera_move"
-  ],
-  [
-    "camera_reset",
-    "textures/azalea_icons/other/camera_reset"
-  ],
-  [
-    "camera_rotate",
-    "textures/azalea_icons/other/camera_rotate"
-  ],
-  [
-    "character",
-    "textures/azalea_icons/other/character"
-  ],
-  [
-    "character_add",
-    "textures/azalea_icons/other/character_add"
-  ],
-  [
-    "character_dialogue",
-    "textures/azalea_icons/other/character_dialogue"
-  ],
-  [
-    "character_edit",
-    "textures/azalea_icons/other/character_edit"
-  ],
-  [
-    "character_heart",
-    "textures/azalea_icons/other/character_heart"
-  ],
-  [
-    "character_item_get",
-    "textures/azalea_icons/other/character_item_get"
-  ],
-  [
-    "character_lock",
-    "textures/azalea_icons/other/character_lock"
-  ],
-  [
-    "character_move",
-    "textures/azalea_icons/other/character_move"
-  ],
-  [
-    "character_npc",
-    "textures/azalea_icons/other/character_npc"
-  ],
-  [
-    "character_question",
-    "textures/azalea_icons/other/character_question"
-  ],
-  [
-    "character_rotate",
-    "textures/azalea_icons/other/character_rotate"
-  ],
-  [
-    "character_stop",
-    "textures/azalea_icons/other/character_stop"
-  ],
-  [
-    "checkbox",
-    "textures/azalea_icons/other/checkbox"
-  ],
-  [
-    "checkbox_off",
-    "textures/azalea_icons/other/checkbox_off"
-  ],
-  [
-    "checkmark",
-    "textures/azalea_icons/other/checkmark"
-  ],
-  [
-    "chest",
-    "textures/azalea_icons/other/chest"
-  ],
-  [
-    "chest_checkmark",
-    "textures/azalea_icons/other/chest_checkmark"
-  ],
-  [
-    "chest_delete",
-    "textures/azalea_icons/other/chest_delete"
-  ],
-  [
-    "chest_disable",
-    "textures/azalea_icons/other/chest_disable"
-  ],
-  [
-    "chest_enable",
-    "textures/azalea_icons/other/chest_enable"
-  ],
-  [
-    "chest_item",
-    "textures/azalea_icons/other/chest_item"
-  ],
-  [
-    "clear",
-    "textures/azalea_icons/other/clear"
-  ],
-  [
-    "clipboard",
-    "textures/azalea_icons/other/clipboard"
-  ],
-  [
-    "clock",
-    "textures/azalea_icons/other/clock"
-  ],
-  [
-    "clock_play",
-    "textures/azalea_icons/other/clock_play"
-  ],
-  [
-    "clock_stop",
-    "textures/azalea_icons/other/clock_stop"
-  ],
-  [
-    "coins",
-    "textures/azalea_icons/other/coins"
-  ],
-  [
-    "collapse",
-    "textures/azalea_icons/other/collapse"
-  ],
-  [
-    "color_edit",
-    "textures/azalea_icons/other/color_edit"
-  ],
-  [
-    "color_swatch",
-    "textures/azalea_icons/other/color_swatch"
-  ],
-  [
-    "comment",
-    "textures/azalea_icons/other/comment"
-  ],
-  [
-    "computer",
-    "textures/azalea_icons/other/computer"
-  ],
-  [
-    "console",
-    "textures/azalea_icons/other/console"
-  ],
-  [
-    "credits",
-    "textures/azalea_icons/other/credits"
-  ],
-  [
-    "crosshair",
-    "textures/azalea_icons/other/crosshair"
-  ],
-  [
-    "cursor",
-    "textures/azalea_icons/other/cursor"
-  ],
-  [
-    "delete",
-    "textures/azalea_icons/other/delete"
-  ],
-  [
-    "dialogue",
-    "textures/azalea_icons/other/dialogue"
-  ],
-  [
-    "dialogue_add",
-    "textures/azalea_icons/other/dialogue_add"
-  ],
-  [
-    "dialogue_page",
-    "textures/azalea_icons/other/dialogue_page"
-  ],
-  [
-    "dialogue_start",
-    "textures/azalea_icons/other/dialogue_start"
-  ],
-  [
-    "dice",
-    "textures/azalea_icons/other/dice"
-  ],
-  [
-    "discord_logo",
-    "textures/azalea_icons/other/discord_logo"
-  ],
-  [
-    "disk",
-    "textures/azalea_icons/other/disk"
-  ],
-  [
-    "disk_load",
-    "textures/azalea_icons/other/disk_load"
-  ],
-  [
-    "disk_multiple",
-    "textures/azalea_icons/other/disk_multiple"
-  ],
-  [
-    "disk_save",
-    "textures/azalea_icons/other/disk_save"
-  ],
-  [
-    "door",
-    "textures/azalea_icons/other/door"
-  ],
-  [
-    "enemy",
-    "textures/azalea_icons/other/enemy"
-  ],
-  [
-    "enemy_add",
-    "textures/azalea_icons/other/enemy_add"
-  ],
-  [
-    "entity",
-    "textures/azalea_icons/other/entity"
-  ],
-  [
-    "entity_bounds",
-    "textures/azalea_icons/other/entity_bounds"
-  ],
-  [
-    "entity_delete",
-    "textures/azalea_icons/other/entity_delete"
-  ],
-  [
-    "entity_move",
-    "textures/azalea_icons/other/entity_move"
-  ],
-  [
-    "exclamation",
-    "textures/azalea_icons/other/exclamation"
-  ],
-  [
-    "exit",
-    "textures/azalea_icons/other/exit"
-  ],
-  [
-    "expand",
-    "textures/azalea_icons/other/expand"
-  ],
-  [
-    "expression",
-    "textures/azalea_icons/other/expression"
-  ],
-  [
-    "eye",
-    "textures/azalea_icons/other/eye"
-  ],
-  [
-    "eyedropper",
-    "textures/azalea_icons/other/eyedropper"
-  ],
-  [
-    "eye_height",
-    "textures/azalea_icons/other/eye_height"
-  ],
-  [
-    "eye_hide",
-    "textures/azalea_icons/other/eye_hide"
-  ],
-  [
-    "eye_lock",
-    "textures/azalea_icons/other/eye_lock"
-  ],
-  [
-    "eye_show",
-    "textures/azalea_icons/other/eye_show"
-  ],
-  [
-    "fade_in",
-    "textures/azalea_icons/other/fade_in"
-  ],
-  [
-    "fade_out",
-    "textures/azalea_icons/other/fade_out"
-  ],
-  [
-    "flag_blue",
-    "textures/azalea_icons/other/flag_blue"
-  ],
-  [
-    "flip_horizontal",
-    "textures/azalea_icons/other/flip_horizontal"
-  ],
-  [
-    "folder",
-    "textures/azalea_icons/other/folder"
-  ],
-  [
-    "folder_image",
-    "textures/azalea_icons/other/folder_image"
-  ],
-  [
-    "folder_page",
-    "textures/azalea_icons/other/folder_page"
-  ],
-  [
-    "folder_search",
-    "textures/azalea_icons/other/folder_search"
-  ],
-  [
-    "folder_settings",
-    "textures/azalea_icons/other/folder_settings"
-  ],
-  [
-    "folder_up",
-    "textures/azalea_icons/other/folder_up"
-  ],
-  [
-    "folder_voxel",
-    "textures/azalea_icons/other/folder_voxel"
-  ],
-  [
-    "font",
-    "textures/azalea_icons/other/font"
-  ],
-  [
-    "font_size",
-    "textures/azalea_icons/other/font_size"
-  ],
-  [
-    "fullscreen",
-    "textures/azalea_icons/other/fullscreen"
-  ],
-  [
-    "function",
-    "textures/azalea_icons/other/function"
-  ],
-  [
-    "gear",
-    "textures/azalea_icons/other/gear"
-  ],
-  [
-    "glow",
-    "textures/azalea_icons/other/glow"
-  ],
-  [
-    "godot_logo",
-    "textures/azalea_icons/other/godot_logo"
-  ],
-  [
-    "gradient_red",
-    "textures/azalea_icons/other/gradient_red"
-  ],
-  [
-    "grid",
-    "textures/azalea_icons/other/grid"
-  ],
-  [
-    "grid_height",
-    "textures/azalea_icons/other/grid_height"
-  ],
-  [
-    "grid_tile",
-    "textures/azalea_icons/other/grid_tile"
-  ],
-  [
-    "grid_tile_place",
-    "textures/azalea_icons/other/grid_tile_place"
-  ],
-  [
-    "ground",
-    "textures/azalea_icons/other/ground"
-  ],
-  [
-    "group",
-    "textures/azalea_icons/other/group"
-  ],
-  [
-    "group_add",
-    "textures/azalea_icons/other/group_add"
-  ],
-  [
-    "group_delete",
-    "textures/azalea_icons/other/group_delete"
-  ],
-  [
-    "group_edit",
-    "textures/azalea_icons/other/group_edit"
-  ],
-  [
-    "group_mesh",
-    "textures/azalea_icons/other/group_mesh"
-  ],
-  [
-    "group_tiles",
-    "textures/azalea_icons/other/group_tiles"
-  ],
-  [
-    "hand",
-    "textures/azalea_icons/other/hand"
-  ],
-  [
-    "hand_add",
-    "textures/azalea_icons/other/hand_add"
-  ],
-  [
-    "hand_delete",
-    "textures/azalea_icons/other/hand_delete"
-  ],
-  [
-    "hand_move",
-    "textures/azalea_icons/other/hand_move"
-  ],
-  [
-    "heart",
-    "textures/azalea_icons/other/heart"
-  ],
-  [
-    "heart_add",
-    "textures/azalea_icons/other/heart_add"
-  ],
-  [
-    "heart_delete",
-    "textures/azalea_icons/other/heart_delete"
-  ],
-  [
-    "help",
-    "textures/azalea_icons/other/help"
-  ],
-  [
-    "hourglass",
-    "textures/azalea_icons/other/hourglass"
-  ],
-  [
-    "image",
-    "textures/azalea_icons/other/image"
-  ],
-  [
-    "image_add",
-    "textures/azalea_icons/other/image_add"
-  ],
-  [
-    "image_dimensions",
-    "textures/azalea_icons/other/image_dimensions"
-  ],
-  [
-    "image_hand",
-    "textures/azalea_icons/other/image_hand"
-  ],
-  [
-    "import_export",
-    "textures/azalea_icons/other/import_export"
-  ],
-  [
-    "information",
-    "textures/azalea_icons/other/information"
-  ],
-  [
-    "interact",
-    "textures/azalea_icons/other/interact"
-  ],
-  [
-    "inventory",
-    "textures/azalea_icons/other/inventory"
-  ],
-  [
-    "inventory_hide",
-    "textures/azalea_icons/other/inventory_hide"
-  ],
-  [
-    "inventory_show",
-    "textures/azalea_icons/other/inventory_show"
-  ],
-  [
-    "itch_logo",
-    "textures/azalea_icons/other/itch_logo"
-  ],
-  [
-    "item",
-    "textures/azalea_icons/other/item"
-  ],
-  [
-    "item_add",
-    "textures/azalea_icons/other/item_add"
-  ],
-  [
-    "item_delete",
-    "textures/azalea_icons/other/item_delete"
-  ],
-  [
-    "item_drop",
-    "textures/azalea_icons/other/item_drop"
-  ],
-  [
-    "item_stack",
-    "textures/azalea_icons/other/item_stack"
-  ],
-  [
-    "joystick",
-    "textures/azalea_icons/other/joystick"
-  ],
-  [
-    "jump",
-    "textures/azalea_icons/other/jump"
-  ],
-  [
-    "keyboard",
-    "textures/azalea_icons/other/keyboard"
-  ],
-  [
-    "key_c",
-    "textures/azalea_icons/other/key_c"
-  ],
-  [
-    "key_t",
-    "textures/azalea_icons/other/key_t"
-  ],
-  [
-    "ladder",
-    "textures/azalea_icons/other/ladder"
-  ],
-  [
-    "ladder_character",
-    "textures/azalea_icons/other/ladder_character"
-  ],
-  [
-    "ladder_down",
-    "textures/azalea_icons/other/ladder_down"
-  ],
-  [
-    "ladder_lock",
-    "textures/azalea_icons/other/ladder_lock"
-  ],
-  [
-    "ladder_none",
-    "textures/azalea_icons/other/ladder_none"
-  ],
-  [
-    "ladder_up",
-    "textures/azalea_icons/other/ladder_up"
-  ],
-  [
-    "ladder_up_down",
-    "textures/azalea_icons/other/ladder_up_down"
-  ],
-  [
-    "laser",
-    "textures/azalea_icons/other/laser"
-  ],
-  [
-    "library",
-    "textures/azalea_icons/other/library"
-  ],
-  [
-    "light",
-    "textures/azalea_icons/other/light"
-  ],
-  [
-    "light_add",
-    "textures/azalea_icons/other/light_add"
-  ],
-  [
-    "light_energy",
-    "textures/azalea_icons/other/light_energy"
-  ],
-  [
-    "light_fade",
-    "textures/azalea_icons/other/light_fade"
-  ],
-  [
-    "light_negative",
-    "textures/azalea_icons/other/light_negative"
-  ],
-  [
-    "light_off",
-    "textures/azalea_icons/other/light_off"
-  ],
-  [
-    "light_on_off",
-    "textures/azalea_icons/other/light_on_off"
-  ],
-  [
-    "light_range",
-    "textures/azalea_icons/other/light_range"
-  ],
-  [
-    "link",
-    "textures/azalea_icons/other/link"
-  ],
-  [
-    "link_add",
-    "textures/azalea_icons/other/link_add"
-  ],
-  [
-    "link_box",
-    "textures/azalea_icons/other/link_box"
-  ],
-  [
-    "link_delete",
-    "textures/azalea_icons/other/link_delete"
-  ],
-  [
-    "link_eye",
-    "textures/azalea_icons/other/link_eye"
-  ],
-  [
-    "linux_logo",
-    "textures/azalea_icons/other/linux_logo"
-  ],
-  [
-    "loading_screen",
-    "textures/azalea_icons/other/loading_screen"
-  ],
-  [
-    "location",
-    "textures/azalea_icons/other/location"
-  ],
-  [
-    "location_character",
-    "textures/azalea_icons/other/location_character"
-  ],
-  [
-    "location_enemy",
-    "textures/azalea_icons/other/location_enemy"
-  ],
-  [
-    "location_hand",
-    "textures/azalea_icons/other/location_hand"
-  ],
-  [
-    "lock",
-    "textures/azalea_icons/other/lock"
-  ],
-  [
-    "lock_vertical",
-    "textures/azalea_icons/other/lock_vertical"
-  ],
-  [
-    "mac_logo",
-    "textures/azalea_icons/other/mac_logo"
-  ],
-  [
-    "magnifier",
-    "textures/azalea_icons/other/magnifier"
-  ],
-  [
-    "magnifier_zoom_in",
-    "textures/azalea_icons/other/magnifier_zoom_in"
-  ],
-  [
-    "magnifier_zoom_out",
-    "textures/azalea_icons/other/magnifier_zoom_out"
-  ],
-  [
-    "main_menu",
-    "textures/azalea_icons/other/main_menu"
-  ],
-  [
-    "map",
-    "textures/azalea_icons/other/map"
-  ],
-  [
-    "map_add",
-    "textures/azalea_icons/other/map_add"
-  ],
-  [
-    "map_fog",
-    "textures/azalea_icons/other/map_fog"
-  ],
-  [
-    "map_link",
-    "textures/azalea_icons/other/map_link"
-  ],
-  [
-    "map_reset",
-    "textures/azalea_icons/other/map_reset"
-  ],
-  [
-    "map_start",
-    "textures/azalea_icons/other/map_start"
-  ],
-  [
-    "margin_bottom",
-    "textures/azalea_icons/other/margin_bottom"
-  ],
-  [
-    "margin_left",
-    "textures/azalea_icons/other/margin_left"
-  ],
-  [
-    "margin_right",
-    "textures/azalea_icons/other/margin_right"
-  ],
-  [
-    "margin_top",
-    "textures/azalea_icons/other/margin_top"
-  ],
-  [
-    "margin_top_left",
-    "textures/azalea_icons/other/margin_top_left"
-  ],
-  [
-    "mesh_default",
-    "textures/azalea_icons/other/mesh_default"
-  ],
-  [
-    "mesh_marching",
-    "textures/azalea_icons/other/mesh_marching"
-  ],
-  [
-    "mesh_preview",
-    "textures/azalea_icons/other/mesh_preview"
-  ],
-  [
-    "message",
-    "textures/azalea_icons/other/message"
-  ],
-  [
-    "missing",
-    "textures/azalea_icons/other/missing"
-  ],
-  [
-    "model_edit",
-    "textures/azalea_icons/other/model_edit"
-  ],
-  [
-    "mouse",
-    "textures/azalea_icons/other/mouse"
-  ],
-  [
-    "mouse_eye",
-    "textures/azalea_icons/other/mouse_eye"
-  ],
-  [
-    "mouse_free",
-    "textures/azalea_icons/other/mouse_free"
-  ],
-  [
-    "move_interact",
-    "textures/azalea_icons/other/move_interact"
-  ],
-  [
-    "music",
-    "textures/azalea_icons/other/music"
-  ],
-  [
-    "music_play",
-    "textures/azalea_icons/other/music_play"
-  ],
-  [
-    "navigation",
-    "textures/azalea_icons/other/navigation"
-  ],
-  [
-    "navigation_adjacent",
-    "textures/azalea_icons/other/navigation_adjacent"
-  ],
-  [
-    "node",
-    "textures/azalea_icons/other/node"
-  ],
-  [
-    "node_add",
-    "textures/azalea_icons/other/node_add"
-  ],
-  [
-    "node_copy",
-    "textures/azalea_icons/other/node_copy"
-  ],
-  [
-    "node_library",
-    "textures/azalea_icons/other/node_library"
-  ],
-  [
-    "node_link",
-    "textures/azalea_icons/other/node_link"
-  ],
-  [
-    "noise",
-    "textures/azalea_icons/other/noise"
-  ],
-  [
-    "number",
-    "textures/azalea_icons/other/number"
-  ],
-  [
-    "object",
-    "textures/azalea_icons/other/object"
-  ],
-  [
-    "object_add",
-    "textures/azalea_icons/other/object_add"
-  ],
-  [
-    "object_hand",
-    "textures/azalea_icons/other/object_hand"
-  ],
-  [
-    "offset_horizontal",
-    "textures/azalea_icons/other/offset_horizontal"
-  ],
-  [
-    "offset_vertical",
-    "textures/azalea_icons/other/offset_vertical"
-  ],
-  [
-    "package",
-    "textures/azalea_icons/other/package"
-  ],
-  [
-    "page_add",
-    "textures/azalea_icons/other/page_add"
-  ],
-  [
-    "page_copy",
-    "textures/azalea_icons/other/page_copy"
-  ],
-  [
-    "page_data",
-    "textures/azalea_icons/other/page_data"
-  ],
-  [
-    "page_edit",
-    "textures/azalea_icons/other/page_edit"
-  ],
-  [
-    "page_voxel",
-    "textures/azalea_icons/other/page_voxel"
-  ],
-  [
-    "paint_can",
-    "textures/azalea_icons/other/paint_can"
-  ],
-  [
-    "palette",
-    "textures/azalea_icons/other/palette"
-  ],
-  [
-    "party",
-    "textures/azalea_icons/other/party"
-  ],
-  [
-    "party_add",
-    "textures/azalea_icons/other/party_add"
-  ],
-  [
-    "party_delete",
-    "textures/azalea_icons/other/party_delete"
-  ],
-  [
-    "party_reset",
-    "textures/azalea_icons/other/party_reset"
-  ],
-  [
-    "pause",
-    "textures/azalea_icons/other/pause"
-  ],
-  [
-    "pencil",
-    "textures/azalea_icons/other/pencil"
-  ],
-  [
-    "platform",
-    "textures/azalea_icons/other/platform"
-  ],
-  [
-    "play",
-    "textures/azalea_icons/other/play"
-  ],
-  [
-    "portrait",
-    "textures/azalea_icons/other/portrait"
-  ],
-  [
-    "portrait_left",
-    "textures/azalea_icons/other/portrait_left"
-  ],
-  [
-    "portrait_right",
-    "textures/azalea_icons/other/portrait_right"
-  ],
-  [
-    "potion",
-    "textures/azalea_icons/other/potion"
-  ],
-  [
-    "progress_bar",
-    "textures/azalea_icons/other/progress_bar"
-  ],
-  [
-    "properties",
-    "textures/azalea_icons/other/properties"
-  ],
-  [
-    "properties_edit",
-    "textures/azalea_icons/other/properties_edit"
-  ],
-  [
-    "properties_insert",
-    "textures/azalea_icons/other/properties_insert"
-  ],
-  [
-    "puzzle",
-    "textures/azalea_icons/other/puzzle"
-  ],
-  [
-    "redo",
-    "textures/azalea_icons/other/redo"
-  ],
-  [
-    "rpgiab_logo",
-    "textures/azalea_icons/other/rpgiab_logo"
-  ],
-  [
-    "scissors",
-    "textures/azalea_icons/other/scissors"
-  ],
-  [
-    "script",
-    "textures/azalea_icons/other/script"
-  ],
-  [
-    "script_add",
-    "textures/azalea_icons/other/script_add"
-  ],
-  [
-    "script_code",
-    "textures/azalea_icons/other/script_code"
-  ],
-  [
-    "script_delete",
-    "textures/azalea_icons/other/script_delete"
-  ],
-  [
-    "script_edit",
-    "textures/azalea_icons/other/script_edit"
-  ],
-  [
-    "script_lightning",
-    "textures/azalea_icons/other/script_lightning"
-  ],
-  [
-    "script_lightning_add",
-    "textures/azalea_icons/other/script_lightning_add"
-  ],
-  [
-    "script_lightning_edit",
-    "textures/azalea_icons/other/script_lightning_edit"
-  ],
-  [
-    "script_start",
-    "textures/azalea_icons/other/script_start"
-  ],
-  [
-    "script_text",
-    "textures/azalea_icons/other/script_text"
-  ],
-  [
-    "script_text_add",
-    "textures/azalea_icons/other/script_text_add"
-  ],
-  [
-    "script_text_checkmark",
-    "textures/azalea_icons/other/script_text_checkmark"
-  ],
-  [
-    "script_text_delete",
-    "textures/azalea_icons/other/script_text_delete"
-  ],
-  [
-    "select_edit",
-    "textures/azalea_icons/other/select_edit"
-  ],
-  [
-    "settings_gear",
-    "textures/azalea_icons/other/settings_gear"
-  ],
-  [
-    "settings_save",
-    "textures/azalea_icons/other/settings_save"
-  ],
-  [
-    "shadow",
-    "textures/azalea_icons/other/shadow"
-  ],
-  [
-    "shadow_darkness",
-    "textures/azalea_icons/other/shadow_darkness"
-  ],
-  [
-    "shield",
-    "textures/azalea_icons/other/shield"
-  ],
-  [
-    "ship",
-    "textures/azalea_icons/other/ship"
-  ],
-  [
-    "skull",
-    "textures/azalea_icons/other/skull"
-  ],
-  [
-    "skull_delete",
-    "textures/azalea_icons/other/skull_delete"
-  ],
-  [
-    "sound",
-    "textures/azalea_icons/other/sound"
-  ],
-  [
-    "star",
-    "textures/azalea_icons/other/star"
-  ],
-  [
-    "steam_logo",
-    "textures/azalea_icons/other/steam_logo"
-  ],
-  [
-    "stop",
-    "textures/azalea_icons/other/stop"
-  ],
-  [
-    "stop_sign",
-    "textures/azalea_icons/other/stop_sign"
-  ],
-  [
-    "string",
-    "textures/azalea_icons/other/string"
-  ],
-  [
-    "surface_edges",
-    "textures/azalea_icons/other/surface_edges"
-  ],
-  [
-    "sword",
-    "textures/azalea_icons/other/sword"
-  ],
-  [
-    "swords",
-    "textures/azalea_icons/other/swords"
-  ],
-  [
-    "sword_blood",
-    "textures/azalea_icons/other/sword_blood"
-  ],
-  [
-    "sword_eye",
-    "textures/azalea_icons/other/sword_eye"
-  ],
-  [
-    "sword_hit",
-    "textures/azalea_icons/other/sword_hit"
-  ],
-  [
-    "sword_link",
-    "textures/azalea_icons/other/sword_link"
-  ],
-  [
-    "sword_reset",
-    "textures/azalea_icons/other/sword_reset"
-  ],
-  [
-    "sword_start",
-    "textures/azalea_icons/other/sword_start"
-  ],
-  [
-    "sword_stop",
-    "textures/azalea_icons/other/sword_stop"
-  ],
-  [
-    "tab",
-    "textures/azalea_icons/other/tab"
-  ],
-  [
-    "tag_blue",
-    "textures/azalea_icons/other/tag_blue"
-  ],
-  [
-    "tag_id",
-    "textures/azalea_icons/other/tag_id"
-  ],
-  [
-    "terrain",
-    "textures/azalea_icons/other/terrain"
-  ],
-  [
-    "terrain_follow",
-    "textures/azalea_icons/other/terrain_follow"
-  ],
-  [
-    "terrain_precise",
-    "textures/azalea_icons/other/terrain_precise"
-  ],
-  [
-    "terrain_smooth_curve",
-    "textures/azalea_icons/other/terrain_smooth_curve"
-  ],
-  [
-    "terrain_smooth_linear",
-    "textures/azalea_icons/other/terrain_smooth_linear"
-  ],
-  [
-    "text",
-    "textures/azalea_icons/other/text"
-  ],
-  [
-    "text_align_center",
-    "textures/azalea_icons/other/text_align_center"
-  ],
-  [
-    "text_bullets",
-    "textures/azalea_icons/other/text_bullets"
-  ],
-  [
-    "text_eye",
-    "textures/azalea_icons/other/text_eye"
-  ],
-  [
-    "text_field",
-    "textures/azalea_icons/other/text_field"
-  ],
-  [
-    "text_line_numbers",
-    "textures/azalea_icons/other/text_line_numbers"
-  ],
-  [
-    "text_line_spacing",
-    "textures/azalea_icons/other/text_line_spacing"
-  ],
-  [
-    "tile",
-    "textures/azalea_icons/other/tile"
-  ],
-  [
-    "tile_add",
-    "textures/azalea_icons/other/tile_add"
-  ],
-  [
-    "tile_enter",
-    "textures/azalea_icons/other/tile_enter"
-  ],
-  [
-    "tile_exclamation",
-    "textures/azalea_icons/other/tile_exclamation"
-  ],
-  [
-    "tile_exit",
-    "textures/azalea_icons/other/tile_exit"
-  ],
-  [
-    "tile_impassable",
-    "textures/azalea_icons/other/tile_impassable"
-  ],
-  [
-    "tile_passable",
-    "textures/azalea_icons/other/tile_passable"
-  ],
-  [
-    "tile_stop",
-    "textures/azalea_icons/other/tile_stop"
-  ],
-  [
-    "tools",
-    "textures/azalea_icons/other/tools"
-  ],
-  [
-    "tool_items",
-    "textures/azalea_icons/other/tool_items"
-  ],
-  [
-    "transparency",
-    "textures/azalea_icons/other/transparency"
-  ],
-  [
-    "tree_collapse",
-    "textures/azalea_icons/other/tree_collapse"
-  ],
-  [
-    "tree_expand",
-    "textures/azalea_icons/other/tree_expand"
-  ],
-  [
-    "trello_logo",
-    "textures/azalea_icons/other/trello_logo"
-  ],
-  [
-    "twitter_logo",
-    "textures/azalea_icons/other/twitter_logo"
-  ],
-  [
-    "ui",
-    "textures/azalea_icons/other/ui"
-  ],
-  [
-    "ui_inventory",
-    "textures/azalea_icons/other/ui_inventory"
-  ],
-  [
-    "ui_toolbar",
-    "textures/azalea_icons/other/ui_toolbar"
-  ],
-  [
-    "undo",
-    "textures/azalea_icons/other/undo"
-  ],
-  [
-    "unlock",
-    "textures/azalea_icons/other/unlock"
-  ],
-  [
-    "variable",
-    "textures/azalea_icons/other/variable"
-  ],
-  [
-    "variable_return",
-    "textures/azalea_icons/other/variable_return"
-  ],
-  [
-    "voxel",
-    "textures/azalea_icons/other/voxel"
-  ],
-  [
-    "voxel_add",
-    "textures/azalea_icons/other/voxel_add"
-  ],
-  [
-    "voxel_editor",
-    "textures/azalea_icons/other/voxel_editor"
-  ],
-  [
-    "voxel_outlines",
-    "textures/azalea_icons/other/voxel_outlines"
-  ],
-  [
-    "voxel_paint",
-    "textures/azalea_icons/other/voxel_paint"
-  ],
-  [
-    "warning",
-    "textures/azalea_icons/other/warning"
-  ],
-  [
-    "weapons",
-    "textures/azalea_icons/other/weapons"
-  ],
-  [
-    "weather_fog",
-    "textures/azalea_icons/other/weather_fog"
-  ],
-  [
-    "weather_sun",
-    "textures/azalea_icons/other/weather_sun"
-  ],
-  [
-    "widget",
-    "textures/azalea_icons/other/widget"
-  ],
-  [
-    "widget_height",
-    "textures/azalea_icons/other/widget_height"
-  ],
-  [
-    "widget_hide",
-    "textures/azalea_icons/other/widget_hide"
-  ],
-  [
-    "widget_lock",
-    "textures/azalea_icons/other/widget_lock"
-  ],
-  [
-    "widget_save",
-    "textures/azalea_icons/other/widget_save"
-  ],
-  [
-    "widget_show",
-    "textures/azalea_icons/other/widget_show"
-  ],
-  [
-    "widget_width",
-    "textures/azalea_icons/other/widget_width"
-  ],
-  [
-    "windows_logo",
-    "textures/azalea_icons/other/windows_logo"
-  ],
-  [
-    "window_compact_off",
-    "textures/azalea_icons/other/window_compact_off"
-  ],
-  [
-    "window_compact_on",
-    "textures/azalea_icons/other/window_compact_on"
-  ],
-  [
-    "window_dialogue",
-    "textures/azalea_icons/other/window_dialogue"
-  ],
-  [
-    "window_expand_down",
-    "textures/azalea_icons/other/window_expand_down"
-  ],
-  [
-    "window_expand_up",
-    "textures/azalea_icons/other/window_expand_up"
-  ],
-  [
-    "window_frame_show",
-    "textures/azalea_icons/other/window_frame_show"
-  ],
-  [
-    "window_free",
-    "textures/azalea_icons/other/window_free"
-  ],
-  [
-    "window_title_show",
-    "textures/azalea_icons/other/window_title_show"
-  ],
-  [
-    "window_width",
-    "textures/azalea_icons/other/window_width"
-  ],
-  [
-    "wizard",
-    "textures/azalea_icons/other/wizard"
-  ],
-  [
-    "world",
-    "textures/azalea_icons/other/world"
-  ],
-  [
-    "world_disable",
-    "textures/azalea_icons/other/world_disable"
-  ],
-  [
-    "world_disk",
-    "textures/azalea_icons/other/world_disk"
-  ],
-  [
-    "world_enable",
-    "textures/azalea_icons/other/world_enable"
-  ],
-  [
-    "world_hand",
-    "textures/azalea_icons/other/world_hand"
-  ],
-  [
-    "world_page",
-    "textures/azalea_icons/other/world_page"
-  ],
-  [
-    "xp",
-    "textures/azalea_icons/other/xp"
-  ],
-  [
-    "yield",
-    "textures/azalea_icons/other/yield"
-  ],
-  [
-    "yield_add",
-    "textures/azalea_icons/other/yield_add"
-  ]
-])]
+    [
+        "pack_data",
+        new Map([
+            ["2d", "textures/azalea_icons/other/2d"],
+            ["accept", "textures/azalea_icons/other/accept"],
+            ["add", "textures/azalea_icons/other/add"],
+            [
+                "ambient_occlusion",
+                "textures/azalea_icons/other/ambient_occlusion",
+            ],
+            [
+                "ambient_occlusion_voxel",
+                "textures/azalea_icons/other/ambient_occlusion_voxel",
+            ],
+            ["ammo", "textures/azalea_icons/other/ammo"],
+            ["angle", "textures/azalea_icons/other/angle"],
+            ["anim_frame", "textures/azalea_icons/other/anim_frame"],
+            ["anim_frame_add", "textures/azalea_icons/other/anim_frame_add"],
+            [
+                "anim_frame_character",
+                "textures/azalea_icons/other/anim_frame_character",
+            ],
+            [
+                "anim_frame_delete",
+                "textures/azalea_icons/other/anim_frame_delete",
+            ],
+            [
+                "anim_frame_duplicate",
+                "textures/azalea_icons/other/anim_frame_duplicate",
+            ],
+            ["anim_frame_edit", "textures/azalea_icons/other/anim_frame_edit"],
+            [
+                "anim_frame_move_left",
+                "textures/azalea_icons/other/anim_frame_move_left",
+            ],
+            [
+                "anim_frame_move_right",
+                "textures/azalea_icons/other/anim_frame_move_right",
+            ],
+            [
+                "anim_frame_speed",
+                "textures/azalea_icons/other/anim_frame_speed",
+            ],
+            ["anvil_in", "textures/azalea_icons/other/anvil_in"],
+            ["anvil_out", "textures/azalea_icons/other/anvil_out"],
+            ["arguments", "textures/azalea_icons/other/arguments"],
+            [
+                "arrow_blue_first",
+                "textures/azalea_icons/other/arrow_blue_first",
+            ],
+            ["arrow_blue_last", "textures/azalea_icons/other/arrow_blue_last"],
+            ["arrow_blue_left", "textures/azalea_icons/other/arrow_blue_left"],
+            [
+                "arrow_blue_right",
+                "textures/azalea_icons/other/arrow_blue_right",
+            ],
+            ["arrow_branch", "textures/azalea_icons/other/arrow_branch"],
+            ["arrow_down", "textures/azalea_icons/other/arrow_down"],
+            ["arrow_in", "textures/azalea_icons/other/arrow_in"],
+            ["arrow_in_out", "textures/azalea_icons/other/arrow_in_out"],
+            ["arrow_left", "textures/azalea_icons/other/arrow_left"],
+            [
+                "arrow_left_right",
+                "textures/azalea_icons/other/arrow_left_right",
+            ],
+            ["arrow_lower", "textures/azalea_icons/other/arrow_lower"],
+            [
+                "arrow_lower_step",
+                "textures/azalea_icons/other/arrow_lower_step",
+            ],
+            ["arrow_out", "textures/azalea_icons/other/arrow_out"],
+            ["arrow_play", "textures/azalea_icons/other/arrow_play"],
+            ["arrow_prompt", "textures/azalea_icons/other/arrow_prompt"],
+            ["arrow_raise", "textures/azalea_icons/other/arrow_raise"],
+            [
+                "arrow_raise_step",
+                "textures/azalea_icons/other/arrow_raise_step",
+            ],
+            ["arrow_refresh", "textures/azalea_icons/other/arrow_refresh"],
+            ["arrow_right", "textures/azalea_icons/other/arrow_right"],
+            [
+                "arrow_rotate_anticlockwise",
+                "textures/azalea_icons/other/arrow_rotate_anticlockwise",
+            ],
+            [
+                "arrow_rotate_clockwise",
+                "textures/azalea_icons/other/arrow_rotate_clockwise",
+            ],
+            ["arrow_speed", "textures/azalea_icons/other/arrow_speed"],
+            ["arrow_switch", "textures/azalea_icons/other/arrow_switch"],
+            ["arrow_up", "textures/azalea_icons/other/arrow_up"],
+            ["arrow_up_down", "textures/azalea_icons/other/arrow_up_down"],
+            ["attach", "textures/azalea_icons/other/attach"],
+            ["autotile", "textures/azalea_icons/other/autotile"],
+            ["blip_orange", "textures/azalea_icons/other/blip_orange"],
+            ["bomb", "textures/azalea_icons/other/bomb"],
+            ["book", "textures/azalea_icons/other/book"],
+            ["boolean", "textures/azalea_icons/other/boolean"],
+            ["button", "textures/azalea_icons/other/button"],
+            ["button_xbox_a", "textures/azalea_icons/other/button_xbox_a"],
+            ["button_xbox_b", "textures/azalea_icons/other/button_xbox_b"],
+            ["button_xbox_x", "textures/azalea_icons/other/button_xbox_x"],
+            ["button_xbox_y", "textures/azalea_icons/other/button_xbox_y"],
+            ["camera", "textures/azalea_icons/other/camera"],
+            ["camera_add", "textures/azalea_icons/other/camera_add"],
+            ["camera_edit", "textures/azalea_icons/other/camera_edit"],
+            [
+                "camera_first_person",
+                "textures/azalea_icons/other/camera_first_person",
+            ],
+            ["camera_free", "textures/azalea_icons/other/camera_free"],
+            [
+                "camera_isometric",
+                "textures/azalea_icons/other/camera_isometric",
+            ],
+            ["camera_lock", "textures/azalea_icons/other/camera_lock"],
+            ["camera_move", "textures/azalea_icons/other/camera_move"],
+            ["camera_reset", "textures/azalea_icons/other/camera_reset"],
+            ["camera_rotate", "textures/azalea_icons/other/camera_rotate"],
+            ["character", "textures/azalea_icons/other/character"],
+            ["character_add", "textures/azalea_icons/other/character_add"],
+            [
+                "character_dialogue",
+                "textures/azalea_icons/other/character_dialogue",
+            ],
+            ["character_edit", "textures/azalea_icons/other/character_edit"],
+            ["character_heart", "textures/azalea_icons/other/character_heart"],
+            [
+                "character_item_get",
+                "textures/azalea_icons/other/character_item_get",
+            ],
+            ["character_lock", "textures/azalea_icons/other/character_lock"],
+            ["character_move", "textures/azalea_icons/other/character_move"],
+            ["character_npc", "textures/azalea_icons/other/character_npc"],
+            [
+                "character_question",
+                "textures/azalea_icons/other/character_question",
+            ],
+            [
+                "character_rotate",
+                "textures/azalea_icons/other/character_rotate",
+            ],
+            ["character_stop", "textures/azalea_icons/other/character_stop"],
+            ["checkbox", "textures/azalea_icons/other/checkbox"],
+            ["checkbox_off", "textures/azalea_icons/other/checkbox_off"],
+            ["checkmark", "textures/azalea_icons/other/checkmark"],
+            ["chest", "textures/azalea_icons/other/chest"],
+            ["chest_checkmark", "textures/azalea_icons/other/chest_checkmark"],
+            ["chest_delete", "textures/azalea_icons/other/chest_delete"],
+            ["chest_disable", "textures/azalea_icons/other/chest_disable"],
+            ["chest_enable", "textures/azalea_icons/other/chest_enable"],
+            ["chest_item", "textures/azalea_icons/other/chest_item"],
+            ["clear", "textures/azalea_icons/other/clear"],
+            ["clipboard", "textures/azalea_icons/other/clipboard"],
+            ["clock", "textures/azalea_icons/other/clock"],
+            ["clock_play", "textures/azalea_icons/other/clock_play"],
+            ["clock_stop", "textures/azalea_icons/other/clock_stop"],
+            ["coins", "textures/azalea_icons/other/coins"],
+            ["collapse", "textures/azalea_icons/other/collapse"],
+            ["color_edit", "textures/azalea_icons/other/color_edit"],
+            ["color_swatch", "textures/azalea_icons/other/color_swatch"],
+            ["comment", "textures/azalea_icons/other/comment"],
+            ["computer", "textures/azalea_icons/other/computer"],
+            ["console", "textures/azalea_icons/other/console"],
+            ["credits", "textures/azalea_icons/other/credits"],
+            ["crosshair", "textures/azalea_icons/other/crosshair"],
+            ["cursor", "textures/azalea_icons/other/cursor"],
+            ["delete", "textures/azalea_icons/other/delete"],
+            ["dialogue", "textures/azalea_icons/other/dialogue"],
+            ["dialogue_add", "textures/azalea_icons/other/dialogue_add"],
+            ["dialogue_page", "textures/azalea_icons/other/dialogue_page"],
+            ["dialogue_start", "textures/azalea_icons/other/dialogue_start"],
+            ["dice", "textures/azalea_icons/other/dice"],
+            ["discord_logo", "textures/azalea_icons/other/discord_logo"],
+            ["disk", "textures/azalea_icons/other/disk"],
+            ["disk_load", "textures/azalea_icons/other/disk_load"],
+            ["disk_multiple", "textures/azalea_icons/other/disk_multiple"],
+            ["disk_save", "textures/azalea_icons/other/disk_save"],
+            ["door", "textures/azalea_icons/other/door"],
+            ["enemy", "textures/azalea_icons/other/enemy"],
+            ["enemy_add", "textures/azalea_icons/other/enemy_add"],
+            ["entity", "textures/azalea_icons/other/entity"],
+            ["entity_bounds", "textures/azalea_icons/other/entity_bounds"],
+            ["entity_delete", "textures/azalea_icons/other/entity_delete"],
+            ["entity_move", "textures/azalea_icons/other/entity_move"],
+            ["exclamation", "textures/azalea_icons/other/exclamation"],
+            ["exit", "textures/azalea_icons/other/exit"],
+            ["expand", "textures/azalea_icons/other/expand"],
+            ["expression", "textures/azalea_icons/other/expression"],
+            ["eye", "textures/azalea_icons/other/eye"],
+            ["eyedropper", "textures/azalea_icons/other/eyedropper"],
+            ["eye_height", "textures/azalea_icons/other/eye_height"],
+            ["eye_hide", "textures/azalea_icons/other/eye_hide"],
+            ["eye_lock", "textures/azalea_icons/other/eye_lock"],
+            ["eye_show", "textures/azalea_icons/other/eye_show"],
+            ["fade_in", "textures/azalea_icons/other/fade_in"],
+            ["fade_out", "textures/azalea_icons/other/fade_out"],
+            ["flag_blue", "textures/azalea_icons/other/flag_blue"],
+            ["flip_horizontal", "textures/azalea_icons/other/flip_horizontal"],
+            ["folder", "textures/azalea_icons/other/folder"],
+            ["folder_image", "textures/azalea_icons/other/folder_image"],
+            ["folder_page", "textures/azalea_icons/other/folder_page"],
+            ["folder_search", "textures/azalea_icons/other/folder_search"],
+            ["folder_settings", "textures/azalea_icons/other/folder_settings"],
+            ["folder_up", "textures/azalea_icons/other/folder_up"],
+            ["folder_voxel", "textures/azalea_icons/other/folder_voxel"],
+            ["font", "textures/azalea_icons/other/font"],
+            ["font_size", "textures/azalea_icons/other/font_size"],
+            ["fullscreen", "textures/azalea_icons/other/fullscreen"],
+            ["function", "textures/azalea_icons/other/function"],
+            ["gear", "textures/azalea_icons/other/gear"],
+            ["glow", "textures/azalea_icons/other/glow"],
+            ["godot_logo", "textures/azalea_icons/other/godot_logo"],
+            ["gradient_red", "textures/azalea_icons/other/gradient_red"],
+            ["grid", "textures/azalea_icons/other/grid"],
+            ["grid_height", "textures/azalea_icons/other/grid_height"],
+            ["grid_tile", "textures/azalea_icons/other/grid_tile"],
+            ["grid_tile_place", "textures/azalea_icons/other/grid_tile_place"],
+            ["ground", "textures/azalea_icons/other/ground"],
+            ["group", "textures/azalea_icons/other/group"],
+            ["group_add", "textures/azalea_icons/other/group_add"],
+            ["group_delete", "textures/azalea_icons/other/group_delete"],
+            ["group_edit", "textures/azalea_icons/other/group_edit"],
+            ["group_mesh", "textures/azalea_icons/other/group_mesh"],
+            ["group_tiles", "textures/azalea_icons/other/group_tiles"],
+            ["hand", "textures/azalea_icons/other/hand"],
+            ["hand_add", "textures/azalea_icons/other/hand_add"],
+            ["hand_delete", "textures/azalea_icons/other/hand_delete"],
+            ["hand_move", "textures/azalea_icons/other/hand_move"],
+            ["heart", "textures/azalea_icons/other/heart"],
+            ["heart_add", "textures/azalea_icons/other/heart_add"],
+            ["heart_delete", "textures/azalea_icons/other/heart_delete"],
+            ["help", "textures/azalea_icons/other/help"],
+            ["hourglass", "textures/azalea_icons/other/hourglass"],
+            ["image", "textures/azalea_icons/other/image"],
+            ["image_add", "textures/azalea_icons/other/image_add"],
+            [
+                "image_dimensions",
+                "textures/azalea_icons/other/image_dimensions",
+            ],
+            ["image_hand", "textures/azalea_icons/other/image_hand"],
+            ["import_export", "textures/azalea_icons/other/import_export"],
+            ["information", "textures/azalea_icons/other/information"],
+            ["interact", "textures/azalea_icons/other/interact"],
+            ["inventory", "textures/azalea_icons/other/inventory"],
+            ["inventory_hide", "textures/azalea_icons/other/inventory_hide"],
+            ["inventory_show", "textures/azalea_icons/other/inventory_show"],
+            ["itch_logo", "textures/azalea_icons/other/itch_logo"],
+            ["item", "textures/azalea_icons/other/item"],
+            ["item_add", "textures/azalea_icons/other/item_add"],
+            ["item_delete", "textures/azalea_icons/other/item_delete"],
+            ["item_drop", "textures/azalea_icons/other/item_drop"],
+            ["item_stack", "textures/azalea_icons/other/item_stack"],
+            ["joystick", "textures/azalea_icons/other/joystick"],
+            ["jump", "textures/azalea_icons/other/jump"],
+            ["keyboard", "textures/azalea_icons/other/keyboard"],
+            ["key_c", "textures/azalea_icons/other/key_c"],
+            ["key_t", "textures/azalea_icons/other/key_t"],
+            ["ladder", "textures/azalea_icons/other/ladder"],
+            [
+                "ladder_character",
+                "textures/azalea_icons/other/ladder_character",
+            ],
+            ["ladder_down", "textures/azalea_icons/other/ladder_down"],
+            ["ladder_lock", "textures/azalea_icons/other/ladder_lock"],
+            ["ladder_none", "textures/azalea_icons/other/ladder_none"],
+            ["ladder_up", "textures/azalea_icons/other/ladder_up"],
+            ["ladder_up_down", "textures/azalea_icons/other/ladder_up_down"],
+            ["laser", "textures/azalea_icons/other/laser"],
+            ["library", "textures/azalea_icons/other/library"],
+            ["light", "textures/azalea_icons/other/light"],
+            ["light_add", "textures/azalea_icons/other/light_add"],
+            ["light_energy", "textures/azalea_icons/other/light_energy"],
+            ["light_fade", "textures/azalea_icons/other/light_fade"],
+            ["light_negative", "textures/azalea_icons/other/light_negative"],
+            ["light_off", "textures/azalea_icons/other/light_off"],
+            ["light_on_off", "textures/azalea_icons/other/light_on_off"],
+            ["light_range", "textures/azalea_icons/other/light_range"],
+            ["link", "textures/azalea_icons/other/link"],
+            ["link_add", "textures/azalea_icons/other/link_add"],
+            ["link_box", "textures/azalea_icons/other/link_box"],
+            ["link_delete", "textures/azalea_icons/other/link_delete"],
+            ["link_eye", "textures/azalea_icons/other/link_eye"],
+            ["linux_logo", "textures/azalea_icons/other/linux_logo"],
+            ["loading_screen", "textures/azalea_icons/other/loading_screen"],
+            ["location", "textures/azalea_icons/other/location"],
+            [
+                "location_character",
+                "textures/azalea_icons/other/location_character",
+            ],
+            ["location_enemy", "textures/azalea_icons/other/location_enemy"],
+            ["location_hand", "textures/azalea_icons/other/location_hand"],
+            ["lock", "textures/azalea_icons/other/lock"],
+            ["lock_vertical", "textures/azalea_icons/other/lock_vertical"],
+            ["mac_logo", "textures/azalea_icons/other/mac_logo"],
+            ["magnifier", "textures/azalea_icons/other/magnifier"],
+            [
+                "magnifier_zoom_in",
+                "textures/azalea_icons/other/magnifier_zoom_in",
+            ],
+            [
+                "magnifier_zoom_out",
+                "textures/azalea_icons/other/magnifier_zoom_out",
+            ],
+            ["main_menu", "textures/azalea_icons/other/main_menu"],
+            ["map", "textures/azalea_icons/other/map"],
+            ["map_add", "textures/azalea_icons/other/map_add"],
+            ["map_fog", "textures/azalea_icons/other/map_fog"],
+            ["map_link", "textures/azalea_icons/other/map_link"],
+            ["map_reset", "textures/azalea_icons/other/map_reset"],
+            ["map_start", "textures/azalea_icons/other/map_start"],
+            ["margin_bottom", "textures/azalea_icons/other/margin_bottom"],
+            ["margin_left", "textures/azalea_icons/other/margin_left"],
+            ["margin_right", "textures/azalea_icons/other/margin_right"],
+            ["margin_top", "textures/azalea_icons/other/margin_top"],
+            ["margin_top_left", "textures/azalea_icons/other/margin_top_left"],
+            ["mesh_default", "textures/azalea_icons/other/mesh_default"],
+            ["mesh_marching", "textures/azalea_icons/other/mesh_marching"],
+            ["mesh_preview", "textures/azalea_icons/other/mesh_preview"],
+            ["message", "textures/azalea_icons/other/message"],
+            ["missing", "textures/azalea_icons/other/missing"],
+            ["model_edit", "textures/azalea_icons/other/model_edit"],
+            ["mouse", "textures/azalea_icons/other/mouse"],
+            ["mouse_eye", "textures/azalea_icons/other/mouse_eye"],
+            ["mouse_free", "textures/azalea_icons/other/mouse_free"],
+            ["move_interact", "textures/azalea_icons/other/move_interact"],
+            ["music", "textures/azalea_icons/other/music"],
+            ["music_play", "textures/azalea_icons/other/music_play"],
+            ["navigation", "textures/azalea_icons/other/navigation"],
+            [
+                "navigation_adjacent",
+                "textures/azalea_icons/other/navigation_adjacent",
+            ],
+            ["node", "textures/azalea_icons/other/node"],
+            ["node_add", "textures/azalea_icons/other/node_add"],
+            ["node_copy", "textures/azalea_icons/other/node_copy"],
+            ["node_library", "textures/azalea_icons/other/node_library"],
+            ["node_link", "textures/azalea_icons/other/node_link"],
+            ["noise", "textures/azalea_icons/other/noise"],
+            ["number", "textures/azalea_icons/other/number"],
+            ["object", "textures/azalea_icons/other/object"],
+            ["object_add", "textures/azalea_icons/other/object_add"],
+            ["object_hand", "textures/azalea_icons/other/object_hand"],
+            [
+                "offset_horizontal",
+                "textures/azalea_icons/other/offset_horizontal",
+            ],
+            ["offset_vertical", "textures/azalea_icons/other/offset_vertical"],
+            ["package", "textures/azalea_icons/other/package"],
+            ["page_add", "textures/azalea_icons/other/page_add"],
+            ["page_copy", "textures/azalea_icons/other/page_copy"],
+            ["page_data", "textures/azalea_icons/other/page_data"],
+            ["page_edit", "textures/azalea_icons/other/page_edit"],
+            ["page_voxel", "textures/azalea_icons/other/page_voxel"],
+            ["paint_can", "textures/azalea_icons/other/paint_can"],
+            ["palette", "textures/azalea_icons/other/palette"],
+            ["party", "textures/azalea_icons/other/party"],
+            ["party_add", "textures/azalea_icons/other/party_add"],
+            ["party_delete", "textures/azalea_icons/other/party_delete"],
+            ["party_reset", "textures/azalea_icons/other/party_reset"],
+            ["pause", "textures/azalea_icons/other/pause"],
+            ["pencil", "textures/azalea_icons/other/pencil"],
+            ["platform", "textures/azalea_icons/other/platform"],
+            ["play", "textures/azalea_icons/other/play"],
+            ["portrait", "textures/azalea_icons/other/portrait"],
+            ["portrait_left", "textures/azalea_icons/other/portrait_left"],
+            ["portrait_right", "textures/azalea_icons/other/portrait_right"],
+            ["potion", "textures/azalea_icons/other/potion"],
+            ["progress_bar", "textures/azalea_icons/other/progress_bar"],
+            ["properties", "textures/azalea_icons/other/properties"],
+            ["properties_edit", "textures/azalea_icons/other/properties_edit"],
+            [
+                "properties_insert",
+                "textures/azalea_icons/other/properties_insert",
+            ],
+            ["puzzle", "textures/azalea_icons/other/puzzle"],
+            ["redo", "textures/azalea_icons/other/redo"],
+            ["rpgiab_logo", "textures/azalea_icons/other/rpgiab_logo"],
+            ["scissors", "textures/azalea_icons/other/scissors"],
+            ["script", "textures/azalea_icons/other/script"],
+            ["script_add", "textures/azalea_icons/other/script_add"],
+            ["script_code", "textures/azalea_icons/other/script_code"],
+            ["script_delete", "textures/azalea_icons/other/script_delete"],
+            ["script_edit", "textures/azalea_icons/other/script_edit"],
+            [
+                "script_lightning",
+                "textures/azalea_icons/other/script_lightning",
+            ],
+            [
+                "script_lightning_add",
+                "textures/azalea_icons/other/script_lightning_add",
+            ],
+            [
+                "script_lightning_edit",
+                "textures/azalea_icons/other/script_lightning_edit",
+            ],
+            ["script_start", "textures/azalea_icons/other/script_start"],
+            ["script_text", "textures/azalea_icons/other/script_text"],
+            ["script_text_add", "textures/azalea_icons/other/script_text_add"],
+            [
+                "script_text_checkmark",
+                "textures/azalea_icons/other/script_text_checkmark",
+            ],
+            [
+                "script_text_delete",
+                "textures/azalea_icons/other/script_text_delete",
+            ],
+            ["select_edit", "textures/azalea_icons/other/select_edit"],
+            ["settings_gear", "textures/azalea_icons/other/settings_gear"],
+            ["settings_save", "textures/azalea_icons/other/settings_save"],
+            ["shadow", "textures/azalea_icons/other/shadow"],
+            ["shadow_darkness", "textures/azalea_icons/other/shadow_darkness"],
+            ["shield", "textures/azalea_icons/other/shield"],
+            ["ship", "textures/azalea_icons/other/ship"],
+            ["skull", "textures/azalea_icons/other/skull"],
+            ["skull_delete", "textures/azalea_icons/other/skull_delete"],
+            ["sound", "textures/azalea_icons/other/sound"],
+            ["star", "textures/azalea_icons/other/star"],
+            ["steam_logo", "textures/azalea_icons/other/steam_logo"],
+            ["stop", "textures/azalea_icons/other/stop"],
+            ["stop_sign", "textures/azalea_icons/other/stop_sign"],
+            ["string", "textures/azalea_icons/other/string"],
+            ["surface_edges", "textures/azalea_icons/other/surface_edges"],
+            ["sword", "textures/azalea_icons/other/sword"],
+            ["swords", "textures/azalea_icons/other/swords"],
+            ["sword_blood", "textures/azalea_icons/other/sword_blood"],
+            ["sword_eye", "textures/azalea_icons/other/sword_eye"],
+            ["sword_hit", "textures/azalea_icons/other/sword_hit"],
+            ["sword_link", "textures/azalea_icons/other/sword_link"],
+            ["sword_reset", "textures/azalea_icons/other/sword_reset"],
+            ["sword_start", "textures/azalea_icons/other/sword_start"],
+            ["sword_stop", "textures/azalea_icons/other/sword_stop"],
+            ["tab", "textures/azalea_icons/other/tab"],
+            ["tag_blue", "textures/azalea_icons/other/tag_blue"],
+            ["tag_id", "textures/azalea_icons/other/tag_id"],
+            ["terrain", "textures/azalea_icons/other/terrain"],
+            ["terrain_follow", "textures/azalea_icons/other/terrain_follow"],
+            ["terrain_precise", "textures/azalea_icons/other/terrain_precise"],
+            [
+                "terrain_smooth_curve",
+                "textures/azalea_icons/other/terrain_smooth_curve",
+            ],
+            [
+                "terrain_smooth_linear",
+                "textures/azalea_icons/other/terrain_smooth_linear",
+            ],
+            ["text", "textures/azalea_icons/other/text"],
+            [
+                "text_align_center",
+                "textures/azalea_icons/other/text_align_center",
+            ],
+            ["text_bullets", "textures/azalea_icons/other/text_bullets"],
+            ["text_eye", "textures/azalea_icons/other/text_eye"],
+            ["text_field", "textures/azalea_icons/other/text_field"],
+            [
+                "text_line_numbers",
+                "textures/azalea_icons/other/text_line_numbers",
+            ],
+            [
+                "text_line_spacing",
+                "textures/azalea_icons/other/text_line_spacing",
+            ],
+            ["tile", "textures/azalea_icons/other/tile"],
+            ["tile_add", "textures/azalea_icons/other/tile_add"],
+            ["tile_enter", "textures/azalea_icons/other/tile_enter"],
+            [
+                "tile_exclamation",
+                "textures/azalea_icons/other/tile_exclamation",
+            ],
+            ["tile_exit", "textures/azalea_icons/other/tile_exit"],
+            ["tile_impassable", "textures/azalea_icons/other/tile_impassable"],
+            ["tile_passable", "textures/azalea_icons/other/tile_passable"],
+            ["tile_stop", "textures/azalea_icons/other/tile_stop"],
+            ["tools", "textures/azalea_icons/other/tools"],
+            ["tool_items", "textures/azalea_icons/other/tool_items"],
+            ["transparency", "textures/azalea_icons/other/transparency"],
+            ["tree_collapse", "textures/azalea_icons/other/tree_collapse"],
+            ["tree_expand", "textures/azalea_icons/other/tree_expand"],
+            ["trello_logo", "textures/azalea_icons/other/trello_logo"],
+            ["twitter_logo", "textures/azalea_icons/other/twitter_logo"],
+            ["ui", "textures/azalea_icons/other/ui"],
+            ["ui_inventory", "textures/azalea_icons/other/ui_inventory"],
+            ["ui_toolbar", "textures/azalea_icons/other/ui_toolbar"],
+            ["undo", "textures/azalea_icons/other/undo"],
+            ["unlock", "textures/azalea_icons/other/unlock"],
+            ["variable", "textures/azalea_icons/other/variable"],
+            ["variable_return", "textures/azalea_icons/other/variable_return"],
+            ["voxel", "textures/azalea_icons/other/voxel"],
+            ["voxel_add", "textures/azalea_icons/other/voxel_add"],
+            ["voxel_editor", "textures/azalea_icons/other/voxel_editor"],
+            ["voxel_outlines", "textures/azalea_icons/other/voxel_outlines"],
+            ["voxel_paint", "textures/azalea_icons/other/voxel_paint"],
+            ["warning", "textures/azalea_icons/other/warning"],
+            ["weapons", "textures/azalea_icons/other/weapons"],
+            ["weather_fog", "textures/azalea_icons/other/weather_fog"],
+            ["weather_sun", "textures/azalea_icons/other/weather_sun"],
+            ["widget", "textures/azalea_icons/other/widget"],
+            ["widget_height", "textures/azalea_icons/other/widget_height"],
+            ["widget_hide", "textures/azalea_icons/other/widget_hide"],
+            ["widget_lock", "textures/azalea_icons/other/widget_lock"],
+            ["widget_save", "textures/azalea_icons/other/widget_save"],
+            ["widget_show", "textures/azalea_icons/other/widget_show"],
+            ["widget_width", "textures/azalea_icons/other/widget_width"],
+            ["windows_logo", "textures/azalea_icons/other/windows_logo"],
+            [
+                "window_compact_off",
+                "textures/azalea_icons/other/window_compact_off",
+            ],
+            [
+                "window_compact_on",
+                "textures/azalea_icons/other/window_compact_on",
+            ],
+            ["window_dialogue", "textures/azalea_icons/other/window_dialogue"],
+            [
+                "window_expand_down",
+                "textures/azalea_icons/other/window_expand_down",
+            ],
+            [
+                "window_expand_up",
+                "textures/azalea_icons/other/window_expand_up",
+            ],
+            [
+                "window_frame_show",
+                "textures/azalea_icons/other/window_frame_show",
+            ],
+            ["window_free", "textures/azalea_icons/other/window_free"],
+            [
+                "window_title_show",
+                "textures/azalea_icons/other/window_title_show",
+            ],
+            ["window_width", "textures/azalea_icons/other/window_width"],
+            ["wizard", "textures/azalea_icons/other/wizard"],
+            ["world", "textures/azalea_icons/other/world"],
+            ["world_disable", "textures/azalea_icons/other/world_disable"],
+            ["world_disk", "textures/azalea_icons/other/world_disk"],
+            ["world_enable", "textures/azalea_icons/other/world_enable"],
+            ["world_hand", "textures/azalea_icons/other/world_hand"],
+            ["world_page", "textures/azalea_icons/other/world_page"],
+            ["xp", "textures/azalea_icons/other/xp"],
+            ["yield", "textures/azalea_icons/other/yield"],
+            ["yield_add", "textures/azalea_icons/other/yield_add"],
+        ]),
+    ],
 ]);
-export { rpgiabIconPack }
+export { rpgiabIconPack };

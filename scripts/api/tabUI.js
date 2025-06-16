@@ -38,4 +38,4 @@ class TabUIManager {
     }
 }
 
-export default new TabUIManager(); 
+export default new TabUIManager();

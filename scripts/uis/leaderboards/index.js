@@ -1,2 +1,2 @@
-import './root.js'
-import './edit.js'
+import "./root.js";
+import "./edit.js";

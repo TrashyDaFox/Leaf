@@ -96,101 +96,111 @@ an addon that can be added to a world and is able to interact with leaf, you cou
 meow meow
 */
 
-configAPI.registerProperty("AzaleaStyleSharedHomes", configAPI.Types.Boolean, true)
-configAPI.registerProperty("HomesLimit", configAPI.Types.Number, 5)
+configAPI.registerProperty(
+    "AzaleaStyleSharedHomes",
+    configAPI.Types.Boolean,
+    true
+);
+configAPI.registerProperty("HomesLimit", configAPI.Types.Number, 5);
 class Homes {
     constructor() {
-        this.db = prismarineDb.table('homes')
+        this.db = prismarineDb.table("homes");
     }
     createHome(name, player) {
-        let owner = playerStorage.getID(player)
-        let hs = this.db.findDocuments({owner})
-        if(hs.length + 1 > configAPI.getProperty("HomesLimit")) {
-            player.error("You have reached the homes limit!")
+        let owner = playerStorage.getID(player);
+        let hs = this.db.findDocuments({ owner });
+        if (hs.length + 1 > configAPI.getProperty("HomesLimit")) {
+            player.error("You have reached the homes limit!");
             return false;
         }
 
-        let h = this.db.findFirst({ owner, name })
-        if(h) return false;
+        let h = this.db.findFirst({ owner, name });
+        if (h) return false;
         let h2 = this.db.insertDocument({
             owner,
             name,
             loc: player.location,
-            sharedTo: []
-        })
+            sharedTo: [],
+        });
         return h2;
     }
     removeHome(name, player) {
-        let owner = playerStorage.getID(player)
-        let h = this.db.findFirst({ owner, name})
-        if(!h) return false;
-        this.db.deleteDocumentByID(h.id)
+        let owner = playerStorage.getID(player);
+        let h = this.db.findFirst({ owner, name });
+        if (!h) return false;
+        this.db.deleteDocumentByID(h.id);
         return true;
     }
     editName(id, name, player) {
-        let owner = playerStorage.getID(player)
-        let h = this.db.getByID(id)
-        if(!h) return false;
+        let owner = playerStorage.getID(player);
+        let h = this.db.getByID(id);
+        if (!h) return false;
         h.data.name = name;
-        this.db.overwriteDataByID(id, h.data)
+        this.db.overwriteDataByID(id, h.data);
         return true;
     }
     teleport(id, player) {
-        let h = this.db.getByID(id)
+        let h = this.db.getByID(id);
         player.teleport({
             x: h.data.loc.x,
             y: h.data.loc.y,
-            z: h.data.loc.z
-        })
+            z: h.data.loc.z,
+        });
         return true;
     }
     shareHome(id, player) {
-        let h = this.db.getByID(id)
-        if(!h) return false
-        h.data.sharedTo.push(player.name)
-        this.db.overwriteDataByID(id, h.data)
+        let h = this.db.getByID(id);
+        if (!h) return false;
+        h.data.sharedTo.push(player.name);
+        this.db.overwriteDataByID(id, h.data);
         return true;
     }
     getSharedHomes(player) {
         let hs = [];
         for (const h of this.db.findDocuments()) {
             for (const sh of h.data.sharedTo) {
-                if(sh == player.name) {
-                    hs.push(h)
+                if (sh == player.name) {
+                    hs.push(h);
                 }
             }
         }
         return hs;
     }
     removeShare(id, name) {
-        let h = this.db.getByID(id)
-        if(!h) return false;
-        let index = h.data.sharedTo.findIndex(sh => sh == name)
-        if(index) return h.data.sharedTo.splice(index, 1);
-        this.db.overwriteDataByID(id, h.data)
+        let h = this.db.getByID(id);
+        if (!h) return false;
+        let index = h.data.sharedTo.findIndex((sh) => sh == name);
+        if (index) return h.data.sharedTo.splice(index, 1);
+        this.db.overwriteDataByID(id, h.data);
     }
     delete(id) {
-        let h = this.db.getByID(id)
-        if(!h) return false;
-        this.db.deleteDocumentByID(h.id)
+        let h = this.db.getByID(id);
+        if (!h) return false;
+        this.db.deleteDocumentByID(h.id);
         return true;
     }
     getAllFromPlayer(player) {
-        let owner = playerStorage.getID(player)
+        let owner = playerStorage.getID(player);
         let hs = this.db.findDocuments({ owner });
-        if(configAPI.getProperty("AzaleaStyleSharedHomes")) {
-            for(const doc of this.db.data) {
-                if(!doc.data.sharedTo || !doc.data.sharedTo.includes(player.name)) continue;
-                let newDoc = JSON.parse(JSON.stringify(doc))
-                let playerData = playerStorage.getPlayerByID(newDoc.data.owner)
-                newDoc.data.name = `${playerData ? playerData.name : "UnknownPlayer"} / ${newDoc.data.name}`
-                hs.push(newDoc)
+        if (configAPI.getProperty("AzaleaStyleSharedHomes")) {
+            for (const doc of this.db.data) {
+                if (
+                    !doc.data.sharedTo ||
+                    !doc.data.sharedTo.includes(player.name)
+                )
+                    continue;
+                let newDoc = JSON.parse(JSON.stringify(doc));
+                let playerData = playerStorage.getPlayerByID(newDoc.data.owner);
+                newDoc.data.name = `${
+                    playerData ? playerData.name : "UnknownPlayer"
+                } / ${newDoc.data.name}`;
+                hs.push(newDoc);
             }
         }
         return hs;
     }
     get(id) {
-        return this.db.getByID(id)
+        return this.db.getByID(id);
     }
 }
 

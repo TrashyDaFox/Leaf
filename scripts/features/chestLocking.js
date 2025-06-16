@@ -3,127 +3,144 @@ import { prismarineDb } from "../lib/prismarinedb";
 import playerStorage from "../api/playerStorage";
 import { ModalForm } from "../lib/form_func";
 let accessMap = new Map();
-world.beforeEvents.playerInteractWithBlock.subscribe(e=>{
+world.beforeEvents.playerInteractWithBlock.subscribe((e) => {
     try {
-        if(e.block.typeId === "minecraft:barrel" || e.block.typeId === "minecraft:chest") {
+        if (
+            e.block.typeId === "minecraft:barrel" ||
+            e.block.typeId === "minecraft:chest"
+        ) {
             let container = e.block.getComponent("inventory");
             let lockItem = null;
-            for(let i = 0;i < container.container.size;i++) {
-                let item = container.container.getItem(i)
-                if(item && item.typeId === "leaf:lock") {
+            for (let i = 0; i < container.container.size; i++) {
+                let item = container.container.getItem(i);
+                if (item && item.typeId === "leaf:lock") {
                     lockItem = item;
                     break;
                 }
             }
 
-            let mode = lockItem.getDynamicProperty("mode")
-            if(mode == 0) {
+            let mode = lockItem.getDynamicProperty("mode");
+            if (mode == 0) {
                 let owner = lockItem.getDynamicProperty("owner");
-                if(e.player.id !== owner) {
+                if (e.player.id !== owner) {
                     e.cancel = true;
-                    e.player.error("You dont have permission to open this chest")
+                    e.player.error(
+                        "You dont have permission to open this chest"
+                    );
                 }
-            } else if(mode == 1) {
-                let lockID = `${lockItem.getDynamicProperty("id")}`
-                if(accessMap.has(`${e.player.id}:${lockID}`)) {
-                    let expiration = accessMap.get(`${e.player.id}:${lockID}`)
-                    if(Date.now() > expiration) {
-                        accessMap.delete(`${e.player.id}:${lockID}`)
+            } else if (mode == 1) {
+                let lockID = `${lockItem.getDynamicProperty("id")}`;
+                if (accessMap.has(`${e.player.id}:${lockID}`)) {
+                    let expiration = accessMap.get(`${e.player.id}:${lockID}`);
+                    if (Date.now() > expiration) {
+                        accessMap.delete(`${e.player.id}:${lockID}`);
                     } else {
                         return;
                     }
                 }
                 e.cancel = true;
-                system.run(()=>{
+                system.run(() => {
                     let modalForm = new ModalForm();
-                    modalForm.textField("Password", "Type the password for this chest", undefined)
-                    modalForm.title("Locked Chest")
-                    modalForm.submitButton("Unlock Chest")
-                    modalForm.show(e.player, false, (player, response)=>{
+                    modalForm.textField(
+                        "Password",
+                        "Type the password for this chest",
+                        undefined
+                    );
+                    modalForm.title("Locked Chest");
+                    modalForm.submitButton("Unlock Chest");
+                    modalForm.show(e.player, false, (player, response) => {
                         let inputPassword = response.formValues[0];
-                        let realPassword = lockItem.getDynamicProperty("password");
-                        if(inputPassword == realPassword) {
-                            accessMap.set(`${e.player.id}:${lockID}`, Date.now() + 10000);
-                            e.player.info("Correct password! Chest will be unlocked for 10 seconds")
+                        let realPassword =
+                            lockItem.getDynamicProperty("password");
+                        if (inputPassword == realPassword) {
+                            accessMap.set(
+                                `${e.player.id}:${lockID}`,
+                                Date.now() + 10000
+                            );
+                            e.player.info(
+                                "Correct password! Chest will be unlocked for 10 seconds"
+                            );
                         } else {
-                            e.player.error("Incorrect password")
+                            e.player.error("Incorrect password");
                         }
-                    })
-        
-                })
-            } else if(mode == 2) {
-                system.run(()=>{
-                    e.player.applyKnockback(e.player.getViewDirection().x, e.player.getViewDirection().z, 1, 20)
-
-                })
+                    });
+                });
+            } else if (mode == 2) {
+                system.run(() => {
+                    e.player.applyKnockback(
+                        e.player.getViewDirection().x,
+                        e.player.getViewDirection().z,
+                        1,
+                        20
+                    );
+                });
             }
         }
     } catch {}
-})
-world.beforeEvents.playerBreakBlock.subscribe(e=>{
+});
+world.beforeEvents.playerBreakBlock.subscribe((e) => {
     try {
         let lockItem = null;
         let blocks = [e.block, e.block.above(), e.block.below()];
-        for(const block of blocks) {
+        for (const block of blocks) {
             let container = block.getComponent("inventory");
-            if(container) {
-                for(let i = 0;i < container.container.size;i++) {
-                    let item = container.container.getItem(i)
-                    if(item && item.typeId === "leaf:lock") {
+            if (container) {
+                for (let i = 0; i < container.container.size; i++) {
+                    let item = container.container.getItem(i);
+                    if (item && item.typeId === "leaf:lock") {
                         lockItem = item;
                         break;
                     }
                 }
             }
-            if(lockItem) break;
+            if (lockItem) break;
         }
-        if(lockItem) {
-            e.player.error('You cant break locked chests.');
+        if (lockItem) {
+            e.player.error("You cant break locked chests.");
             e.cancel = true;
         }
-    } catch {
-
-    }
-})
-world.beforeEvents.playerPlaceBlock.subscribe(e=>{
+    } catch {}
+});
+world.beforeEvents.playerPlaceBlock.subscribe((e) => {
     try {
         let lockItem = null;
         let blocks = [e.block, e.block.above(), e.block.below()];
-        for(const block of blocks) {
+        for (const block of blocks) {
             let container = block.getComponent("inventory");
-            if(container) {
-                for(let i = 0;i < container.container.size;i++) {
-                    let item = container.container.getItem(i)
-                    if(item && item.typeId === "leaf:lock") {
+            if (container) {
+                for (let i = 0; i < container.container.size; i++) {
+                    let item = container.container.getItem(i);
+                    if (item && item.typeId === "leaf:lock") {
                         lockItem = item;
                         break;
                     }
                 }
             }
-            if(lockItem) break;
+            if (lockItem) break;
         }
-        if(lockItem) {
-            e.player.error('You cant place blocks above or below locked chests.');
+        if (lockItem) {
+            e.player.error(
+                "You cant place blocks above or below locked chests."
+            );
             e.cancel = true;
         }
-    } catch {
-
-    }
-})
-world.beforeEvents.explosion.subscribe(e=>{
-    e.setImpactedBlocks(e.getImpactedBlocks().filter(block=>{
-        let container = block.getComponent("inventory");
-        if(!container) return true;
-        for(let i = 0;i < container.container.size;i++) {
-            let item = container.container.getItem(i)
-            if(item && item.typeId === "leaf:lock") {
-                return false;
+    } catch {}
+});
+world.beforeEvents.explosion.subscribe((e) => {
+    e.setImpactedBlocks(
+        e.getImpactedBlocks().filter((block) => {
+            let container = block.getComponent("inventory");
+            if (!container) return true;
+            for (let i = 0; i < container.container.size; i++) {
+                let item = container.container.getItem(i);
+                if (item && item.typeId === "leaf:lock") {
+                    return false;
+                }
             }
-        }
-        return true;
-    }))
-
-})
+            return true;
+        })
+    );
+});
 // const blockDb = prismarineDb.table("BlockDB");
 // function vec3ToString(vec3) {
 //     return `${vec3.x},${vec3.y},${vec3.z}`;

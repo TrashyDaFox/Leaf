@@ -17,14 +17,15 @@ export var Base64 = {
     decode: function (a) {
         var i;
         if (decoder === undefined) {
-            var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            var b64 =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
             var ignore = "= \f\n\r\t\u00A0\u2028\u2029";
             decoder = Object.create(null);
             for (i = 0; i < 64; ++i) {
                 decoder[b64.charAt(i)] = i;
             }
-            decoder['-'] = 62; //+
-            decoder['_'] = 63; //-
+            decoder["-"] = 62; //+
+            decoder["_"] = 63; //-
             for (i = 0; i < ignore.length; ++i) {
                 decoder[ignore.charAt(i)] = -1;
             }
@@ -46,25 +47,26 @@ export var Base64 = {
             }
             bits |= c;
             if (++char_count >= 4) {
-                out[out.length] = (bits >> 16);
-                out[out.length] = (bits >> 8) & 0xFF;
-                out[out.length] = bits & 0xFF;
+                out[out.length] = bits >> 16;
+                out[out.length] = (bits >> 8) & 0xff;
+                out[out.length] = bits & 0xff;
                 bits = 0;
                 char_count = 0;
-            }
-            else {
+            } else {
                 bits <<= 6;
             }
         }
         switch (char_count) {
             case 1:
-                throw new Error("Base64 encoding incomplete: at least 2 bits missing");
+                throw new Error(
+                    "Base64 encoding incomplete: at least 2 bits missing"
+                );
             case 2:
-                out[out.length] = (bits >> 10);
+                out[out.length] = bits >> 10;
                 break;
             case 3:
-                out[out.length] = (bits >> 16);
-                out[out.length] = (bits >> 8) & 0xFF;
+                out[out.length] = bits >> 16;
+                out[out.length] = (bits >> 8) & 0xff;
                 break;
         }
         return out;
@@ -75,14 +77,12 @@ export var Base64 = {
         if (m) {
             if (m[1]) {
                 a = m[1];
-            }
-            else if (m[2]) {
+            } else if (m[2]) {
                 a = m[2];
-            }
-            else {
+            } else {
                 throw new Error("RegExp out of sync");
             }
         }
         return Base64.decode(a);
-    }
+    },
 };

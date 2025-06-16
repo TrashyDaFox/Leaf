@@ -1,1 +1,1 @@
-import './root'
+import "./root";

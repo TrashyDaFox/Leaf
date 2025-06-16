@@ -33,7 +33,8 @@ function pkcs1pad1(s, n) {
 }
 // PKCS#1 (type 2, random) pad input string s to n bytes, and return a bigint
 function pkcs1pad2(s, n) {
-    if (n < s.length + 11) { // TODO: fix for utf-8
+    if (n < s.length + 11) {
+        // TODO: fix for utf-8
         console.error("Message too long for RSA");
         return null;
     }
@@ -41,14 +42,13 @@ function pkcs1pad2(s, n) {
     var i = s.length - 1;
     while (i >= 0 && n > 0) {
         var c = s.charCodeAt(i--);
-        if (c < 128) { // encode using utf-8
+        if (c < 128) {
+            // encode using utf-8
             ba[--n] = c;
-        }
-        else if ((c > 127) && (c < 2048)) {
+        } else if (c > 127 && c < 2048) {
             ba[--n] = (c & 63) | 128;
             ba[--n] = (c >> 6) | 192;
-        }
-        else {
+        } else {
             ba[--n] = (c & 63) | 128;
             ba[--n] = ((c >> 6) & 63) | 128;
             ba[--n] = (c >> 12) | 224;
@@ -57,7 +57,8 @@ function pkcs1pad2(s, n) {
     ba[--n] = 0;
     var rng = new SecureRandom();
     var x = [];
-    while (n > 2) { // random non-zero pad
+    while (n > 2) {
+        // random non-zero pad
         x[0] = 0;
         while (x[0] == 0) {
             rng.nextBytes(x);
@@ -99,7 +100,12 @@ var RSAKey = /** @class */ (function () {
         while (xp.compareTo(xq) < 0) {
             xp = xp.add(this.p);
         }
-        return xp.subtract(xq).multiply(this.coeff).mod(this.p).multiply(this.q).add(xq);
+        return xp
+            .subtract(xq)
+            .multiply(this.coeff)
+            .mod(this.p)
+            .multiply(this.q)
+            .add(xq);
     };
     //#endregion PROTECTED
     //#region PUBLIC
@@ -109,8 +115,7 @@ var RSAKey = /** @class */ (function () {
         if (N != null && E != null && N.length > 0 && E.length > 0) {
             this.n = parseBigInt(N, 16);
             this.e = parseInt(E, 16);
-        }
-        else {
+        } else {
             console.error("Invalid RSA public key");
         }
     };
@@ -141,8 +146,7 @@ var RSAKey = /** @class */ (function () {
             this.n = parseBigInt(N, 16);
             this.e = parseInt(E, 16);
             this.d = parseBigInt(D, 16);
-        }
-        else {
+        } else {
             console.error("Invalid RSA private key");
         }
     };
@@ -158,8 +162,7 @@ var RSAKey = /** @class */ (function () {
             this.dmp1 = parseBigInt(DP, 16);
             this.dmq1 = parseBigInt(DQ, 16);
             this.coeff = parseBigInt(C, 16);
-        }
-        else {
+        } else {
             console.error("Invalid RSA private key");
         }
     };
@@ -173,13 +176,25 @@ var RSAKey = /** @class */ (function () {
         for (;;) {
             for (;;) {
                 this.p = new BigInteger(B - qs, 1, rng);
-                if (this.p.subtract(BigInteger.ONE).gcd(ee).compareTo(BigInteger.ONE) == 0 && this.p.isProbablePrime(10)) {
+                if (
+                    this.p
+                        .subtract(BigInteger.ONE)
+                        .gcd(ee)
+                        .compareTo(BigInteger.ONE) == 0 &&
+                    this.p.isProbablePrime(10)
+                ) {
                     break;
                 }
             }
             for (;;) {
                 this.q = new BigInteger(qs, 1, rng);
-                if (this.q.subtract(BigInteger.ONE).gcd(ee).compareTo(BigInteger.ONE) == 0 && this.q.isProbablePrime(10)) {
+                if (
+                    this.q
+                        .subtract(BigInteger.ONE)
+                        .gcd(ee)
+                        .compareTo(BigInteger.ONE) == 0 &&
+                    this.q.isProbablePrime(10)
+                ) {
                     break;
                 }
             }
@@ -237,9 +252,10 @@ var RSAKey = /** @class */ (function () {
                     rsa.dmp1 = rsa.d.mod(p1);
                     rsa.dmq1 = rsa.d.mod(q1);
                     rsa.coeff = rsa.q.modInverse(rsa.p);
-                    setTimeout(function () { callback(); }, 0); // escape
-                }
-                else {
+                    setTimeout(function () {
+                        callback();
+                    }, 0); // escape
+                } else {
                     setTimeout(loop1, 0);
                 }
             };
@@ -247,10 +263,12 @@ var RSAKey = /** @class */ (function () {
                 rsa.q = nbi();
                 rsa.q.fromNumberAsync(qs, 1, rng, function () {
                     rsa.q.subtract(BigInteger.ONE).gcda(ee, function (r) {
-                        if (r.compareTo(BigInteger.ONE) == 0 && rsa.q.isProbablePrime(10)) {
+                        if (
+                            r.compareTo(BigInteger.ONE) == 0 &&
+                            rsa.q.isProbablePrime(10)
+                        ) {
                             setTimeout(loop4, 0);
-                        }
-                        else {
+                        } else {
                             setTimeout(loop3, 0);
                         }
                     });
@@ -260,10 +278,12 @@ var RSAKey = /** @class */ (function () {
                 rsa.p = nbi();
                 rsa.p.fromNumberAsync(B - qs, 1, rng, function () {
                     rsa.p.subtract(BigInteger.ONE).gcda(ee, function (r) {
-                        if (r.compareTo(BigInteger.ONE) == 0 && rsa.p.isProbablePrime(10)) {
+                        if (
+                            r.compareTo(BigInteger.ONE) == 0 &&
+                            rsa.p.isProbablePrime(10)
+                        ) {
                             setTimeout(loop3, 0);
-                        }
-                        else {
+                        } else {
                             setTimeout(loop2, 0);
                         }
                     });
@@ -287,8 +307,7 @@ var RSAKey = /** @class */ (function () {
         var h = c.toString(16);
         if ((h.length & 1) == 0) {
             return h;
-        }
-        else {
+        } else {
             return "0" + h;
         }
     };
@@ -303,7 +322,7 @@ var RSAKey = /** @class */ (function () {
         return digest == digestMethod(text).toString();
     };
     return RSAKey;
-}());
+})();
 export { RSAKey };
 // Undo PKCS#1 (type 2, random) padding and, if valid, return the plaintext
 function pkcs1unpad2(d, n) {
@@ -324,15 +343,16 @@ function pkcs1unpad2(d, n) {
     var ret = "";
     while (++i < b.length) {
         var c = b[i] & 255;
-        if (c < 128) { // utf-8 decode
+        if (c < 128) {
+            // utf-8 decode
             ret += String.fromCharCode(c);
-        }
-        else if ((c > 191) && (c < 224)) {
+        } else if (c > 191 && c < 224) {
             ret += String.fromCharCode(((c & 31) << 6) | (b[i + 1] & 63));
             ++i;
-        }
-        else {
-            ret += String.fromCharCode(((c & 15) << 12) | ((b[i + 1] & 63) << 6) | (b[i + 2] & 63));
+        } else {
+            ret += String.fromCharCode(
+                ((c & 15) << 12) | ((b[i + 1] & 63) << 6) | (b[i + 2] & 63)
+            );
             i += 2;
         }
     }
@@ -347,7 +367,7 @@ var DIGEST_HEADERS = {
     sha256: "3031300d060960864801650304020105000420",
     sha384: "3041300d060960864801650304020205000430",
     sha512: "3051300d060960864801650304020305000440",
-    ripemd160: "3021300906052b2403020105000414"
+    ripemd160: "3021300906052b2403020105000414",
 };
 function getDigestHeader(name) {
     return DIGEST_HEADERS[name] || "";

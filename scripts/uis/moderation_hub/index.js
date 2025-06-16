@@ -1,2 +1,2 @@
-import './root.js'
-import './bans.js'
+import "./root.js";
+import "./bans.js";

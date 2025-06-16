@@ -8,7 +8,11 @@ if (rng_pool == null) {
     rng_pool = [];
     rng_pptr = 0;
     var t = void 0;
-    if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+    if (
+        typeof window !== "undefined" &&
+        window.crypto &&
+        window.crypto.getRandomValues
+    ) {
         // Extract entropy (2048 bits) from RNG if available
         var z = new Uint32Array(256);
         window.crypto.getRandomValues(z);
@@ -23,9 +27,12 @@ if (rng_pool == null) {
         count = count || 0;
         if (count >= 256 || rng_pptr >= rng_psize) {
             if (window.removeEventListener) {
-                window.removeEventListener("mousemove", onMouseMoveListener_1, false);
-            }
-            else if (window.detachEvent) {
+                window.removeEventListener(
+                    "mousemove",
+                    onMouseMoveListener_1,
+                    false
+                );
+            } else if (window.detachEvent) {
                 window.detachEvent("onmousemove", onMouseMoveListener_1);
             }
             return;
@@ -34,16 +41,14 @@ if (rng_pool == null) {
             var mouseCoordinates = ev.x + ev.y;
             rng_pool[rng_pptr++] = mouseCoordinates & 255;
             count += 1;
-        }
-        catch (e) {
+        } catch (e) {
             // Sometimes Firefox will deny permission to access event properties for some reason. Ignore.
         }
     };
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
         if (window.addEventListener) {
             window.addEventListener("mousemove", onMouseMoveListener_1, false);
-        }
-        else if (window.attachEvent) {
+        } else if (window.attachEvent) {
             window.attachEvent("onmousemove", onMouseMoveListener_1);
         }
     }
@@ -66,13 +71,12 @@ function rng_get_byte() {
     return rng_state.next();
 }
 var SecureRandom = /** @class */ (function () {
-    function SecureRandom() {
-    }
+    function SecureRandom() {}
     SecureRandom.prototype.nextBytes = function (ba) {
         for (var i = 0; i < ba.length; ++i) {
             ba[i] = rng_get_byte();
         }
     };
     return SecureRandom;
-}());
+})();
 export { SecureRandom };

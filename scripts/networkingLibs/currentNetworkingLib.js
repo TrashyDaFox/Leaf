@@ -1,7 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { prismarineDb } from "../lib/prismarinedb";
-import SHA256 from '../lib/sha256';
-import { JSEncrypt } from '../lib/jsencrypt-lib/JSEncrypt';
+import SHA256 from "../lib/sha256";
+import { JSEncrypt } from "../lib/jsencrypt-lib/JSEncrypt";
 import config from "../versionData";
 import base64 from "../api/uibuild/base64";
 import versionData from "../versionData";
@@ -35,30 +35,37 @@ class HTTP {
         //                 ]
         //             }
         //         })
-                    
+
         //     }
         // }
         this.player = player;
     }
     makeRequest(args, response) {
         if (!this.player) return;
-        if(!args.headers) args.headers = {};
-        args.headers["User-Agent"] = `Leaf/${versionData.versionInfo.versionInternalID}`
+        if (!args.headers) args.headers = {};
+        args.headers[
+            "User-Agent"
+        ] = `Leaf/${versionData.versionInfo.versionInternalID}`;
         let id = Date.now().toString();
         this.requests.set(id, response);
         this.requests2.set(id, "");
-        this.player.sendMessage(JSON.stringify({
-            command: "make_request",
-            request: args,
-            id
-        }))
+        this.player.sendMessage(
+            JSON.stringify({
+                command: "make_request",
+                request: args,
+                id,
+            })
+        );
     }
 }
 let http = new HTTP();
 function getSpkiDer(spkiPem) {
     const pemHeader = "-----BEGIN PUBLIC KEY-----";
     const pemFooter = "-----END PUBLIC KEY-----";
-    var pemContents = spkiPem.substring(pemHeader.length, spkiPem.length - pemFooter.length);
+    var pemContents = spkiPem.substring(
+        pemHeader.length,
+        spkiPem.length - pemFooter.length
+    );
     var binaryDerString = window.atob(pemContents);
     return str2ab(binaryDerString);
 }
@@ -75,27 +82,32 @@ function ab2str(buf) {
     return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 function hexToStr(str) {
-    return str.split('.').map(_=>{
-        return String.fromCharCode(parseInt(_, 16))
-    }).join('')
+    return str
+        .split(".")
+        .map((_) => {
+            return String.fromCharCode(parseInt(_, 16));
+        })
+        .join("");
 }
-world.beforeEvents.chatSend.subscribe(async e => {
+world.beforeEvents.chatSend.subscribe(async (e) => {
     if (!config.HTTPEnabled) return;
-    if(e.message == ".LEAF") {
-        e.sender.sendMessage(".LEAF_INSTALLED")
+    if (e.message == ".LEAF") {
+        e.sender.sendMessage(".LEAF_INSTALLED");
     }
     if (e.message.startsWith(".NETWORKING_LIB-COMPATIBLE-PLAYER:")) {
         e.cancel = true;
         // much security
-        let signature = e.message.substring(".NETWORKING_LIB-COMPATIBLE-PLAYER:".length);
-        let jsenc = new JSEncrypt()
-        jsenc.setPublicKey(pubKey)
+        let signature = e.message.substring(
+            ".NETWORKING_LIB-COMPATIBLE-PLAYER:".length
+        );
+        let jsenc = new JSEncrypt();
+        jsenc.setPublicKey(pubKey);
         let val = `${e.sender.name}/${Math.floor(Date.now() / 10000)}`;
         // console.log(val)
-        let verified = jsenc.verify(val, signature, SHA256)
+        let verified = jsenc.verify(val, signature, SHA256);
         if (!verified) {
             e.cancel = true;
-            e.sender.sendMessage(`ERROR: Invalid signature`)
+            e.sender.sendMessage(`ERROR: Invalid signature`);
         } else {
             e.cancel = true;
             // e.cancel = true;
@@ -103,14 +115,18 @@ world.beforeEvents.chatSend.subscribe(async e => {
         }
     }
     if (http.player && e.sender.id == http.player.id) {
-        // console.warn(e.message)
+        // // console.warn(e.message)
         //503
         if (e.message.startsWith(`.APPEND:`)) {
             e.cancel = true;
-            let id = e.message.substring('.APPEND:'.length).split(',')[0]
-            let data = e.message.substring('.APPEND:'.length).split(',').slice(1).join(',')
+            let id = e.message.substring(".APPEND:".length).split(",")[0];
+            let data = e.message
+                .substring(".APPEND:".length)
+                .split(",")
+                .slice(1)
+                .join(",");
             if (!http.requests2.has(id)) return;
-            http.requests2.set(id, http.requests2.get(id) + data)
+            http.requests2.set(id, http.requests2.get(id) + data);
         }
         if (e.message.startsWith(`.END:`)) {
             e.cancel = true;
@@ -120,28 +136,38 @@ world.beforeEvents.chatSend.subscribe(async e => {
             if (msg) {
                 if (msg.startsWith(`.RES:`)) {
                     // e.cancel = true;
-                    let status = parseInt(msg.substring('.RES:'.length).split(',', 3)[0])
-                    let id = msg.substring('.RES:'.length).split(',', 3)[1]
-                    let data = msg.substring('.RES:'.length).split(',').slice(2).join(',')
+                    let status = parseInt(
+                        msg.substring(".RES:".length).split(",", 3)[0]
+                    );
+                    let id = msg.substring(".RES:".length).split(",", 3)[1];
+                    let data = msg
+                        .substring(".RES:".length)
+                        .split(",")
+                        .slice(2)
+                        .join(",");
                     if (http.requests.has(id)) {
-                        system.run(()=>{
+                        system.run(() => {
                             // world.sendMessage(data)
-                            http.requests.get(id)(status, hexToStr(data))
-
-                        })
+                            http.requests.get(id)(status, hexToStr(data));
+                        });
                     }
                 }
             }
         }
     }
     if (e.message == ".test") {
-        http.makeRequest({
-            method: 'get',
-            url: 'https://nekos.life/api/v2/cat',
-        }, (status, data) => {
-            // world.sendMessage(`sent message`)
-            world.sendMessage(`Received a response from https://nekos.life/api/v2/cat with status ${status} and data:\n${data}`)
-        })
+        http.makeRequest(
+            {
+                method: "get",
+                url: "https://nekos.life/api/v2/cat",
+            },
+            (status, data) => {
+                // world.sendMessage(`sent message`)
+                world.sendMessage(
+                    `Received a response from https://nekos.life/api/v2/cat with status ${status} and data:\n${data}`
+                );
+            }
+        );
     }
-})
-export default http
+});
+export default http;

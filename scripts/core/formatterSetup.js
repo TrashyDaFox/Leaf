@@ -1,4 +1,4 @@
-import { leafFormatter } from './api/formatting.js';
+import { leafFormatter } from "./api/formatting.js";
 
 export function setupFormatters() {
     leafFormatter.addVariable("name", (sessionData) => {
@@ -10,4 +10,4 @@ export function setupFormatters() {
     });
 
     // ... other formatter setup
-} 
+}

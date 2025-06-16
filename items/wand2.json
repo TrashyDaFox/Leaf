@@ -1,0 +1,21 @@
+{
+	"format_version": "1.20.20",
+	"minecraft:item": {
+		"description": {
+			"identifier": "leaf:wand2",
+            "menu_category": {
+				"category": "equipment"
+			}
+        },
+		"components": {
+			"minecraft:display_name": {
+                "value": "Teleport Wand 2"
+            },
+			"minecraft:max_stack_size": 1,
+			"minecraft:icon": {
+				"texture": "wand2"
+			},
+            "minecraft:foil": false
+		}
+	}
+}

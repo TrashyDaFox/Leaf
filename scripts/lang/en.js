@@ -5,28 +5,28 @@ export default {
         titleplaceholder: "Type a title here",
         body: "Body",
         bodyplaceholder: "Type a body here",
-        scriptevent: "Scriptevent",
+        scriptevent: "Unique ID",
         createui: "Create UI",
         errors: {
             titleundefined: "Title must be defined.",
             scripteventundefined: "Scriptevent must be defined.",
-        }
+        },
     },
-	tpa: {
-		requestSent: "Sent tpa request!",
-	},
-	general: {
-		noPlayerFoudn: "No player found"
-	},
-	rtp: {
-		teleported: "Teleported to %s, %s",
-		findingSafeLocation: "Finding safe location"
-	},
-	config: {
-		mainsettings: {
-			text: "Main Settings"
-		},
-	},
+    tpa: {
+        requestSent: "Sent tpa request!",
+    },
+    general: {
+        noPlayerFoudn: "No player found",
+    },
+    rtp: {
+        teleported: "Teleported to %s, %s",
+        findingSafeLocation: "Finding safe location",
+    },
+    config: {
+        mainsettings: {
+            text: "Main Settings",
+        },
+    },
     error: "§c§lERROR §8>> §r§7%s",
     success: "§a§lSUCCESS §8>> §r§7%s",
     info: "§b§lINFO §8>> §r§7%s",
@@ -35,16 +35,17 @@ export default {
     commands: {
         errors: {
             notfound: "Command not found.",
-            noperms: "You do not have permission to run this command. You require: §c%s"
-        }
+            noperms:
+                "You do not have permission to run this command. You require: §c%s",
+        },
     },
     chestguis: {
         additem: "Add an item",
         additemlore: {
             line1: "To add an §bitem§r, click this",
             line2: "If you §cdo not §runderstand how this works",
-            line3: "Go to the documentation at §2https://leaf.trashdev.org/"
-        }
+            line3: "Go to the documentation at §2https://leaf.trashdev.org/",
+        },
     },
-    auctionhouse: `Auction House`
-}
+    auctionhouse: `Auction House`,
+};

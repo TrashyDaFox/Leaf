@@ -1,12 +1,9 @@
-import { prismarineDb } from '../lib/prismarinedb'
-import commandManager from './commands/commandManager'
-import actionParser from './actionParser'
+import { prismarineDb } from "../lib/prismarinedb";
+import commandManager from "./commands/commandManager";
+import actionParser from "./actionParser";
 
 class CustomCommands {
-    constructor() {
-    
-    }
-
+    constructor() {}
 }
 
-export default new CustomCommands()
+export default new CustomCommands();

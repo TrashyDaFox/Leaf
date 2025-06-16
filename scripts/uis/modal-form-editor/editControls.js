@@ -67,21 +67,41 @@ import uiBuilder from "../../api/uiBuilder";
 import { ActionForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
 import versionData from "../../versionData";
+import { NUT_UI_TAG, NUT_UI_THEMED } from "../preset_browser/nutUIConsts";
+import { themes } from "../uiBuilder/cherryThemes";
 
-uiManager.addUI(versionData.uiNames.Modal.EditControls, "", (player, id)=>{
+uiManager.addUI(versionData.uiNames.Modal.EditControls, "", (player, id) => {
     let ui = uiBuilder.getByID(id);
     let form = new ActionForm();
-    form.button(`§aAdd control\n§7Adds a control`, `textures/azalea_icons/GUIMaker/ModalsV2/add control`, (player)=>{
-        uiManager.open(player, versionData.uiNames.Modal.AddControl, id)
-    })
-    form.button(`§dPreview\n§7Previews the UI`, null, (player)=>{
-        uiBuilder.open(id, player)
-    })
-    for(let i = 0; i < ui.data.controls.length;i++) {
+    form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[25][0]}§rEdit Controls`)
+    form.button(
+        `§aAdd control\n§7Adds a control`,
+        `textures/azalea_icons/other/add`,
+        (player) => {
+            uiManager.open(player, versionData.uiNames.Modal.AddControl, id);
+        }
+    );
+    form.button(`§dPreview\n§7Previews the UI`, null, (player) => {
+        uiBuilder.open(ui, player);
+    });
+    for (let i = 0; i < ui.data.controls.length; i++) {
         let control = ui.data.controls[i];
-        form.button(`§6${control.type == "header" || control.type == "label" ? control.text : control.label}\n§r§7${control.type}`, null, (player)=>{
-            uiManager.open(player, versionData.uiNames.Modal.EditControl, id, i)
-        })
+        form.button(
+            `§6${
+                control.type == "header" || control.type == "label"
+                    ? control.text
+                    : control.label
+            }\n§r§7${control.type}`,
+            null,
+            (player) => {
+                uiManager.open(
+                    player,
+                    versionData.uiNames.Modal.EditControl,
+                    id,
+                    i
+                );
+            }
+        );
     }
-    form.show(player, false, (player, response)=>{})
-})
+    form.show(player, false, (player, response) => {});
+});

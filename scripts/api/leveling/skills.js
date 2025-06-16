@@ -3,7 +3,10 @@ import { SegmentedStoragePrismarine } from "../../prismarineDbStorages/segmented
 
 class Skills {
     constructor() {
-        this.db = prismarineDb.customStorage("Jobs", SegmentedStoragePrismarine)
+        this.db = prismarineDb.customStorage(
+            "Jobs",
+            SegmentedStoragePrismarine
+        );
     }
 }
 

@@ -2,11 +2,11 @@ export function parseQuotedString(str) {
     const regex = /[^\s"]+|"([^"]*)"/gi;
     const results = [];
     let match;
-    
+
     while ((match = regex.exec(str)) !== null) {
         results.push(match[1] || match[0]);
     }
-    
+
     return results;
 }
 
@@ -16,9 +16,9 @@ export function safeDivide(num1, num2) {
 }
 
 export function abbreviateNumber(number, decPlaces) {
-    const suffixes = ['k', 'm', 'b', 't'];
+    const suffixes = ["k", "m", "b", "t"];
     const decScale = Math.pow(10, decPlaces);
-    
+
     for (let i = suffixes.length - 1; i >= 0; i--) {
         const size = Math.pow(10, (i + 1) * 3);
         if (size <= number) {
@@ -32,4 +32,4 @@ export function abbreviateNumber(number, decPlaces) {
         }
     }
     return number;
-} 
+}

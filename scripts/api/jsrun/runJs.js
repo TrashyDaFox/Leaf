@@ -4,7 +4,7 @@ class Session extends Map {
     }
     toObject() {
         let obj = {};
-        for(const key of this.keys()) {
+        for (const key of this.keys()) {
             obj[key] = this.get(key);
         }
     }
@@ -20,12 +20,12 @@ export class JSEnvironment {
         let fn = eval(`(({env, session})=>{${code}})`);
         let env = {};
         let session = new Session();
-        for(const key in this.fns) {
-            env[key] = function(...data) {
+        for (const key in this.fns) {
+            env[key] = function (...data) {
                 let error = this.fns[key](session, ...data);
-                if(error) throw new Error(error);
-            }
+                if (error) throw new Error(error);
+            };
         }
-        fn({env, session});
+        fn({ env, session });
     }
 }

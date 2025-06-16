@@ -17,33 +17,36 @@ import playerStorage from "./playerStorage";
 
 class Bank {
     constructor() {
-        this.db = prismarineDb.customStorage("Bank", SegmentedStoragePrismarine)
+        this.db = prismarineDb.customStorage(
+            "Bank",
+            SegmentedStoragePrismarine
+        );
     }
 
     getPlayerBankData(player) {
-        let playerId = playerStorage.getID(player)
-        let doc = this.db.findFirst({player: playerId})
-        if(doc) {
+        let playerId = playerStorage.getID(player);
+        let doc = this.db.findFirst({ player: playerId });
+        if (doc) {
             return doc;
         } else {
             let data = {
                 player: playerId,
-                currencies: []
-            }
+                currencies: [],
+            };
             let id = this.db.insertDocument(data);
-            return {id, data}
+            return { id, data };
         }
     }
 
     setPlayerBankData(player, data = {}) {
-        this.getPlayerBankData(player)
-        let playerId = playerStorage.getID(player)
-        let doc = this.db.findFirst({player: playerId})
+        this.getPlayerBankData(player);
+        let playerId = playerStorage.getID(player);
+        let doc = this.db.findFirst({ player: playerId });
         this.db.overwriteDataByID(doc.id, data);
     }
 
     deposit(player, currency = "default") {
-        if(!prismarineDb.economy.getCurrency(currency)) return;
-        let curnc =  prismarineDb.economy.getCurrency(currency) // curnc reference?! no way!
+        if (!prismarineDb.economy.getCurrency(currency)) return;
+        let curnc = prismarineDb.economy.getCurrency(currency); // curnc reference?! no way!
     }
 }

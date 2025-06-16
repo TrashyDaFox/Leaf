@@ -51,8 +51,7 @@ export var Hex = {
                 out[out.length] = bits;
                 bits = 0;
                 char_count = 0;
-            }
-            else {
+            } else {
                 bits <<= 4;
             }
         }
@@ -60,5 +59,5 @@ export var Hex = {
             throw new Error("Hex encoding incomplete: 4 bits missing");
         }
         return out;
-    }
+    },
 };

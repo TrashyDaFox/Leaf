@@ -26,7 +26,8 @@ var CryptoJS =
                 init: function () {},
                 mixIn: function (a) {
                     for (var c in a) a.hasOwnProperty(c) && (this[c] = a[c]);
-                    a.hasOwnProperty("toString") && (this.toString = a.toString);
+                    a.hasOwnProperty("toString") &&
+                        (this.toString = a.toString);
                 },
                 clone: function () {
                     return this.init.prototype.extend(this);
@@ -46,8 +47,14 @@ var CryptoJS =
                         b = this.sigBytes;
                     a = a.sigBytes;
                     this.clamp();
-                    if (b % 4) for (var e = 0; e < a; e++) c[(b + e) >>> 2] |= ((d[e >>> 2] >>> (24 - 8 * (e % 4))) & 255) << (24 - 8 * ((b + e) % 4));
-                    else if (65535 < d.length) for (e = 0; e < a; e += 4) c[(b + e) >>> 2] = d[e >>> 2];
+                    if (b % 4)
+                        for (var e = 0; e < a; e++)
+                            c[(b + e) >>> 2] |=
+                                ((d[e >>> 2] >>> (24 - 8 * (e % 4))) & 255) <<
+                                (24 - 8 * ((b + e) % 4));
+                    else if (65535 < d.length)
+                        for (e = 0; e < a; e += 4)
+                            c[(b + e) >>> 2] = d[e >>> 2];
                     else c.push.apply(c, d);
                     this.sigBytes += a;
                     return this;
@@ -64,7 +71,8 @@ var CryptoJS =
                     return a;
                 },
                 random: function (a) {
-                    for (var c = [], d = 0; d < a; d += 4) c.push((4294967296 * h.random()) | 0);
+                    for (var c = [], d = 0; d < a; d += 4)
+                        c.push((4294967296 * h.random()) | 0);
                     return new q.init(c, a);
                 },
             })),
@@ -81,7 +89,9 @@ var CryptoJS =
                     return d.join("");
                 },
                 parse: function (a) {
-                    for (var c = a.length, d = [], b = 0; b < c; b += 2) d[b >>> 3] |= parseInt(a.substr(b, 2), 16) << (24 - 4 * (b % 8));
+                    for (var c = a.length, d = [], b = 0; b < c; b += 2)
+                        d[b >>> 3] |=
+                            parseInt(a.substr(b, 2), 16) << (24 - 4 * (b % 8));
                     return new q.init(d, c / 2);
                 },
             }),
@@ -89,11 +99,18 @@ var CryptoJS =
                 stringify: function (a) {
                     var c = a.words;
                     a = a.sigBytes;
-                    for (var d = [], b = 0; b < a; b++) d.push(String.fromCharCode((c[b >>> 2] >>> (24 - 8 * (b % 4))) & 255));
+                    for (var d = [], b = 0; b < a; b++)
+                        d.push(
+                            String.fromCharCode(
+                                (c[b >>> 2] >>> (24 - 8 * (b % 4))) & 255
+                            )
+                        );
                     return d.join("");
                 },
                 parse: function (a) {
-                    for (var c = a.length, d = [], b = 0; b < c; b++) d[b >>> 2] |= (a.charCodeAt(b) & 255) << (24 - 8 * (b % 4));
+                    for (var c = a.length, d = [], b = 0; b < c; b++)
+                        d[b >>> 2] |=
+                            (a.charCodeAt(b) & 255) << (24 - 8 * (b % 4));
                     return new q.init(d, c);
                 },
             }),
@@ -125,11 +142,14 @@ var CryptoJS =
                         b = c.sigBytes,
                         e = this.blockSize,
                         f = b / (4 * e),
-                        f = a ? h.ceil(f) : h.max((f | 0) - this._minBufferSize, 0);
+                        f = a
+                            ? h.ceil(f)
+                            : h.max((f | 0) - this._minBufferSize, 0);
                     a = f * e;
                     b = h.min(4 * a, b);
                     if (a) {
-                        for (var m = 0; m < a; m += e) this._doProcessBlock(d, m);
+                        for (var m = 0; m < a; m += e)
+                            this._doProcessBlock(d, m);
                         m = d.splice(0, a);
                         c.sigBytes -= b;
                     }
@@ -203,7 +223,10 @@ var CryptoJS =
                 }
             l = !0;
         }
-        l && (8 > k && (j[k] = v(h.pow(u, 0.5))), (q[k] = v(h.pow(u, 1 / 3))), k++);
+        l &&
+            (8 > k && (j[k] = v(h.pow(u, 0.5))),
+            (q[k] = v(h.pow(u, 1 / 3))),
+            k++);
         u++;
     }
     var a = [],
@@ -212,15 +235,47 @@ var CryptoJS =
                 this._hash = new t.init(j.slice(0));
             },
             _doProcessBlock: function (c, d) {
-                for (var b = this._hash.words, e = b[0], f = b[1], m = b[2], h = b[3], p = b[4], j = b[5], k = b[6], l = b[7], n = 0; 64 > n; n++) {
+                for (
+                    var b = this._hash.words,
+                        e = b[0],
+                        f = b[1],
+                        m = b[2],
+                        h = b[3],
+                        p = b[4],
+                        j = b[5],
+                        k = b[6],
+                        l = b[7],
+                        n = 0;
+                    64 > n;
+                    n++
+                ) {
                     if (16 > n) a[n] = c[d + n] | 0;
                     else {
                         var r = a[n - 15],
                             g = a[n - 2];
-                        a[n] = (((r << 25) | (r >>> 7)) ^ ((r << 14) | (r >>> 18)) ^ (r >>> 3)) + a[n - 7] + (((g << 15) | (g >>> 17)) ^ ((g << 13) | (g >>> 19)) ^ (g >>> 10)) + a[n - 16];
+                        a[n] =
+                            (((r << 25) | (r >>> 7)) ^
+                                ((r << 14) | (r >>> 18)) ^
+                                (r >>> 3)) +
+                            a[n - 7] +
+                            (((g << 15) | (g >>> 17)) ^
+                                ((g << 13) | (g >>> 19)) ^
+                                (g >>> 10)) +
+                            a[n - 16];
                     }
-                    r = l + (((p << 26) | (p >>> 6)) ^ ((p << 21) | (p >>> 11)) ^ ((p << 7) | (p >>> 25))) + ((p & j) ^ (~p & k)) + q[n] + a[n];
-                    g = (((e << 30) | (e >>> 2)) ^ ((e << 19) | (e >>> 13)) ^ ((e << 10) | (e >>> 22))) + ((e & f) ^ (e & m) ^ (f & m));
+                    r =
+                        l +
+                        (((p << 26) | (p >>> 6)) ^
+                            ((p << 21) | (p >>> 11)) ^
+                            ((p << 7) | (p >>> 25))) +
+                        ((p & j) ^ (~p & k)) +
+                        q[n] +
+                        a[n];
+                    g =
+                        (((e << 30) | (e >>> 2)) ^
+                            ((e << 19) | (e >>> 13)) ^
+                            ((e << 10) | (e >>> 22))) +
+                        ((e & f) ^ (e & m) ^ (f & m));
                     l = k;
                     k = j;
                     j = p;
@@ -260,4 +315,4 @@ var CryptoJS =
     bb.SHA256 = g._createHelper(f);
     bb.HmacSHA256 = g._createHmacHelper(f);
 })(Math);
-export default bb.SHA256
+export default bb.SHA256;

@@ -24,7 +24,10 @@ export class TimeIntervals {
 }
 class DailyRewardsAPI {
     constructor() {
-        this.db = prismarineDb.customStorage("DailyRewards", SegmentedStoragePrismarine);
+        this.db = prismarineDb.customStorage(
+            "DailyRewards",
+            SegmentedStoragePrismarine
+        );
         this.keyval = this.db.keyval("Rewards");
         // for(const key of this.keyval.keys()) {
         //     if(key !== "REWARDS") this.keyval.set(key, {})
@@ -34,7 +37,7 @@ class DailyRewardsAPI {
         this.dayInterval = new TimeIntervals(24 * 60 * 60 * 1000);
     }
     timestampToDays(timestamp) {
-        return this.dayInterval.currentInterval
+        return this.dayInterval.currentInterval;
     }
     timestampToMonths(timestamp) {
         return this.monthInterval.currentInterval;
@@ -58,17 +61,17 @@ class DailyRewardsAPI {
         return this.keyval.has(rewardKey) ? this.keyval.get(rewardKey) : [];
     }
     createReward(rewardKey, type = "command", options = {}) {
-        if(!this.isValidType(type)) return;
-        if(type == "command") {
-            let rewards = this.getRewards(rewardKey)
+        if (!this.isValidType(type)) return;
+        if (type == "command") {
+            let rewards = this.getRewards(rewardKey);
             rewards.push({
                 doctype: "REWARD",
                 type,
                 command: options.command,
                 message: options.message,
-            })
+            });
             this.keyval.set(rewardKey, rewards);
-        } else if(type == "currency") {
+        } else if (type == "currency") {
             let rewards = this.getRewards(rewardKey);
             rewards.push({
                 doctype: "REWARD",
@@ -89,29 +92,37 @@ class DailyRewardsAPI {
         this.createReward("REWARDS_MONTHLY", type, options);
     }
     claimReward(reward, player) {
-        if(reward) {
-            if(reward.type == "command") {
-                actionParser.runAction(player, reward.command)
+        if (reward) {
+            if (reward.type == "command") {
+                actionParser.runAction(player, reward.command);
                 player.sendMessage(formatStr(reward.message, player));
-            } else if(reward.type == "currency") {
-                let currency = prismarineDb.economy.getCurrency(reward.currency) ? prismarineDb.economy.getCurrency(reward.currency) : prismarineDb.economy.getCurrency("default");
-                prismarineDb.economy.addMoney(player, reward.amount, currency.scoreboard)
-                player.info(`You have earned §b${currency.symbol} ${reward.amount}§r§7!`)
+            } else if (reward.type == "currency") {
+                let currency = prismarineDb.economy.getCurrency(reward.currency)
+                    ? prismarineDb.economy.getCurrency(reward.currency)
+                    : prismarineDb.economy.getCurrency("default");
+                prismarineDb.economy.addMoney(
+                    player,
+                    reward.amount,
+                    currency.scoreboard
+                );
+                player.info(
+                    `You have earned §b${currency.symbol} ${reward.amount}§r§7!`
+                );
             }
         }
     }
     claimDailyReward(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claims) data.claims = [];
+        if (!data.claims) data.claims = [];
         let currentDay = this.timestampToDays(Date.now());
-        if(data.claims.includes(currentDay)) return false;
+        if (data.claims.includes(currentDay)) return false;
         let rewards = this.getRewards("REWARDS");
         let day = 1;
-        for(let i = 0;i < data.claims.length;i++) {
+        for (let i = 0; i < data.claims.length; i++) {
             let prevClaim = i > 0 ? data.claims[i - 1] : -1;
             let claim = data.claims[i];
-            if(prevClaim == claim - 1) {
+            if (prevClaim == claim - 1) {
                 day++;
             } else {
                 day = 1;
@@ -126,15 +137,15 @@ class DailyRewardsAPI {
     claimWeeklyReward(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claimsWeekly) data.claimsWeekly = [];
+        if (!data.claimsWeekly) data.claimsWeekly = [];
         let currentDay = this.timestampToWeeks(Date.now());
-        if(data.claimsWeekly.includes(currentDay)) return false;
+        if (data.claimsWeekly.includes(currentDay)) return false;
         let rewards = this.getRewards("REWARDS_WEEKLY");
         let day = 1;
-        for(let i = 0;i < data.claimsWeekly.length;i++) {
+        for (let i = 0; i < data.claimsWeekly.length; i++) {
             let prevClaim = i > 0 ? data.claimsWeekly[i - 1] : -1;
             let claim = data.claimsWeekly[i];
-            if(prevClaim == claim - 1) {
+            if (prevClaim == claim - 1) {
                 day++;
             } else {
                 day = 1;
@@ -149,15 +160,15 @@ class DailyRewardsAPI {
     claimMonthlyReward(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claimsMonthly) data.claimsMonthly = [];
+        if (!data.claimsMonthly) data.claimsMonthly = [];
         let currentDay = this.timestampToMonths(Date.now());
-        if(data.claimsMonthly.includes(currentDay)) return false;
+        if (data.claimsMonthly.includes(currentDay)) return false;
         let rewards = this.getRewards("REWARDS_MONTHLY");
         let day = 1;
-        for(let i = 0;i < data.claimsMonthly.length;i++) {
+        for (let i = 0; i < data.claimsMonthly.length; i++) {
             let prevClaim = i > 0 ? data.claimsMonthly[i - 1] : -1;
             let claim = data.claimsMonthly[i];
-            if(prevClaim == claim - 1) {
+            if (prevClaim == claim - 1) {
                 day++;
             } else {
                 day = 1;
@@ -172,12 +183,12 @@ class DailyRewardsAPI {
     getDay(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claims) data.claims = [];
+        if (!data.claims) data.claims = [];
         let day = 1;
-        for(let i = 0;i < data.claims.length;i++) {
+        for (let i = 0; i < data.claims.length; i++) {
             let prevClaim = i > 0 ? data.claims[i - 1] : -1;
             let claim = data.claims[i];
-            if(prevClaim == claim - 1) {
+            if (prevClaim == claim - 1) {
                 day++;
             } else {
                 day = 1;
@@ -188,21 +199,21 @@ class DailyRewardsAPI {
     hasReward(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claims) data.claims = [];
+        if (!data.claims) data.claims = [];
         let currentDay = this.timestampToDays(Date.now());
         return !data.claims.includes(currentDay);
     }
     hasRewardWeekly(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claimsWeekly) data.claimsWeekly = [];
+        if (!data.claimsWeekly) data.claimsWeekly = [];
         let currentDay = this.timestampToWeeks();
         return !data.claimsWeekly.includes(currentDay);
     }
     hasRewardMonthly(player) {
         let playerID = playerStorage.getID(player);
         let data = this.keyval.has(playerID) ? this.keyval.get(playerID) : {};
-        if(!data.claimsMonthly) data.claimsMonthly = [];
+        if (!data.claimsMonthly) data.claimsMonthly = [];
         let currentDay = this.timestampToMonths();
         return !data.claimsMonthly.includes(currentDay);
     }

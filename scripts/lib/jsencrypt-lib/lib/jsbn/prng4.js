@@ -35,7 +35,7 @@ var Arcfour = /** @class */ (function () {
         return this.S[(t + this.S[this.i]) & 255];
     };
     return Arcfour;
-}());
+})();
 export { Arcfour };
 // Plug in your RNG constructor here
 export function prng_newstate() {

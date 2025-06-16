@@ -3,7 +3,13 @@ import config from "../versionData";
 import { ActionForm } from "../lib/form_func";
 import uiManager from "../uiManager";
 import { ActionFormData } from "@minecraft/server-ui";
-import { NUT_UI_DISABLE_VERTICAL_SIZE_KEY, NUT_UI_HEADER_BUTTON, NUT_UI_LEFT_HALF, NUT_UI_RIGHT_HALF, NUT_UI_TAG } from "./preset_browser/nutUIConsts";
+import {
+    NUT_UI_DISABLE_VERTICAL_SIZE_KEY,
+    NUT_UI_HEADER_BUTTON,
+    NUT_UI_LEFT_HALF,
+    NUT_UI_RIGHT_HALF,
+    NUT_UI_TAG,
+} from "./preset_browser/nutUIConsts";
 let pages = [
     {
         path: "formatting-vars",
@@ -58,8 +64,8 @@ let pages = [
             "- <minutes_played> - the amount of minutes the player has played",
             "- <seconds_played> - the amount of seconds the player has played",
             "- {{score objective}} - the players score",
-            "- {{scoreshort objective}} - the players score, but shortened (example: 1,234 becomes 1.2k)"
-        ]
+            "- {{scoreshort objective}} - the players score, but shortened (example: 1,234 becomes 1.2k)",
+        ],
     },
     {
         path: "freesex",
@@ -78,8 +84,7 @@ let pages = [
             "3. Furry corn",
             "2. Gay Furry corn",
             "1. Gay Furry Femboy corn",
-
-        ]
+        ],
     },
     {
         path: "292949402-icantfindaname",
@@ -93,11 +98,9 @@ let pages = [
             `- Added mute system`,
             `- Added warn system`,
             `- Added reports UI`,
-            `+ more!`
+            `+ more!`,
         ],
-        links: [
-            `home`
-        ]
+        links: [`home`],
     },
     {
         path: "home",
@@ -109,24 +112,20 @@ let pages = [
             `This guide will help you setup the addon`,
             `Click what page you want to read below`,
             `Also, there is a website for this.`,
-            `docs.leafessentials.org`
+            `docs.leafessentials.org`,
         ],
         links: [
             `ui_builder/root`,
             `292949402-icantfindaname`,
             `how-to-properly-make-a-server`,
-            `formatting-vars`
-
-        ]
+            `formatting-vars`,
+        ],
     },
     {
         path: "ui_builder/root",
         title: "UI Builder Home",
         icon: "Packs/Asteroid/ui",
-        links: [
-            `home`,
-            `ui_builder/buttons`
-        ],
+        links: [`home`, `ui_builder/buttons`],
         text: [
             `§2-=-=-=-=- Leaf UI Builder -=-=-=-=-`,
             ``,
@@ -154,32 +153,26 @@ let pages = [
             ``,
             `Edit form can be used to change the title and body of the form`,
             `Edit buttons can be used to edit the buttons`,
-        ]
+        ],
     },
     {
         path: "how-to-properly-make-a-server",
         title: "About Platform Settings",
-        links: [
-            `home`
-        ],
+        links: [`home`],
         text: [
             `§aLeaf is heavily against banning players purely based on the platform they play Minecraft on. §7People should be able to play Minecraft on any platform.`,
             `§7Banning players based on the platform is not the best way to remove hackers from your server.`,
             `§7Not everyone who plays on platforms like §bWindows §ror §aAndroid §ruses hacks, so the people who don't use hacks on those platforms can't even play most servers.`,
             `§7Platform settings ONLY exist because I felt like adding it to see how people would react to it. §oIf I ever want to remove it at ANY point, §rI will. §7Use this feature at your own risk.`,
             `§7We are not obligated to help you with Leaf outside of basic questions if you use this feature or any other device banning system.`,
-            `§eWe would suggest getting a moderation team (and maybe a somewhat decent anti-cheat, if you can find one).`
-        ]
-        
+            `§eWe would suggest getting a moderation team (and maybe a somewhat decent anti-cheat, if you can find one).`,
+        ],
     },
     {
         path: "ui_builder/buttons",
         title: "UI Builder - Buttons",
         icon: "Packs/Asteroid/ui",
-        links: [
-            `home`,
-            `ui_builder/root`
-        ],
+        links: [`home`, `ui_builder/root`],
         text: [
             `§2-=-=-=-=- Adding Buttons -=-=-=-=-`,
             `To add a button, edit your UI and click §aEdit Buttons§r. This should bring up a UI with all your buttons, and an option to add buttons`,
@@ -196,41 +189,54 @@ let pages = [
             `§bINFO: Action is the command run when using the button`,
             `§bINFO: Icon is an image displayednext to the button`,
             ``,
-            `Once you are done making the button, click the button at the bottom under all the other options (assuming you have set a display and action). It should say either §b"Edit"§r or §b"Create"`
-        ]
-    }
-]
-uiManager.addUI(config.uiNames.Help, "Help Page", (player, page = "home")=>{
+            `Once you are done making the button, click the button at the bottom under all the other options (assuming you have set a display and action). It should say either §b"Edit"§r or §b"Create"`,
+        ],
+    },
+];
+uiManager.addUI(config.uiNames.Help, "Help Page", (player, page = "home") => {
     let form = new ActionForm();
-    let pageData = pages.find(_=>_.path == page);
-    if(!pageData) pageData = pages[0];
-    form.title(NUT_UI_TAG+`§r${pageData.title}`)
+    let pageData = pages.find((_) => _.path == page);
+    if (!pageData) pageData = pages[0];
+    form.title(NUT_UI_TAG + `§r${pageData.title}`);
     // form.body(Array.isArray(pageData.text) ? pageData.text.join('\n§r') : pageData.text);
-    form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Click to Go Back`, `textures/azalea_icons/2`, (player)=>{
-        uiManager.open(player, config.uiNames.ConfigMain)
-    })
+    form.button(
+        `${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Click to Go Back`,
+        `textures/azalea_icons/2`,
+        (player) => {
+            uiManager.open(player, config.uiNames.ConfigMain);
+        }
+    );
     let form2 = new ActionFormData();
-    if(false) {
-        for(const line of pageData.text) {
-            if(line.startsWith('# ')) form.header(line.substring(2))
-            else form.label(line)
+    if (false) {
+        for (const line of pageData.text) {
+            if (line.startsWith("# ")) form.header(line.substring(2));
+            else form.label(line);
         }
     } else {
-        form.body(pageData.text.join('\n§r'))
+        form.body(pageData.text.join("\n§r"));
     }
 
-    let links = pageData.links && pageData.links.length ? pageData.links : [`home`];
+    let links =
+        pageData.links && pageData.links.length ? pageData.links : [`home`];
     let i = 0;
-    for(const link of links) {
-        let pageData2 = pages.find(_=>_.path == link);
+    for (const link of links) {
+        let pageData2 = pages.find((_) => _.path == link);
         i++;
-        if(pageData2) {
-            form.button(`${i == links.length && links.length % 2 != 0 ? `` : i % 2 == 0 ? `${NUT_UI_LEFT_HALF}` : `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}`}§r${pageData2.title}`, pageData2.icon ? icons.resolve(pageData2.icon) : null, (player)=>{
-                uiManager.open(player, config.uiNames.Help, pageData2.path);
-            })
-        }//§
+        if (pageData2) {
+            form.button(
+                `${
+                    i == links.length && links.length % 2 != 0
+                        ? ``
+                        : i % 2 == 0
+                        ? `${NUT_UI_LEFT_HALF}`
+                        : `${NUT_UI_RIGHT_HALF}${NUT_UI_DISABLE_VERTICAL_SIZE_KEY}`
+                }§r${pageData2.title}`,
+                pageData2.icon ? icons.resolve(pageData2.icon) : null,
+                (player) => {
+                    uiManager.open(player, config.uiNames.Help, pageData2.path);
+                }
+            );
+        } //§
     }
-    form.show(player, false, (player, response)=>{
-
-    })
-})
+    form.show(player, false, (player, response) => {});
+});

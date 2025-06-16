@@ -1,1 +1,1 @@
-import './add.js'
+import "./add.js";

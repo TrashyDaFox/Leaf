@@ -5,12 +5,15 @@ import { SegmentedStoragePrismarine } from "../prismarineDbStorages/segmented";
 
 class BanSystem {
     constructor() {
-        this.db = prismarineDb.customStorage("bans", SegmentedStoragePrismarine)
+        this.db = prismarineDb.customStorage(
+            "bans",
+            SegmentedStoragePrismarine
+        );
     }
 
     addBan(player, reason, duration) {
-        let doc = this.db.findFirst({player:player.id})
-        if(doc) {
+        let doc = this.db.findFirst({ player: player.id });
+        if (doc) {
             doc.data.reason = reason;
             doc.data.duration = duration;
             doc.data.time = new Date().getTime();
@@ -20,8 +23,8 @@ class BanSystem {
                 player: player.id,
                 reason: reason,
                 duration: duration,
-                time: new Date().getTime()
-            })
+                time: new Date().getTime(),
+            });
         }
     }
 }

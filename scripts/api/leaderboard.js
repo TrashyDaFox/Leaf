@@ -10,19 +10,22 @@ let themes = [
         headerText: "§a",
         scorePlace: "§b",
         scorePlayer: "§e",
-        scoreNumber: "§7"
+        scoreNumber: "§7",
+    },
+];
+eventHandler.on(
+    "create",
+    (objective, loc, dimension = "minecraft:overworld") => {
+        if (!world.scoreboard.getObjective(objective)) return;
+        db.insertDocument({
+            objective,
+            loc,
+            dimension,
+            offline: true,
+            theme: 0,
+        });
     }
-]
-eventHandler.on("create", (objective, loc, dimension = "minecraft:overworld")=>{
-    if(!world.scoreboard.getObjective(objective)) return;
-    db.insertDocument({
-        objective,
-        loc,
-        dimension,
-        offline: true,
-        theme: 0
-    });
-})
+);
 export const leaderboardDb = db;
 export const leaderboardEventHandler = eventHandler;
 // system.runInterval(()=>{

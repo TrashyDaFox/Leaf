@@ -1,7 +1,7 @@
-import { prismarineDb } from '../lib/prismarinedb'
+import { prismarineDb } from "../lib/prismarinedb";
 
 class TagEvents {
     constructor() {
-        this.db = prismarineDb.table('TagEvents')
+        this.db = prismarineDb.table("TagEvents");
     }
 }

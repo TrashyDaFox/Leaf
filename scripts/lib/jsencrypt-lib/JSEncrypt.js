@@ -1,9 +1,12 @@
 var _a;
 import { b64tohex, hex2b64 } from "./lib/jsbn/base64";
 import { JSEncryptRSAKey } from "./JSEncryptRSAKey";
-var version = typeof process !== 'undefined'
-    ? (_a = process.env) === null || _a === void 0 ? void 0 : _a.npm_package_version
-    : undefined;
+var version =
+    typeof process !== "undefined"
+        ? (_a = process.env) === null || _a === void 0
+            ? void 0
+            : _a.npm_package_version
+        : undefined;
 /**
  *
  * @param {Object} [options = {}] - An object to customize JSEncrypt behaviour
@@ -15,12 +18,15 @@ var version = typeof process !== 'undefined'
  */
 var JSEncrypt = /** @class */ (function () {
     function JSEncrypt(options) {
-        if (options === void 0) { options = {}; }
+        if (options === void 0) {
+            options = {};
+        }
         options = options || {};
         this.default_key_size = options.default_key_size
             ? parseInt(options.default_key_size, 10)
             : 1024;
-        this.default_public_exponent = options.default_public_exponent || "010001"; // 65537 default openssl public exponent for rsa key type
+        this.default_public_exponent =
+            options.default_public_exponent || "010001"; // 65537 default openssl public exponent for rsa key type
         this.log = options.log || false;
         // The private and public key.
         this.key = null;
@@ -34,7 +40,7 @@ var JSEncrypt = /** @class */ (function () {
      */
     JSEncrypt.prototype.setKey = function (key) {
         if (this.log && this.key) {
-            console.warn("A key was already set, overriding existing.");
+            // console.warn("A key was already set, overriding existing.");
         }
         this.key = new JSEncryptRSAKey(key);
     };
@@ -68,8 +74,7 @@ var JSEncrypt = /** @class */ (function () {
         // Return the decrypted string.
         try {
             return this.getKey().decrypt(b64tohex(str));
-        }
-        catch (ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -85,8 +90,7 @@ var JSEncrypt = /** @class */ (function () {
         // Return the encrypted string.
         try {
             return hex2b64(this.getKey().encrypt(str));
-        }
-        catch (ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -102,8 +106,7 @@ var JSEncrypt = /** @class */ (function () {
         // return the RSA signature of 'str' in 'hex' format.
         try {
             return hex2b64(this.getKey().sign(str, digestMethod, digestName));
-        }
-        catch (ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -119,8 +122,7 @@ var JSEncrypt = /** @class */ (function () {
         // Return the decrypted 'digest' of the signature.
         try {
             return this.getKey().verify(str, b64tohex(signature), digestMethod);
-        }
-        catch (ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -138,11 +140,18 @@ var JSEncrypt = /** @class */ (function () {
             // Get a new private key.
             this.key = new JSEncryptRSAKey();
             if (cb && {}.toString.call(cb) === "[object Function]") {
-                this.key.generateAsync(this.default_key_size, this.default_public_exponent, cb);
+                this.key.generateAsync(
+                    this.default_key_size,
+                    this.default_public_exponent,
+                    cb
+                );
                 return;
             }
             // Generate the key.
-            this.key.generate(this.default_key_size, this.default_public_exponent);
+            this.key.generate(
+                this.default_key_size,
+                this.default_public_exponent
+            );
         }
         return this.key;
     };
@@ -188,5 +197,5 @@ var JSEncrypt = /** @class */ (function () {
     };
     JSEncrypt.version = version;
     return JSEncrypt;
-}());
+})();
 export { JSEncrypt };

@@ -86,51 +86,46 @@ export var KJUR = {};
  * @name KJUR.asn1
  * @namespace
  */
-if (typeof KJUR.asn1 == "undefined" || !KJUR.asn1)
-    KJUR.asn1 = {};
+if (typeof KJUR.asn1 == "undefined" || !KJUR.asn1) KJUR.asn1 = {};
 /**
  * ASN1 utilities class
  * @name KJUR.asn1.ASN1Util
  * @class ASN1 utilities class
  * @since asn1 1.0.2
  */
-KJUR.asn1.ASN1Util = new function () {
+KJUR.asn1.ASN1Util = new (function () {
     this.integerToByteHex = function (i) {
         var h = i.toString(16);
-        if ((h.length % 2) == 1)
-            h = '0' + h;
+        if (h.length % 2 == 1) h = "0" + h;
         return h;
     };
     this.bigIntToMinTwosComplementsHex = function (bigIntegerValue) {
         var h = bigIntegerValue.toString(16);
-        if (h.substr(0, 1) != '-') {
+        if (h.substr(0, 1) != "-") {
             if (h.length % 2 == 1) {
-                h = '0' + h;
-            }
-            else {
+                h = "0" + h;
+            } else {
                 if (!h.match(/^[0-7]/)) {
-                    h = '00' + h;
+                    h = "00" + h;
                 }
             }
-        }
-        else {
+        } else {
             var hPos = h.substr(1);
             var xorLen = hPos.length;
             if (xorLen % 2 == 1) {
                 xorLen += 1;
-            }
-            else {
+            } else {
                 if (!h.match(/^[0-7]/)) {
                     xorLen += 2;
                 }
             }
-            var hMask = '';
+            var hMask = "";
             for (var i = 0; i < xorLen; i++) {
-                hMask += 'f';
+                hMask += "f";
             }
             var biMask = new BigInteger(hMask, 16);
             var biNeg = biMask.xor(bigIntegerValue).add(BigInteger.ONE);
-            h = biNeg.toString(16).replace(/^-/, '');
+            h = biNeg.toString(16).replace(/^-/, "");
         }
         return h;
     };
@@ -206,41 +201,49 @@ KJUR.asn1.ASN1Util = new function () {
      *                   ]});
      */
     this.newObject = function (param) {
-        var _KJUR = KJUR, _KJUR_asn1 = _KJUR.asn1, _DERBoolean = _KJUR_asn1.DERBoolean, _DERInteger = _KJUR_asn1.DERInteger, _DERBitString = _KJUR_asn1.DERBitString, _DEROctetString = _KJUR_asn1.DEROctetString, _DERNull = _KJUR_asn1.DERNull, _DERObjectIdentifier = _KJUR_asn1.DERObjectIdentifier, _DEREnumerated = _KJUR_asn1.DEREnumerated, _DERUTF8String = _KJUR_asn1.DERUTF8String, _DERNumericString = _KJUR_asn1.DERNumericString, _DERPrintableString = _KJUR_asn1.DERPrintableString, _DERTeletexString = _KJUR_asn1.DERTeletexString, _DERIA5String = _KJUR_asn1.DERIA5String, _DERUTCTime = _KJUR_asn1.DERUTCTime, _DERGeneralizedTime = _KJUR_asn1.DERGeneralizedTime, _DERSequence = _KJUR_asn1.DERSequence, _DERSet = _KJUR_asn1.DERSet, _DERTaggedObject = _KJUR_asn1.DERTaggedObject, _newObject = _KJUR_asn1.ASN1Util.newObject;
+        var _KJUR = KJUR,
+            _KJUR_asn1 = _KJUR.asn1,
+            _DERBoolean = _KJUR_asn1.DERBoolean,
+            _DERInteger = _KJUR_asn1.DERInteger,
+            _DERBitString = _KJUR_asn1.DERBitString,
+            _DEROctetString = _KJUR_asn1.DEROctetString,
+            _DERNull = _KJUR_asn1.DERNull,
+            _DERObjectIdentifier = _KJUR_asn1.DERObjectIdentifier,
+            _DEREnumerated = _KJUR_asn1.DEREnumerated,
+            _DERUTF8String = _KJUR_asn1.DERUTF8String,
+            _DERNumericString = _KJUR_asn1.DERNumericString,
+            _DERPrintableString = _KJUR_asn1.DERPrintableString,
+            _DERTeletexString = _KJUR_asn1.DERTeletexString,
+            _DERIA5String = _KJUR_asn1.DERIA5String,
+            _DERUTCTime = _KJUR_asn1.DERUTCTime,
+            _DERGeneralizedTime = _KJUR_asn1.DERGeneralizedTime,
+            _DERSequence = _KJUR_asn1.DERSequence,
+            _DERSet = _KJUR_asn1.DERSet,
+            _DERTaggedObject = _KJUR_asn1.DERTaggedObject,
+            _newObject = _KJUR_asn1.ASN1Util.newObject;
         var keys = Object.keys(param);
-        if (keys.length != 1)
-            throw "key of param shall be only one.";
+        if (keys.length != 1) throw "key of param shall be only one.";
         var key = keys[0];
-        if (":bool:int:bitstr:octstr:null:oid:enum:utf8str:numstr:prnstr:telstr:ia5str:utctime:gentime:seq:set:tag:".indexOf(":" + key + ":") == -1)
+        if (
+            ":bool:int:bitstr:octstr:null:oid:enum:utf8str:numstr:prnstr:telstr:ia5str:utctime:gentime:seq:set:tag:".indexOf(
+                ":" + key + ":"
+            ) == -1
+        )
             throw "undefined key: " + key;
-        if (key == "bool")
-            return new _DERBoolean(param[key]);
-        if (key == "int")
-            return new _DERInteger(param[key]);
-        if (key == "bitstr")
-            return new _DERBitString(param[key]);
-        if (key == "octstr")
-            return new _DEROctetString(param[key]);
-        if (key == "null")
-            return new _DERNull(param[key]);
-        if (key == "oid")
-            return new _DERObjectIdentifier(param[key]);
-        if (key == "enum")
-            return new _DEREnumerated(param[key]);
-        if (key == "utf8str")
-            return new _DERUTF8String(param[key]);
-        if (key == "numstr")
-            return new _DERNumericString(param[key]);
-        if (key == "prnstr")
-            return new _DERPrintableString(param[key]);
-        if (key == "telstr")
-            return new _DERTeletexString(param[key]);
-        if (key == "ia5str")
-            return new _DERIA5String(param[key]);
-        if (key == "utctime")
-            return new _DERUTCTime(param[key]);
-        if (key == "gentime")
-            return new _DERGeneralizedTime(param[key]);
+        if (key == "bool") return new _DERBoolean(param[key]);
+        if (key == "int") return new _DERInteger(param[key]);
+        if (key == "bitstr") return new _DERBitString(param[key]);
+        if (key == "octstr") return new _DEROctetString(param[key]);
+        if (key == "null") return new _DERNull(param[key]);
+        if (key == "oid") return new _DERObjectIdentifier(param[key]);
+        if (key == "enum") return new _DEREnumerated(param[key]);
+        if (key == "utf8str") return new _DERUTF8String(param[key]);
+        if (key == "numstr") return new _DERNumericString(param[key]);
+        if (key == "prnstr") return new _DERPrintableString(param[key]);
+        if (key == "telstr") return new _DERTeletexString(param[key]);
+        if (key == "ia5str") return new _DERIA5String(param[key]);
+        if (key == "utctime") return new _DERUTCTime(param[key]);
+        if (key == "gentime") return new _DERGeneralizedTime(param[key]);
         if (key == "seq") {
             var paramList = param[key];
             var a = [];
@@ -248,7 +251,7 @@ KJUR.asn1.ASN1Util = new function () {
                 var asn1Obj = _newObject(paramList[i]);
                 a.push(asn1Obj);
             }
-            return new _DERSequence({ 'array': a });
+            return new _DERSequence({ array: a });
         }
         if (key == "set") {
             var paramList = param[key];
@@ -257,23 +260,25 @@ KJUR.asn1.ASN1Util = new function () {
                 var asn1Obj = _newObject(paramList[i]);
                 a.push(asn1Obj);
             }
-            return new _DERSet({ 'array': a });
+            return new _DERSet({ array: a });
         }
         if (key == "tag") {
             var tagParam = param[key];
-            if (Object.prototype.toString.call(tagParam) === '[object Array]' &&
-                tagParam.length == 3) {
+            if (
+                Object.prototype.toString.call(tagParam) === "[object Array]" &&
+                tagParam.length == 3
+            ) {
                 var obj = _newObject(tagParam[2]);
-                return new _DERTaggedObject({ tag: tagParam[0],
+                return new _DERTaggedObject({
+                    tag: tagParam[0],
                     explicit: tagParam[1],
-                    obj: obj });
-            }
-            else {
+                    obj: obj,
+                });
+            } else {
                 var newParam = {};
                 if (tagParam.explicit !== undefined)
                     newParam.explicit = tagParam.explicit;
-                if (tagParam.tag !== undefined)
-                    newParam.tag = tagParam.tag;
+                if (tagParam.tag !== undefined) newParam.tag = tagParam.tag;
                 if (tagParam.obj === undefined)
                     throw "obj shall be specified for 'tag'.";
                 newParam.obj = _newObject(tagParam.obj);
@@ -299,7 +304,7 @@ KJUR.asn1.ASN1Util = new function () {
         var asn1Obj = this.newObject(param);
         return asn1Obj.getEncodedHex();
     };
-};
+})();
 /**
  * get dot noted oid number string from hexadecimal value of OID
  * @name oidHexToInt
@@ -331,7 +336,6 @@ KJUR.asn1.ASN1Util.oidHexToInt = function (hex) {
             binbuf = "";
         }
     }
-    ;
     return s;
 };
 /**
@@ -351,25 +355,21 @@ KJUR.asn1.ASN1Util.oidHexToInt = function (hex) {
 KJUR.asn1.ASN1Util.oidIntToHex = function (oidString) {
     var itox = function (i) {
         var h = i.toString(16);
-        if (h.length == 1)
-            h = '0' + h;
+        if (h.length == 1) h = "0" + h;
         return h;
     };
     var roidtox = function (roid) {
-        var h = '';
+        var h = "";
         var bi = new BigInteger(roid, 10);
         var b = bi.toString(2);
-        var padLen = 7 - b.length % 7;
-        if (padLen == 7)
-            padLen = 0;
-        var bPad = '';
-        for (var i = 0; i < padLen; i++)
-            bPad += '0';
+        var padLen = 7 - (b.length % 7);
+        if (padLen == 7) padLen = 0;
+        var bPad = "";
+        for (var i = 0; i < padLen; i++) bPad += "0";
         b = bPad + b;
         for (var i = 0; i < b.length - 1; i += 7) {
             var b8 = b.substr(i, 7);
-            if (i != b.length - 7)
-                b8 = '1' + b8;
+            if (i != b.length - 7) b8 = "1" + b8;
             h += itox(parseInt(b8, 2));
         }
         return h;
@@ -377,8 +377,8 @@ KJUR.asn1.ASN1Util.oidIntToHex = function (oidString) {
     if (!oidString.match(/^[0-9.]+$/)) {
         throw "malformed oid string: " + oidString;
     }
-    var h = '';
-    var a = oidString.split('.');
+    var h = "";
+    var a = oidString.split(".");
     var i0 = parseInt(a[0]) * 40 + parseInt(a[1]);
     h += itox(i0);
     a.splice(0, 2);
@@ -405,9 +405,9 @@ KJUR.asn1.ASN1Util.oidIntToHex = function (oidString) {
 KJUR.asn1.ASN1Object = function () {
     var isModified = true;
     var hTLV = null;
-    var hT = '00';
-    var hL = '00';
-    var hV = '';
+    var hT = "00";
+    var hL = "00";
+    var hV = "";
     /**
      * get hexadecimal ASN.1 TLV length(L) bytes from TLV value(V)
      * @name getLengthHexFromValue
@@ -420,7 +420,12 @@ KJUR.asn1.ASN1Object = function () {
             throw "this.hV is null or undefined.";
         }
         if (this.hV.length % 2 == 1) {
-            throw "value hex must be even length: n=" + hV.length + ",v=" + this.hV;
+            throw (
+                "value hex must be even length: n=" +
+                hV.length +
+                ",v=" +
+                this.hV
+            );
         }
         var n = this.hV.length / 2;
         var hN = n.toString(16);
@@ -429,11 +434,13 @@ KJUR.asn1.ASN1Object = function () {
         }
         if (n < 128) {
             return hN;
-        }
-        else {
+        } else {
             var hNlen = hN.length / 2;
             if (hNlen > 15) {
-                throw "ASN.1 length too long to represent by 8x: n = " + n.toString(16);
+                throw (
+                    "ASN.1 length too long to represent by 8x: n = " +
+                    n.toString(16)
+                );
             }
             var head = 128 + hNlen;
             return head.toString(16) + hN;
@@ -468,7 +475,7 @@ KJUR.asn1.ASN1Object = function () {
         return this.hV;
     };
     this.getFreshValueHex = function () {
-        return '';
+        return "";
     };
 };
 // == BEGIN DERAbstractString ================================================
@@ -535,12 +542,10 @@ KJUR.asn1.DERAbstractString = function (params) {
     if (typeof params != "undefined") {
         if (typeof params == "string") {
             this.setString(params);
-        }
-        else if (typeof params['str'] != "undefined") {
-            this.setString(params['str']);
-        }
-        else if (typeof params['hex'] != "undefined") {
-            this.setStringHex(params['hex']);
+        } else if (typeof params["str"] != "undefined") {
+            this.setString(params["str"]);
+        } else if (typeof params["hex"] != "undefined") {
+            this.setStringHex(params["hex"]);
         }
     }
 };
@@ -562,7 +567,7 @@ KJUR.asn1.DERAbstractTime = function (params) {
     var date = null;
     // --- PRIVATE METHODS --------------------
     this.localDateToUTC = function (d) {
-        utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        utc = d.getTime() + d.getTimezoneOffset() * 60000;
         var utcDate = new Date(utc);
         return utcDate;
     };
@@ -580,8 +585,7 @@ KJUR.asn1.DERAbstractTime = function (params) {
         var pad = this.zeroPadding;
         var d = this.localDateToUTC(dateObject);
         var year = String(d.getFullYear());
-        if (type == 'utc')
-            year = year.substr(2, 2);
+        if (type == "utc") year = year.substr(2, 2);
         var month = pad(String(d.getMonth() + 1), 2);
         var day = pad(String(d.getDate()), 2);
         var hour = pad(String(d.getHours()), 2);
@@ -599,9 +603,8 @@ KJUR.asn1.DERAbstractTime = function (params) {
         return s + "Z";
     };
     this.zeroPadding = function (s, len) {
-        if (s.length >= len)
-            return s;
-        return new Array(len - s.length + 1).join('0') + s;
+        if (s.length >= len) return s;
+        return new Array(len - s.length + 1).join("0") + s;
     };
     // --- PUBLIC METHODS --------------------
     /**
@@ -640,7 +643,9 @@ KJUR.asn1.DERAbstractTime = function (params) {
      * @param {Integer} sec seconds of date
      */
     this.setByDateValue = function (year, month, day, hour, min, sec) {
-        var dateObject = new Date(Date.UTC(year, month - 1, day, hour, min, sec, 0));
+        var dateObject = new Date(
+            Date.UTC(year, month - 1, day, hour, min, sec, 0)
+        );
         this.setByDate(dateObject);
     };
     this.getFreshValueHex = function () {
@@ -688,8 +693,8 @@ KJUR.asn1.DERAbstractStructured = function (params) {
     };
     this.asn1Array = new Array();
     if (typeof params != "undefined") {
-        if (typeof params['array'] != "undefined") {
-            this.asn1Array = params['array'];
+        if (typeof params["array"] != "undefined") {
+            this.asn1Array = params["array"];
         }
     }
 };
@@ -742,7 +747,8 @@ KJUR.asn1.DERInteger = function (params) {
     this.setByBigInteger = function (bigIntegerValue) {
         this.hTLV = null;
         this.isModified = true;
-        this.hV = KJUR.asn1.ASN1Util.bigIntToMinTwosComplementsHex(bigIntegerValue);
+        this.hV =
+            KJUR.asn1.ASN1Util.bigIntToMinTwosComplementsHex(bigIntegerValue);
     };
     /**
      * set value by integer value
@@ -777,17 +783,14 @@ KJUR.asn1.DERInteger = function (params) {
         return this.hV;
     };
     if (typeof params != "undefined") {
-        if (typeof params['bigint'] != "undefined") {
-            this.setByBigInteger(params['bigint']);
-        }
-        else if (typeof params['int'] != "undefined") {
-            this.setByInteger(params['int']);
-        }
-        else if (typeof params == "number") {
+        if (typeof params["bigint"] != "undefined") {
+            this.setByBigInteger(params["bigint"]);
+        } else if (typeof params["int"] != "undefined") {
+            this.setByInteger(params["int"]);
+        } else if (typeof params == "number") {
             this.setByInteger(params);
-        }
-        else if (typeof params['hex'] != "undefined") {
-            this.setValueHex(params['hex']);
+        } else if (typeof params["hex"] != "undefined") {
+            this.setValueHex(params["hex"]);
         }
     }
 };
@@ -845,7 +848,9 @@ KJUR.asn1.DERBitString = function (params) {
      * @function
      * @param {String} newHexStringIncludingUnusedBits
      */
-    this.setHexValueIncludingUnusedBits = function (newHexStringIncludingUnusedBits) {
+    this.setHexValueIncludingUnusedBits = function (
+        newHexStringIncludingUnusedBits
+    ) {
         this.hTLV = null;
         this.isModified = true;
         this.hV = newHexStringIncludingUnusedBits;
@@ -882,24 +887,22 @@ KJUR.asn1.DERBitString = function (params) {
      * o.setByBooleanArray("01011");
      */
     this.setByBinaryString = function (binaryString) {
-        binaryString = binaryString.replace(/0+$/, '');
-        var unusedBits = 8 - binaryString.length % 8;
-        if (unusedBits == 8)
-            unusedBits = 0;
+        binaryString = binaryString.replace(/0+$/, "");
+        var unusedBits = 8 - (binaryString.length % 8);
+        if (unusedBits == 8) unusedBits = 0;
         for (var i = 0; i <= unusedBits; i++) {
-            binaryString += '0';
+            binaryString += "0";
         }
-        var h = '';
+        var h = "";
         for (var i = 0; i < binaryString.length - 1; i += 8) {
             var b = binaryString.substr(i, 8);
             var x = parseInt(b, 2).toString(16);
-            if (x.length == 1)
-                x = '0' + x;
+            if (x.length == 1) x = "0" + x;
             h += x;
         }
         this.hTLV = null;
         this.isModified = true;
-        this.hV = '0' + unusedBits + h;
+        this.hV = "0" + unusedBits + h;
     };
     /**
      * set ASN.1 TLV value(V) by an array of boolean<br/>
@@ -914,13 +917,12 @@ KJUR.asn1.DERBitString = function (params) {
      * o.setByBooleanArray([false, true, false, true, true]);
      */
     this.setByBooleanArray = function (booleanArray) {
-        var s = '';
+        var s = "";
         for (var i = 0; i < booleanArray.length; i++) {
             if (booleanArray[i] == true) {
-                s += '1';
-            }
-            else {
-                s += '0';
+                s += "1";
+            } else {
+                s += "0";
             }
         }
         this.setByBinaryString(s);
@@ -949,17 +951,17 @@ KJUR.asn1.DERBitString = function (params) {
         return this.hV;
     };
     if (typeof params != "undefined") {
-        if (typeof params == "string" && params.toLowerCase().match(/^[0-9a-f]+$/)) {
+        if (
+            typeof params == "string" &&
+            params.toLowerCase().match(/^[0-9a-f]+$/)
+        ) {
             this.setHexValueIncludingUnusedBits(params);
-        }
-        else if (typeof params['hex'] != "undefined") {
-            this.setHexValueIncludingUnusedBits(params['hex']);
-        }
-        else if (typeof params['bin'] != "undefined") {
-            this.setByBinaryString(params['bin']);
-        }
-        else if (typeof params['array'] != "undefined") {
-            this.setByBooleanArray(params['array']);
+        } else if (typeof params["hex"] != "undefined") {
+            this.setHexValueIncludingUnusedBits(params["hex"]);
+        } else if (typeof params["bin"] != "undefined") {
+            this.setByBinaryString(params["bin"]);
+        } else if (typeof params["array"] != "undefined") {
+            this.setByBooleanArray(params["array"]);
         }
     }
 };
@@ -1045,25 +1047,21 @@ YAHOO.lang.extend(KJUR.asn1.DERNull, KJUR.asn1.ASN1Object);
 KJUR.asn1.DERObjectIdentifier = function (params) {
     var itox = function (i) {
         var h = i.toString(16);
-        if (h.length == 1)
-            h = '0' + h;
+        if (h.length == 1) h = "0" + h;
         return h;
     };
     var roidtox = function (roid) {
-        var h = '';
+        var h = "";
         var bi = new BigInteger(roid, 10);
         var b = bi.toString(2);
-        var padLen = 7 - b.length % 7;
-        if (padLen == 7)
-            padLen = 0;
-        var bPad = '';
-        for (var i = 0; i < padLen; i++)
-            bPad += '0';
+        var padLen = 7 - (b.length % 7);
+        if (padLen == 7) padLen = 0;
+        var bPad = "";
+        for (var i = 0; i < padLen; i++) bPad += "0";
         b = bPad + b;
         for (var i = 0; i < b.length - 1; i += 7) {
             var b8 = b.substr(i, 7);
-            if (i != b.length - 7)
-                b8 = '1' + b8;
+            if (i != b.length - 7) b8 = "1" + b8;
             h += itox(parseInt(b8, 2));
         }
         return h;
@@ -1097,8 +1095,8 @@ KJUR.asn1.DERObjectIdentifier = function (params) {
         if (!oidString.match(/^[0-9.]+$/)) {
             throw "malformed oid string: " + oidString;
         }
-        var h = '';
-        var a = oidString.split('.');
+        var h = "";
+        var a = oidString.split(".");
         var i0 = parseInt(a[0]) * 40 + parseInt(a[1]);
         h += itox(i0);
         a.splice(0, 2);
@@ -1126,10 +1124,9 @@ KJUR.asn1.DERObjectIdentifier = function (params) {
      */
     this.setValueName = function (oidName) {
         var oid = KJUR.asn1.x509.OID.name2oid(oidName);
-        if (oid !== '') {
+        if (oid !== "") {
             this.setValueOidString(oid);
-        }
-        else {
+        } else {
             throw "DERObjectIdentifier oidName undefined: " + oidName;
         }
     };
@@ -1140,18 +1137,14 @@ KJUR.asn1.DERObjectIdentifier = function (params) {
         if (typeof params === "string") {
             if (params.match(/^[0-2].[0-9.]+$/)) {
                 this.setValueOidString(params);
-            }
-            else {
+            } else {
                 this.setValueName(params);
             }
-        }
-        else if (params.oid !== undefined) {
+        } else if (params.oid !== undefined) {
             this.setValueOidString(params.oid);
-        }
-        else if (params.hex !== undefined) {
+        } else if (params.hex !== undefined) {
             this.setValueHex(params.hex);
-        }
-        else if (params.name !== undefined) {
+        } else if (params.name !== undefined) {
             this.setValueName(params.name);
         }
     }
@@ -1190,7 +1183,8 @@ KJUR.asn1.DEREnumerated = function (params) {
     this.setByBigInteger = function (bigIntegerValue) {
         this.hTLV = null;
         this.isModified = true;
-        this.hV = KJUR.asn1.ASN1Util.bigIntToMinTwosComplementsHex(bigIntegerValue);
+        this.hV =
+            KJUR.asn1.ASN1Util.bigIntToMinTwosComplementsHex(bigIntegerValue);
     };
     /**
      * set value by integer value
@@ -1221,14 +1215,12 @@ KJUR.asn1.DEREnumerated = function (params) {
         return this.hV;
     };
     if (typeof params != "undefined") {
-        if (typeof params['int'] != "undefined") {
-            this.setByInteger(params['int']);
-        }
-        else if (typeof params == "number") {
+        if (typeof params["int"] != "undefined") {
+            this.setByInteger(params["int"]);
+        } else if (typeof params == "number") {
             this.setByInteger(params);
-        }
-        else if (typeof params['hex'] != "undefined") {
-            this.setValueHex(params['hex']);
+        } else if (typeof params["hex"] != "undefined") {
+            this.setValueHex(params["hex"]);
         }
     }
 };
@@ -1351,13 +1343,13 @@ KJUR.asn1.DERUTCTime = function (params) {
         this.hTLV = null;
         this.isModified = true;
         this.date = dateObject;
-        this.s = this.formatDate(this.date, 'utc');
+        this.s = this.formatDate(this.date, "utc");
         this.hV = stohex(this.s);
     };
     this.getFreshValueHex = function () {
         if (typeof this.date == "undefined" && typeof this.s == "undefined") {
             this.date = new Date();
-            this.s = this.formatDate(this.date, 'utc');
+            this.s = this.formatDate(this.date, "utc");
             this.hV = stohex(this.s);
         }
         return this.hV;
@@ -1365,14 +1357,11 @@ KJUR.asn1.DERUTCTime = function (params) {
     if (params !== undefined) {
         if (params.str !== undefined) {
             this.setString(params.str);
-        }
-        else if (typeof params == "string" && params.match(/^[0-9]{12}Z$/)) {
+        } else if (typeof params == "string" && params.match(/^[0-9]{12}Z$/)) {
             this.setString(params);
-        }
-        else if (params.hex !== undefined) {
+        } else if (params.hex !== undefined) {
             this.setStringHex(params.hex);
-        }
-        else if (params.date !== undefined) {
+        } else if (params.date !== undefined) {
             this.setByDate(params.date);
         }
     }
@@ -1420,13 +1409,13 @@ KJUR.asn1.DERGeneralizedTime = function (params) {
         this.hTLV = null;
         this.isModified = true;
         this.date = dateObject;
-        this.s = this.formatDate(this.date, 'gen', this.withMillis);
+        this.s = this.formatDate(this.date, "gen", this.withMillis);
         this.hV = stohex(this.s);
     };
     this.getFreshValueHex = function () {
         if (this.date === undefined && this.s === undefined) {
             this.date = new Date();
-            this.s = this.formatDate(this.date, 'gen', this.withMillis);
+            this.s = this.formatDate(this.date, "gen", this.withMillis);
             this.hV = stohex(this.s);
         }
         return this.hV;
@@ -1434,14 +1423,11 @@ KJUR.asn1.DERGeneralizedTime = function (params) {
     if (params !== undefined) {
         if (params.str !== undefined) {
             this.setString(params.str);
-        }
-        else if (typeof params == "string" && params.match(/^[0-9]{14}Z$/)) {
+        } else if (typeof params == "string" && params.match(/^[0-9]{14}Z$/)) {
             this.setString(params);
-        }
-        else if (params.hex !== undefined) {
+        } else if (params.hex !== undefined) {
             this.setStringHex(params.hex);
-        }
-        else if (params.date !== undefined) {
+        } else if (params.date !== undefined) {
             this.setByDate(params.date);
         }
         if (params.millis === true) {
@@ -1469,7 +1455,7 @@ KJUR.asn1.DERSequence = function (params) {
     KJUR.asn1.DERSequence.superclass.constructor.call(this, params);
     this.hT = "30";
     this.getFreshValueHex = function () {
-        var h = '';
+        var h = "";
         for (var i = 0; i < this.asn1Array.length; i++) {
             var asn1Obj = this.asn1Array[i];
             h += asn1Obj.getEncodedHex();
@@ -1506,14 +1492,12 @@ KJUR.asn1.DERSet = function (params) {
             var asn1Obj = this.asn1Array[i];
             a.push(asn1Obj.getEncodedHex());
         }
-        if (this.sortFlag == true)
-            a.sort();
-        this.hV = a.join('');
+        if (this.sortFlag == true) a.sort();
+        this.hV = a.join("");
         return this.hV;
     };
     if (typeof params != "undefined") {
-        if (typeof params.sortflag != "undefined" &&
-            params.sortflag == false)
+        if (typeof params.sortflag != "undefined" && params.sortflag == false)
             this.sortFlag = false;
     }
 };
@@ -1546,7 +1530,7 @@ YAHOO.lang.extend(KJUR.asn1.DERSet, KJUR.asn1.DERAbstractStructured);
 KJUR.asn1.DERTaggedObject = function (params) {
     KJUR.asn1.DERTaggedObject.superclass.constructor.call(this);
     this.hT = "a0";
-    this.hV = '';
+    this.hV = "";
     this.isExplicit = true;
     this.asn1Object = null;
     /**
@@ -1566,8 +1550,7 @@ KJUR.asn1.DERTaggedObject = function (params) {
             this.hV = this.asn1Object.getEncodedHex();
             this.hTLV = null;
             this.isModified = true;
-        }
-        else {
+        } else {
             this.hV = null;
             this.hTLV = asn1Object.getEncodedHex();
             this.hTLV = this.hTLV.replace(/^../, tagNoHex);
@@ -1578,14 +1561,14 @@ KJUR.asn1.DERTaggedObject = function (params) {
         return this.hV;
     };
     if (typeof params != "undefined") {
-        if (typeof params['tag'] != "undefined") {
-            this.hT = params['tag'];
+        if (typeof params["tag"] != "undefined") {
+            this.hT = params["tag"];
         }
-        if (typeof params['explicit'] != "undefined") {
-            this.isExplicit = params['explicit'];
+        if (typeof params["explicit"] != "undefined") {
+            this.isExplicit = params["explicit"];
         }
-        if (typeof params['obj'] != "undefined") {
-            this.asn1Object = params['obj'];
+        if (typeof params["obj"] != "undefined") {
+            this.asn1Object = params["obj"];
             this.setASN1Object(this.isExplicit, this.hT, this.asn1Object);
         }
     }

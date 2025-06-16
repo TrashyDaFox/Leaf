@@ -1,1 +1,1 @@
-import './root.js'
+import "./root.js";

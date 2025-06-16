@@ -10,7 +10,7 @@ let timeArray = [];
 
 system.runInterval(() => {
     if (timeArray.length === 20) timeArray.shift();
-    timeArray.push(Math.round(1000 / (Date.now() - lastTick) * 100) / 100);
+    timeArray.push(Math.round((1000 / (Date.now() - lastTick)) * 100) / 100);
     tps = timeArray.reduce((a, b) => a + b) / timeArray.length;
     lastTick = Date.now();
 });
@@ -21,4 +21,4 @@ system.runInterval(() => {
 
 export function getTPS() {
     return tps;
-} 
+}

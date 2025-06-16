@@ -12,7 +12,7 @@ export class Home {
             owner: this.owner,
             name: this.name,
             loc: this.location,
-            sharedTo: this.sharedTo
+            sharedTo: this.sharedTo,
         };
     }
-} 
+}

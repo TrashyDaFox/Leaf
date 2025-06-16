@@ -1,18 +1,37 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends =
+    (this && this.__extends) ||
+    (function () {
+        var extendStatics = function (d, b) {
+            extendStatics =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                    function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                function (d, b) {
+                    for (var p in b)
+                        if (Object.prototype.hasOwnProperty.call(b, p))
+                            d[p] = b[p];
+                };
+            return extendStatics(d, b);
+        };
+        return function (d, b) {
+            if (typeof b !== "function" && b !== null)
+                throw new TypeError(
+                    "Class extends value " +
+                        String(b) +
+                        " is not a constructor or null"
+                );
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype =
+                b === null
+                    ? Object.create(b)
+                    : ((__.prototype = b.prototype), new __());
+        };
+    })();
 import { hex2b64 } from "./lib/jsbn/base64";
 import { Hex } from "./lib/asn1js/hex";
 import { Base64 } from "./lib/asn1js/base64";
@@ -38,9 +57,10 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
             // If this is a string...
             if (typeof key === "string") {
                 _this.parseKey(key);
-            }
-            else if (JSEncryptRSAKey.hasPrivateKeyProperty(key) ||
-                JSEncryptRSAKey.hasPublicKeyProperty(key)) {
+            } else if (
+                JSEncryptRSAKey.hasPrivateKeyProperty(key) ||
+                JSEncryptRSAKey.hasPublicKeyProperty(key)
+            ) {
                 // Set the values for the key.
                 _this.parsePropertiesFrom(key);
             }
@@ -104,8 +124,7 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
                 this.dmq1 = parseBigInt(exponent2, 16);
                 var coefficient = asn1.sub[8].getHexStringValue(); // bigint
                 this.coeff = parseBigInt(coefficient, 16);
-            }
-            else if (asn1.sub.length === 2) {
+            } else if (asn1.sub.length === 2) {
                 if (asn1.sub[0].sub) {
                     // Parse ASN.1 SubjectPublicKeyInfo type as defined by X.509
                     var bit_string = asn1.sub[1];
@@ -114,21 +133,18 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
                     this.n = parseBigInt(modulus, 16);
                     public_exponent = sequence.sub[1].getHexStringValue();
                     this.e = parseInt(public_exponent, 16);
-                }
-                else {
+                } else {
                     // Parse ASN.1 RSAPublicKey type as defined by PKCS #1
                     modulus = asn1.sub[0].getHexStringValue();
                     this.n = parseBigInt(modulus, 16);
                     public_exponent = asn1.sub[1].getHexStringValue();
                     this.e = parseInt(public_exponent, 16);
                 }
-            }
-            else {
+            } else {
                 return false;
             }
             return true;
-        }
-        catch (ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -198,7 +214,9 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
     JSEncryptRSAKey.prototype.getPublicBaseKey = function () {
         var first_sequence = new KJUR.asn1.DERSequence({
             array: [
-                new KJUR.asn1.DERObjectIdentifier({ oid: "1.2.840.113549.1.1.1" }),
+                new KJUR.asn1.DERObjectIdentifier({
+                    oid: "1.2.840.113549.1.1.1",
+                }),
                 new KJUR.asn1.DERNull(),
             ],
         });
@@ -288,14 +306,16 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
      */
     JSEncryptRSAKey.hasPrivateKeyProperty = function (obj) {
         obj = obj || {};
-        return (obj.hasOwnProperty("n") &&
+        return (
+            obj.hasOwnProperty("n") &&
             obj.hasOwnProperty("e") &&
             obj.hasOwnProperty("d") &&
             obj.hasOwnProperty("p") &&
             obj.hasOwnProperty("q") &&
             obj.hasOwnProperty("dmp1") &&
             obj.hasOwnProperty("dmq1") &&
-            obj.hasOwnProperty("coeff"));
+            obj.hasOwnProperty("coeff")
+        );
     };
     /**
      * Parse the properties of obj in the current rsa object. Obj should AT LEAST
@@ -316,5 +336,5 @@ var JSEncryptRSAKey = /** @class */ (function (_super) {
         }
     };
     return JSEncryptRSAKey;
-}(RSAKey));
+})(RSAKey);
 export { JSEncryptRSAKey };

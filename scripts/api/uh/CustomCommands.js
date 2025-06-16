@@ -8,7 +8,5 @@ class CustomCommandsICanNameThisWhateverTheHellIWantBecauseINeverExportItMeowCol
         this.db = prismarineDb.table("owo_uwu");
         // https://youtu.be/4yCRjwSzVHg
     }
-    createCustomCommand(name, description, category, author) {
-        
-    }
+    createCustomCommand(name, description, category, author) {}
 }

@@ -1,0 +1,20 @@
+{
+	"format_version": "1.20.20",
+	"minecraft:item": {
+		"description": {
+			"identifier": "leaf:admin_menu"
+		},
+		"components": {
+			"minecraft:can_destroy_in_creative": false,
+			"minecraft:allow_off_hand": false,
+			"minecraft:display_name": {
+				"value": "Admin Menu"
+			},
+			"minecraft:max_stack_size": 1,
+			"minecraft:icon": {
+				"texture": "admin_menu"
+			},
+			"minecraft:glint": false
+		}
+	}
+}

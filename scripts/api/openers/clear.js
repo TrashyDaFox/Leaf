@@ -1,31 +1,30 @@
-
 export function clear(inventory, itemToClear, amount) {
     let container = inventory.container;
     let total = 0;
-    for(let i = 0;i < container.size;i++) {
+    for (let i = 0; i < container.size; i++) {
         let item = container.getItem(i);
-        if(!item) continue;
-        if(item.typeId == itemToClear) {
-            total += item.amount
+        if (!item) continue;
+        if (item.typeId == itemToClear) {
+            total += item.amount;
         }
     }
     let cleared = 0;
-    if(total >= amount) {
-        for(let i = 0;i < container.size;i++) {
+    if (total >= amount) {
+        for (let i = 0; i < container.size; i++) {
             let item = container.getItem(i);
-            if(!item) continue;
-            if(item.amount <= 0) return;
+            if (!item) continue;
+            if (item.amount <= 0) return;
             // world.sendMessage(`${amount}, ${item.amount}`);
-            if(item.typeId == itemToClear) {
-                if(amount == item.amount) {
+            if (item.typeId == itemToClear) {
+                if (amount == item.amount) {
                     container.setItem(i);
                     amount = 0;
                     cleared = amount;
-                } else if(amount > item.amount) {
+                } else if (amount > item.amount) {
                     container.setItem(i);
                     amount -= item.amount;
                     cleared += item.amount;
-                } else if(amount < item.amount) {
+                } else if (amount < item.amount) {
                     cleared = amount;
                     item.amount -= amount;
                     amount = 0;
@@ -44,9 +43,9 @@ export function clear(inventory, itemToClear, amount) {
 export function getItemCount(inventory, itemID) {
     let container = inventory.container;
     let amount = 0;
-    for(let i = 0;i < container.size;i++) {
+    for (let i = 0; i < container.size; i++) {
         let item = container.getItem(i);
-        if(item && item.typeId == itemID) {
+        if (item && item.typeId == itemID) {
             amount += item.amount;
         }
     }

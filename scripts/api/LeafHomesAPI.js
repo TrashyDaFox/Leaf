@@ -18,11 +18,9 @@ Is this what it feels like to be gay?
 Wtf did i just find
 Lmfao
 */
-import { world } from '@minecraft/server'
-import { prismarineDb } from '../lib/prismarinedb'
+import { world } from "@minecraft/server";
+import { prismarineDb } from "../lib/prismarinedb";
 
 class Homes {
-    constructor() {
-        
-    }
+    constructor() {}
 }

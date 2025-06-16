@@ -27,8 +27,7 @@ var Int10 = /** @class */ (function () {
             t = b[i] * m + c;
             if (t < max) {
                 c = 0;
-            }
-            else {
+            } else {
                 c = 0 | (t / max);
                 t -= c * max;
             }
@@ -49,8 +48,7 @@ var Int10 = /** @class */ (function () {
             if (t < 0) {
                 t += max;
                 c = 1;
-            }
-            else {
+            } else {
                 c = 0;
             }
             b[i] = t;
@@ -80,8 +78,8 @@ var Int10 = /** @class */ (function () {
     };
     Int10.prototype.simplify = function () {
         var b = this.buf;
-        return (b.length == 1) ? b[0] : this;
+        return b.length == 1 ? b[0] : this;
     };
     return Int10;
-}());
+})();
 export { Int10 };

@@ -25,9 +25,9 @@ import { builderTabUI } from "../uiBuilder/root";
 //     }
 // })
 
-uiManager.addUI(config.uiNames.Modal.Root, "rexy is bad", player=>{
-    return uiManager.open(player, config.uiNames.UIBuilderRoot)
-    builderTabUI.open(player, 3)
+uiManager.addUI(config.uiNames.Modal.Root, "rexy is bad", (player) => {
+    return uiManager.open(player, config.uiNames.UIBuilderRoot);
+    builderTabUI.open(player, 3);
     // let form = new ActionForm();
     // form.title("Modal Forms");
     // form.button("New Modal Form", null, (player)=>{
@@ -41,4 +41,4 @@ uiManager.addUI(config.uiNames.Modal.Root, "rexy is bad", player=>{
     // form.show(player, false, (player, response)=>{
 
     // })
-})
+});

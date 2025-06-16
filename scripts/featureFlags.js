@@ -2,7 +2,9 @@ import { prismarineDb } from "./lib/prismarinedb";
 
 class FeatureFlags {
     constructor() {
-        this.db = prismarineDb.table("featureflags").keyval("asdasdasdasdasdasdasdasdasdasdasdasd") // very professional frfr
+        this.db = prismarineDb
+            .table("featureflags")
+            .keyval("asdasdasdasdasdasdasdasdasdasdasdasd"); // very professional frfr
     }
     // getFeatureFlags() {
     //     return this.db.has("a") ? this.db.get("a") : [];

@@ -6,141 +6,321 @@ import uiManager from "../uiManager";
 import { prismarineDb } from "../lib/prismarinedb";
 import configAPI from "../api/config/configAPI";
 
-uiManager.addUI(config.uiNames.Generator.Create, "Create Generator", (player, blockTypeID)=>{
-    if(!configAPI.getProperty("Generators")) return player.sendMessage("Generators are not enabled");
-    let modalForm = new ModalForm();
-    modalForm.textField(`You are making a generator for block ${blockTypeID}\n\nGenerator Name`, "Gold Generator", undefined)
-    modalForm.textField("Respawn Time", "Respawn Time (in seconds)", undefined)
-    modalForm.textField("Scriptevent to give player the item", "gold_gen", undefined)
-    modalForm.show(player, false, (player, response)=>{
-        if(response.canceled) return;
-        if(!response || response.canceled || !response.formValues || !response.formValues[0] || !response.formValues[1] || !/^\d+$/.test(response.formValues[1]) || !response.formValues[2]) return uiManager.open(player, config.uiNames.Generator.Create, blockTypeID);
-        generator.addGenerator(response.formValues[0], blockTypeID, parseInt(response.formValues[1]), response.formValues[2]);
-    })
-})
-uiManager.addUI(config.uiNames.Generator.EditRoot, "Generator Edit Root", (player)=>{
-    if(!configAPI.getProperty("Generators")) return player.sendMessage("Generators are not enabled");
-    let form = new ActionForm();
-    form.title("Generators");
-    for(const generatorData of generator.getGenerators()) {
-        form.button(`§a${generatorData.data.name}\n§r§7${generatorData.data.scriptevent ? generatorData.data.scriptevent : "N/A"}`, null, (player)=>{
-            uiManager.open(player, config.uiNames.Generator.EditGenerator, generatorData.id)
-        })
+uiManager.addUI(
+    config.uiNames.Generator.Create,
+    "Create Generator",
+    (player, blockTypeID) => {
+        if (!configAPI.getProperty("Generators"))
+            return player.sendMessage("Generators are not enabled");
+        let modalForm = new ModalForm();
+        modalForm.textField(
+            `You are making a generator for block ${blockTypeID}\n\nGenerator Name`,
+            "Gold Generator",
+            undefined
+        );
+        modalForm.textField(
+            "Respawn Time",
+            "Respawn Time (in seconds)",
+            undefined
+        );
+        modalForm.textField(
+            "Scriptevent to give player the item",
+            "gold_gen",
+            undefined
+        );
+        modalForm.show(player, false, (player, response) => {
+            if (response.canceled) return;
+            if (
+                !response ||
+                response.canceled ||
+                !response.formValues ||
+                !response.formValues[0] ||
+                !response.formValues[1] ||
+                !/^\d+$/.test(response.formValues[1]) ||
+                !response.formValues[2]
+            )
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.Create,
+                    blockTypeID
+                );
+            generator.addGenerator(
+                response.formValues[0],
+                blockTypeID,
+                parseInt(response.formValues[1]),
+                response.formValues[2]
+            );
+        });
     }
-    form.show(player, false, ()=>{})
-})
-let effects = ["Default", "Magic", "Nature", "Lava"]
-uiManager.addUI(config.uiNames.Generator.EditGenerator, "a", (player, id)=>{
-    if(!configAPI.getProperty("Generators")) return player.sendMessage("Generators are not enabled");
+);
+uiManager.addUI(
+    config.uiNames.Generator.EditRoot,
+    "Generator Edit Root",
+    (player) => {
+        if (!configAPI.getProperty("Generators"))
+            return player.sendMessage("Generators are not enabled");
+        let form = new ActionForm();
+        form.title("Generators");
+        for (const generatorData of generator.getGenerators()) {
+            form.button(
+                `§a${generatorData.data.name}\n§r§7${
+                    generatorData.data.scriptevent
+                        ? generatorData.data.scriptevent
+                        : "N/A"
+                }`,
+                null,
+                (player) => {
+                    uiManager.open(
+                        player,
+                        config.uiNames.Generator.EditGenerator,
+                        generatorData.id
+                    );
+                }
+            );
+        }
+        form.show(player, false, () => {});
+    }
+);
+let effects = ["Default", "Magic", "Nature", "Lava"];
+uiManager.addUI(config.uiNames.Generator.EditGenerator, "a", (player, id) => {
+    if (!configAPI.getProperty("Generators"))
+        return player.sendMessage("Generators are not enabled");
     let gen = generator.db.getByID(id);
     let form = new ActionForm();
     form.title(gen.data.name);
-    form.button("Edit Upgrades", null, (player)=>{
-        uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id);
-    })
-    form.button(`Edit Effect`, null, (player)=>{
+    form.button("Edit Upgrades", null, (player) => {
+        uiManager.open(
+            player,
+            config.uiNames.Generator.EditGeneratorUpgrades,
+            id
+        );
+    });
+    form.button(`Edit Effect`, null, (player) => {
         let modal = new ModalForm();
-        modal.dropdown("Effect", effects.map(_=>{return {option: _,callback(){}}}), gen.data.effect ? gen.data.effect : 0)
-        modal.show(player, false, (player, response)=>{
-            if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGenerator)
+        modal.dropdown(
+            "Effect",
+            effects.map((_) => {
+                return { option: _, callback() {} };
+            }),
+            gen.data.effect ? gen.data.effect : 0
+        );
+        modal.show(player, false, (player, response) => {
+            if (response.canceled)
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.EditGenerator
+                );
             gen.data.effect = response.formValues[0];
-            generator.db.overwriteDataByID(gen.id, gen.data)
-            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
-        })
-    })
-    form.button(`Edit Base Cooldown\n${gen.data.respawnTime}`, null, (player)=>{
-        let modal = new ModalForm();
-        modal.textField("Respawn Time", `${gen.data.respawnTime}`, gen.data.respawnTime.toString())
-        modal.show(player, false, (player, response)=>{
-            if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
-            gen.data.respawnTime = isNaN(parseInt(response.formValues[0])) ? 0 : parseInt(response.formValues[0])
-            generator.db.overwriteDataByID(gen.id, gen.data)
-            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
-        })
-    })
-    form.button(`Delete`, null, (player)=>{
-        uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this generator?", ()=>{
-            generator.db.deleteDocumentByID(gen.id)
-            return uiManager.open(player, config.uiNames.Generator.EditRoot)
-        }, ()=>{
-            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id)
-
-        })
-    })
-    form.show(player, false, ()=>{})
-})
-uiManager.addUI(config.uiNames.Generator.EditGeneratorUpgrades, "a", (player, id)=>{
-    if(!configAPI.getProperty("Generators")) return player.sendMessage("Generators are not enabled");
-    let gen = generator.db.getByID(id);
-    let form = new ActionForm();
-    form.button("New Upgrade", null, (player)=>{
-        let modal = new ModalForm();
-        modal.textField("Respawn Time (in seconds)", "10");
-        modal.textField("Price", "120");
-        let vals1 = prismarineDb.economy.getCurrencies().map(_=>`${_.symbol} ${_.displayName}`);
-        let vals2 = prismarineDb.economy.getCurrencies().map(_=>_.scoreboard);
-        modal.dropdown(`Currency`, vals1.map(_=>{
-            return {
-                option: _,
-                callback() {}
+            generator.db.overwriteDataByID(gen.id, gen.data);
+            return uiManager.open(
+                player,
+                config.uiNames.Generator.EditGenerator,
+                id
+            );
+        });
+    });
+    form.button(
+        `Edit Base Cooldown\n${gen.data.respawnTime}`,
+        null,
+        (player) => {
+            let modal = new ModalForm();
+            modal.textField(
+                "Respawn Time",
+                `${gen.data.respawnTime}`,
+                gen.data.respawnTime.toString()
+            );
+            modal.show(player, false, (player, response) => {
+                if (response.canceled)
+                    return uiManager.open(
+                        player,
+                        config.uiNames.Generator.EditGeneratorUpgrades,
+                        id
+                    );
+                gen.data.respawnTime = isNaN(parseInt(response.formValues[0]))
+                    ? 0
+                    : parseInt(response.formValues[0]);
+                generator.db.overwriteDataByID(gen.id, gen.data);
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.EditGenerator,
+                    id
+                );
+            });
+        }
+    );
+    form.button(`Delete`, null, (player) => {
+        uiManager.open(
+            player,
+            config.uiNames.Basic.Confirmation,
+            "Are you sure you want to delete this generator?",
+            () => {
+                generator.db.deleteDocumentByID(gen.id);
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.EditRoot
+                );
+            },
+            () => {
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.EditGenerator,
+                    id
+                );
             }
-        }));
-        modal.show(player, false, (player, response)=>{
-            if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id);
-            if(!response.formValues[0] || !response.formValues[1] || !/^\d+$/.test(response.formValues[0]) || !/^\d+$/.test(response.formValues[1])) return;
-            generator.addGeneratorUpgrade(id, parseInt(response.formValues[0]), vals2[response.formValues[2]], parseInt(response.formValues[1]));
-            return uiManager.open(player, config.uiNames.Generator.EditGenerator, id);
-        })
-    })
-    let i = 1;
-    for(const upgrade of gen.data.upgrades) {
-        i++;
-        let currency = prismarineDb.economy.getCurrency(upgrade.currency) ? prismarineDb.economy.getCurrency(upgrade.currency) : prismarineDb.economy.getCurrency("default");
-        form.button(`Level ${i} (${upgrade.respawnTime}s)\n${currency.symbol} ${upgrade.price}`, null, (player)=>{
-            let form2 = new ActionForm();
-            form2.button(`Back`, null, (player)=>{
-                return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
-
-            })
-            form2.button(`Edit Cooldown`, null, (player)=>{
-                let modal = new ModalForm();
-                modal.textField("Respawn Time", `${upgrade.respawnTime}`, upgrade.respawnTime.toString())
-                modal.show(player, false, (player, response)=>{
-                    if(response.canceled) return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
-                    upgrade.respawnTime = isNaN(parseInt(response.formValues[0])) ? 0 : parseInt(response.formValues[0])
-                    generator.db.overwriteDataByID(gen.id, gen.data)
-                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
+        );
+    });
+    form.show(player, false, () => {});
+});
+uiManager.addUI(
+    config.uiNames.Generator.EditGeneratorUpgrades,
+    "a",
+    (player, id) => {
+        if (!configAPI.getProperty("Generators"))
+            return player.sendMessage("Generators are not enabled");
+        let gen = generator.db.getByID(id);
+        let form = new ActionForm();
+        form.button("New Upgrade", null, (player) => {
+            let modal = new ModalForm();
+            modal.textField("Respawn Time (in seconds)", "10");
+            modal.textField("Price", "120");
+            let vals1 = prismarineDb.economy
+                .getCurrencies()
+                .map((_) => `${_.symbol} ${_.displayName}`);
+            let vals2 = prismarineDb.economy
+                .getCurrencies()
+                .map((_) => _.scoreboard);
+            modal.dropdown(
+                `Currency`,
+                vals1.map((_) => {
+                    return {
+                        option: _,
+                        callback() {},
+                    };
                 })
-            })
-            // form2.button()
-            form2.button("Delete", null, (player)=>{
-                uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this upgrade?", ()=>{
-                    gen.data.upgrades.splice(i - 2, 1);
-                    generator.db.overwriteDataByID(gen.id, gen.data);
-                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
-                }, ()=>{
-
-                    return uiManager.open(player, config.uiNames.Generator.EditGeneratorUpgrades, id)
-                })
-            })
-            form2.show(player, false, (player, response)=>{
-
-            })
-        })
+            );
+            modal.show(player, false, (player, response) => {
+                if (response.canceled)
+                    return uiManager.open(
+                        player,
+                        config.uiNames.Generator.EditGeneratorUpgrades,
+                        id
+                    );
+                if (
+                    !response.formValues[0] ||
+                    !response.formValues[1] ||
+                    !/^\d+$/.test(response.formValues[0]) ||
+                    !/^\d+$/.test(response.formValues[1])
+                )
+                    return;
+                generator.addGeneratorUpgrade(
+                    id,
+                    parseInt(response.formValues[0]),
+                    vals2[response.formValues[2]],
+                    parseInt(response.formValues[1])
+                );
+                return uiManager.open(
+                    player,
+                    config.uiNames.Generator.EditGenerator,
+                    id
+                );
+            });
+        });
+        let i = 1;
+        for (const upgrade of gen.data.upgrades) {
+            i++;
+            let currency = prismarineDb.economy.getCurrency(upgrade.currency)
+                ? prismarineDb.economy.getCurrency(upgrade.currency)
+                : prismarineDb.economy.getCurrency("default");
+            form.button(
+                `Level ${i} (${upgrade.respawnTime}s)\n${currency.symbol} ${upgrade.price}`,
+                null,
+                (player) => {
+                    let form2 = new ActionForm();
+                    form2.button(`Back`, null, (player) => {
+                        return uiManager.open(
+                            player,
+                            config.uiNames.Generator.EditGeneratorUpgrades,
+                            id
+                        );
+                    });
+                    form2.button(`Edit Cooldown`, null, (player) => {
+                        let modal = new ModalForm();
+                        modal.textField(
+                            "Respawn Time",
+                            `${upgrade.respawnTime}`,
+                            upgrade.respawnTime.toString()
+                        );
+                        modal.show(player, false, (player, response) => {
+                            if (response.canceled)
+                                return uiManager.open(
+                                    player,
+                                    config.uiNames.Generator
+                                        .EditGeneratorUpgrades,
+                                    id
+                                );
+                            upgrade.respawnTime = isNaN(
+                                parseInt(response.formValues[0])
+                            )
+                                ? 0
+                                : parseInt(response.formValues[0]);
+                            generator.db.overwriteDataByID(gen.id, gen.data);
+                            return uiManager.open(
+                                player,
+                                config.uiNames.Generator.EditGeneratorUpgrades,
+                                id
+                            );
+                        });
+                    });
+                    // form2.button()
+                    form2.button("Delete", null, (player) => {
+                        uiManager.open(
+                            player,
+                            config.uiNames.Basic.Confirmation,
+                            "Are you sure you want to delete this upgrade?",
+                            () => {
+                                gen.data.upgrades.splice(i - 2, 1);
+                                generator.db.overwriteDataByID(
+                                    gen.id,
+                                    gen.data
+                                );
+                                return uiManager.open(
+                                    player,
+                                    config.uiNames.Generator
+                                        .EditGeneratorUpgrades,
+                                    id
+                                );
+                            },
+                            () => {
+                                return uiManager.open(
+                                    player,
+                                    config.uiNames.Generator
+                                        .EditGeneratorUpgrades,
+                                    id
+                                );
+                            }
+                        );
+                    });
+                    form2.show(player, false, (player, response) => {});
+                }
+            );
+        }
+        form.show(player, false, () => {});
     }
-    form.show(player, false, ()=>{});
-})
+);
 let blockMap = new Map();
-system.runInterval(()=>{
+system.runInterval(() => {
     blockMap.clear();
-},20);
-world.beforeEvents.playerInteractWithBlock.subscribe(e=>{
-    if(blockMap.has(e.player.id)) return;
+}, 20);
+world.beforeEvents.playerInteractWithBlock.subscribe((e) => {
+    if (blockMap.has(e.player.id)) return;
     blockMap.set(e.player.id, true);
-    if(e.itemStack && e.itemStack.typeId == "leaf:generator_editor") {
-        system.run(()=>{
-            uiManager.open(e.player, config.uiNames.Generator.Create, e.block.typeId);
-
-        })
+    if (e.itemStack && e.itemStack.typeId == "leaf:generator_editor") {
+        system.run(() => {
+            uiManager.open(
+                e.player,
+                config.uiNames.Generator.Create,
+                e.block.typeId
+            );
+        });
     }
-})
+});

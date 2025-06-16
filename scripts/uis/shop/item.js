@@ -3,42 +3,132 @@ import shopAPI from "../../api/shopAPI";
 import config from "../../versionData";
 import { ActionForm, ModalForm } from "../../lib/form_func";
 import uiManager from "../../uiManager";
-import { NUT_UI_HEADER_BUTTON, NUT_UI_TAG } from "../preset_browser/nutUIConsts";
+import {
+    NUT_UI_HEADER_BUTTON,
+    NUT_UI_TAG,
+} from "../preset_browser/nutUIConsts";
 
-uiManager.addUI(config.uiNames.Shop.ItemAdmin, "Item Admin", (player, shopID, categoryID, itemIndex)=>{
-    let shop = shopAPI.shops.getByID(shopID);
-    let category = shop.data.categories.find(_=>_.id == categoryID);
-    if(category.items[itemIndex] && category.items[itemIndex].type == "ITEMDB_ITEM") {
-        let form = new ActionForm();
-        form.title(`${NUT_UI_TAG}§rEdit Item`)
-        form.button(`${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`, `textures/azalea_icons/2`, (player)=>{
-            uiManager.open(player, config.uiNames.Shop.CategoryAdmin, shopID, categoryID)
-        })
-        form.button(`§eSet Display\n§7Set the display`, icons.resolve("leaf/image-770"), (player)=>{
-            let modal = new ModalForm();
-            modal.textField("Display Name", "Display name of the item", category.items[itemIndex].displayName ? category.items[itemIndex].displayName : undefined);
-            modal.show(player, false, (player, response)=>{
-                if(response.canceled) return uiManager.open(player, config.uiNames.Shop.ItemAdmin, shopID, categoryID, itemIndex);
-                shopAPI.setItemDisplayName(shopID, categoryID, itemIndex, response.formValues[0]);
-                return uiManager.open(player, config.uiNames.Shop.ItemAdmin, shopID, categoryID, itemIndex);
-            })
-        })
-        form.button(`§cSet Icon\n§7Set the icon`, category.items[itemIndex].icon ? icons.resolve(category.items[itemIndex].icon) : icons.resolve("leaf/image-789"), (player)=>{
-            uiManager.open(player, config.uiNames.IconViewer, 0, (player, iconID)=>{
-                if(iconID != null) {
-                    shopAPI.setItemIcon(shopID, categoryID, itemIndex, iconID);
+uiManager.addUI(
+    config.uiNames.Shop.ItemAdmin,
+    "Item Admin",
+    (player, shopID, categoryID, itemIndex) => {
+        let shop = shopAPI.shops.getByID(shopID);
+        let category = shop.data.categories.find((_) => _.id == categoryID);
+        if (
+            category.items[itemIndex] &&
+            category.items[itemIndex].type == "ITEMDB_ITEM"
+        ) {
+            let form = new ActionForm();
+            form.title(`${NUT_UI_TAG}§rEdit Item`);
+            form.button(
+                `${NUT_UI_HEADER_BUTTON}§r§cBack\n§7Go back`,
+                `textures/azalea_icons/2`,
+                (player) => {
+                    uiManager.open(
+                        player,
+                        config.uiNames.Shop.CategoryAdmin,
+                        shopID,
+                        categoryID
+                    );
                 }
-                return uiManager.open(player, config.uiNames.Shop.ItemAdmin, shopID, categoryID, itemIndex);
-            })
-        })
-        form.button(`§cDelete item\n§7Delete the item`, `textures/blocks/barrier`, (player)=>{
-            uiManager.open(player, config.uiNames.Basic.Confirmation, "Are you sure you want to delete this item?", ()=>{
-                shopAPI.deleteItem(shopID, categoryID, itemIndex);
-                return uiManager.open(player, config.uiNames.Shop.CategoryAdmin, shopID, categoryID);
-            }, ()=>{
-                return uiManager.open(player, config.uiNames.Shop.ItemAdmin, shopID, categoryID, itemIndex);
-            })
-        })
-        form.show(player, false, (player, response)=>{})
+            );
+            form.button(
+                `§eSet Display\n§7Set the display`,
+                icons.resolve("leaf/image-770"),
+                (player) => {
+                    let modal = new ModalForm();
+                    modal.textField(
+                        "Display Name",
+                        "Display name of the item",
+                        category.items[itemIndex].displayName
+                            ? category.items[itemIndex].displayName
+                            : undefined
+                    );
+                    modal.show(player, false, (player, response) => {
+                        if (response.canceled)
+                            return uiManager.open(
+                                player,
+                                config.uiNames.Shop.ItemAdmin,
+                                shopID,
+                                categoryID,
+                                itemIndex
+                            );
+                        shopAPI.setItemDisplayName(
+                            shopID,
+                            categoryID,
+                            itemIndex,
+                            response.formValues[0]
+                        );
+                        return uiManager.open(
+                            player,
+                            config.uiNames.Shop.ItemAdmin,
+                            shopID,
+                            categoryID,
+                            itemIndex
+                        );
+                    });
+                }
+            );
+            form.button(
+                `§cSet Icon\n§7Set the icon`,
+                category.items[itemIndex].icon
+                    ? icons.resolve(category.items[itemIndex].icon)
+                    : icons.resolve("leaf/image-789"),
+                (player) => {
+                    uiManager.open(
+                        player,
+                        config.uiNames.IconViewer,
+                        0,
+                        (player, iconID) => {
+                            if (iconID != null) {
+                                shopAPI.setItemIcon(
+                                    shopID,
+                                    categoryID,
+                                    itemIndex,
+                                    iconID
+                                );
+                            }
+                            return uiManager.open(
+                                player,
+                                config.uiNames.Shop.ItemAdmin,
+                                shopID,
+                                categoryID,
+                                itemIndex
+                            );
+                        }
+                    );
+                }
+            );
+            form.button(
+                `§cDelete item\n§7Delete the item`,
+                `textures/blocks/barrier`,
+                (player) => {
+                    uiManager.open(
+                        player,
+                        config.uiNames.Basic.Confirmation,
+                        "Are you sure you want to delete this item?",
+                        () => {
+                            shopAPI.deleteItem(shopID, categoryID, itemIndex);
+                            return uiManager.open(
+                                player,
+                                config.uiNames.Shop.CategoryAdmin,
+                                shopID,
+                                categoryID
+                            );
+                        },
+                        () => {
+                            return uiManager.open(
+                                player,
+                                config.uiNames.Shop.ItemAdmin,
+                                shopID,
+                                categoryID,
+                                itemIndex
+                            );
+                        }
+                    );
+                }
+            );
+            form.show(player, false, (player, response) => {});
+        }
     }
-})
+);

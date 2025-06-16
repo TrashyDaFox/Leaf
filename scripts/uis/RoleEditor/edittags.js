@@ -13,21 +13,22 @@ import uiManager from "../../uiManager";
 // configAPI.registerProperty("ExperimentalChatRankFormatting", configAPI.Types.Boolean, false);
 // configAPI.registerProperty("Chatranks", configAPI.Types.Boolean, true);
 // configAPI.registerProperty("DevMode", configAPI.Types.Boolean, false);
-uiManager.addUI(config.uiNames.RoleEditor.EditTags, "Edit Tags", (player)=>{
+uiManager.addUI(config.uiNames.RoleEditor.EditTags, "Edit Tags", (player) => {
     let modalForm = new ModalForm();
     modalForm.title("Edit tags");
-    modalForm.toggle("example")
-    modalForm.toggle("example")
-    modalForm.toggle(`§aexample ${emojis.potion48}`)
-    modalForm.toggle("example")
-    modalForm.toggle("example")
-    modalForm.toggle(`§aexample ${emojis.potion48}`)
-    modalForm.toggle(`§aexample ${emojis.potion48}`)
-    modalForm.toggle(`example`)
-    modalForm.toggle(`§bexample ${emojis.potion49}`)
-    modalForm.show(player, false, (player, response)=>{
-        if(response.canceled) return uiManager.open(player, config.uiNames.RoleEditor.Edit);
-        
+    modalForm.toggle("example");
+    modalForm.toggle("example");
+    modalForm.toggle(`§aexample ${emojis.potion48}`);
+    modalForm.toggle("example");
+    modalForm.toggle("example");
+    modalForm.toggle(`§aexample ${emojis.potion48}`);
+    modalForm.toggle(`§aexample ${emojis.potion48}`);
+    modalForm.toggle(`example`);
+    modalForm.toggle(`§bexample ${emojis.potion49}`);
+    modalForm.show(player, false, (player, response) => {
+        if (response.canceled)
+            return uiManager.open(player, config.uiNames.RoleEditor.Edit);
+
         return uiManager.open(player, config.uiNames.RoleEditor.Edit);
-    })
-})
+    });
+});

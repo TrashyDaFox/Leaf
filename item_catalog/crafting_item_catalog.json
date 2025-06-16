@@ -14,7 +14,25 @@
                             "leaf:config_ui",
                             "leaf:entity_editor",
                             "leaf:block_editor",
-                            "leaf:customizer"
+                            "leaf:customizer",
+                            "leaf:admin_menu",
+                            "leaf:chunk_border"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "leaf:wand1",
+                            "name": "leaf:teleport_wands"
+                        },
+                        "items": [
+                            "leaf:wand1",
+                            "leaf:wand2",
+                            "leaf:wand3",
+                            "leaf:wand4",
+                            "leaf:wand5",
+                            "leaf:wand6",
+                            "leaf:wand7",
+                            "leaf:wand8"
                         ]
                     }
                 ]
