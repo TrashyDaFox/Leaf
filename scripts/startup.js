@@ -643,6 +643,35 @@ system.beforeEvents.startup.subscribe(async (init) => {
 
     init.customCommandRegistry.registerCommand(
         {
+            name: "leaf:sel2entity",
+            description: "Internal command to translate entity selectors to entities array",
+            permissionLevel: CommandPermissionLevel.GameDirectors,
+            mandatoryParameters: [
+                {
+                    type: CustomCommandParamType.EntitySelector,
+                    name: "entities"
+                },
+                {
+                    type: CustomCommandParamType.String,
+                    name: "id",
+                },
+            ],
+        },
+        (origin, entities, id) => {
+            if(origin.sourceType != mc.CustomCommandSource.Server) return {
+                status: CustomCommandStatus.Failure,
+                message: "no"
+            };
+            uiBuilder.default.selector2entities(entities, id)
+            return {
+                status: CustomCommandStatus.Success,
+                message: "Triggered!",
+            };
+        }
+    );
+
+    init.customCommandRegistry.registerCommand(
+        {
             name: "leaf:save_inv_player",
             description: "Save players inventory only for them",
             permissionLevel: CommandPermissionLevel.GameDirectors,

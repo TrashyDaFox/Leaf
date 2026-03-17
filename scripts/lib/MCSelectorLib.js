@@ -12,6 +12,7 @@ export function splitSelector(sel) {
         return [sel];
     }
 }
+
 export function entitySel(str, player) {
     let entities = [];
     if(!str.startsWith('@')) {

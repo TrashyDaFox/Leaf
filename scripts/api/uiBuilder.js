@@ -466,6 +466,9 @@ class UIBuilder extends Router {
             uniqueID
         })
     }
+    selector2entities(entities, id) {
+        
+    }
     createMine(uniqueID, refillTimeMS, zoneID, blockTypeIDs, chances) {
         let mine = this.db.findFirst({type: minesAPI.CUSTOMIZER_TYPE, uniqueID})
         if(mine) return mine.id;
