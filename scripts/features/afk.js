@@ -24,7 +24,7 @@ uiManager.addUI(versionData.uiNames.Afk, "AFK", (player)=>{
     let modalForm = new ModalForm();
     modalForm.title("AFK System Config")
     modalForm.toggle("AFK System", configAPI.getProperty("AFKSystem"))
-    modalForm.slider("AFK Timeout", 30, 240, 15, configAPI.getProperty("AFKTimeout"), ()=>{})
+    modalForm.slider("AFK Timeout", 30, 1000, 15, configAPI.getProperty("AFKTimeout"), ()=>{})
     let warps = uiBuilder.db.findDocuments({type: 12}).map(_=>{
         return _.data.name;
     })
@@ -51,7 +51,7 @@ uiManager.addUI(versionData.uiNames.Afk, "AFK", (player)=>{
         return uiManager.open(player, versionData.uiNames.Config.Misc)
     })
 })
-configAPI.registerProperty("AFKSystem", configAPI.Types.Boolean, true);
+configAPI.registerProperty("AFKSystem", configAPI.Types.Boolean, false);
 configAPI.registerProperty("AFKKick", configAPI.Types.Boolean, false);
 configAPI.registerProperty("AFKTimeout", configAPI.Types.Number, 90);
 configAPI.registerProperty("AFKWarp", configAPI.Types.String, "");

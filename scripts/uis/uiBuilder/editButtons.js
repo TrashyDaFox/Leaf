@@ -8,6 +8,7 @@ import { world } from "@minecraft/server";
 import {
     NUT_UI_ALT,
     NUT_UI_HEADER_BUTTON,
+    NUT_UI_MODAL,
     NUT_UI_PAPERDOLL,
     NUT_UI_TAG,
     NUT_UI_THEMED,
@@ -24,7 +25,7 @@ uiManager.addUI(
         let form = new ActionForm();
         let ui = uiBuilder.db.getByID(id);
         form.title(ui.data.name);
-        form.show(player, false, (player, response)=>{
+        form.show(player, false, (player, response) => {
 
         })
     }
@@ -57,8 +58,8 @@ uiManager.addUI(
                 newView < 0
                     ? 0
                     : newView >= views.length
-                    ? views.length - 1
-                    : newView;
+                        ? views.length - 1
+                        : newView;
             viewFilter = views[viewIndex].id;
         }
         let actionForm = new ActionForm();
@@ -80,23 +81,22 @@ uiManager.addUI(
         if (form.data.layout == 4 && nutUIPreview)
             pre = `§f§0§0${themString}§r`;
         let titleLabels = [];
-        if(form.data.layout == 4 && nutUIPreview) {
+        if (form.data.layout == 4 && nutUIPreview) {
             titleLabels.push(emojis.green_dot)
         }
-        if(form.data.buttons.find(_=>{
-            if(_.meta) return true;
-            if(_.template && _.template.on) return true;
-            if(_.comment) return true;
-            if(_.requiredTag) return true;
+        if (form.data.buttons.find(_ => {
+            if (_.meta) return true;
+            if (_.template && _.template.on) return true;
+            if (_.comment) return true;
+            if (_.requiredTag) return true;
             return false;
         }) && !player.hasTag("DisableEditorLabels")) {
             titleLabels.push(emojis.oak_sign)
         }
         actionForm.title(
-            `${
-                form.data.layout == 4 && form.data.paperdoll
-                    ? NUT_UI_PAPERDOLL
-                    : ``
+            `${form.data.layout == 4 && form.data.paperdoll
+                ? NUT_UI_PAPERDOLL
+                : ``
             }${pre}${titleLabels ? `${titleLabels.join('')} ${formatStr("<dra> ")}` : ``}§r${form.data.name}`
         );
         let multiselectMode =
@@ -104,10 +104,9 @@ uiManager.addUI(
         // nutUIText = `${button.disabled ? "§e(DISABLED) " : ""}${button.nutUIAlt ? "§a§l§t§b§t§n" : ""}${button.nutUIHalf == 2 ? "§p§1§2" : button.nutUIHalf == 1 ? "§p§2§2" : button.nutUIHalf == 3 ? "§p§2§2§p§2§1" : button.nutUIHalf == 4 ? "§p§2§1§p§1§2" : button.nutUIHalf == 5 ? "§p§1§1§p§1§2" : ""}${button.nutUIHeaderButton ? "§p§4§0" : ""}${button.nutUINoSizeKey ? "§p§0§0" : ""}`;
 
         actionForm.button(
-            `${
-                multiselectMode
-                    ? ""
-                    : form.data.layout == 4 && nutUIPreview
+            `${multiselectMode
+                ? ""
+                : form.data.layout == 4 && nutUIPreview
                     ? "§p§0§0§p§2§2§r"
                     : ""
             }§cBack\n§7Exit this menu`,
@@ -121,16 +120,14 @@ uiManager.addUI(
         );
         if (multiselectMode && multiselect.length) {
             actionForm.button(
-                `§cDelete ${multiselect.length} button${
-                    multiselect.length > 1 ? "s" : ""
+                `§cDelete ${multiselect.length} button${multiselect.length > 1 ? "s" : ""
                 }\n§7Deletes all selected buttons`,
                 `textures/azalea_icons/Delete`,
                 (player) => {
                     uiManager.open(
                         player,
                         config.uiNames.Basic.Confirmation,
-                        `Are you sure you want to delete ${
-                            multiselect.length
+                        `Are you sure you want to delete ${multiselect.length
                         } button${multiselect.length > 1 ? "s" : ""}?`,
                         () => {
                             form.data.buttons = form.data.buttons.filter(
@@ -157,10 +154,8 @@ uiManager.addUI(
         if (!multiselectMode) {
             if (form.data.layout == 4 || form.data.layout == 1) {
                 actionForm.button(
-                    `${
-                        form.data.layout == 4 && nutUIPreview ? "§p§1§2§r" : ""
-                    }§dPreview Mode\n§7Current: ${
-                        nutUIPreview ? "ON" : "OFF"
+                    `${form.data.layout == 4 && nutUIPreview ? "§p§1§2§r" : ""
+                    }§dPreview Mode\n§7Current: ${nutUIPreview ? "ON" : "OFF"
                     }`,
                     nutUIPreview
                         ? `textures/azalea_icons/other/play`
@@ -328,7 +323,7 @@ uiManager.addUI(
                                         "Label Text",
                                         "Enter label text",
                                         "",
-                                        () => {},
+                                        () => { },
                                         "Meow meow meow! (test)"
                                     );
                                     modal.show(
@@ -397,7 +392,7 @@ uiManager.addUI(
                                 }
                             );
                         }
-                        addMenu.button(`§vAdd State\n§7Add player preferences to this UI!`, `textures/azalea_icons/Save`, (player)=>{
+                        addMenu.button(`§vAdd State\n§7Add player preferences to this UI!`, `textures/azalea_icons/Save`, (player) => {
                             player.error("Coming Soon")
                             uiManager.open(player, config.uiNames.UIBuilderEditButtons, id, multiselect, selectingButton, response)
                         })
@@ -412,17 +407,17 @@ uiManager.addUI(
                                 );
                             }
                         );
-                        if(form.data.pag) {
-                            if(!form.data.buttons.find(_=>_.type == 'pagstart')) {
-                                addMenu.button(`§2Pagination Start\n§7Start pagination here`, `textures/azalea_icons/other/play`, (player)=>{
-                                    form.data.buttons.push({id: Date.now(), type:"pagstart"})
+                        if (form.data.pag) {
+                            if (!form.data.buttons.find(_ => _.type == 'pagstart')) {
+                                addMenu.button(`§2Pagination Start\n§7Start pagination here`, `textures/azalea_icons/other/play`, (player) => {
+                                    form.data.buttons.push({ id: Date.now(), type: "pagstart" })
                                     uiBuilder.db.overwriteDataByID(form.id, form.data)
                                     uiManager.open(player, versionData.uiNames.UIBuilderEditButtons, id, multiselect, selectingButton, response)
                                 })
                             }
-                            if(!form.data.buttons.find(_=>_.type == 'pagend')) {
-                                addMenu.button(`§nPagination End\n§7End pagination here`, `textures/azalea_icons/other/stop`, (player)=>{
-                                    form.data.buttons.push({id: Date.now(), type:"pagend"})
+                            if (!form.data.buttons.find(_ => _.type == 'pagend')) {
+                                addMenu.button(`§nPagination End\n§7End pagination here`, `textures/azalea_icons/other/stop`, (player) => {
+                                    form.data.buttons.push({ id: Date.now(), type: "pagend" })
                                     uiBuilder.db.overwriteDataByID(form.id, form.data)
                                     uiManager.open(player, versionData.uiNames.UIBuilderEditButtons, id, multiselect, selectingButton, response)
                                 })
@@ -480,7 +475,7 @@ uiManager.addUI(
                             );
                         }
 
-                        addMenu.show(player, false, () => {});
+                        addMenu.show(player, false, () => { });
                     }
                 );
             }
@@ -488,8 +483,7 @@ uiManager.addUI(
 
         if (!selectingButton) {
             actionForm.button(
-                `§aMultiselect ${
-                    multiselectMode ? "OFF" : "ON"
+                `§aMultiselect ${multiselectMode ? "OFF" : "ON"
                 }\n§7Multiselect buttons`,
                 `textures/azalea_icons/other/checkmark`,
                 (player) => {
@@ -512,8 +506,8 @@ uiManager.addUI(
                 view < 0
                     ? 0
                     : view >= viewList.length
-                    ? viewList.length - 1
-                    : view;
+                        ? viewList.length - 1
+                        : view;
             actionForm.button(
                 `§cSet View Filter\n§7Current: ${viewList[viewIndex]}`,
                 null,
@@ -533,15 +527,15 @@ uiManager.addUI(
                 }
             );
         }
-        if(player.hasTag("DisableEditorLabels") || form.data.buttons.find(_=>{
-            if(_.meta) return true;
-            if(_.template && _.template.on) return true;
-            if(_.comment) return true;
-            if(_.requiredTag) return true;
+        if (player.hasTag("DisableEditorLabels") || form.data.buttons.find(_ => {
+            if (_.meta) return true;
+            if (_.template && _.template.on) return true;
+            if (_.comment) return true;
+            if (_.requiredTag) return true;
             return false;
         })) {
-            actionForm.button(`${form.data.layout == 4 && nutUIPreview ? `${NUT_UI_HEADER_BUTTON}§r` : ``}§dEditor Labels\n§7Current: ${player.hasTag("DisableEditorLabels") ? `OFF` : `ON`}`, `textures/azalea_icons/11`, (player)=>{
-                if(player.hasTag("DisableEditorLabels")) player.removeTag("DisableEditorLabels")
+            actionForm.button(`${form.data.layout == 4 && nutUIPreview ? `${NUT_UI_HEADER_BUTTON}§r` : ``}§dEditor Labels\n§7Current: ${player.hasTag("DisableEditorLabels") ? `OFF` : `ON`}`, `textures/azalea_icons/11`, (player) => {
+                if (player.hasTag("DisableEditorLabels")) player.removeTag("DisableEditorLabels")
                 else player.addTag("DisableEditorLabels")
                 uiManager.open(
                     player,
@@ -559,7 +553,7 @@ uiManager.addUI(
         // Add Button section with submenu
 
         if (form.data.layout == 0 || form.data.layout == 4) {
-            if(form.data.body && !player.hasTag("DisableEditorLabels")) {
+            if (form.data.body && !player.hasTag("DisableEditorLabels")) {
                 actionForm.label(`§r${form.data.body}`)
             }
             actionForm.divider();
@@ -567,10 +561,10 @@ uiManager.addUI(
         /*
         "$key": "§p§4§0",
 "$BUTTON_SIZER_left_third": "§p§1§1",
-	"$BUTTON_SIZER_right_third": "§p§2§1",
-	"$BUTTON_SIZER_left_half": "§p§1§2",
-	"$BUTTON_SIZER_right_half": "§p§2§2",
-	"$VERTICAL_PROCESSING_no_height_key": "§p§0§0",
+    "$BUTTON_SIZER_right_third": "§p§2§1",
+    "$BUTTON_SIZER_left_half": "§p§1§2",
+    "$BUTTON_SIZER_right_half": "§p§2§2",
+    "$VERTICAL_PROCESSING_no_height_key": "§p§0§0",
     */
         // List existing buttons/headers/labels
         let currView = -1;
@@ -589,9 +583,9 @@ uiManager.addUI(
             //     if(!button) continue;
             //     isSnippetBook = true;
             // }
-            if(button.type == "pagstart") {
+            if (button.type == "pagstart") {
                 let btnIndex = index;
-                actionForm.button(`§2Pagination Start\n§r§7Pagination starts here`, `textures/azalea_icons/other/play`, (player)=>{
+                actionForm.button(`§2Pagination Start\n§r§7Pagination starts here`, `textures/azalea_icons/other/play`, (player) => {
                     uiManager.open(
                         player,
                         config.uiNames.UIBuilderEditButton,
@@ -601,9 +595,9 @@ uiManager.addUI(
                 })
                 continue;
             }
-            if(button.type == "pagend") {
+            if (button.type == "pagend") {
                 let btnIndex = index;
-                actionForm.button(`§nPagination End\n§r§7Pagination ends here`, `textures/azalea_icons/other/stop`, (player)=>{
+                actionForm.button(`§nPagination End\n§r§7Pagination ends here`, `textures/azalea_icons/other/stop`, (player) => {
                     uiManager.open(
                         player,
                         config.uiNames.UIBuilderEditButton,
@@ -613,9 +607,9 @@ uiManager.addUI(
                 })
                 continue;
             }
-            if(button.type == "poll") {
+            if (button.type == "poll") {
                 let btnIndex = index;
-                actionForm.button(`§b[POLL] ${button.title ? button.title : "Unknown"}\n§r§7${button.options.join('§r§7, ')}`, null, (player)=>{
+                actionForm.button(`§b[POLL] ${button.title ? button.title : "Unknown"}\n§r§7${button.options.join('§r§7, ')}`, null, (player) => {
                     uiManager.open(
                         player,
                         config.uiNames.UIBuilderEditButton,
@@ -629,8 +623,7 @@ uiManager.addUI(
                 let clearModes = ["NONE", "ALL", "VIEW", "NOTDEFAULT"];
                 let btnIndex = index;
                 actionForm.button(
-                    `§d[Separator] ${button.label}\n§r§7Condition: ${
-                        button.condition
+                    `§d[Separator] ${button.label}\n§r§7Condition: ${button.condition
                     }, ${clearModes[button.clearMode ? button.clearMode : 0]}`,
                     null,
                     (player) => {
@@ -646,23 +639,18 @@ uiManager.addUI(
             }
             if (button.type === "group") {
                 let isButtonRow = form.data.layout === 4 && button.buttonRow;
-                let groupText = isButtonRow ? "§eButton Row" : "§eButton Group";
+                let groupText = isButtonRow ? "§eButton Row" : "§eButton Group"; // probably wouldnt care
                 const groupIndex = index;
                 let buttonCount = button.buttons.length;
 
                 actionForm.button(
-                    `${groupText}\n§7${buttonCount} button${
-                        buttonCount !== 1 ? "s" : ""
+                    `${groupText}\n§7${buttonCount} button${buttonCount !== 1 ? "s" : ""
                     }`,
                     "textures/azalea_icons/ClickyClick",
                     (player) => {
                         if (selectingButton) return response(button.id);
                         let groupMenu = new ActionForm();
-                        groupMenu.title(
-                            isButtonRow
-                                ? "Edit Button Row"
-                                : "Edit Button Group"
-                        );
+                        groupMenu.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[68][0]}${isButtonRow ? "Edit Button Row" : "Edit Button Group"}`);
 
                         groupMenu.button(
                             "§cBack\n§7Return to buttons",
@@ -690,19 +678,17 @@ uiManager.addUI(
                                         nutUIPreview
                                     ) {
                                         // Base NUT UI formatting
-                                        nutUIText = `${
-                                            groupButton.disabled ? "§p§3§0" : ""
-                                        }${
-                                            groupButton.nutUIAlt ||
-                                            (groupButton.nutUIColorCondition
-                                                ? this.playerIsAllowed(
-                                                      player,
-                                                      groupButton.nutUIColorCondition
-                                                  )
-                                                : false)
+                                        nutUIText = `${groupButton.disabled ? "§p§3§0" : ""
+                                            }${groupButton.nutUIAlt ||
+                                                (groupButton.nutUIColorCondition
+                                                    ? this.playerIsAllowed(
+                                                        player,
+                                                        groupButton.nutUIColorCondition
+                                                    )
+                                                    : false)
                                                 ? "§a§l§t§b§t§n"
                                                 : ""
-                                        }`;
+                                            }`;
 
                                         if (button.buttonRow) {
                                             // Button Row formatting (max 3 buttons)
@@ -741,20 +727,18 @@ uiManager.addUI(
                                     }
 
                                     previewForm.button(
-                                        `${
-                                            form.data.layout == 4 &&
+                                        `${form.data.layout == 4 &&
                                             nutUIPreview
-                                                ? `${nutUIText}§r§f`
-                                                : ""
-                                        }${groupButton.text}${
-                                            groupButton.subtext
-                                                ? `\n§7${groupButton.subtext}`
-                                                : ""
+                                            ? `${nutUIText}§r§f`
+                                            : ""
+                                        }${groupButton.text}${groupButton.subtext
+                                            ? `\n§7${groupButton.subtext}`
+                                            : ""
                                         }`,
                                         groupButton.iconID
                                             ? icons.resolve(groupButton.iconID)
                                             : null,
-                                        () => {}
+                                        () => { }
                                     );
                                 }
 
@@ -770,8 +754,7 @@ uiManager.addUI(
 
                         if (form.data.layout === 4) {
                             groupMenu.button(
-                                `§6Button Row: ${
-                                    button.buttonRow ? "ON" : "OFF"
+                                `§6Button Row: ${button.buttonRow ? "ON" : "OFF"
                                 }\n§7Max 3 buttons per row`,
                                 null,
                                 (player) => {
@@ -817,17 +800,16 @@ uiManager.addUI(
                                 : `§r${groupButton.text}`;
 
                             groupMenu.button(
-                                `${moveText}${
-                                    groupButton.subtext
-                                        ? `\n§7${groupButton.subtext}`
-                                        : ""
+                                `${moveText}${groupButton.subtext
+                                    ? `\n§7${groupButton.subtext}`
+                                    : ""
                                 }`,
                                 groupButton.iconID
                                     ? icons.resolve(groupButton.iconID)
                                     : null,
                                 (player) => {
                                     let buttonMenu = new ActionForm();
-                                    buttonMenu.title("Button Options");
+                                    buttonMenu.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[68][0]}` + "Button Options");
 
                                     buttonMenu.button(
                                         "§cBack",
@@ -844,7 +826,7 @@ uiManager.addUI(
 
                                     buttonMenu.button(
                                         "§eEdit Button",
-                                        "textures/azalea_icons/edit",
+                                        "textures/azalea_icons/Extra UI settings",
                                         (player) => {
                                             uiManager.open(
                                                 player,
@@ -894,8 +876,8 @@ uiManager.addUI(
                                                 ? "§aMove Left"
                                                 : "§aMove Up",
                                             isButtonRow
-                                                ? "textures/azalea_icons/left_arrow"
-                                                : "textures/azalea_icons/up_arrow",
+                                                ? icons.resolve('rpgiab/arrow_left')
+                                                : icons.resolve('rpgiab/arrow_raise'),
                                             (player) => {
                                                 // Store current button
                                                 const currentButton =
@@ -921,15 +903,15 @@ uiManager.addUI(
                                             }
                                         );
                                     }
-
+                                    // were u on crack when making this
                                     if (i < button.buttons.length - 1) {
                                         buttonMenu.button(
                                             isButtonRow
                                                 ? "§6Move Right"
                                                 : "§6Move Down",
                                             isButtonRow
-                                                ? "textures/azalea_icons/right_arrow"
-                                                : "textures/azalea_icons/down_arrow",
+                                                ? icons.resolve('rpgiab/arrow_right')
+                                                : icons.resolve('rpgiab/arrow_lower'),
                                             (player) => {
                                                 // Store current button
                                                 const currentButton =
@@ -976,7 +958,7 @@ uiManager.addUI(
                                         }
                                     );
 
-                                    buttonMenu.show(player, false, () => {});
+                                    buttonMenu.show(player, false, () => { });
                                 }
                             );
                         }
@@ -984,7 +966,7 @@ uiManager.addUI(
                         if (groupIndex > 0) {
                             groupMenu.button(
                                 "§aMove Up\n§7Move group up",
-                                "textures/azalea_icons/up_arrow",
+                                icons.resolve('rpgiab/arrow_raise'),
                                 (player) => {
                                     uiBuilder.moveButtonInUI(
                                         id,
@@ -1003,7 +985,7 @@ uiManager.addUI(
                         if (groupIndex < form.data.buttons.length - 1) {
                             groupMenu.button(
                                 "§6Move Down\n§7Move group down",
-                                "textures/azalea_icons/down_arrow",
+                                icons.resolve('rpgiab/arrow_lower'),
                                 (player) => {
                                     uiBuilder.moveButtonInUI(
                                         id,
@@ -1074,7 +1056,7 @@ uiManager.addUI(
                             }
                         );
 
-                        groupMenu.show(player, false, () => {});
+                        groupMenu.show(player, false, () => { });
                     }
                 );
                 continue;
@@ -1082,23 +1064,20 @@ uiManager.addUI(
 
             let nutUIText = "";
             try {
-                nutUIText = `${button.disabled ? "§e(DISABLED) " : ""}${
-                    button.nutUIAlt ? typeof button.altBtnColorOverride === "number" && button.altBtnColorOverride != -1 ? `${NUT_UI_ALT}${themes[button.altBtnColorOverride][0]}` : nutUIAlt : ""
-                }${
-                    button.nutUIHalf == 2
+                nutUIText = `${button.disabled ? "§e(DISABLED) " : ""}${button.nutUIAlt ? typeof button.altBtnColorOverride === "number" && button.altBtnColorOverride != -1 ? `${NUT_UI_ALT}${themes[button.altBtnColorOverride][0]}` : nutUIAlt : ""
+                    }${button.nutUIHalf == 2
                         ? "§p§1§2"
                         : button.nutUIHalf == 1
-                        ? "§p§2§2"
-                        : button.nutUIHalf == 3
-                        ? "§p§2§2§p§2§1"
-                        : button.nutUIHalf == 4
-                        ? "§p§2§1§p§1§2"
-                        : button.nutUIHalf == 5
-                        ? "§p§1§1§p§1§2"
-                        : ""
-                }${button.nutUIHeaderButton ? "§p§4§0" : ""}${
-                    button.nutUINoSizeKey ? "§p§0§0" : ""
-                }`;
+                            ? "§p§2§2"
+                            : button.nutUIHalf == 3
+                                ? "§p§2§2§p§2§1"
+                                : button.nutUIHalf == 4
+                                    ? "§p§2§1§p§1§2"
+                                    : button.nutUIHalf == 5
+                                        ? "§p§1§1§p§1§2"
+                                        : ""
+                    }${button.nutUIHeaderButton ? "§p§4§0" : ""}${button.nutUINoSizeKey ? "§p§0§0" : ""
+                    }`;
             } catch (e) {
                 player.sendMessage(`Failed to load NUT UI DATA: ${e}`);
             }
@@ -1106,34 +1085,32 @@ uiManager.addUI(
                 button.type === "header"
                     ? `§b[Header] §r§f${button.text}`
                     : button.type === "label"
-                    ? `§e[Label] §r§f${button.text}`
-                    : button.type == "divider"
-                    ? `§v-=-=-=- §f[Divider] §v-=-=-=-`
-                    : formatStr(
-                          `${
-                              form.data.layout == 4 && nutUIPreview
-                                  ? `${nutUIText}§r§f`
-                                  : ""
-                          }${button.text}${
-                              button.subtext ? `\n§r§7${button.subtext}` : ``
-                          }`,
-                          player
-                      );
+                        ? `§e[Label] §r§f${button.text}`
+                        : button.type == "divider"
+                            ? `§v-=-=-=- §f[Divider] §v-=-=-=-`
+                            : formatStr(
+                                `${form.data.layout == 4 && nutUIPreview
+                                    ? `${nutUIText}§r§f`
+                                    : ""
+                                }${button.text}${button.subtext ? `\n§r§7${button.subtext}` : ``
+                                }`,
+                                player
+                            );
             let labels = [];
-            if(button.meta) {
+            if (button.meta) {
                 labels.push(`${emojis.blue_dot} §9${button.meta}`)
             }
-            if(button.template && button.template.on) {
+            if (button.template && button.template.on) {
                 labels.push(`${emojis.green_dot} §2TEMPLATE, ${button.template.start}-${button.template.end}`)
             }
-            if(button.comment && button.comment) {
+            if (button.comment && button.comment) {
                 labels.push(`${emojis.orange_dot} §6${button.comment}`)
             }
-            if(button.requiredTag) {
+            if (button.requiredTag) {
                 labels.push(`${emojis.yellow_check} §eCondition: ${button.requiredTag}`)
             }
-            if(labels.length && !player.hasTag("DisableEditorLabels")) {
-                if(index > 0) actionForm.divider();
+            if (labels.length && !player.hasTag("DisableEditorLabels")) {
+                if (index > 0) actionForm.divider();
                 actionForm.label(`§r§f${labels.join('§r ')}`)
             }
             actionForm.button(
@@ -1143,11 +1120,11 @@ uiManager.addUI(
                         ? "textures/azalea_icons/other/checkbox"
                         : "textures/azalea_icons/other/checkbox_off"
                     : button.type == "header" ? "textures/azalea_icons/other/font"
-                    : button.type == "label" ? "textures/azalea_icons/other/text"
-                    : button.type == "divider" ? "textures/azalea_icons/other/group"
-                    : button.iconID
-                    ? icons.resolve(button.iconID)
-                    : null,
+                        : button.type == "label" ? "textures/azalea_icons/other/text"
+                            : button.type == "divider" ? "textures/azalea_icons/other/group"
+                                : button.iconID
+                                    ? icons.resolve(button.iconID)
+                                    : null,
                 (player) => {
                     if (multiselectMode) {
                         if (multiselect.includes(button.id)) {
@@ -1195,9 +1172,9 @@ uiManager.addUI(
                     }
                 }
             );
-            if(labels.length && !player.hasTag("DisableEditorLabels")) actionForm.divider();
+            if (labels.length && !player.hasTag("DisableEditorLabels")) actionForm.divider();
         }
 
-        actionForm.show(player, false, (player, response) => {});
+        actionForm.show(player, false, (player, response) => { });
     }
 );
