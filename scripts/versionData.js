@@ -408,6 +408,11 @@ export default {
                 Add: "add_mute | Leaf/Mute/Add",
             },
         },
+        InventoryViewer: {
+            Root: "inventory_viewer | Leaf/InventoryViewer",
+            Player: "inventory_viewer_player | Leaf/InventoryViewer/Player",
+            Slot: "inventory_viewer_slot | Leaf/InventoryViewer/Slot",
+        },
         MCBEToolsAuth: "mcbetools_auth",
         Basic: {
             PlayerSelector: "player_selector | Leaf/Basic/PlayerSelector",

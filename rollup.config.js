@@ -1,37 +1,32 @@
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import fs from 'fs';
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const commonjs = require("@rollup/plugin-commonjs");
+const fs = require("fs");
 // import { terser } from "@rollup/plugin-terser"; // uncomment if you want minify
 
 
   
-export default {
-  input: "./src/startup.js",
+module.exports = {
+  input: "./scripts/startup.js",
   output: {
-    file: "./scripts/startup.js",
+    file: "./dist/startup.js",
     format: "es",          // ESM output, so TLA is valid
     sourcemap: false,
     inlineDynamicImports: true,
-    banner: fs.readFileSync('./banner.js').toString()
+    banner: fs.readFileSync("./banner.js").toString()
   },
   watch: {
-    // include: 'src/**', // <-- watches everything in src recursively
-    include: ['src/**/*.js', 'banner.js'],
+    include: ["scripts/**/*.js", "banner.js"],
     clearScreen: false,
   },
   plugins: [
     // prioritizeStartup(),
-    resolve({
+    nodeResolve({
       browser: false,
       preferBuiltins: true,
     }),
     commonjs(),
     // terser(), // enable if you want minification
   ],
-  external: [
-    "@minecraft/server",
-    "@minecraft/server-ui",
-    "@minecraft/server-admin",
-  ], // keep Minecraft modules external
+  external: (id) => id.startsWith("@minecraft/"), // keep Minecraft modules external
   preserveEntrySignatures: "strict",
 };

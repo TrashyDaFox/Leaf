@@ -45,6 +45,7 @@ import "./uis/warps/index.js";
 import "./commands/broadcast.js";
 import './uis/emoji_selector/root.js'
 import "./uis/importer.js";
+import "./uis/inventoryViewer.js";
 import uiManager from "./uiManager.js";
 import "./uis/softcoded/root.js";
 import "./uis/uiBuilder/editIconOverrides.js";

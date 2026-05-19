@@ -1,4 +1,3 @@
-import { ModalFormData } from "@minecraft/server-ui";
 import { prismarineDb } from "../lib/prismarinedb"
 // import uiStorage from "../../uiStorage";
 import { pluginsLoaded } from "../pluginStorage";
@@ -33,63 +32,96 @@ export class ModuleToggler {
                 });
                 let form = new ActionForm();
                 form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[68][0]}§rModules`)
+                form.button("§cBack\n§7Return to config", "textures/azalea_icons/2", (player)=>{
+                    uiManager.open(player, versionData.uiNames.ConfigRoot)
+                })
                 for(const module of modules) {
                     let inst = pluginsLoaded[module];
-                    form.button(`§${inst.coreModule ? "d" : "b"}${inst.displayName ? inst.displayName : inst.id}${inst.coreModule ? " [CORE]" : ""}\n§r§7${inst.id}`, inst.icon ? inst.icon : inst.configEntry && inst.configEntry.data && inst.configEntry.data.icon ? inst.configEntry.data.icon : "textures/azalea_icons/ExtIcon", (player)=>{
-
+                    let state = inst.coreModule ? "CORE" : getPluginToggle(inst) ? "ON" : "OFF";
+                    form.button(`§${inst.coreModule ? "d" : getPluginToggle(inst) ? "a" : "c"}${inst.displayName ? inst.displayName : inst.id}${inst.coreModule ? " [CORE]" : ""}\n§r§7${state} - ${inst.id}`, inst.icon ? inst.icon : inst.configEntry && inst.configEntry.data && inst.configEntry.data.icon ? inst.configEntry.data.icon : "textures/azalea_icons/ExtIcon", (player)=>{
+                        uiManager.open(player, "modules", module)
                     })
                 }
                 form.show(player, false, (player, response)=>{
 
                 })
+                return;
             }
-        })
-        return;
-        uiManager.addUI("module_toggler", {}, (player)=>{
-            let modalForm = new ModalFormData();
-            modalForm.title("Modules");
-            let modules = Object.keys(pluginsLoaded).filter(_=>pluginsLoaded[_].parentModule ? false : pluginsLoaded[_].coreModule ? false : true);
-            for(const module of modules) {
-                modalForm.toggle(`${pluginsLoaded[module].displayName ? pluginsLoaded[module].displayName : module}`, {
-                    defaultValue: getPluginToggle(pluginsLoaded[module]),
-                    tooltip: pluginsLoaded[module].description ?? undefined
-                })
+            let instance = pluginsLoaded[moduleName];
+            if(!instance) {
+                player.error(`Module "${moduleName}" was not found.`);
+                return uiManager.open(player, "modules");
             }
-            modalForm.show(player).then(res=>{
-                if(res.canceled) uiManager.open(player, "config")
-                for(let i = 0;i < res.formValues.length;i++) {
-                    if(res.formValues[i] == getPluginToggle(pluginsLoaded[modules[i]])) continue;
-                    if(res.formValues[i]) {
-                        // world.getDynamicProperty(`pluginToggle:${pluginClass.id}`)
-                        try {
-                            pluginsLoaded[modules[i]].load();
-                        } catch(e) {
-                            let instance = pluginsLoaded[modules[i]]
-                            try {
-                                prismarineDb.getEventHandler("PluginLoader").emit("PluginFailed", {
-                                    message: `${e}`,
-                                    stack: e.stack,
-                                    pluginClass: pluginsLoaded[modules[i]]
-                                })
-                            } catch(e) {
-                                world.sendMessage(`§cMODULE ERROR §8§l>> §r§7Some unknown module did a huge meanie and tried breaking the addon :(`)
-                            }
-                            world.sendMessage(`§cMODULE ERROR §8§l>> §r§7Module "${instance.displayName ? instance.displayName : instance.id}" failed to load.`)
-                        }
-                        pluginsLoaded[modules[i]].enabled = true;
-                        world.setDynamicProperty(`pluginToggle:${modules[i]}`, true)
-                    } else {
-                        if(pluginsLoaded[modules[i]].unload) {
-                            pluginsLoaded[modules[i]].enabled = false;
-                            pluginsLoaded[modules[i]].unload();
-                        } else {
-                            player.error(`Plugin "${modules[i]}" does not have an unload function. Please close and reopen your realm or restart your server and report this as a bug.`)
-                        }
-                        world.setDynamicProperty(`pluginToggle:${modules[i]}`, false)
-                    }
-                }
-                uiManager.open(player, versionData.uiNames.ConfigRoot)
+            let form = new ActionForm();
+            let enabled = getPluginToggle(instance);
+            form.title(`${NUT_UI_TAG}${NUT_UI_THEMED}${themes[68][0]}§r${instance.displayName ? instance.displayName : instance.id}`)
+            form.button("§cBack\n§7Return to modules", "textures/azalea_icons/2", (player)=>{
+                uiManager.open(player, "modules")
             })
+            form.label(`§7ID: §f${instance.id}\n§7State: §f${instance.coreModule ? "CORE" : enabled ? "ON" : "OFF"}${instance.description ? `\n§7${instance.description}` : ""}`)
+            if(!instance.coreModule) {
+                form.button(`${enabled ? "§cDisable" : "§aEnable"}\n§7${enabled ? "Turn this module off" : "Turn this module on"}`, enabled ? "textures/azalea_icons/Delete" : "textures/azalea_icons/other/checkmark", (player)=>{
+                    this.setModuleEnabled(player, instance, !enabled)
+                })
+                if(enabled) {
+                    form.button("§eReload\n§7Unload and load this module", "textures/azalea_icons/other/arrow_refresh", (player)=>{
+                        try {
+                            if(instance.unload) instance.unload();
+                            instance.load();
+                            instance.enabled = true;
+                            world.setDynamicProperty(`pluginToggle:${instance.id}`, true)
+                            prismarineDb.getEventHandler("PluginLoader").emit("PluginLoaded", {
+                                pluginClass: instance
+                            })
+                            player.success(`Reloaded ${instance.displayName ? instance.displayName : instance.id}`);
+                        } catch(e) {
+                            this.reportModuleError(player, instance, e)
+                        }
+                        uiManager.open(player, "modules", instance.id)
+                    })
+                }
+            }
+            form.show(player, false, (player, response)=>{})
         })
+        uiManager.addUI("module_toggler", {}, (player)=>{
+            uiManager.open(player, "modules")
+        })
+    }
+    reportModuleError(player, instance, error) {
+        try {
+            prismarineDb.getEventHandler("PluginLoader").emit("PluginFailed", {
+                message: `${error}`,
+                stack: error.stack,
+                pluginClass: instance
+            })
+        } catch(e) {
+            world.sendMessage(`§cMODULE ERROR §8§l>> §r§7An unknown module failed.`)
+        }
+        player.error(`Module "${instance.displayName ? instance.displayName : instance.id}" failed: ${error}`)
+    }
+    setModuleEnabled(player, instance, enabled) {
+        try {
+            if(enabled) {
+                instance.load();
+                instance.enabled = true;
+                world.setDynamicProperty(`pluginToggle:${instance.id}`, true)
+                prismarineDb.getEventHandler("PluginLoader").emit("PluginLoaded", {
+                    pluginClass: instance
+                })
+                player.success(`Enabled ${instance.displayName ? instance.displayName : instance.id}`);
+            } else {
+                if(!instance.unload) {
+                    player.error(`Module "${instance.id}" does not have an unload function. Restart the world to fully disable it.`)
+                } else {
+                    instance.unload();
+                }
+                instance.enabled = false;
+                world.setDynamicProperty(`pluginToggle:${instance.id}`, false)
+                player.success(`Disabled ${instance.displayName ? instance.displayName : instance.id}`);
+            }
+        } catch(e) {
+            this.reportModuleError(player, instance, e)
+        }
+        uiManager.open(player, "modules", instance.id)
     }
 }

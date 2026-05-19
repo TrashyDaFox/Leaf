@@ -109,7 +109,7 @@ export class ConfigModule {
                     }
                 }
                 if(buttons[res.selection].type == "category") {
-                    uiManager.open(player, buttons[res.selection].page, "config")
+                    uiManager.open(player, "config", buttons[res.selection].page)
                 } else if(buttons[res.selection].type == "external_ui") {
                     uiManager.open(player, buttons[res.selection].ui)
                 } else if(buttons[res.selection].type == "back") {

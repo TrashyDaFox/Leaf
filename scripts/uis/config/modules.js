@@ -172,13 +172,14 @@ uiManager.addUI(config.uiNames.Config.Modules, "Module Config", (player) => {
         // configAPI.setProperty("ExperimentalChatRankFormatting", response.formValues[6]);
         // configAPI.setProperty("Chatranks", response.formValues[7]);
         // configAPI.setProperty("DevMode", response.formValues[8]);
-        let toggleOptions2 = toggleOptions;
-        for (let i = 0; i < toggleOptions2.length; i++) {
-            if(toggleOptions2[i].header) continue;
+        let formValueIndex = 0;
+        for (const option of toggleOptions) {
+            if(option.header) continue;
             configAPI.setProperty(
-                toggleOptions2[i].property,
-                response.formValues[i]
+                option.property,
+                response.formValues[formValueIndex]
             );
+            formValueIndex++;
         }
         return uiManager.open(player, config.uiNames.ConfigRoot);
     });
