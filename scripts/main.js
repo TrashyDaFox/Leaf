@@ -8,6 +8,7 @@ import { ErrorHandlerModule } from "./modules_v2/errorHandler";
 import { ErrorTestingModule } from "./modules_v2/errorTesting";
 import './legacyLoader'
 import { ModuleToggler } from "./modules_v2/pluginToggler";
+import { PackHealthModule } from "./modules_v2/packHealth";
 import { Clock } from "./modules_v2/clock";
 import uiManager from "./uiManager";
 // import { ChatHandler } from "./modules_v2/chat";
@@ -27,6 +28,7 @@ World.prototype.moduleError = function(message) {
 let plugins = [
     ConfigModule,
     ErrorHandlerModule,
+    PackHealthModule,
     ErrorTestingModule,
     Clock,
     ModuleToggler,

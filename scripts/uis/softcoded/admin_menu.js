@@ -212,6 +212,20 @@ export default [
                 id: 6669886921,
             },
             {
+                text: "§a§lPack Health",
+                subtext: "§iVersions, modules, dependencies",
+                action: "/playsound note.bell @s",
+                actions: [
+                    "/playsound note.bell @s",
+                    "/scriptevent leafgui:pack_health",
+                ],
+                iconID: "rpgiab/server",
+                iconOverrides: [],
+                requiredTag: "",
+                disabled: false,
+                id: 1748632301001,
+            },
+            {
                 text: "§e§lCREDITS",
                 subtext: "§iContribution!",
                 action: "/playsound note.bell @s",

@@ -413,6 +413,10 @@ export default {
             Player: "inventory_viewer_player | Leaf/InventoryViewer/Player",
             Slot: "inventory_viewer_slot | Leaf/InventoryViewer/Slot",
         },
+        PackHealth: {
+            Root: "pack_health | Leaf/PackHealth",
+            ReloadGuidance: "pack_health_reload_guidance | Leaf/PackHealth/ReloadGuidance",
+        },
         MCBEToolsAuth: "mcbetools_auth",
         Basic: {
             PlayerSelector: "player_selector | Leaf/Basic/PlayerSelector",
