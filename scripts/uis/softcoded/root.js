@@ -74,4 +74,29 @@ uiBuilder.db.waitLoad().then(() => {
         "pagFBack": "",
         "pagpb": false
     })
+    uiBuilder.addInternalUI({
+        "type": 9,
+        "name": "!bank",
+        "command": "bank",
+        "description": "Bank command. Opens bank ui",
+        "category": "Economy",
+        "requiredTag": "",
+        "ensureChatClosed": true,
+        "actions": [
+            {
+                "type": 1,
+                "condition": "$cfg/BankCMD",
+                "actions": [
+                    {
+                        "type": 0,
+                        "action": "leaf:open @s \"leaf/bank\""
+                    }
+                ],
+                "stopExec": true
+            }
+        ],
+        "subcommands": [],
+        "execother": false,
+        "noself": false
+    })
 });
