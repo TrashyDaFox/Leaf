@@ -13,8 +13,8 @@ uiManager.addUI("add_action", "a", (player, id, index, buttonIndex) => {
     let button =
         typeof buttonIndex === "number"
             ? ui.data[ui.data.type === 0 ? "buttons" : "icons"][index].buttons[
-                  buttonIndex
-              ]
+            buttonIndex
+            ]
             : ui.data[ui.data.type === 0 ? "buttons" : "icons"][index];
 
     let form = new ModalForm();
@@ -44,7 +44,7 @@ uiManager.addUI(
         let button =
             typeof buttonIndex === "number"
                 ? ui.data[ui.data.type === 0 ? "buttons" : "icons"][index]
-                      .buttons[buttonIndex]
+                    .buttons[buttonIndex]
                 : ui.data[ui.data.type === 0 ? "buttons" : "icons"][index];
 
         let form = new ActionForm();
@@ -140,7 +140,7 @@ uiManager.addUI(
             }
         );
 
-        form.show(player, false, () => {});
+        form.show(player, false, () => { });
     }
 );
 
@@ -151,12 +151,14 @@ uiManager.addUI("edit_actions", "a", (player, id, index, buttonIndex) => {
 
     // Handle both regular and group buttons
     let button;
+    let isGroupButton = false;
     if (typeof buttonIndex === "number") {
         // Group button
         button =
             ui.data[ui.data.type === 0 ? "buttons" : "icons"][index].buttons[
-                buttonIndex
+            buttonIndex
             ];
+        isGroupButton = true
     } else {
         // Regular button
         button = ui.data[ui.data.type === 0 ? "buttons" : "icons"][index];
@@ -166,6 +168,11 @@ uiManager.addUI("edit_actions", "a", (player, id, index, buttonIndex) => {
         `${NUT_UI_HEADER_BUTTON}§r§6Back\n§7Click to go back`,
         `textures/azalea_icons/2`,
         (player) => {
+            if (isGroupButton) return uiManager.open(
+                player,
+                config.uiNames.UIBuilderEditButtons,
+                id
+            );
             uiManager.open(player, config.uiNames.UIBuilderEditButton, id, index);
         }
     );
@@ -179,8 +186,7 @@ uiManager.addUI("edit_actions", "a", (player, id, index, buttonIndex) => {
     );
 
     form.button(
-        `§d${
-            button.conditionalActions ? "Disable" : "Enable"
+        `§d${button.conditionalActions ? "Disable" : "Enable"
         } Conditional Actions\n§7Conditional`,
         null,
         (player) => {
@@ -214,5 +220,5 @@ uiManager.addUI("edit_actions", "a", (player, id, index, buttonIndex) => {
         });
     }
 
-    form.show(player, false, () => {});
+    form.show(player, false, () => { });
 });
